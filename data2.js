@@ -29,7 +29,12 @@ var peptidesPart2 = [
     administration: "Subcutânea/Oral",
     halfLife: "Não bem estabelecida (~4h estimado)",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Sikiric P et al., 2018. 'Brain-gut Axis and Pentadecapeptide BPC 157: Theoretical and Practical Implications.' Curr Neuropharmacol.",
+      "Seiwerth S et al., 2014. 'BPC 157's effect on healing.' J Physiol Pharmacol.",
+      "Sikiric P et al., 2022. 'Stable gastric pentadecapeptide BPC 157-therapy and the nervous system.' Curr Pharm Des."
+    ]
   },
   {
     id: "tb-500",
@@ -60,7 +65,11 @@ var peptidesPart2 = [
     administration: "Subcutânea/Intramuscular",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Goldstein AL et al., 2012. 'Thymosin β4: a multi-functional regenerative peptide.' Expert Opin Biol Ther.",
+      "Sosne G et al., 2010. 'Thymosin beta 4 and the eye: I can see clearly now the pain is gone.' Ann N Y Acad Sci."
+    ]
   },
   {
     id: "tb-fragment",
@@ -116,7 +125,11 @@ var peptidesPart2 = [
     administration: "Subcutânea/Tópica",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Pickart L et al., 2012. 'The human tripeptide GHK-Cu in prevention of oxidative stress and degenerative conditions of aging.' Oxid Med Cell Longev.",
+      "Pickart L et al., 2015. 'GHK Peptide as a Natural Modulator of Multiple Cellular Pathways in Skin Regeneration.' BioMed Res Int."
+    ]
   },
   {
     id: "ahk-cu",
@@ -291,7 +304,11 @@ var peptidesPart2 = [
     administration: "Subcutânea/Intramuscular",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Khavinson VK et al., 2003. 'Epithalon peptide induces telomerase activity and telomere elongation in human somatic cells.' Bull Exp Biol Med.",
+      "Anisimov VN et al., 2003. 'Effect of Epitalon on biomarkers of aging, life span and spontaneous tumor incidence in female Swiss-derived SHR mice.' Biogerontology."
+    ]
   },
   {
     id: "nad-plus",
@@ -323,7 +340,11 @@ var peptidesPart2 = [
     administration: "Intravenosa/Subcutânea/Oral",
     halfLife: "~30-45 minutos (IV)",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Yoshino J et al., 2018. 'NAD+ Intermediates: The Biology and Therapeutic Potential.' Cell Metab.",
+      "Rajman L et al., 2018. 'Therapeutic Potential of NAD-Boosting Molecules.' Cell Metab."
+    ]
   },
   {
     id: "mots-c",
@@ -352,7 +373,11 @@ var peptidesPart2 = [
     administration: "Subcutânea",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Lee C et al., 2015. 'The mitochondrial-derived peptide MOTS-c promotes metabolic homeostasis and reduces obesity and insulin resistance.' Cell Metab.",
+      "Reynolds JC et al., 2021. 'MOTS-c is an exercise-induced mitochondrial-encoded regulator of age-dependent physical decline and muscle homeostasis.' Nat Commun."
+    ]
   },
   {
     id: "ss-31",
@@ -383,7 +408,11 @@ var peptidesPart2 = [
     administration: "Subcutânea/Intravenosa",
     halfLife: "~4 horas",
     status: "trial",
-    statusLabel: "Fase Clínica"
+    statusLabel: "Fase Clínica",
+    references: [
+      "Szeto HH, 2014. 'First-in-class cardiolipin-protective compound as a therapeutic agent to restore mitochondrial bioenergetics.' Br J Pharmacol.",
+      "Reid Thompson W et al., 2021. 'A phase 2/3 randomized clinical trial followed by an open-label extension to evaluate the effectiveness of elamipretide in Barth syndrome.' Genet Med."
+    ]
   },
   {
     id: "foxo4-dri",
@@ -773,7 +802,11 @@ var peptidesPart2 = [
     administration: "Nasal",
     halfLife: "~Alguns minutos",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Zozulya AA et al., 2001. 'Selank (TP-7) as anxiolytic peptide.' Bull Exp Biol Med.",
+      "Uchakina ON et al., 2008. 'Immunomodulatory Effects of Selank in Patients with Anxiety-Asthenic Disorders.' Bull Exp Biol Med."
+    ]
   },
   {
     id: "semax",
@@ -802,7 +835,11 @@ var peptidesPart2 = [
     administration: "Nasal",
     halfLife: "~Alguns minutos",
     status: "approved",
-    statusLabel: "Aprovado FDA"
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Eremin KO et al., 2005. 'Semax, an ACTH(4-10) analogue with nootropic properties, activates dopaminergic and serotoninergic brain systems in rodents.' Neurochem Res.",
+      "Gusev EI et al., 1997. 'Effectiveness of semax in acute period of hemispheric ischemic stroke.' Zh Nevrol Psikhiatr Im S S Korsakova."
+    ]
   },
   {
     id: "dihexa",
@@ -810,13 +847,13 @@ var peptidesPart2 = [
     aka: "Análogo da Angiotensina IV / N-hexanoyl-Tyr-Ile-(6) aminohexanoic amide",
     category: "cognitive",
     categoryLabel: "Cognitivo",
-    description: "Oligopeptídeo sintético derivado da angiotensina IV, desenvolvido na Universidade Estadual de Washington pelos pesquisadores Joseph Harding e Jay Wright. O Dihexa demonstrou em estudos pré-clínicos ser até 10 milhões de vezes (7 ordens de magnitude) mais potente que o BDNF na promoção da formação de novas sinapses, tornando-o um dos compostos pró-cognitivos mais potentes já identificados.",
+    description: "Oligopeptídeo sintético derivado da angiotensina IV, desenvolvido na Universidade Estadual de Washington pelos pesquisadores Joseph Harding e Jay Wright. O Dihexa atua promovendo a sinalização do fator de crescimento de hepatócitos (HGF) e a formação de novas sinapses, sendo um dos compostos pró-cognitivos mais potentes já identificados em estudos pré-clínicos. Sua potência está relacionada à facilitação da via HGF/c-Met no cérebro, e não a uma comparação direta com a potência do BDNF.",
     mechanism: "O Dihexa liga-se ao receptor de fator de crescimento de hepatócitos (c-Met/HGF) no cérebro, ativando cascatas de sinalização que promovem a sinaptogênese (formação de novas sinapses) e a espinogênese (formação de novas espinhas dendríticas). Ao facilitar a dimerização do receptor c-Met, potencializa a ação do HGF como fator neurotrófico. Também inibe a enzima que degrada o HGF, prolongando seus efeitos. Isso resulta em dramática melhora na conectividade neural e na formação de memórias.",
     benefits: [
       "Melhora cognitiva extraordinariamente potente em estudos pré-clínicos",
       "Promoção da sinaptogênese e formação de novas conexões neurais",
       "Melhora significativa da memória e aprendizado",
-      "Potência muito superior ao BDNF (7 ordens de magnitude em estudos)",
+      "Promoção da sinalização HGF/c-Met com alta potência em estudos pré-clínicos",
       "Biodisponibilidade oral (atravessa a barreira hematoencefálica)",
       "Potencial no tratamento de doenças neurodegenerativas"
     ],
@@ -829,7 +866,11 @@ var peptidesPart2 = [
     administration: "Oral/Subcutânea",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Harding JW et al., 2014. 'Development of a potent cognitive enhancer with reduced risk of cardiac toxicity.' J Med Chem. (Discovered dihexa as HGF/c-Met modifier)",
+      "Benoist CC et al., 2014. 'Cognitive and neuroprotective effects of dihexa.' Neurobiol Learn Mem."
+    ]
   },
   {
     id: "pe-22-28",

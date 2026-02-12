@@ -44,10 +44,36 @@
         </div>
     </div>
 
+    <!-- Section Toggle -->
+    <div class="section-toggle">
+        <button class="section-btn active" data-section="peptides">Pept&iacute;deos Individuais</button>
+        <button class="section-btn" data-section="stacks">Combina&ccedil;&otilde;es Recomendadas</button>
+    </div>
+
     <!-- Peptide Cards Container -->
     <main class="cards-container" id="cardsContainer">
         <!-- Cards rendered by JS -->
     </main>
+
+    <!-- Stacks Container -->
+    <div class="stacks-container" id="stacksContainer" style="display:none">
+        <div class="stacks-filters" id="stacksFilters">
+            <button class="filter-btn active" data-goal="all">Todas</button>
+            <button class="filter-btn" data-goal="weight-loss">Perda de Peso</button>
+            <button class="filter-btn" data-goal="anti-aging">Anti-Envelhecimento</button>
+            <button class="filter-btn" data-goal="healing">Cura e Recupera&ccedil;&atilde;o</button>
+            <button class="filter-btn" data-goal="growth-hormone">Horm&ocirc;nio do Crescimento</button>
+            <button class="filter-btn" data-goal="cognitive">Cognitivo</button>
+            <button class="filter-btn" data-goal="immune">Sistema Imunol&oacute;gico</button>
+            <button class="filter-btn" data-goal="skin">Pele e Est&eacute;tica</button>
+            <button class="filter-btn" data-goal="body-comp">Composi&ccedil;&atilde;o Corporal</button>
+            <button class="filter-btn" data-goal="sleep">Sono</button>
+            <button class="filter-btn" data-goal="hormonal">Hormonal</button>
+        </div>
+        <div class="stacks-grid" id="stacksGrid">
+            <!-- Stack cards rendered by JS -->
+        </div>
+    </div>
 
     <!-- Modal -->
     <div class="modal-overlay" id="modalOverlay">
@@ -68,6 +94,7 @@
     <script src="data1.js"></script>
     <script src="data2.js"></script>
     <script src="data3.js"></script>
+    <script src="stacks.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

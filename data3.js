@@ -31,7 +31,11 @@ var peptidesPart3 = [
     administration: "Subcutânea",
     halfLife: "~2 horas",
     status: "approved",
-    statusLabel: "Aprovado em alguns países"
+    statusLabel: "Aprovado em alguns países",
+    references: [
+      "Garaci E et al., 2012. 'Thymosin alpha 1: from bench to bedside.' Ann N Y Acad Sci.",
+      "Tuthill C et al., 2010. 'Thymosin alpha 1 - past clinical experience and future promise.' Ann N Y Acad Sci."
+    ]
   },
   {
     id: "thymalin",
@@ -171,7 +175,10 @@ var peptidesPart3 = [
     administration: "Intramuscular/Subcutânea",
     halfLife: "~24-36 horas",
     status: "approved",
-    statusLabel: "Aprovado pela FDA"
+    statusLabel: "Aprovado pela FDA",
+    references: [
+      "Coviello AD et al., 2008. 'Low-dose human chorionic gonadotropin maintains intratesticular testosterone in normal men with testosterone-induced gonadotropin suppression.' J Clin Endocrinol Metab."
+    ]
   },
   {
     id: "pt-141",
@@ -202,7 +209,11 @@ var peptidesPart3 = [
     administration: "Subcutânea",
     halfLife: "~2,7 horas",
     status: "approved",
-    statusLabel: "Aprovado pela FDA"
+    statusLabel: "Aprovado pela FDA",
+    references: [
+      "Kingsberg SA et al., 2019. 'Bremelanotide for the treatment of hypoactive sexual desire disorder.' Obstet Gynecol. (RECONNECT trials)",
+      "Clayton AH et al., 2016. 'Bremelanotide for female sexual dysfunctions in premenopausal women.' Exp Opin Investig Drugs."
+    ]
   },
   {
     id: "gonadorelin",
@@ -524,7 +535,11 @@ var peptidesPart3 = [
     administration: "Oral/Intramuscular/Intravenosa",
     halfLife: "Variável conforme via de administração",
     status: "approved",
-    statusLabel: "Aprovado como suplemento"
+    statusLabel: "Aprovado como suplemento",
+    references: [
+      "Pooyandjoo M et al., 2016. 'The effect of (L-)carnitine on weight loss in adults: a systematic review and meta-analysis.' Obes Rev.",
+      "Fielding R et al., 2018. 'L-Carnitine Supplementation in Recovery after Exercise.' Nutrients."
+    ]
   },
   {
     id: "lipo-c",
