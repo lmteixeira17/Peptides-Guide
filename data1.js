@@ -30,7 +30,12 @@ var peptidesPart1 = [
     administration: "Subcutânea",
     halfLife: "~7 dias",
     status: "approved",
-    statusLabel: "Aprovado FDA"
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Wilding JPH et al., 2021. 'Once-Weekly Semaglutide in Adults with Overweight or Obesity.' N Engl J Med. (STEP 1)",
+      "Lincoff AM et al., 2023. 'Semaglutide and Cardiovascular Outcomes in Obesity without Diabetes.' N Engl J Med. (SELECT trial)",
+      "Davies M et al., 2021. 'Semaglutide 2.4 mg once a week in adults with overweight or obesity.' Lancet. (STEP 2-4)"
+    ]
   },
   {
     id: "tirzepatide",
@@ -60,7 +65,12 @@ var peptidesPart1 = [
     administration: "Subcutânea",
     halfLife: "~5 dias",
     status: "approved",
-    statusLabel: "Aprovado FDA"
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Jastreboff AM et al., 2022. 'Tirzepatide Once Weekly for the Treatment of Obesity.' N Engl J Med. (SURMOUNT-1)",
+      "Frías JP et al., 2021. 'Tirzepatide versus Semaglutide Once Weekly in Patients with Type 2 Diabetes.' N Engl J Med. (SURPASS-2)",
+      "Aronne LJ et al., 2024. 'Continued Treatment with Tirzepatide for Maintenance of Weight Reduction.' JAMA. (SURMOUNT-4)"
+    ]
   },
   {
     id: "retatrutide",
@@ -89,7 +99,11 @@ var peptidesPart1 = [
     administration: "Subcutânea",
     halfLife: "~6 dias",
     status: "trial",
-    statusLabel: "Fase 3 de Estudos Clínicos"
+    statusLabel: "Fase 3 de Estudos Clínicos",
+    references: [
+      "Jastreboff AM et al., 2023. 'Triple-Hormone-Receptor Agonist Retatrutide for Obesity.' N Engl J Med. (Phase 2 trial, up to 24.2% weight loss)",
+      "Rosenstock J et al., 2023. 'Retatrutide, a GIP, GLP-1 and Glucagon Receptor Agonist, for People with Type 2 Diabetes.' Lancet."
+    ]
   },
   {
     id: "liraglutide",
@@ -119,7 +133,11 @@ var peptidesPart1 = [
     administration: "Subcutânea",
     halfLife: "~13 horas",
     status: "approved",
-    statusLabel: "Aprovado FDA"
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Pi-Sunyer X et al., 2015. 'A Randomized, Controlled Trial of 3.0 mg of Liraglutide in Weight Management.' N Engl J Med. (SCALE Obesity)",
+      "Marso SP et al., 2016. 'Liraglutide and Cardiovascular Outcomes in Type 2 Diabetes.' N Engl J Med. (LEADER trial)"
+    ]
   },
   {
     id: "dulaglutide",
@@ -148,7 +166,11 @@ var peptidesPart1 = [
     administration: "Subcutânea",
     halfLife: "~5 dias",
     status: "approved",
-    statusLabel: "Aprovado FDA"
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Gerstein HC et al., 2019. 'Dulaglutide and Cardiovascular Outcomes in Type 2 Diabetes.' Lancet. (REWIND trial)",
+      "Frias JP et al., 2023. 'Efficacy and Safety of Dulaglutide 3.0 mg and 4.5 mg.' Diabetes Obes Metab."
+    ]
   },
   {
     id: "mazdutide",
@@ -265,11 +287,11 @@ var peptidesPart1 = [
   {
     id: "aod-9604",
     name: "AOD-9604",
-    aka: "",
+    aka: "Advanced Obesity Drug, versão modificada do HGH Frag 176-191",
     category: "weight-loss",
     categoryLabel: "Perda de Peso",
-    description: "AOD-9604 é um fragmento modificado do hormônio do crescimento humano (hGH), correspondendo aos aminoácidos 177-191 da região C-terminal com adição de tirosina. Foi desenvolvido para mimetizar os efeitos lipolíticos do GH sem seus efeitos adversos sobre o metabolismo da glicose. Estudos pré-clínicos demonstraram propriedades de redução de gordura, porém os resultados clínicos em humanos foram limitados.",
-    mechanism: "Mimetiza a ação lipolítica da porção C-terminal do hormônio do crescimento, estimulando a lipólise (quebra de gordura) e inibindo a lipogênese (formação de gordura) sem afetar os níveis de IGF-1 ou a sensibilidade à insulina. Atua diretamente nos receptores beta-3-adrenérgicos do tecido adiposo.",
+    description: "AOD-9604 (Advanced Obesity Drug) é uma versão modificada e estabilizada do HGH Fragment 176-191, correspondendo aos aminoácidos 177-191 da região C-terminal do hormônio do crescimento com adição de uma tirosina. Assim como o Frag 176-191, foi desenvolvido exclusivamente para mimetizar os efeitos lipolíticos do GH sem impacto na glicemia, IGF-1 ou crescimento tecidual. Chegou a fase 2 de estudos clínicos e obteve status GRAS (Generally Recognized as Safe) pelo FDA para uso oral.",
+    mechanism: "Mimetiza a ação lipolítica da porção C-terminal do hormônio do crescimento, estimulando a lipólise (quebra de gordura) e inibindo a lipogênese (formação de gordura) sem afetar os níveis de IGF-1 ou a sensibilidade à insulina. Atua diretamente nos receptores beta-3-adrenérgicos do tecido adiposo. Seu mecanismo é essencialmente idêntico ao do HGH Fragment 176-191, com maior estabilidade molecular devido à tirosina adicional.",
     benefits: [
       "Efeito lipolítico sem impacto na glicemia ou insulina",
       "Não afeta os níveis de IGF-1",
@@ -352,16 +374,20 @@ var peptidesPart1 = [
     administration: "Subcutânea",
     halfLife: "3-5 horas",
     status: "approved",
-    statusLabel: "Aprovado FDA (condições específicas)"
+    statusLabel: "Aprovado FDA (condições específicas)",
+    references: [
+      "Rudman D et al., 1990. 'Effects of human growth hormone in men over 60 years old.' N Engl J Med.",
+      "Liu H et al., 2007. 'Systematic review: the safety and efficacy of growth hormone in the healthy elderly.' Ann Intern Med."
+    ]
   },
   {
     id: "hgh-fragment-176-191",
     name: "HGH Fragment 176-191",
-    aka: "",
-    category: "growth-hormone",
-    categoryLabel: "Hormônio do Crescimento",
-    description: "O HGH Fragment 176-191 é um peptídeo sintético correspondente à porção C-terminal do hormônio do crescimento humano (aminoácidos 176-191). Foi desenvolvido para isolar as propriedades lipolíticas do GH sem seus efeitos sobre o crescimento ou metabolismo da glicose. Estudos em modelos animais demonstraram eficácia na redução de gordura corporal, porém dados clínicos em humanos são limitados.",
-    mechanism: "Mimetiza a região do hormônio do crescimento responsável pela lipólise, estimulando a quebra de triglicerídeos armazenados no tecido adiposo e inibindo a lipogênese. Diferentemente do GH completo, não interage com o receptor de GH de forma a estimular a produção de IGF-1, não afetando o crescimento tecidual nem a homeostase da glicose.",
+    aka: "Frag 176-191, precursor do AOD-9604",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "O HGH Fragment 176-191 é um peptídeo sintético correspondente à porção C-terminal do hormônio do crescimento humano (aminoácidos 176-191), que é exclusivamente a região responsável pela lipólise (queima de gordura). Foi desenvolvido para isolar as propriedades lipolíticas do GH sem seus efeitos sobre crescimento, IGF-1 ou metabolismo da glicose. É o precursor direto do AOD-9604, que é sua versão modificada com adição de tirosina para maior estabilidade.",
+    mechanism: "Mimetiza a região do hormônio do crescimento exclusivamente responsável pela lipólise, estimulando a quebra de triglicerídeos armazenados no tecido adiposo e inibindo a lipogênese (formação de nova gordura). Diferentemente do GH completo, não interage com o receptor de GH de forma a estimular a produção de IGF-1, não afetando o crescimento tecidual nem a homeostase da glicose. Seu mecanismo é praticamente idêntico ao do AOD-9604.",
     benefits: [
       "Ação lipolítica direcionada sem efeitos anabólicos do GH",
       "Não afeta os níveis de glicose ou IGF-1",
@@ -408,7 +434,11 @@ var peptidesPart1 = [
     administration: "Subcutânea",
     halfLife: "26-38 minutos",
     status: "approved",
-    statusLabel: "Aprovado FDA (lipodistrofia HIV)"
+    statusLabel: "Aprovado FDA (lipodistrofia HIV)",
+    references: [
+      "Falutz J et al., 2007. 'Metabolic effects of a growth hormone-releasing factor in patients with HIV.' N Engl J Med.",
+      "Stanley TL et al., 2014. 'Effect of tesamorelin on visceral fat and liver fat in HIV-infected patients.' JAMA."
+    ]
   },
   {
     id: "sermorelin",
@@ -438,7 +468,11 @@ var peptidesPart1 = [
     administration: "Subcutânea",
     halfLife: "~10-20 minutos",
     status: "research",
-    statusLabel: "Em Pesquisa (previamente aprovado)"
+    statusLabel: "Em Pesquisa (previamente aprovado)",
+    references: [
+      "Vittone J et al., 1997. 'Effects of single nightly injections of growth hormone-releasing hormone (GHRH 1-29) in healthy elderly men.' Metabolism.",
+      "Walker RF, 2006. 'Sermorelin: a better approach to management of adult-onset growth hormone insufficiency?' Clin Interv Aging."
+    ]
   },
   {
     id: "ipamorelin",
@@ -467,7 +501,11 @@ var peptidesPart1 = [
     administration: "Subcutânea",
     halfLife: "~2 horas",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Raun K et al., 1998. 'Ipamorelin, the first selective growth hormone secretagogue.' Eur J Endocrinol.",
+      "Johansen PB et al., 1999. 'Ipamorelin, a new growth-hormone-releasing peptide, induces longitudinal bone growth in rats.' Growth Horm IGF Res."
+    ]
   },
   {
     id: "ghrp-2",
@@ -583,7 +621,10 @@ var peptidesPart1 = [
     administration: "Subcutânea",
     halfLife: "~8 dias",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Teichman SL et al., 2006. 'Prolonged stimulation of growth hormone (GH) and insulin-like growth factor I secretion by CJC-1295.' J Clin Endocrinol Metab."
+    ]
   },
   {
     id: "cjc-1295-no-dac",
@@ -727,7 +768,7 @@ var peptidesPart1 = [
     aka: "Ibutamoren",
     category: "growth-hormone",
     categoryLabel: "Hormônio do Crescimento",
-    description: "MK-677 (Ibutamoren) é um secretagogo oral não-peptídico do hormônio do crescimento que mimetiza a ação da grelina, ligando-se ao receptor GHS-R1a. Diferencia-se dos peptídeos secretagogos por ser ativo por via oral e ter meia-vida longa, permitindo uma única dose diária. Estudos de Fase 2 demonstraram aumentos significativos e sustentados nos níveis de GH e IGF-1 por até 12 meses.",
+    description: "MK-677 (Ibutamoren) é um secretagogo oral não-peptídico do hormônio do crescimento que mimetiza a ação da grelina, ligando-se ao receptor GHS-R1a. Apesar de ser frequentemente categorizado junto com peptídeos, o MK-677 é na verdade uma molécula não-peptídica (small molecule) que mimetiza a grelina. Diferencia-se dos peptídeos secretagogos por ser ativo por via oral e ter meia-vida longa, permitindo uma única dose diária. Estudos de Fase 2 demonstraram aumentos significativos e sustentados nos níveis de GH e IGF-1 por até 12 meses.",
     mechanism: "Atua como agonista do receptor de grelina (GHS-R1a) na hipófise e hipotálamo, estimulando a liberação pulsátil de GH. Aumenta tanto a amplitude quanto a frequência dos pulsos de GH, elevando os níveis de IGF-1 de forma sustentada. Não é um peptídeo, mas sim uma molécula pequena (espiroindolina) com biodisponibilidade oral. Não suprime a produção endógena de GH.",
     benefits: [
       "Administração oral conveniente (não requer injeções)",
@@ -750,7 +791,11 @@ var peptidesPart1 = [
     administration: "Oral",
     halfLife: "~24 horas",
     status: "research",
-    statusLabel: "Em Pesquisa (Fase 2)"
+    statusLabel: "Em Pesquisa (Fase 2)",
+    references: [
+      "Nass R et al., 2008. 'Effects of an oral ghrelin mimetic on body composition and clinical outcomes in healthy older adults.' Ann Intern Med.",
+      "Murphy MG et al., 1998. 'Effect of alendronate and MK-677, a growth hormone secretagogue, on body composition.' J Clin Endocrinol Metab."
+    ]
   },
   {
     id: "follistatin-344",
