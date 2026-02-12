@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia Completo de Pept&iacute;deos - Refer&ecirc;ncia Cient&iacute;fica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>Guia Completo de Pept&iacute;deos</h1>
+            <p class="subtitle">Refer&ecirc;ncia cient&iacute;fica com descri&ccedil;&otilde;es, efeitos colaterais e dosagens baseadas em estudos</p>
+        </div>
+    </header>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+        <strong>AVISO:</strong> Este site tem finalidade exclusivamente informativa e educacional. As informa&ccedil;&otilde;es aqui apresentadas s&atilde;o baseadas em estudos cient&iacute;ficos publicados e n&atilde;o constituem aconselhamento m&eacute;dico. Consulte sempre um profissional de sa&uacute;de antes de utilizar qualquer subst&acirc;ncia.
+    </div>
+
+    <!-- Search and Filters -->
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Buscar pept&iacute;deo por nome..." autocomplete="off">
+        </div>
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">Todos</button>
+            <button class="filter-btn" data-category="weight-loss">Perda de Peso</button>
+            <button class="filter-btn" data-category="growth-hormone">Horm&ocirc;nio do Crescimento</button>
+            <button class="filter-btn" data-category="healing">Cura e Recupera&ccedil;&atilde;o</button>
+            <button class="filter-btn" data-category="anti-aging">Anti-Envelhecimento</button>
+            <button class="filter-btn" data-category="skin">Pele e Est&eacute;tica</button>
+            <button class="filter-btn" data-category="cognitive">Cognitivo</button>
+            <button class="filter-btn" data-category="immune">Sistema Imunol&oacute;gico</button>
+            <button class="filter-btn" data-category="hormonal">Hormonal</button>
+            <button class="filter-btn" data-category="sleep">Sono</button>
+            <button class="filter-btn" data-category="body-comp">Composi&ccedil;&atilde;o Corporal</button>
+            <button class="filter-btn" data-category="other">Outros</button>
+        </div>
+        <div class="peptide-count">
+            Exibindo <span id="countDisplay">0</span> pept&iacute;deos
+        </div>
+    </div>
+
+    <!-- Peptide Cards Container -->
+    <main class="cards-container" id="cardsContainer">
+        <!-- Cards rendered by JS -->
+    </main>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modal">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <div class="modal-content" id="modalContent">
+                <!-- Modal content rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Guia de Pept&iacute;deos &copy; 2026 - Conte&uacute;do baseado em literatura cient&iacute;fica publicada</p>
+        <p class="footer-disclaimer">Este material &eacute; para fins educacionais. N&atilde;o substitui orienta&ccedil;&atilde;o m&eacute;dica profissional.</p>
+    </footer>
+
+    <script src="data1.js"></script>
+    <script src="data2.js"></script>
+    <script src="data3.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
