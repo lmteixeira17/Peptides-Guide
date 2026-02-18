@@ -12,6 +12,7 @@ var currentCategory = "all";
 var currentSearch = "";
 var currentSection = "peptides";
 var currentStackGoal = "all";
+var sourceStackId = null;
 
 // DOM elements
 var cardsContainer = document.getElementById("cardsContainer");
@@ -194,12 +195,29 @@ function renderStacks() {
     stacksGrid.innerHTML = html;
 }
 
+// Open peptide from stack (with back navigation)
+function openPeptideFromStack(peptideId, stackId) {
+    sourceStackId = stackId;
+    openModal(peptideId);
+}
+
 // Open peptide modal
 function openModal(id) {
     var p = peptides.find(function(item) { return item.id === id; });
     if (!p) return;
 
     var html = '';
+
+    // Back button when coming from a stack
+    if (sourceStackId) {
+        var srcStack = stacks.find(function(item) { return item.id === sourceStackId; });
+        if (srcStack) {
+            html += '<div class="modal-back">';
+            html += '  <a href="javascript:void(0)" onclick="openStackModal(\'' + sourceStackId + '\')">&larr; Voltar para ' + srcStack.name + '</a>';
+            html += '</div>';
+        }
+    }
+
     html += '<div class="modal-header">';
     html += '  <div class="modal-title">' + p.name + '</div>';
     if (p.aka) {
@@ -288,6 +306,7 @@ function openModal(id) {
 
 // Open stack modal
 function openStackModal(id) {
+    sourceStackId = null;
     var s = stacks.find(function(item) { return item.id === id; });
     if (!s) return;
 
@@ -309,14 +328,26 @@ function openStackModal(id) {
     html += '<div class="modal-section">';
     html += '  <h3>Pept\u00eddeos do Protocolo</h3>';
     s.peptides.forEach(function(p) {
+        var hasDetail = p.id && peptides.some(function(item) { return item.id === p.id; });
         html += '  <div class="stack-peptide-detail">';
-        html += '    <h4>' + p.name + '</h4>';
+        if (hasDetail) {
+            html += '    <h4><a href="javascript:void(0)" class="peptide-link" onclick="openPeptideFromStack(\'' + p.id + '\', \'' + s.id + '\')" title="Ver detalhes completos de ' + p.name + '">' + p.name + ' \u2197</a></h4>';
+        } else {
+            html += '    <h4>' + p.name + '</h4>';
+        }
         html += '    <div class="role">' + p.role + '</div>';
         html += '    <div class="dose-info"><strong>Dosagem:</strong> ' + p.dose + '</div>';
         html += '    <div class="dose-info"><strong>Frequ\u00eancia:</strong> ' + p.timing + '</div>';
         html += '  </div>';
     });
     html += '</div>';
+
+    if (s.application) {
+        html += '<div class="modal-section">';
+        html += '  <h3>Aplica\u00e7\u00e3o</h3>';
+        html += '  <div class="application-box">' + s.application + '</div>';
+        html += '</div>';
+    }
 
     html += '<div class="modal-section">';
     html += '  <h3>Sinergia</h3>';
@@ -332,6 +363,18 @@ function openStackModal(id) {
     html += '  <h3>N\u00edvel de Evid\u00eancia</h3>';
     html += '  <div class="evidence-box">' + s.evidenceLevel + '</div>';
     html += '</div>';
+
+    // References if available
+    if (s.references && s.references.length > 0) {
+        html += '<div class="modal-section">';
+        html += '  <h3>Refer\u00eancias Cient\u00edficas</h3>';
+        html += '  <ul>';
+        s.references.forEach(function(r) {
+            html += '    <li>' + r + '</li>';
+        });
+        html += '  </ul>';
+        html += '</div>';
+    }
 
     html += '<div class="warning-box">';
     html += '  <strong>ATEN\u00c7\u00c3O:</strong> ' + s.warnings + ' As combina\u00e7\u00f5es listadas s\u00e3o baseadas em l\u00f3gica farmacol\u00f3gica e relatos de pesquisa. ';
