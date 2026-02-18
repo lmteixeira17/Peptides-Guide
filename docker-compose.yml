@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: peptides-db
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=peptides
+      - POSTGRES_USER=peptides
+      - POSTGRES_PASSWORD=peptides_secure_pwd_2026
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U peptides -d peptides"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    container_name: peptides-web
+    ports:
+      - "3007:8000"
+    environment:
+      - DEBUG=False
+      - SECRET_KEY=${SECRET_KEY:-django-peptides-change-me-in-production}
+      - ALLOWED_HOSTS=localhost,127.0.0.1,45.63.90.69
+      - FORCE_SCRIPT_NAME=/peptides
+      - DB_ENGINE=django.db.backends.postgresql
+      - DB_NAME=peptides
+      - DB_USER=peptides
+      - DB_PASSWORD=peptides_secure_pwd_2026
+      - DB_HOST=db
+      - DB_PORT=5432
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+
+volumes:
+  postgres-data:

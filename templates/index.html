@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia Completo de Pept&iacute;deos - Refer&ecirc;ncia Cient&iacute;fica</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
 </head>
 <body>
     <!-- Header -->
@@ -103,10 +104,13 @@
         <p class="footer-disclaimer">Este material &eacute; para fins educacionais. N&atilde;o substitui orienta&ccedil;&atilde;o m&eacute;dica profissional.</p>
     </footer>
 
-    <script src="data1.js"></script>
-    <script src="data2.js"></script>
-    <script src="data3.js"></script>
-    <script src="stacks.js"></script>
-    <script src="app.js"></script>
+    <!-- Data from PostgreSQL -->
+    <script>
+    var peptidesPart1 = {{ peptides_part1_json|safe }};
+    var peptidesPart2 = {{ peptides_part2_json|safe }};
+    var peptidesPart3 = {{ peptides_part3_json|safe }};
+    var peptideStacks = {{ stacks_json|safe }};
+    </script>
+    <script src="{% static 'core/app.js' %}"></script>
 </body>
 </html>
