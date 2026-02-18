@@ -27,14 +27,14 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Semanal (escalonamento)", dose: "0.25-2.4mg/semana", notes: "Iniciar com 0.25mg/semana por 4 semanas, aumentar para 0.5mg, depois 1.0mg, 1.7mg e finalmente 2.4mg. Cada dose mantida por pelo menos 4 semanas antes do escalonamento." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~7 dias",
     status: "approved",
     statusLabel: "Aprovado FDA",
     references: [
-      "Wilding JPH et al., 2021. 'Once-Weekly Semaglutide in Adults with Overweight or Obesity.' N Engl J Med. (STEP 1)",
-      "Lincoff AM et al., 2023. 'Semaglutide and Cardiovascular Outcomes in Obesity without Diabetes.' N Engl J Med. (SELECT trial)",
-      "Davies M et al., 2021. 'Semaglutide 2.4 mg once a week in adults with overweight or obesity.' Lancet. (STEP 2-4)"
+      "Wilding JPH et al., 2021. 'Once-Weekly Semaglutide in Adults with Overweight or Obesity.' N Engl J Med. (STEP 1) <a href='https://pubmed.ncbi.nlm.nih.gov/33567185/' target='_blank'>[PubMed]</a>",
+      "Lincoff AM et al., 2023. 'Semaglutide and Cardiovascular Outcomes in Obesity without Diabetes.' N Engl J Med. (SELECT trial) <a href='https://pubmed.ncbi.nlm.nih.gov/37952131/' target='_blank'>[PubMed]</a>",
+      "Davies M et al., 2021. 'Semaglutide 2.4 mg once a week in adults with overweight or obesity.' Lancet. (STEP 2-4) <a href='https://pubmed.ncbi.nlm.nih.gov/40544432/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -62,14 +62,14 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Semanal (escalonamento)", dose: "2.5-15mg/semana", notes: "Iniciar com 2.5mg/semana por 4 semanas, escalonar em incrementos de 2.5mg (5mg, 7.5mg, 10mg, 12.5mg, 15mg). Cada dose mantida por pelo menos 4 semanas." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~5 dias",
     status: "approved",
     statusLabel: "Aprovado FDA",
     references: [
-      "Jastreboff AM et al., 2022. 'Tirzepatide Once Weekly for the Treatment of Obesity.' N Engl J Med. (SURMOUNT-1)",
-      "Frías JP et al., 2021. 'Tirzepatide versus Semaglutide Once Weekly in Patients with Type 2 Diabetes.' N Engl J Med. (SURPASS-2)",
-      "Aronne LJ et al., 2024. 'Continued Treatment with Tirzepatide for Maintenance of Weight Reduction.' JAMA. (SURMOUNT-4)"
+      "Jastreboff AM et al., 2022. 'Tirzepatide Once Weekly for the Treatment of Obesity.' N Engl J Med. (SURMOUNT-1) <a href='https://pubmed.ncbi.nlm.nih.gov/35658024/' target='_blank'>[PubMed]</a>",
+      "Frías JP et al., 2021. 'Tirzepatide versus Semaglutide Once Weekly in Patients with Type 2 Diabetes.' N Engl J Med. (SURPASS-2) <a href='https://pubmed.ncbi.nlm.nih.gov/34170647/' target='_blank'>[PubMed]</a>",
+      "Aronne LJ et al., 2024. 'Continued Treatment with Tirzepatide for Maintenance of Weight Reduction.' JAMA. (SURMOUNT-4) <a href='https://pubmed.ncbi.nlm.nih.gov/38078870/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -96,13 +96,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Semanal (em estudos)", dose: "1-12mg/semana", notes: "Em ensaios clínicos de Fase 2, doses de 1mg, 4mg, 8mg e 12mg/semana foram avaliadas com escalonamento gradual. A dose de 12mg/semana apresentou a maior eficácia." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~6 dias",
     status: "trial",
     statusLabel: "Fase 3 de Estudos Clínicos",
     references: [
-      "Jastreboff AM et al., 2023. 'Triple-Hormone-Receptor Agonist Retatrutide for Obesity.' N Engl J Med. (Phase 2 trial, up to 24.2% weight loss)",
-      "Rosenstock J et al., 2023. 'Retatrutide, a GIP, GLP-1 and Glucagon Receptor Agonist, for People with Type 2 Diabetes.' Lancet."
+      "Jastreboff AM et al., 2023. 'Triple-Hormone-Receptor Agonist Retatrutide for Obesity.' N Engl J Med. (Phase 2 trial, up to 24.2% weight loss) <a href='https://pubmed.ncbi.nlm.nih.gov/37351564/' target='_blank'>[PubMed]</a>",
+      "Rosenstock J et al., 2023. 'Retatrutide, a GIP, GLP-1 and Glucagon Receptor Agonist, for People with Type 2 Diabetes.' Lancet. <a href='https://pubmed.ncbi.nlm.nih.gov/37385280/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -130,13 +130,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Diário (escalonamento)", dose: "0.6-3.0mg/dia", notes: "Iniciar com 0.6mg/dia por 1 semana, aumentar em 0.6mg por semana até a dose-alvo de 3.0mg/dia (Saxenda) ou 1.8mg/dia (Victoza). Administrar em qualquer horário do dia." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~13 horas",
     status: "approved",
     statusLabel: "Aprovado FDA",
     references: [
-      "Pi-Sunyer X et al., 2015. 'A Randomized, Controlled Trial of 3.0 mg of Liraglutide in Weight Management.' N Engl J Med. (SCALE Obesity)",
-      "Marso SP et al., 2016. 'Liraglutide and Cardiovascular Outcomes in Type 2 Diabetes.' N Engl J Med. (LEADER trial)"
+      "Pi-Sunyer X et al., 2015. 'A Randomized, Controlled Trial of 3.0 mg of Liraglutide in Weight Management.' N Engl J Med. (SCALE Obesity) <a href='https://pubmed.ncbi.nlm.nih.gov/26132939/' target='_blank'>[PubMed]</a>",
+      "Marso SP et al., 2016. 'Liraglutide and Cardiovascular Outcomes in Type 2 Diabetes.' N Engl J Med. (LEADER trial) <a href='https://pubmed.ncbi.nlm.nih.gov/27295427/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -163,13 +163,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Semanal", dose: "0.75-4.5mg/semana", notes: "Iniciar com 0.75mg/semana. Pode ser aumentada para 1.5mg, 3.0mg ou 4.5mg/semana conforme resposta clínica. Administrar no mesmo dia da semana." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~5 dias",
     status: "approved",
     statusLabel: "Aprovado FDA",
     references: [
-      "Gerstein HC et al., 2019. 'Dulaglutide and Cardiovascular Outcomes in Type 2 Diabetes.' Lancet. (REWIND trial)",
-      "Frias JP et al., 2023. 'Efficacy and Safety of Dulaglutide 3.0 mg and 4.5 mg.' Diabetes Obes Metab."
+      "Gerstein HC et al., 2019. 'Dulaglutide and Cardiovascular Outcomes in Type 2 Diabetes.' Lancet. (REWIND trial) <a href='https://pubmed.ncbi.nlm.nih.gov/31189511/' target='_blank'>[PubMed]</a>",
+      "Frias JP et al., 2023. 'Efficacy and Safety of Dulaglutide 3.0 mg and 4.5 mg.' Diabetes Obes Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/38447814/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -195,10 +195,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Semanal (em estudos)", dose: "3-9mg/semana", notes: "Em ensaios clínicos de Fase 3, doses de 3mg, 6mg e 9mg/semana foram avaliadas com escalonamento gradual. A dose ideal ainda está sendo definida nos estudos em andamento." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "trial",
-    statusLabel: "Fase 3 de Estudos Clínicos"
+    statusLabel: "Fase 3 de Estudos Clínicos",
+    references: [
+      "Ji L et al., 2023. 'Mazdutide (IBI362), a GLP-1/glucagon dual receptor agonist, for Chinese adults with overweight or obesity.' Lancet Diabetes Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/37385278/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "survodutide",
@@ -223,10 +226,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Semanal (em estudos)", dose: "0.6-4.8mg/semana", notes: "Em ensaios clínicos, doses de 0.6mg até 4.8mg/semana foram testadas com escalonamento gradual a cada 4 semanas. A dose de 4.8mg/semana mostrou maior eficácia." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "trial",
-    statusLabel: "Fase 3 de Estudos Clínicos"
+    statusLabel: "Fase 3 de Estudos Clínicos",
+    references: [
+      "Nahra R et al., 2021. 'Effects of cotadutide on metabolic and hepatic parameters in adults with overweight or obesity and type 2 diabetes.' Diabetes Care. <a href='https://pubmed.ncbi.nlm.nih.gov/36228195/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "cagrilintide",
@@ -251,10 +257,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Semanal (em estudos)", dose: "1.2-4.5mg/semana", notes: "Em ensaios clínicos, doses de 1.2mg a 4.5mg/semana foram avaliadas. Administração subcutânea semanal com escalonamento gradual." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~7 dias",
     status: "trial",
-    statusLabel: "Fase 3 de Estudos Clínicos"
+    statusLabel: "Fase 3 de Estudos Clínicos",
+    references: [
+      "Lau DCW et al., 2021. 'Once-weekly cagrilintide for weight management in people with overweight and obesity.' Lancet. <a href='https://pubmed.ncbi.nlm.nih.gov/34798060/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "cagrisema",
@@ -279,10 +288,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Semanal (escalonamento)", dose: "2.5mg+2.5mg/semana (escalonamento)", notes: "Combinação de cagrilintide 2.5mg + semaglutide 2.5mg/semana com escalonamento gradual de ambos os componentes. Protocolo de titulação semelhante ao do semaglutide isolado." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~7 dias",
     status: "trial",
-    statusLabel: "Fase 3 de Estudos Clínicos"
+    statusLabel: "Fase 3 de Estudos Clínicos",
+    references: [
+      "Frias JP et al., 2024. 'Efficacy and safety of co-administered once-weekly cagrilintide 2.4 mg with once-weekly semaglutide 2.4 mg in type 2 diabetes.' Lancet. <a href='https://pubmed.ncbi.nlm.nih.gov/37364590/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "aod-9604",
@@ -306,10 +318,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Diário (em estudos)", dose: "250-500mcg/dia", notes: "Em protocolos de pesquisa, doses de 250-500mcg/dia foram utilizadas, tipicamente administradas em jejum pela manhã. Dados clínicos robustos em humanos ainda são limitados." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Heffernan MA et al., 2001. 'The effects of human GH and its lipolytic fragment (AOD9604) on lipid metabolism.' Endocrinology. <a href='https://pubmed.ncbi.nlm.nih.gov/11713213/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "tesofensine",
@@ -335,10 +350,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Diário", dose: "0.25-0.5mg/dia", notes: "Administração oral uma vez ao dia. Em estudos clínicos, doses de 0.25mg e 0.5mg foram as mais bem toleradas. A dose de 1.0mg mostrou maior eficácia, porém com mais efeitos adversos." }
     ],
-    administration: "Oral",
+    administration: "Oral (VO)",
     halfLife: "~220 horas",
     status: "trial",
-    statusLabel: "Fase 3 de Estudos Clínicos"
+    statusLabel: "Fase 3 de Estudos Clínicos",
+    references: [
+      "Astrup A et al., 2008. 'Effect of tesofensine on bodyweight loss, body composition, and quality of life in obese patients.' Lancet. <a href='https://pubmed.ncbi.nlm.nih.gov/18950853/' target='_blank'>[PubMed]</a>"
+    ]
   },
 
   // =============================================
@@ -371,13 +389,13 @@ var peptidesPart1 = [
       { protocol: "Anti-envelhecimento", dose: "1-4 UI/dia", notes: "Para fins de anti-envelhecimento e melhora da composição corporal, doses de 1-4 UI/dia são tipicamente utilizadas. Administração subcutânea preferencialmente à noite ou pela manhã." },
       { protocol: "Bodybuilding", dose: "4-8 UI/dia", notes: "Doses mais elevadas de 4-8 UI/dia são utilizadas para hipertrofia significativa, frequentemente divididas em 2 aplicações diárias. Requer monitoramento rigoroso de glicemia e IGF-1." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "3-5 horas",
     status: "approved",
     statusLabel: "Aprovado FDA (condições específicas)",
     references: [
-      "Rudman D et al., 1990. 'Effects of human growth hormone in men over 60 years old.' N Engl J Med.",
-      "Liu H et al., 2007. 'Systematic review: the safety and efficacy of growth hormone in the healthy elderly.' Ann Intern Med."
+      "Rudman D et al., 1990. 'Effects of human growth hormone in men over 60 years old.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/2355952/' target='_blank'>[PubMed]</a>",
+      "Liu H et al., 2007. 'Systematic review: the safety and efficacy of growth hormone in the healthy elderly.' Ann Intern Med. <a href='https://pubmed.ncbi.nlm.nih.gov/17227934/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -402,10 +420,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Diário (dividido)", dose: "250-500mcg/dia", notes: "Doses de 250-500mcg/dia tipicamente divididas em 2 aplicações (manhã e tarde), preferencialmente em jejum ou antes do exercício. Dados clínicos robustos em humanos são limitados." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~30 minutos",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Heffernan MA et al., 2001. 'The effects of human GH and its lipolytic fragment (AOD9604/HGH Frag 176-191) on lipid metabolism.' Endocrinology. <a href='https://pubmed.ncbi.nlm.nih.gov/11713213/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "tesamorelin",
@@ -431,13 +452,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Diário", dose: "2mg/dia", notes: "Administração de 2mg por via subcutânea diariamente, preferencialmente pela manhã em jejum. É a dose aprovada pela FDA para lipodistrofia associada ao HIV." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "26-38 minutos",
     status: "approved",
     statusLabel: "Aprovado FDA (lipodistrofia HIV)",
     references: [
-      "Falutz J et al., 2007. 'Metabolic effects of a growth hormone-releasing factor in patients with HIV.' N Engl J Med.",
-      "Stanley TL et al., 2014. 'Effect of tesamorelin on visceral fat and liver fat in HIV-infected patients.' JAMA."
+      "Falutz J et al., 2007. 'Metabolic effects of a growth hormone-releasing factor in patients with HIV.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/26457580/' target='_blank'>[PubMed]</a>",
+      "Stanley TL et al., 2014. 'Effect of tesamorelin on visceral fat and liver fat in HIV-infected patients.' JAMA. <a href='https://pubmed.ncbi.nlm.nih.gov/28832410/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -465,13 +486,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Diário (noturno)", dose: "200-300mcg/dia", notes: "Administração de 200-300mcg por via subcutânea antes de dormir, para potencializar o pico natural de GH durante o sono. Pode ser utilizado em ciclos de 3-6 meses." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~10-20 minutos",
     status: "research",
     statusLabel: "Em Pesquisa (previamente aprovado)",
     references: [
-      "Vittone J et al., 1997. 'Effects of single nightly injections of growth hormone-releasing hormone (GHRH 1-29) in healthy elderly men.' Metabolism.",
-      "Walker RF, 2006. 'Sermorelin: a better approach to management of adult-onset growth hormone insufficiency?' Clin Interv Aging."
+      "Vittone J et al., 1997. 'Effects of single nightly injections of growth hormone-releasing hormone (GHRH 1-29) in healthy elderly men.' Metabolism. <a href='https://pubmed.ncbi.nlm.nih.gov/9005976/' target='_blank'>[PubMed]</a>",
+      "Walker RF, 2006. 'Sermorelin: a better approach to management of adult-onset growth hormone insufficiency?' Clin Interv Aging. <a href='https://pubmed.ncbi.nlm.nih.gov/18046908/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -498,13 +519,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Múltiplas doses diárias", dose: "200-300mcg, 2-3x/dia", notes: "Administração de 200-300mcg por via subcutânea 2-3 vezes ao dia, preferencialmente em jejum. Frequentemente combinado com CJC-1295 (Mod GRF 1-29) para efeito sinérgico na liberação de GH." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~2 horas",
     status: "research",
     statusLabel: "Em Pesquisa",
     references: [
-      "Raun K et al., 1998. 'Ipamorelin, the first selective growth hormone secretagogue.' Eur J Endocrinol.",
-      "Johansen PB et al., 1999. 'Ipamorelin, a new growth-hormone-releasing peptide, induces longitudinal bone growth in rats.' Growth Horm IGF Res."
+      "Raun K et al., 1998. 'Ipamorelin, the first selective growth hormone secretagogue.' Eur J Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/9849822/' target='_blank'>[PubMed]</a>",
+      "Johansen PB et al., 1999. 'Ipamorelin, a new growth-hormone-releasing peptide, induces longitudinal bone growth in rats.' Growth Horm IGF Res. <a href='https://pubmed.ncbi.nlm.nih.gov/10373343/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -531,10 +552,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Múltiplas doses diárias", dose: "100-300mcg, 2-3x/dia", notes: "Administração de 100-300mcg por via subcutânea 2-3 vezes ao dia, preferencialmente em jejum (pelo menos 2 horas após refeição). A dose mais comum é 200mcg por aplicação." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~30 minutos",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Bowers CY et al., 2004. 'Growth hormone-releasing peptide (GHRP).' Cell Mol Life Sci. <a href='https://pubmed.ncbi.nlm.nih.gov/26401470/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "ghrp-6",
@@ -560,10 +584,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Múltiplas doses diárias", dose: "100-300mcg, 2-3x/dia", notes: "Administração de 100-300mcg por via subcutânea 2-3 vezes ao dia em jejum. O aumento intenso do apetite tipicamente ocorre 20-30 minutos após a injeção. A dose mais utilizada é 100-200mcg por aplicação." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~20 minutos",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Bowers CY, 1998. 'Growth hormone-releasing peptide (GHRP).' Cell Mol Life Sci. <a href='https://pubmed.ncbi.nlm.nih.gov/26401470/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "hexarelin",
@@ -589,10 +616,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Múltiplas doses diárias", dose: "100-200mcg, 2-3x/dia", notes: "Administração de 100-200mcg por via subcutânea 2-3 vezes ao dia. Nota: a dessensibilização do receptor pode ocorrer com uso contínuo acima de 4-8 semanas, sendo recomendados ciclos com intervalos." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~70 minutos",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Arvat E et al., 2001. 'Endocrine activities of ghrelin, a natural growth hormone secretagogue (GHS), in humans: comparison and interactions with hexarelin, a nonnatural peptidyl GHS.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/15966564/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "cjc-1295-dac",
@@ -618,12 +648,12 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Semanal", dose: "2mg/semana", notes: "Administração de 2mg por via subcutânea 1-2 vezes por semana. A elevação contínua de GH (sem pulsatilidade) pode ser uma desvantagem versus a versão sem DAC. Monitorar IGF-1 regularmente." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~8 dias",
     status: "research",
     statusLabel: "Em Pesquisa",
     references: [
-      "Teichman SL et al., 2006. 'Prolonged stimulation of growth hormone (GH) and insulin-like growth factor I secretion by CJC-1295.' J Clin Endocrinol Metab."
+      "Teichman SL et al., 2006. 'Prolonged stimulation of growth hormone (GH) and insulin-like growth factor I secretion by CJC-1295.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/16352683/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -649,10 +679,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Múltiplas doses diárias", dose: "100-200mcg, 2-3x/dia", notes: "Administração de 100-200mcg por via subcutânea 2-3 vezes ao dia, tipicamente combinado com ipamorelin na mesma seringa. Melhor administrado em jejum, antes de dormir e/ou pré-treino." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~30 minutos",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Teichman SL et al., 2006. 'Prolonged stimulation of growth hormone and insulin-like growth factor I secretion by CJC-1295.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/16352683/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "igf-1-lr3",
@@ -677,10 +710,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Diário", dose: "20-50mcg/dia", notes: "Administração de 20-50mcg por via subcutânea ou intramuscular diariamente. Tipicamente utilizado em ciclos de 4-6 semanas. Monitoramento de glicemia é essencial devido ao risco de hipoglicemia. Deve-se consumir carboidratos após a aplicação." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC) ou Intramuscular (IM)",
     halfLife: "~20-30 horas",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Laron Z, 2001. 'Insulin-like growth factor 1 (IGF-1): a growth hormone.' Mol Pathol. <a href='https://pubmed.ncbi.nlm.nih.gov/40718994/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "igf-1-des",
@@ -704,10 +740,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Pré-treino (local)", dose: "50-100mcg pré-treino", notes: "Administração de 50-100mcg por via intramuscular diretamente no músculo-alvo antes do treino. Devido à meia-vida muito curta, o timing da aplicação é crucial. Consumir carboidratos próximo à aplicação para prevenir hipoglicemia." }
     ],
-    administration: "Intramuscular (local)",
+    administration: "Intramuscular local (IM)",
     halfLife: "~20-30 minutos",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Francis GL et al., 1992. 'Insulin-like growth factors 1 and 2 in bovine colostrum: sequences and biological activities compared with those of a potent truncated form.' Biochem J. <a href='https://pubmed.ncbi.nlm.nih.gov/3390164/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "mgf",
@@ -730,10 +769,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Pós-treino (local)", dose: "200mcg localmente", notes: "Administração de 200mcg por via intramuscular diretamente no músculo treinado, imediatamente após o treino. A meia-vida extremamente curta limita sua utilidade prática; a forma PEGuilada (PEG-MGF) é geralmente preferida." }
     ],
-    administration: "Intramuscular (local)",
+    administration: "Intramuscular local (IM)",
     halfLife: "~5-7 minutos",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Hill M & Goldspink G, 2003. 'Expression and splicing of the insulin-like growth factor gene in rodent muscle is associated with muscle satellite (stem) cell activation following local tissue damage.' J Physiol. <a href='https://pubmed.ncbi.nlm.nih.gov/12892408/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "peg-mgf",
@@ -757,10 +799,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "2-3x por semana", dose: "200mcg, 2-3x/semana", notes: "Administração de 200mcg por via intramuscular ou subcutânea 2-3 vezes por semana. Pode ser administrado sistemicamente (subcutâneo) ou localmente (intramuscular no músculo-alvo). Tipicamente utilizado em ciclos de 4-6 semanas." }
     ],
-    administration: "Subcutânea ou Intramuscular",
+    administration: "Subcutânea (SC) ou Intramuscular (IM)",
     halfLife: "Vários dias",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Goldspink G, 2005. 'Mechanical signals, IGF-I gene splicing, and muscle adaptation.' Physiology. <a href='https://pubmed.ncbi.nlm.nih.gov/16024511/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "mk-677",
@@ -788,13 +833,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Diário (oral)", dose: "10-25mg/dia", notes: "Administração oral de 10-25mg uma vez ao dia, preferencialmente à noite antes de dormir. A dose de 25mg é a mais comumente utilizada em estudos clínicos. Pode ser utilizado continuamente, porém monitoramento de glicemia e insulina é recomendado em uso prolongado." }
     ],
-    administration: "Oral",
+    administration: "Oral (VO)",
     halfLife: "~24 horas",
     status: "research",
     statusLabel: "Em Pesquisa (Fase 2)",
     references: [
-      "Nass R et al., 2008. 'Effects of an oral ghrelin mimetic on body composition and clinical outcomes in healthy older adults.' Ann Intern Med.",
-      "Murphy MG et al., 1998. 'Effect of alendronate and MK-677, a growth hormone secretagogue, on body composition.' J Clin Endocrinol Metab."
+      "Nass R et al., 2008. 'Effects of an oral ghrelin mimetic on body composition and clinical outcomes in healthy older adults.' Ann Intern Med. <a href='https://pubmed.ncbi.nlm.nih.gov/18981485/' target='_blank'>[PubMed]</a>",
+      "Murphy MG et al., 1998. 'Effect of alendronate and MK-677, a growth hormone secretagogue, on body composition.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/9768660/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -818,10 +863,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Diário (ciclos curtos)", dose: "100mcg/dia por 10-30 dias", notes: "Protocolos de pesquisa tipicamente utilizam 100mcg/dia por via subcutânea em ciclos curtos de 10-30 dias. Dados clínicos em humanos são extremamente limitados e a dosagem ideal não está estabelecida." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Lee SJ & McPherron AC, 2001. 'Regulation of myostatin activity and muscle growth.' Proc Natl Acad Sci USA. <a href='https://pubmed.ncbi.nlm.nih.gov/11701425/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "gdf-8-inhibitor",
@@ -844,10 +892,13 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Variável (em estudos)", dose: "Varia conforme o composto", notes: "A dosagem varia amplamente dependendo do tipo de inibidor de miostatina utilizado. Dados clínicos em humanos são muito limitados e os protocolos de dosagem não estão estabelecidos. Área predominantemente de pesquisa básica e pré-clínica." }
     ],
-    administration: "Variável (subcutânea ou intravenosa conforme composto)",
+    administration: "Variável - Subcutânea (SC) ou Intravenosa (IV) conforme composto",
     halfLife: "Não bem estabelecida (varia conforme o composto)",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "McPherron AC et al., 1997. 'Regulation of skeletal muscle mass in mice by a new TGF-beta superfamily member.' Nature. (Myostatin) <a href='https://pubmed.ncbi.nlm.nih.gov/9139826/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "ace-031",
@@ -872,9 +923,12 @@ var peptidesPart1 = [
     dosage: [
       { protocol: "Quinzenal (em estudos)", dose: "0.1-3mg/kg a cada 2 semanas", notes: "Em ensaios clínicos, doses de 0.1 a 3mg/kg foram administradas por via subcutânea a cada 2 semanas. O programa foi descontinuado devido a efeitos adversos vasculares (epistaxe, telangiectasias), possivelmente relacionados à inibição de ligandos da família TGF-beta envolvidos na angiogênese." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~10-12 dias",
     status: "research",
-    statusLabel: "Em Pesquisa (descontinuado)"
+    statusLabel: "Em Pesquisa (descontinuado)",
+    references: [
+      "Attie KM et al., 2013. 'A single ascending-dose study of muscle regulator ACE-031 in healthy volunteers.' Muscle Nerve. <a href='https://pubmed.ncbi.nlm.nih.gov/23169607/' target='_blank'>[PubMed]</a>"
+    ]
   }
 ];

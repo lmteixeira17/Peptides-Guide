@@ -645,6 +645,41 @@ body {
     margin-bottom: 0.3rem;
 }
 
+.peptide-link {
+    color: #2563eb;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 700;
+    transition: color 0.2s;
+}
+
+.peptide-link:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+.modal-back {
+    margin-bottom: 1rem;
+    padding: 0.6rem 1rem;
+    background: #f0f7ff;
+    border-radius: 8px;
+    border-left: 3px solid #2563eb;
+}
+
+.modal-back a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.modal-back a:hover {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
 .stack-peptide-detail .role {
     font-size: 0.85rem;
     color: var(--primary);
@@ -668,6 +703,16 @@ body {
     padding: 1rem;
     font-size: 0.9rem;
     color: #1b5e20;
+    line-height: 1.6;
+}
+
+.application-box {
+    background: #fff3e0;
+    border: 1px solid #ff9800;
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #e65100;
     line-height: 1.6;
 }
 

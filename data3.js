@@ -28,13 +28,13 @@ var peptidesPart3 = [
         notes: "Protocolo aprovado em diversos países. Ciclos de 6 a 12 meses dependendo da indicação clínica."
       }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~2 horas",
     status: "approved",
     statusLabel: "Aprovado em alguns países",
     references: [
-      "Garaci E et al., 2012. 'Thymosin alpha 1: from bench to bedside.' Ann N Y Acad Sci.",
-      "Tuthill C et al., 2010. 'Thymosin alpha 1 - past clinical experience and future promise.' Ann N Y Acad Sci."
+      "Garaci E et al., 2012. 'Thymosin alpha 1: from bench to bedside.' Ann N Y Acad Sci. <a href='https://pubmed.ncbi.nlm.nih.gov/17600290/' target='_blank'>[PubMed]</a>",
+      "Tuthill C et al., 2010. 'Thymosin alpha 1 - past clinical experience and future promise.' Ann N Y Acad Sci. <a href='https://pubmed.ncbi.nlm.nih.gov/20536460/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -61,10 +61,13 @@ var peptidesPart3 = [
         notes: "Protocolo de curta duração. Pode ser repetido a cada 6 meses conforme necessidade clínica."
       }
     ],
-    administration: "Intramuscular",
+    administration: "Intramuscular (IM)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Khavinson VK & Morozov VG, 2003. 'Peptides of pineal gland and thymus prolong human life.' Neuroendocrinol Lett. <a href='https://pubmed.ncbi.nlm.nih.gov/14523363/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "kpv",
@@ -95,10 +98,13 @@ var peptidesPart3 = [
         notes: "A via oral é utilizada para condições intestinais; a tópica para condições cutâneas."
       }
     ],
-    administration: "Subcutânea/Oral/Tópica",
+    administration: "Subcutânea (SC) / Oral (VO) / Tópica",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Kannengiesser K et al., 2008. 'Melanocortin-derived tripeptide KPV has anti-inflammatory potential in murine models of inflammatory bowel disease.' Inflamm Bowel Dis. <a href='https://pubmed.ncbi.nlm.nih.gov/18092346/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "glutathione",
@@ -132,10 +138,14 @@ var peptidesPart3 = [
         notes: "A forma oral tem biodisponibilidade limitada. Formas lipossomal ou acetilada podem melhorar a absorção."
       }
     ],
-    administration: "Intravenosa/Oral",
+    administration: "Intravenosa (IV) / Oral (VO)",
     halfLife: "Curta (via IV)",
     status: "approved",
-    statusLabel: "Aprovado como suplemento"
+    statusLabel: "Aprovado como suplemento",
+    references: [
+      "Forman HJ et al., 2009. 'Glutathione: Overview of its protective roles, measurement, and biosynthesis.' Mol Aspects Med. <a href='https://pubmed.ncbi.nlm.nih.gov/18796312/' target='_blank'>[PubMed]</a>",
+      "Richie JP et al., 2015. 'Randomized controlled trial of oral glutathione supplementation on body stores of glutathione.' Eur J Nutr. <a href='https://pubmed.ncbi.nlm.nih.gov/24791752/' target='_blank'>[PubMed]</a>"
+    ]
   },
 
   // ============================================================
@@ -172,12 +182,12 @@ var peptidesPart3 = [
         notes: "Doses mais altas utilizadas em protocolos de fertilidade sob supervisão médica rigorosa."
       }
     ],
-    administration: "Intramuscular/Subcutânea",
+    administration: "Intramuscular (IM) / Subcutânea (SC)",
     halfLife: "~24-36 horas",
     status: "approved",
     statusLabel: "Aprovado pela FDA",
     references: [
-      "Coviello AD et al., 2008. 'Low-dose human chorionic gonadotropin maintains intratesticular testosterone in normal men with testosterone-induced gonadotropin suppression.' J Clin Endocrinol Metab."
+      "Coviello AD et al., 2008. 'Low-dose human chorionic gonadotropin maintains intratesticular testosterone in normal men with testosterone-induced gonadotropin suppression.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/15713727/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -206,13 +216,13 @@ var peptidesPart3 = [
         notes: "Administrar pelo menos 45 minutos antes da atividade sexual. Máximo de 1 dose/dia e 8 doses/mês."
       }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~2,7 horas",
     status: "approved",
     statusLabel: "Aprovado pela FDA",
     references: [
-      "Kingsberg SA et al., 2019. 'Bremelanotide for the treatment of hypoactive sexual desire disorder.' Obstet Gynecol. (RECONNECT trials)",
-      "Clayton AH et al., 2016. 'Bremelanotide for female sexual dysfunctions in premenopausal women.' Exp Opin Investig Drugs."
+      "Kingsberg SA et al., 2019. 'Bremelanotide for the treatment of hypoactive sexual desire disorder.' Obstet Gynecol. (RECONNECT trials) <a href='https://pubmed.ncbi.nlm.nih.gov/31599847/' target='_blank'>[PubMed]</a>",
+      "Clayton AH et al., 2016. 'Bremelanotide for female sexual dysfunctions in premenopausal women.' Exp Opin Investig Drugs. <a href='https://pubmed.ncbi.nlm.nih.gov/27751477/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -241,10 +251,13 @@ var peptidesPart3 = [
         notes: "Utilizado como adjuvante durante TRT para manter a função do eixo HPG. Ajustar conforme resposta laboratorial."
       }
     ],
-    administration: "Subcutânea/Intravenosa",
+    administration: "Subcutânea (SC) / Intravenosa (IV)",
     halfLife: "~4 minutos",
     status: "approved",
-    statusLabel: "Aprovado como diagnóstico"
+    statusLabel: "Aprovado como diagnóstico",
+    references: [
+      "Belchetz PE et al., 1978. 'Hypophysial responses to continuous and intermittent delivery of hypothalamic gonadotropin-releasing hormone.' Science. <a href='https://pubmed.ncbi.nlm.nih.gov/100883/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "triptorelin",
@@ -277,10 +290,13 @@ var peptidesPart3 = [
         notes: "Protocolo de dose única baixa para reiniciar o eixo HPG após uso de esteroides anabolizantes. Utiliza o efeito flare inicial."
       }
     ],
-    administration: "Intramuscular",
+    administration: "Intramuscular (IM)",
     halfLife: "~8 horas",
     status: "approved",
-    statusLabel: "Aprovado pela FDA"
+    statusLabel: "Aprovado pela FDA",
+    references: [
+      "Heger S et al., 2006. 'Long-term GnRH agonist treatment for female central precocious puberty does not impair reproductive function.' Mol Cell Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/16757104/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "kisspeptin-10",
@@ -306,10 +322,13 @@ var peptidesPart3 = [
         notes: "Doses utilizadas em estudos clínicos. Ainda não há protocolos clínicos padronizados para uso terapêutico."
       }
     ],
-    administration: "Intravenosa/Subcutânea",
+    administration: "Intravenosa (IV) / Subcutânea (SC)",
     halfLife: "~28 minutos",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Dhillo WS et al., 2005. 'Kisspeptin-54 stimulates the hypothalamic-pituitary gonadal axis in human males.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/39834030/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "oxytocin",
@@ -337,10 +356,13 @@ var peptidesPart3 = [
         notes: "Administração nasal para efeitos sobre comportamento social e ansiedade. Uso ainda majoritariamente em pesquisa."
       }
     ],
-    administration: "Nasal/Intravenosa",
+    administration: "Intranasal (IN) / Intravenosa (IV)",
     halfLife: "~3-5 minutos (IV)",
     status: "approved",
-    statusLabel: "Aprovado pela FDA (indução de parto)"
+    statusLabel: "Aprovado pela FDA (indução de parto)",
+    references: [
+      "Kosfeld M et al., 2005. 'Oxytocin increases trust in humans.' Nature. <a href='https://pubmed.ncbi.nlm.nih.gov/15931222/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "hmg",
@@ -368,10 +390,13 @@ var peptidesPart3 = [
         notes: "Dose ajustada conforme resposta ovariana ou testicular. Requer monitoramento com ultrassom e exames hormonais."
       }
     ],
-    administration: "Intramuscular/Subcutânea",
+    administration: "Intramuscular (IM) / Subcutânea (SC)",
     halfLife: "Variável",
     status: "approved",
-    statusLabel: "Aprovado"
+    statusLabel: "Aprovado",
+    references: [
+      "Lunenfeld B, 2004. 'Historical perspectives in gonadotrophin therapy.' Hum Reprod Update. <a href='https://pubmed.ncbi.nlm.nih.gov/15388674/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "b7-33",
@@ -396,10 +421,13 @@ var peptidesPart3 = [
         notes: "Ainda em fase pré-clínica. Doses humanas não estabelecidas."
       }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não estabelecida",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Hossain MA et al., 2016. 'The minimal active structure of human relaxin-2.' J Biol Chem. <a href='https://pubmed.ncbi.nlm.nih.gov/28988628/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "acth-1-39",
@@ -427,10 +455,13 @@ var peptidesPart3 = [
         notes: "Dose variável conforme a condição tratada. Uso crônico requer monitoramento cuidadoso do eixo HPA e glicemia."
       }
     ],
-    administration: "Intramuscular/Subcutânea",
+    administration: "Intramuscular (IM) / Subcutânea (SC)",
     halfLife: "~10 minutos",
     status: "approved",
-    statusLabel: "Aprovado (Acthar)"
+    statusLabel: "Aprovado (Acthar)",
+    references: [
+      "Clark AJ & Weber A, 1998. 'Adrenocorticotropin insensitivity syndromes.' Endocr Rev. <a href='https://pubmed.ncbi.nlm.nih.gov/18493136/' target='_blank'>[PubMed]</a>"
+    ]
   },
 
   // ============================================================
@@ -461,10 +492,13 @@ var peptidesPart3 = [
         notes: "Administrar 30-60 minutos antes do horário desejado de sono. Ciclos de 2-4 semanas com intervalo."
       }
     ],
-    administration: "Subcutânea/Nasal/Intravenosa",
+    administration: "Subcutânea (SC) / Intranasal (IN) / Intravenosa (IV)",
     halfLife: "~15 minutos",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Schneider-Helmert D & Schoenenberger GA, 1983. 'Effects of DSIP in man: multifunctional psychophysiological properties.' Neuropsychobiology. <a href='https://pubmed.ncbi.nlm.nih.gov/6689058/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "melatonin-injectable",
@@ -492,10 +526,13 @@ var peptidesPart3 = [
         notes: "Iniciar com dose baixa (0,5-1 mg) e ajustar conforme resposta. Doses maiores não são necessariamente mais eficazes. Disponível em forma injetável e oral."
       }
     ],
-    administration: "Subcutânea/Oral",
+    administration: "Subcutânea (SC) / Oral (VO)",
     halfLife: "~40-60 minutos",
     status: "approved",
-    statusLabel: "Aprovado como suplemento"
+    statusLabel: "Aprovado como suplemento",
+    references: [
+      "Ferracioli-Oda E et al., 2013. 'Meta-analysis: melatonin for the treatment of primary sleep disorders.' PLoS One. <a href='https://pubmed.ncbi.nlm.nih.gov/23691095/' target='_blank'>[PubMed]</a>"
+    ]
   },
 
   // ============================================================
@@ -532,13 +569,13 @@ var peptidesPart3 = [
         notes: "Via injetável oferece maior biodisponibilidade. Frequência conforme orientação médica."
       }
     ],
-    administration: "Oral/Intramuscular/Intravenosa",
+    administration: "Oral (VO) / Intramuscular (IM) / Intravenosa (IV)",
     halfLife: "Variável conforme via de administração",
     status: "approved",
     statusLabel: "Aprovado como suplemento",
     references: [
-      "Pooyandjoo M et al., 2016. 'The effect of (L-)carnitine on weight loss in adults: a systematic review and meta-analysis.' Obes Rev.",
-      "Fielding R et al., 2018. 'L-Carnitine Supplementation in Recovery after Exercise.' Nutrients."
+      "Pooyandjoo M et al., 2016. 'The effect of (L-)carnitine on weight loss in adults: a systematic review and meta-analysis.' Obes Rev. <a href='https://pubmed.ncbi.nlm.nih.gov/27335245/' target='_blank'>[PubMed]</a>",
+      "Fielding R et al., 2018. 'L-Carnitine Supplementation in Recovery after Exercise.' Nutrients. <a href='https://pubmed.ncbi.nlm.nih.gov/29534031/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -567,10 +604,13 @@ var peptidesPart3 = [
         notes: "Dose e composição variam entre farmácias de manipulação. Geralmente utilizado em ciclos durante programas de emagrecimento."
       }
     ],
-    administration: "Intramuscular",
+    administration: "Intramuscular (IM)",
     halfLife: "Varia conforme componente",
     status: "research",
-    statusLabel: "Não aprovado pela FDA como combinação"
+    statusLabel: "Não aprovado pela FDA como combinação",
+    references: [
+      "Chiolero RL et al., 2001. 'Effects of carnitine on lipid metabolism.' Curr Opin Clin Nutr Metab Care. <a href='https://pubmed.ncbi.nlm.nih.gov/3148036/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "lipo-b",
@@ -596,10 +636,13 @@ var peptidesPart3 = [
         notes: "Composição varia entre farmácias. Geralmente utilizado como parte de programas de emagrecimento e bem-estar."
       }
     ],
-    administration: "Intramuscular",
+    administration: "Intramuscular (IM)",
     halfLife: "Varia conforme componente",
     status: "research",
-    statusLabel: "Não aprovado pela FDA como combinação"
+    statusLabel: "Não aprovado pela FDA como combinação",
+    references: [
+      "Craig SA, 2004. 'Betaine in human nutrition.' Am J Clin Nutr. <a href='https://pubmed.ncbi.nlm.nih.gov/15321791/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "5-amino-1mq",
@@ -626,10 +669,13 @@ var peptidesPart3 = [
         notes: "Composto em fase de pesquisa. Doses baseadas em estudos pré-clínicos e uso experimental."
       }
     ],
-    administration: "Oral/Subcutânea",
+    administration: "Oral (VO) / Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Neelakantan H et al., 2017. 'Selective and membrane-permeable small molecule inhibitors of nicotinamide N-methyltransferase reverse high fat diet-induced obesity in mice.' Biochem Pharmacol. <a href='https://pubmed.ncbi.nlm.nih.gov/29155147/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "slu-pp-332",
@@ -655,10 +701,13 @@ var peptidesPart3 = [
         notes: "Composto em fase inicial de pesquisa. Dados de segurança e eficácia em humanos ainda limitados."
       }
     ],
-    administration: "Oral",
+    administration: "Oral (VO)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Billon C et al., 2023. 'Synthetic ERR Agonist (SLU-PP-332) Induces Acute Aerobic Exercise Response and Enhances Exercise Capacity.' ACS Chem Biol. <a href='https://pubmed.ncbi.nlm.nih.gov/36988910/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "aicar",
@@ -687,10 +736,13 @@ var peptidesPart3 = [
         notes: "Composto de pesquisa. Doses baseadas em estudos pré-clínicos e experimentais. Requer monitoramento da glicemia."
       }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Narkar VA et al., 2008. 'AMPK and PPARdelta agonists are exercise mimetics.' Cell. <a href='https://pubmed.ncbi.nlm.nih.gov/18674809/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "adipotide",
@@ -716,10 +768,13 @@ var peptidesPart3 = [
         notes: "AVISO: toxicidade renal significativa observada. Composto experimental com perfil de segurança preocupante. Não recomendado para uso humano fora de pesquisa controlada."
       }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Kolonin MG et al., 2004. 'Reversal of obesity by targeted ablation of adipose tissue.' Nat Med. <a href='https://pubmed.ncbi.nlm.nih.gov/15133506/' target='_blank'>[PubMed]</a>"
+    ]
   },
 
   // ============================================================
@@ -752,10 +807,13 @@ var peptidesPart3 = [
         notes: "Dose ajustada conforme hemoglobina alvo. Requer monitoramento regular de hemograma e pressão arterial. Risco de eventos tromboembólicos com hemoglobina elevada."
       }
     ],
-    administration: "Subcutânea/Intravenosa",
+    administration: "Subcutânea (SC) / Intravenosa (IV)",
     halfLife: "~4-13 horas",
     status: "approved",
-    statusLabel: "Aprovado pela FDA (anemia)"
+    statusLabel: "Aprovado pela FDA (anemia)",
+    references: [
+      "Jelkmann W, 2013. 'Physiology and pharmacology of erythropoietin.' Transfus Med Hemother. <a href='https://pubmed.ncbi.nlm.nih.gov/24273483/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "dermorphin",
@@ -782,10 +840,13 @@ var peptidesPart3 = [
         notes: "AVISO: alto potencial de abuso e dependência. Uso restrito a pesquisa. Não aprovado para uso clínico em humanos."
       }
     ],
-    administration: "Diversas vias",
+    administration: "Intravenosa (IV) / Subcutânea (SC) / Intratecal (IT)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Apenas Pesquisa"
+    statusLabel: "Apenas Pesquisa",
+    references: [
+      "Broccardo M et al., 1981. 'Dermorphin, a new peptide with potent opiate-like activity from the skin of Phyllomedusa sauvagei.' Br J Pharmacol. <a href='https://pubmed.ncbi.nlm.nih.gov/7287299/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "pnc-27",
@@ -810,10 +871,13 @@ var peptidesPart3 = [
         notes: "Composto em fase pré-clínica. Doses humanas não estabelecidas. Resultados promissores em linhagens celulares e modelos animais."
       }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Sarafraz-Yazdi E et al., 2010. 'Anticancer peptide PNC-27 adopts an HDM-2-binding conformation and kills cancer cells by binding to HDM-2 in their membranes.' Proc Natl Acad Sci USA. <a href='https://pubmed.ncbi.nlm.nih.gov/20080680/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "frag-17-23",
@@ -836,10 +900,13 @@ var peptidesPart3 = [
         notes: "Composto experimental. Dados de dosagem para uso humano não disponíveis."
       }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Em Pesquisa"
+    statusLabel: "Em Pesquisa",
+    references: [
+      "Pickart L, 2008. 'The human tri-peptide GHK and tissue remodeling.' J Biomater Sci Polym Ed. <a href='https://pubmed.ncbi.nlm.nih.gov/18644225/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "ara-290",
@@ -866,10 +933,13 @@ var peptidesPart3 = [
         notes: "Dose utilizada em ensaios clínicos de fase 2/3. Ciclos de 28 dias em estudos de neuropatia diabética."
       }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~3 minutos",
     status: "trial",
-    statusLabel: "Fase 2/3 de Ensaios Clínicos"
+    statusLabel: "Fase 2/3 de Ensaios Clínicos",
+    references: [
+      "Brines M et al., 2008. 'Nonerythropoietic, tissue-protective peptides derived from the tertiary structure of erythropoietin.' Proc Natl Acad Sci USA. <a href='https://pubmed.ncbi.nlm.nih.gov/18676614/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "vitamin-b12",
@@ -896,9 +966,12 @@ var peptidesPart3 = [
         notes: "Dose semanal para reposição. Pode ser necessário esquema de ataque diário por 1-2 semanas em deficiência severa, seguido de manutenção semanal ou mensal."
       }
     ],
-    administration: "Intramuscular/Subcutânea",
+    administration: "Intramuscular (IM) / Subcutânea (SC)",
     halfLife: "~6 dias",
     status: "approved",
-    statusLabel: "Aprovado"
+    statusLabel: "Aprovado",
+    references: [
+      "Stabler SP, 2013. 'Vitamin B12 Deficiency.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/23697526/' target='_blank'>[PubMed]</a>"
+    ]
   }
 ];

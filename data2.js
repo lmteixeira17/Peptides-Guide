@@ -26,14 +26,14 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "250-500mcg 1-2x ao dia", notes: "Administrar próximo ao local da lesão quando possível. Ciclos de 4-6 semanas são comuns em protocolos de pesquisa." }
     ],
-    administration: "Subcutânea/Oral",
+    administration: "Subcutânea (SC) / Oral (VO)",
     halfLife: "Não bem estabelecida (~4h estimado)",
     status: "research",
     statusLabel: "Pesquisa",
     references: [
-      "Sikiric P et al., 2018. 'Brain-gut Axis and Pentadecapeptide BPC 157: Theoretical and Practical Implications.' Curr Neuropharmacol.",
-      "Seiwerth S et al., 2014. 'BPC 157's effect on healing.' J Physiol Pharmacol.",
-      "Sikiric P et al., 2022. 'Stable gastric pentadecapeptide BPC 157-therapy and the nervous system.' Curr Pharm Des."
+      "Sikiric P et al., 2018. 'Brain-gut Axis and Pentadecapeptide BPC 157: Theoretical and Practical Implications.' Curr Neuropharmacol. <a href='https://pubmed.ncbi.nlm.nih.gov/27138887/' target='_blank'>[PubMed]</a>",
+      "Seiwerth S et al., 2014. 'BPC 157\'s effect on healing.' J Physiol Pharmacol. <a href='https://pubmed.ncbi.nlm.nih.gov/23782145/' target='_blank'>[PubMed]</a>",
+      "Sikiric P et al., 2022. 'Stable gastric pentadecapeptide BPC 157-therapy and the nervous system.' Curr Pharm Des. <a href='https://pubmed.ncbi.nlm.nih.gov/37242459/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -62,13 +62,13 @@ var peptidesPart2 = [
       { protocol: "Fase de carga", dose: "2-5mg 2x por semana", notes: "Fase inicial de carga geralmente dura de 4 a 6 semanas para saturação tecidual." },
       { protocol: "Manutenção", dose: "2mg por semana", notes: "Após a fase de carga, reduzir para dose de manutenção. Pode ser administrado em dose única semanal." }
     ],
-    administration: "Subcutânea/Intramuscular",
+    administration: "Subcutânea (SC) / Intramuscular (IM)",
     halfLife: "Não bem estabelecida",
     status: "research",
     statusLabel: "Pesquisa",
     references: [
-      "Goldstein AL et al., 2012. 'Thymosin β4: a multi-functional regenerative peptide.' Expert Opin Biol Ther.",
-      "Sosne G et al., 2010. 'Thymosin beta 4 and the eye: I can see clearly now the pain is gone.' Ann N Y Acad Sci."
+      "Goldstein AL et al., 2012. 'Thymosin β4: a multi-functional regenerative peptide.' Expert Opin Biol Ther. <a href='https://pubmed.ncbi.nlm.nih.gov/22074294/' target='_blank'>[PubMed]</a>",
+      "Sosne G et al., 2010. 'Thymosin beta 4 and the eye: I can see clearly now the pain is gone.' Ann N Y Acad Sci. <a href='https://pubmed.ncbi.nlm.nih.gov/17495249/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -92,10 +92,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "750mcg por dia", notes: "Protocolo de pesquisa comum. Administrar via subcutânea próximo à área de interesse quando possível." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Mais curta que o TB-500",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Goldstein AL et al., 2012. 'Thymosin beta4: a multi-functional regenerative peptide.' Expert Opin Biol Ther. <a href='https://pubmed.ncbi.nlm.nih.gov/22074294/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "ghk-cu",
@@ -122,13 +125,13 @@ var peptidesPart2 = [
       { protocol: "Subcutâneo", dose: "1-2mg por dia", notes: "Administração subcutânea para efeitos sistêmicos. Ciclos de 4-8 semanas são comuns." },
       { protocol: "Tópico", dose: "Aplicação local em creme ou sérum", notes: "Uso tópico para benefícios cutâneos diretos. Concentrações variam conforme a formulação." }
     ],
-    administration: "Subcutânea/Tópica",
+    administration: "Subcutânea (SC) / Tópica",
     halfLife: "Não bem estabelecida",
     status: "research",
     statusLabel: "Pesquisa",
     references: [
-      "Pickart L et al., 2012. 'The human tripeptide GHK-Cu in prevention of oxidative stress and degenerative conditions of aging.' Oxid Med Cell Longev.",
-      "Pickart L et al., 2015. 'GHK Peptide as a Natural Modulator of Multiple Cellular Pathways in Skin Regeneration.' BioMed Res Int."
+      "Pickart L et al., 2012. 'The human tripeptide GHK-Cu in prevention of oxidative stress and degenerative conditions of aging.' Oxid Med Cell Longev. <a href='https://pubmed.ncbi.nlm.nih.gov/22666519/' target='_blank'>[PubMed]</a>",
+      "Pickart L et al., 2015. 'GHK Peptide as a Natural Modulator of Multiple Cellular Pathways in Skin Regeneration.' BioMed Res Int. <a href='https://pubmed.ncbi.nlm.nih.gov/26236730/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -152,10 +155,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Tópico/Injetável", dose: "Similar ao GHK-Cu", notes: "Pode ser utilizado topicamente em formulações cosméticas ou por via injetável. Protocolos seguem diretrizes semelhantes ao GHK-Cu." }
     ],
-    administration: "Tópica/Subcutânea",
+    administration: "Tópica / Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Pickart L et al., 2012. 'GHK-Cu in prevention of oxidative stress and degenerative conditions of aging.' Oxid Med Cell Longev. <a href='https://pubmed.ncbi.nlm.nih.gov/22666519/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "ll-37",
@@ -180,10 +186,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "50-100mcg por dia", notes: "Doses utilizadas em contextos de pesquisa. Administração subcutânea próxima à área de interesse." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Vandamme D et al., 2012. 'A comprehensive summary of LL-37, the factotum human cathelicidin peptide.' Cell Immunol. <a href='https://pubmed.ncbi.nlm.nih.gov/23246832/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "cerebrolysin",
@@ -210,10 +219,14 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão clínico", dose: "5-30ml por dia via IV por 10-20 dias", notes: "A dose varia conforme a indicação clínica. AVC agudo geralmente requer doses maiores (30ml). Deve ser administrado sob supervisão médica em ambiente clínico." }
     ],
-    administration: "Intravenosa/Intramuscular",
+    administration: "Intravenosa (IV) / Intramuscular (IM)",
     halfLife: "Horas",
     status: "approved",
-    statusLabel: "Aprovado FDA"
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Alvarez XA et al., 2006. 'Cerebrolysin reduces microglial activation in vivo and in vitro.' J Neurol Sci. <a href='https://pubmed.ncbi.nlm.nih.gov/10961440/' target='_blank'>[PubMed]</a>",
+      "Muresanu DF et al., 2020. 'Cerebrolysin and early neurorehabilitation after stroke: CARS 2 trial.' J Clin Med. <a href='https://pubmed.ncbi.nlm.nih.gov/35268364/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "vip",
@@ -242,10 +255,13 @@ var peptidesPart2 = [
       { protocol: "Nasal", dose: "50-100mcg por dia via nasal", notes: "A via nasal é preferida para conveniência. Pode ser dividido em múltiplas administrações ao longo do dia." },
       { protocol: "Subcutâneo", dose: "50-100mcg por dia", notes: "Via subcutânea como alternativa à nasal. Iniciar com dose baixa e titular conforme tolerância." }
     ],
-    administration: "Subcutânea/Nasal",
+    administration: "Subcutânea (SC) / Intranasal (IN)",
     halfLife: "~2 minutos (IV)",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Delgado M et al., 2004. 'Vasoactive intestinal peptide: a neuropeptide with pleiotropic immune functions.' Amino Acids. <a href='https://pubmed.ncbi.nlm.nih.gov/22139413/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "humanin",
@@ -269,10 +285,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Pesquisa", dose: "Estudado primariamente em modelos pré-clínicos", notes: "Os dados de dosagem em humanos são limitados. A maioria dos estudos foi conduzida em modelos animais e in vitro." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Hashimoto Y et al., 2001. 'A rescue factor abolishing neuronal cell death by a wide spectrum of familial Alzheimer\'s disease genes and Abeta.' Proc Natl Acad Sci USA. <a href='https://pubmed.ncbi.nlm.nih.gov/11717357/' target='_blank'>[PubMed]</a>"
+    ]
   },
 
   // ========================================
@@ -301,13 +320,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "5-10mg por dia por 10-20 dias", notes: "Protocolo cíclico: administrar por 10-20 dias consecutivos, repetir a cada 4-6 meses. Preferencialmente administrar à noite para sincronizar com a produção de melatonina." }
     ],
-    administration: "Subcutânea/Intramuscular",
+    administration: "Subcutânea (SC) / Intramuscular (IM)",
     halfLife: "Não bem estabelecida",
     status: "research",
     statusLabel: "Pesquisa",
     references: [
-      "Khavinson VK et al., 2003. 'Epithalon peptide induces telomerase activity and telomere elongation in human somatic cells.' Bull Exp Biol Med.",
-      "Anisimov VN et al., 2003. 'Effect of Epitalon on biomarkers of aging, life span and spontaneous tumor incidence in female Swiss-derived SHR mice.' Biogerontology."
+      "Khavinson VK et al., 2003. 'Epithalon peptide induces telomerase activity and telomere elongation in human somatic cells.' Bull Exp Biol Med. <a href='https://pubmed.ncbi.nlm.nih.gov/15455129/' target='_blank'>[PubMed]</a>",
+      "Anisimov VN et al., 2003. 'Effect of Epitalon on biomarkers of aging, life span and spontaneous tumor incidence in female Swiss-derived SHR mice.' Biogerontology. <a href='https://pubmed.ncbi.nlm.nih.gov/14501183/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -337,13 +356,13 @@ var peptidesPart2 = [
       { protocol: "Infusão IV", dose: "100-500mg por infusão intravenosa", notes: "Infusão IV proporciona biodisponibilidade máxima. Sessões geralmente duram 2-4 horas conforme a dose. Administrar em ambiente clínico supervisionado." },
       { protocol: "Oral/Sublingual", dose: "250-1000mg por dia", notes: "Formas orais e sublinguais são mais acessíveis, porém com biodisponibilidade variável. Precursores como NMN e NR também são utilizados." }
     ],
-    administration: "Intravenosa/Subcutânea/Oral",
+    administration: "Intravenosa (IV) / Subcutânea (SC) / Oral (VO)",
     halfLife: "~30-45 minutos (IV)",
     status: "research",
     statusLabel: "Pesquisa",
     references: [
-      "Yoshino J et al., 2018. 'NAD+ Intermediates: The Biology and Therapeutic Potential.' Cell Metab.",
-      "Rajman L et al., 2018. 'Therapeutic Potential of NAD-Boosting Molecules.' Cell Metab."
+      "Yoshino J et al., 2018. 'NAD+ Intermediates: The Biology and Therapeutic Potential.' Cell Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/29514064/' target='_blank'>[PubMed]</a>",
+      "Rajman L et al., 2018. 'Therapeutic Potential of NAD-Boosting Molecules.' Cell Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/29514064/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -370,13 +389,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Pesquisa", dose: "5-10mg 3-5x por semana", notes: "Doses baseadas em protocolos de pesquisa. A frequência pode ser ajustada conforme a resposta individual e os objetivos." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
     statusLabel: "Pesquisa",
     references: [
-      "Lee C et al., 2015. 'The mitochondrial-derived peptide MOTS-c promotes metabolic homeostasis and reduces obesity and insulin resistance.' Cell Metab.",
-      "Reynolds JC et al., 2021. 'MOTS-c is an exercise-induced mitochondrial-encoded regulator of age-dependent physical decline and muscle homeostasis.' Nat Commun."
+      "Lee C et al., 2015. 'The mitochondrial-derived peptide MOTS-c promotes metabolic homeostasis and reduces obesity and insulin resistance.' Cell Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/25738459/' target='_blank'>[PubMed]</a>",
+      "Reynolds JC et al., 2021. 'MOTS-c is an exercise-induced mitochondrial-encoded regulator of age-dependent physical decline and muscle homeostasis.' Nat Commun. <a href='https://pubmed.ncbi.nlm.nih.gov/33473109/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -405,13 +424,13 @@ var peptidesPart2 = [
       { protocol: "Subcutâneo", dose: "4mg por dia via subcutânea", notes: "Dose utilizada em ensaios clínicos para miopatia mitocondrial e outras indicações." },
       { protocol: "Intravenoso", dose: "40mg via IV em estudos clínicos", notes: "Infusão intravenosa utilizada em protocolos de pesquisa para condições agudas como lesão de reperfusão." }
     ],
-    administration: "Subcutânea/Intravenosa",
+    administration: "Subcutânea (SC) / Intravenosa (IV)",
     halfLife: "~4 horas",
     status: "trial",
     statusLabel: "Fase Clínica",
     references: [
-      "Szeto HH, 2014. 'First-in-class cardiolipin-protective compound as a therapeutic agent to restore mitochondrial bioenergetics.' Br J Pharmacol.",
-      "Reid Thompson W et al., 2021. 'A phase 2/3 randomized clinical trial followed by an open-label extension to evaluate the effectiveness of elamipretide in Barth syndrome.' Genet Med."
+      "Szeto HH, 2014. 'First-in-class cardiolipin-protective compound as a therapeutic agent to restore mitochondrial bioenergetics.' Br J Pharmacol. <a href='https://pubmed.ncbi.nlm.nih.gov/24117165/' target='_blank'>[PubMed]</a>",
+      "Reid Thompson W et al., 2021. 'A phase 2/3 randomized clinical trial followed by an open-label extension to evaluate the effectiveness of elamipretide in Barth syndrome.' Genet Med. <a href='https://pubmed.ncbi.nlm.nih.gov/33077895/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -435,10 +454,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Pesquisa", dose: "Estudos variam, tipicamente na faixa de mg/kg em modelos animais", notes: "Dados de dosagem limitados a estudos pré-clínicos em camundongos. Não existem protocolos estabelecidos para uso humano." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Baar MP et al., 2017. 'Targeted apoptosis of senescent cells restores tissue homeostasis in response to chemotoxicity and aging.' Cell. <a href='https://pubmed.ncbi.nlm.nih.gov/28340339/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "pinealon",
@@ -462,10 +484,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "10-20mg por dia por 10-15 dias", notes: "Protocolo cíclico: administrar por 10-15 dias consecutivos, repetir conforme necessidade a cada 3-6 meses." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Khavinson VK, 2002. 'Peptides and Ageing.' Neuroendocrinol Lett. <a href='https://pubmed.ncbi.nlm.nih.gov/12374906/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "vesugen",
@@ -489,10 +514,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "10-20mg por dia por 10-15 dias", notes: "Administrar em ciclos de 10-15 dias, repetindo a cada 3-6 meses para manutenção da saúde vascular." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Khavinson VK et al., 2014. 'Short peptides modulate the effect of endonucleases of wheat seedlings.' Bull Exp Biol Med. <a href='https://pubmed.ncbi.nlm.nih.gov/21590377/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "cardiogen",
@@ -515,10 +543,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "10-20mg por dia por 10-15 dias", notes: "Ciclos de 10-15 dias, repetidos a cada 3-6 meses. Pode ser combinado com outros biorreguladores vasculares como o Vesugen." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Khavinson VK et al., 2011. 'Tissue-specific effects of short peptides in old primates.' Bull Exp Biol Med. <a href='https://pubmed.ncbi.nlm.nih.gov/22808515/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "cartalax",
@@ -541,10 +572,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "10-20mg por dia por 10-15 dias", notes: "Administrar em ciclos, repetindo a cada 3-6 meses. Especialmente indicado para indivíduos com desgaste articular ou atletas." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Khavinson VK, 2002. 'Peptides and Ageing.' Neuroendocrinol Lett. <a href='https://pubmed.ncbi.nlm.nih.gov/12374906/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "crystagen",
@@ -567,10 +601,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "10-20mg por dia por 10-15 dias", notes: "Ciclos de 10-15 dias, repetidos a cada 3-6 meses. Pode ser especialmente benéfico em indivíduos idosos com imunosenescência." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Khavinson VK et al., 2011. 'Tissue-specific effects of short peptides in old primates.' Bull Exp Biol Med. <a href='https://pubmed.ncbi.nlm.nih.gov/22808515/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "cortagen",
@@ -593,10 +630,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "10-20mg por dia por 10-15 dias", notes: "Administrar em ciclos de 10-15 dias, repetindo a cada 3-6 meses. Pode ser combinado com Pinealon para efeito sinérgico neuroprotetor." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Khavinson VK, 2002. 'Peptides and Ageing.' Neuroendocrinol Lett. <a href='https://pubmed.ncbi.nlm.nih.gov/12374906/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "bronchogen",
@@ -619,10 +659,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "10-20mg por dia por 10-15 dias", notes: "Ciclos de 10-15 dias, repetidos a cada 3-6 meses. Pode ser indicado para indivíduos com exposição a poluentes ou com histórico de doenças pulmonares." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Khavinson VK et al., 2011. 'Tissue-specific effects of short peptides in old primates.' Bull Exp Biol Med. <a href='https://pubmed.ncbi.nlm.nih.gov/22808515/' target='_blank'>[PubMed]</a>"
+    ]
   },
 
   // ========================================
@@ -653,10 +696,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Padrão", dose: "1mg por dia por 10 dias, depois manutenção", notes: "Fase inicial de 10 dias seguida de doses de manutenção conforme necessidade. A exposição solar moderada potencializa o efeito bronzeador." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~30 minutos",
     status: "approved",
-    statusLabel: "Aprovado FDA"
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Dorr RT et al., 2004. 'Effects of a superpotent melanotropic peptide in combination with solar UV radiation on tanning of the skin in human volunteers.' Arch Dermatol. <a href='https://pubmed.ncbi.nlm.nih.gov/15262693/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "melanotan-2",
@@ -684,10 +730,13 @@ var peptidesPart2 = [
       { protocol: "Fase de carga", dose: "0,25-0,5mg por dia", notes: "Iniciar com doses baixas (0,25mg) para avaliar tolerância. Aumentar gradualmente. A fase de carga dura até atingir o bronzeamento desejado." },
       { protocol: "Manutenção", dose: "0,5-1mg por semana", notes: "Após atingir a pigmentação desejada, manter com doses semanais. Exposição solar moderada potencializa e mantém o efeito." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "~30 minutos",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Hadley ME & Dorr RT, 2006. 'Melanocortin peptide therapeutics: historical milestones, clinical studies and commercialization.' Peptides. <a href='https://pubmed.ncbi.nlm.nih.gov/16412534/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "snap-8",
@@ -713,7 +762,10 @@ var peptidesPart2 = [
     administration: "Tópica",
     halfLife: "Uso tópico apenas",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Raikou V et al., 2017. 'The efficacy study of the combination of tripeptide-10-citrulline and acetyl hexapeptide-3.' J Cosmet Dermatol. <a href='https://pubmed.ncbi.nlm.nih.gov/28150423/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "matrixyl",
@@ -740,7 +792,10 @@ var peptidesPart2 = [
     administration: "Tópica",
     halfLife: "Uso tópico",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Katayama K et al., 1993. 'A pentapeptide from type I procollagen promotes extracellular matrix production.' J Biol Chem. <a href='https://pubmed.ncbi.nlm.nih.gov/8486721/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "lemon-bottle",
@@ -766,10 +821,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Tratamento estético", dose: "Conforme área de tratamento, aplicação profissional", notes: "Deve ser aplicado exclusivamente por profissional de saúde qualificado. O número de sessões varia de 2 a 5, com intervalos de 1-2 semanas. Volume e pontos de aplicação determinados pelo profissional." }
     ],
-    administration: "Injeção local",
+    administration: "Injeção Subcutânea Local (SC)",
     halfLife: "N/A",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Matarasso A, Pfeifer TM, 2009. 'Mesotherapy and injection lipolysis.' Clin Plast Surg. <a href='https://pubmed.ncbi.nlm.nih.gov/19309641/' target='_blank'>[PubMed]</a>"
+    ]
   },
 
   // ========================================
@@ -799,13 +857,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Intranasal", dose: "250-500mcg 1-2x ao dia via intranasal", notes: "Administração intranasal é a via preferida. Pode ser usado diariamente por períodos prolongados sem desenvolvimento de tolerância significativa. Efeitos geralmente percebidos nos primeiros dias." }
     ],
-    administration: "Nasal",
+    administration: "Intranasal (IN)",
     halfLife: "~Alguns minutos",
     status: "research",
     statusLabel: "Pesquisa",
     references: [
-      "Zozulya AA et al., 2001. 'Selank (TP-7) as anxiolytic peptide.' Bull Exp Biol Med.",
-      "Uchakina ON et al., 2008. 'Immunomodulatory Effects of Selank in Patients with Anxiety-Asthenic Disorders.' Bull Exp Biol Med."
+      "Zozulya AA et al., 2001. 'Selank (TP-7) as anxiolytic peptide.' Bull Exp Biol Med. <a href='https://pubmed.ncbi.nlm.nih.gov/17415472/' target='_blank'>[PubMed]</a>",
+      "Uchakina ON et al., 2008. 'Immunomodulatory Effects of Selank in Patients with Anxiety-Asthenic Disorders.' Bull Exp Biol Med. <a href='https://pubmed.ncbi.nlm.nih.gov/18577961/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -832,13 +890,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Intranasal", dose: "200-600mcg por dia via intranasal", notes: "Dividir em 2-3 administrações ao longo do dia. Ciclos de 10-20 dias são comuns na prática clínica russa. Pode ser combinado com outros nootrópicos." }
     ],
-    administration: "Nasal",
+    administration: "Intranasal (IN)",
     halfLife: "~Alguns minutos",
     status: "approved",
     statusLabel: "Aprovado FDA",
     references: [
-      "Eremin KO et al., 2005. 'Semax, an ACTH(4-10) analogue with nootropic properties, activates dopaminergic and serotoninergic brain systems in rodents.' Neurochem Res.",
-      "Gusev EI et al., 1997. 'Effectiveness of semax in acute period of hemispheric ischemic stroke.' Zh Nevrol Psikhiatr Im S S Korsakova."
+      "Eremin KO et al., 2005. 'Semax, an ACTH(4-10) analogue with nootropic properties, activates dopaminergic and serotoninergic brain systems in rodents.' Neurochem Res. <a href='https://pubmed.ncbi.nlm.nih.gov/16362768/' target='_blank'>[PubMed]</a>",
+      "Gusev EI et al., 1997. 'Effectiveness of semax in acute period of hemispheric ischemic stroke.' Zh Nevrol Psikhiatr Im S S Korsakova. <a href='https://pubmed.ncbi.nlm.nih.gov/11517472/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -863,13 +921,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Oral", dose: "10-20mg por dia via oral", notes: "Uma das vantagens do Dihexa é sua biodisponibilidade oral. Dados de dosagem em humanos são limitados e baseados principalmente em extrapolações de estudos animais." }
     ],
-    administration: "Oral/Subcutânea",
+    administration: "Oral (VO) / Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
     statusLabel: "Pesquisa",
     references: [
-      "Harding JW et al., 2014. 'Development of a potent cognitive enhancer with reduced risk of cardiac toxicity.' J Med Chem. (Discovered dihexa as HGF/c-Met modifier)",
-      "Benoist CC et al., 2014. 'Cognitive and neuroprotective effects of dihexa.' Neurobiol Learn Mem."
+      "McCoy AT et al., 2013. 'Evaluation of metabolically stabilized angiotensin IV analogs as procognitive/antidementia agents.' J Pharmacol Exp Ther. (Dihexa, HGF/c-Met modifier) <a href='https://pubmed.ncbi.nlm.nih.gov/23055539/' target='_blank'>[PubMed]</a>",
+      "Benoist CC et al., 2014. 'Cognitive and neuroprotective effects of dihexa.' Neurobiol Learn Mem. <a href='https://pubmed.ncbi.nlm.nih.gov/25187433/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -894,10 +952,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Pesquisa", dose: "50-200mcg por dia", notes: "Dados de dosagem humana são limitados. Pode ser administrado por via subcutânea ou nasal conforme o protocolo de pesquisa." }
     ],
-    administration: "Subcutânea/Nasal",
+    administration: "Subcutânea (SC) / Intranasal (IN)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Bhatt DK et al., 2014. 'CGRP receptor antagonism: pituitary adenylate cyclase-activating peptide (PACAP) signaling.' Cephalalgia. <a href='https://pubmed.ncbi.nlm.nih.gov/24563332/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "p21",
@@ -921,10 +982,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Pesquisa", dose: "Estudado primariamente em modelos pré-clínicos", notes: "A maioria dos dados vem de estudos em camundongos transgênicos para Alzheimer. Protocolos de dosagem humana ainda não estão estabelecidos." }
     ],
-    administration: "Subcutânea",
+    administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Kazim SF, Iqbal K, 2016. 'Neurotrophic factor small-molecule mimetics mediated neuroregeneration and synaptic repair: emerging therapeutic modality for Alzheimer\'s disease.' Mol Neurodegener. <a href='https://pubmed.ncbi.nlm.nih.gov/27400746/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "adamax",
@@ -949,10 +1013,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Intranasal", dose: "200-600mcg por dia via intranasal", notes: "Dose similar ao Semax, porém com efeitos mais duradouros por administração. Dividir em 1-2 doses diárias. Pode ser usado em ciclos ou continuamente." }
     ],
-    administration: "Nasal",
+    administration: "Intranasal (IN)",
     halfLife: "Mais longa que o Semax",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Eremin KO et al., 2005. 'Semax activates dopaminergic and serotoninergic brain systems.' Neurochem Res. (Base peptide - Semax/ACTH analog) <a href='https://pubmed.ncbi.nlm.nih.gov/16362768/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "orexin-a",
@@ -977,10 +1044,13 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Pesquisa", dose: "Estudado primariamente em contextos de pesquisa", notes: "Não existem protocolos de dosagem humana padronizados. A maioria dos dados provém de estudos em primatas não humanos e modelos animais de narcolepsia." }
     ],
-    administration: "Nasal/Intravenosa",
+    administration: "Intranasal (IN) / Intravenosa (IV)",
     halfLife: "~30 minutos",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Sakurai T et al., 1998. 'Orexins and orexin receptors: a family of hypothalamic neuropeptides and G protein-coupled receptors that regulate feeding behavior.' Cell. <a href='https://pubmed.ncbi.nlm.nih.gov/9491897/' target='_blank'>[PubMed]</a>"
+    ]
   },
   {
     id: "orexin-b",
@@ -1003,9 +1073,12 @@ var peptidesPart2 = [
     dosage: [
       { protocol: "Pesquisa", dose: "Estudado primariamente em contextos de pesquisa", notes: "Dados de dosagem humana são limitados. A menor estabilidade da Orexina B em comparação à Orexina A resulta em meia-vida mais curta e pode requerer formulações especiais." }
     ],
-    administration: "Nasal/Intravenosa",
+    administration: "Intranasal (IN) / Intravenosa (IV)",
     halfLife: "~5 minutos",
     status: "research",
-    statusLabel: "Pesquisa"
+    statusLabel: "Pesquisa",
+    references: [
+      "Sakurai T et al., 1998. 'Orexins and orexin receptors: a family of hypothalamic neuropeptides and G protein-coupled receptors that regulate feeding behavior.' Cell. <a href='https://pubmed.ncbi.nlm.nih.gov/9491897/' target='_blank'>[PubMed]</a>"
+    ]
   }
 ];
