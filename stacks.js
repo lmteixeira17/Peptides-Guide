@@ -1314,5 +1314,130 @@ var peptideStacks = [
       "Laron Z, 2001. 'Insulin-like growth factor 1 (IGF-1): a growth hormone.' Mol Pathol. (IGF-1 LR3) <a href='https://pubmed.ncbi.nlm.nih.gov/40718994/' target='_blank'>[PubMed]</a>",
       "Lee SJ & McPherron AC, 2001. 'Regulation of myostatin activity and muscle growth.' Proc Natl Acad Sci USA. (Follistatin) <a href='https://pubmed.ncbi.nlm.nih.gov/11701425/' target='_blank'>[PubMed]</a>"
     ]
+  },
+  // =============================================
+  // NOVAS COMBINAÇÕES - PEPTÍDEOS DE NOVA GERAÇÃO
+  // =============================================
+  {
+    id: "weight-loss-hepatic",
+    name: "Perda de Peso - Foco Hep\u00e1tico (Esteatose/MASH)",
+    goal: "weight-loss",
+    goalLabel: "Perda de Peso",
+    level: "Intermedi\u00e1rio",
+    description: "Protocolo direcionado para perda de peso com foco na sa\u00fade hep\u00e1tica. Pemvidutide \u00e9 o \u00fanico agonista dual GLP-1/glucagon com dados espec\u00edficos de redu\u00e7\u00e3o de gordura hep\u00e1tica (at\u00e9 -78% em MASH), complementado com NAD+ para fun\u00e7\u00e3o mitocondrial hep\u00e1tica e Glutationa para prote\u00e7\u00e3o antioxidante do f\u00edgado.",
+    peptides: [
+      {
+        id: "pemvidutide",
+        name: "Pemvidutide",
+        role: "Agente principal \u2014 agonista dual GLP-1/glucagon que promove perda de peso e redu\u00e7\u00e3o direta de gordura hep\u00e1tica via a\u00e7\u00e3o do glucagon no f\u00edgado",
+        dose: "1.2-2.4mg/semana SC",
+        timing: "1x por semana, mesmo dia"
+      },
+      {
+        id: "nad-plus",
+        name: "NAD+",
+        role: "Precursor metab\u00f3lico \u2014 restaura n\u00edveis de NAD+ hep\u00e1tico, melhora fun\u00e7\u00e3o mitocondrial e metabolismo lip\u00eddico no f\u00edgado",
+        dose: "250-500mg IV, 1-2x por semana",
+        timing: "1-2x por semana, infus\u00e3o IV lenta (2-4h)"
+      },
+      {
+        id: "glutathione",
+        name: "Glutationa",
+        role: "Antioxidante master \u2014 prote\u00e7\u00e3o hepatocelular contra estresse oxidativo, essencial na MASH/NAFLD",
+        dose: "600-1200mg IV, 1-2x por semana",
+        timing: "1-2x por semana, pode ser combinado com NAD+ na mesma sess\u00e3o IV"
+      }
+    ],
+    synergy: "Pemvidutide combina a\u00e7\u00e3o GLP-1 (supress\u00e3o de apetite, controle glic\u00eamico) com a\u00e7\u00e3o glucagon (lipog\u00eanese hep\u00e1tica reduzida, oxida\u00e7\u00e3o de gordura aumentada). Nos estudos MOMENTUM, demonstrou redu\u00e7\u00e3o de 78% na gordura hep\u00e1tica em pacientes com MASH. NAD+ melhora a fun\u00e7\u00e3o mitocondrial das c\u00e9lulas hep\u00e1ticas, otimizando o metabolismo lip\u00eddico. Glutationa protege os hepat\u00f3citos contra o estresse oxidativo que acompanha a mobiliza\u00e7\u00e3o intensa de gordura hep\u00e1tica.",
+    application: "Pemvidutide: SC 1x/semana em seringa pr\u00f3pria \u2014 NUNCA misturar. NAD+: infus\u00e3o IV separada \u2014 NUNCA misturar com outros compostos na mesma seringa. Glutationa: IV separada, pode ser administrada na mesma sess\u00e3o de infus\u00e3o que o NAD+ (sequencialmente, n\u00e3o simultaneamente). Todas as tr\u00eas subst\u00e2ncias possuem vias e formula\u00e7\u00f5es distintas.",
+    duration: "16-24 semanas (acompanhamento com ultrassom hep\u00e1tico e enzimas ALT/AST/GGT)",
+    warnings: "Pemvidutide est\u00e1 em fase 2b/3 \u2014 ainda n\u00e3o aprovado pela FDA. N\u00e1usea e diarreia s\u00e3o comuns nas primeiras semanas. O componente glucagon pode elevar ligeiramente a glicemia em jejum \u2014 monitorar em diab\u00e9ticos. NAD+ IV pode causar flush, n\u00e1usea e c\u00e3ibras durante infus\u00e3o. Monitorar enzimas hep\u00e1ticas (ALT, AST, GGT), perfil lip\u00eddico e glicemia regularmente.",
+    evidenceLevel: "Alto (Pemvidutide: fase 2b MOMENTUM com dados de redu\u00e7\u00e3o hep\u00e1tica robustos, designa\u00e7\u00e3o Breakthrough Therapy FDA) / Moderado (NAD+) / Moderado (Glutationa)",
+    references: [
+      "Loomba R et al., 2024. 'Pemvidutide, a GLP-1/glucagon dual receptor agonist, for MASH with liver fibrosis: MOMENTUM phase 2b randomised trial.' Lancet Gastroenterol Hepatol. <a href='https://pubmed.ncbi.nlm.nih.gov/39303720/' target='_blank'>[PubMed]</a>",
+      "Frias JP et al., 2023. 'Safety and efficacy of pemvidutide (ALT-801) in overweight or obesity.' Lancet. <a href='https://pubmed.ncbi.nlm.nih.gov/38519155/' target='_blank'>[PubMed]</a>",
+      "Honda Y et al., 2017. 'Efficacy of glutathione for the treatment of nonalcoholic fatty liver disease.' BMC Gastroenterol. <a href='https://pubmed.ncbi.nlm.nih.gov/29110623/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "weight-loss-monthly",
+    name: "Perda de Peso - Dosagem Mensal (Simplificado)",
+    goal: "weight-loss",
+    goalLabel: "Perda de Peso",
+    level: "Iniciante",
+    description: "Protocolo simplificado de perda de peso com apenas 1 inje\u00e7\u00e3o por m\u00eas. MariTide (maridebart cafraglutide) \u00e9 o primeiro anticorpo anti-GIP com agonismo GLP-1 de a\u00e7\u00e3o ultra-longa, permitindo dosagem mensal com efic\u00e1cia comparada a agentes semanais. Complementado com suporte metab\u00f3lico oral/inject\u00e1vel b\u00e1sico.",
+    peptides: [
+      {
+        id: "maridebart-cafraglutide",
+        name: "Maridebart Cafraglutide (MariTide)",
+        role: "Agente principal \u2014 anticorpo anti-GIP conjugado com agonista GLP-1, produ\u00e7\u00e3o de saciedade e controle glic\u00eamico com meia-vida ultra-longa (~21-24 dias)",
+        dose: "420mg SC/m\u00eas (dose \u00fanica)",
+        timing: "1x por m\u00eas"
+      },
+      {
+        id: "l-carnitine",
+        name: "L-Carnitina",
+        role: "Suporte metab\u00f3lico \u2014 transporte de \u00e1cidos graxos para oxida\u00e7\u00e3o mitocondrial",
+        dose: "600-2000mg/dia",
+        timing: "Di\u00e1rio, pela manh\u00e3 ou antes do exerc\u00edcio"
+      },
+      {
+        id: "vitamin-b12",
+        name: "Vitamina B12",
+        role: "Suporte energ\u00e9tico \u2014 previne defici\u00eancia durante restri\u00e7\u00e3o cal\u00f3rica induzida pelo GLP-1",
+        dose: "1000mcg/semana IM ou di\u00e1rio oral",
+        timing: "1x por semana (inject\u00e1vel) ou di\u00e1rio (oral)"
+      }
+    ],
+    synergy: "MariTide combina duas a\u00e7\u00f5es complementares: (1) o anticorpo anti-GIP bloqueia o receptor GIP, reduzindo armazenamento de gordura, e (2) o pept\u00eddeo GLP-1 conjugado suprime apetite e melhora controle glic\u00eamico. A meia-vida ultra-longa (~21-24 dias) permite dosagem mensal, melhorando drasticamente a ader\u00eancia. L-Carnitina otimiza a oxida\u00e7\u00e3o da gordura mobilizada. B12 mant\u00e9m n\u00edveis energ\u00e9ticos adequados durante a restri\u00e7\u00e3o cal\u00f3rica.",
+    application: "MariTide: SC 1x/m\u00eas em seringa pr\u00f3pria \u2014 NUNCA misturar com outros compostos. L-Carnitina: inje\u00e7\u00e3o SC separada di\u00e1ria ou suplementa\u00e7\u00e3o oral. Vitamina B12: inje\u00e7\u00e3o IM separada semanal ou via oral di\u00e1ria. Vias e frequ\u00eancias completamente distintas.",
+    duration: "12-24 semanas (3-6 doses mensais de MariTide)",
+    warnings: "MariTide est\u00e1 em fase 3 (programa MARITIME) \u2014 ainda n\u00e3o aprovado. N\u00e1usea e v\u00f4mitos s\u00e3o os efeitos adversos mais comuns, especialmente na primeira dose. Perda de peso pode ser muito r\u00e1pida (at\u00e9 ~20% em 12 meses) \u2014 monitorar massa muscular e nutri\u00e7\u00e3o proteica. Rea\u00e7\u00f5es no local de inje\u00e7\u00e3o podem ocorrer. Monitorar glicemia, perfil lip\u00eddico e massa corporal magra.",
+    evidenceLevel: "Alto (MariTide: fase 2 com -14.5% de perda de peso, programa fase 3 MARITIME em andamento) / Moderado (L-Carnitina: meta-an\u00e1lises) / Baixo (B12: suporte)",
+    references: [
+      "Riesmeyer J et al., 2024. 'Maridebart cafraglutide (MariTide), a GIP receptor antibody GLP-1 receptor agonist, in overweight/obesity: phase 2 trial.' Nat Med. <a href='https://pubmed.ncbi.nlm.nih.gov/39702709/' target='_blank'>[PubMed]</a>",
+      "Pooyandjoo M et al., 2016. 'The effect of (L-)carnitine on weight loss in adults: a systematic review and meta-analysis.' Obes Rev. <a href='https://pubmed.ncbi.nlm.nih.gov/27335245/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "weight-loss-glp1-biased",
+    name: "Perda de Peso - Agonista GLP-1 de Nova Gera\u00e7\u00e3o + Metabolismo",
+    goal: "weight-loss",
+    goalLabel: "Perda de Peso",
+    level: "Intermedi\u00e1rio",
+    description: "Protocolo combinando ecnoglutida, um agonista GLP-1 com perfil farmacol\u00f3gico favorecendo sinaliza\u00e7\u00e3o biased (menor n\u00e1usea, melhor toler\u00e2ncia GI), com MOTS-c como mim\u00e9tico de exerc\u00edcio e L-Carnitina para otimizar metabolismo de gordura. Ideal para pacientes que n\u00e3o toleram bem outros agonistas GLP-1.",
+    peptides: [
+      {
+        id: "ecnoglutide",
+        name: "Ecnoglutida",
+        role: "Agente principal \u2014 agonista GLP-1 de longa a\u00e7\u00e3o com mecanismo biased que favorece sinaliza\u00e7\u00e3o via prote\u00edna G (eficaz) sobre \u03b2-arrestina (eventos GI adversos), resultando em melhor toler\u00e2ncia gastrointestinal",
+        dose: "1.5-4.5mg/semana SC",
+        timing: "1x por semana"
+      },
+      {
+        id: "mots-c",
+        name: "MOTS-c",
+        role: "Pept\u00eddeo mitocondrial \u2014 ativa AMPK, melhora sensibilidade \u00e0 insulina e atua como mim\u00e9tico de exerc\u00edcio",
+        dose: "5-10mg, 3x por semana",
+        timing: "3x por semana, preferencialmente em dias de exerc\u00edcio"
+      },
+      {
+        id: "l-carnitine",
+        name: "L-Carnitina",
+        role: "Transportador de \u00e1cidos graxos \u2014 facilita oxida\u00e7\u00e3o de gordura na mitoc\u00f4ndria, sinergia com MOTS-c",
+        dose: "600-2000mg/dia",
+        timing: "Di\u00e1rio, pela manh\u00e3 ou antes do exerc\u00edcio"
+      }
+    ],
+    synergy: "Ecnoglutida suprime apetite e melhora controle glic\u00eamico via GLP-1 com melhor perfil de toler\u00e2ncia GI que outros agonistas da classe. MOTS-c ativa AMPK nas c\u00e9lulas musculares e adiposas, mimetizando os benef\u00edcios metab\u00f3licos do exerc\u00edcio (melhora da sensibilidade \u00e0 insulina, aumento da oxida\u00e7\u00e3o de gordura). L-Carnitina \u00e9 sinerg\u00edstica com MOTS-c, pois transporta os \u00e1cidos graxos mobilizados para dentro das mitoc\u00f4ndrias ativadas, maximizando a queima de gordura.",
+    application: "Ecnoglutida: SC 1x/semana em seringa pr\u00f3pria \u2014 NUNCA misturar. MOTS-c: inje\u00e7\u00e3o SC separada nos dias programados. L-Carnitina: inje\u00e7\u00e3o SC separada di\u00e1ria ou suplementa\u00e7\u00e3o oral. Todas as tr\u00eas subst\u00e2ncias t\u00eam formula\u00e7\u00f5es e frequ\u00eancias distintas \u2014 n\u00e3o misturar.",
+    duration: "12-20 semanas",
+    warnings: "Ecnoglutida est\u00e1 aprovada na China para DM2, mas ainda em avalia\u00e7\u00e3o para obesidade. Embora tenha perfil GI superior, n\u00e1usea leve ainda pode ocorrer nas primeiras semanas. MOTS-c tem dados cl\u00ednicos limitados em humanos. Monitorar glicemia, perfil lip\u00eddico e composi\u00e7\u00e3o corporal. Manter ingest\u00e3o proteica adequada para preservar massa muscular.",
+    evidenceLevel: "Alto (Ecnoglutida: fase 3 com -14.9% de perda de peso, aprovada na China) / Moderado (MOTS-c) / Moderado (L-Carnitina)",
+    references: [
+      "Ji L et al., 2025. 'Ecnoglutide for type 2 diabetes in China: a randomised, double-blind, phase 3 trial.' Lancet Diabetes Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/39674224/' target='_blank'>[PubMed]</a>",
+      "Lee C et al., 2015. 'The mitochondrial-derived peptide MOTS-c promotes metabolic homeostasis and reduces obesity and insulin resistance.' Cell Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/25738459/' target='_blank'>[PubMed]</a>",
+      "Pooyandjoo M et al., 2016. 'The effect of (L-)carnitine on weight loss in adults: a systematic review and meta-analysis.' Obes Rev. <a href='https://pubmed.ncbi.nlm.nih.gov/27335245/' target='_blank'>[PubMed]</a>"
+    ]
   }
 ];

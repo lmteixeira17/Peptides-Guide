@@ -147,6 +147,82 @@ var peptidesPart3 = [
       "Richie JP et al., 2015. 'Randomized controlled trial of oral glutathione supplementation on body stores of glutathione.' Eur J Nutr. <a href='https://pubmed.ncbi.nlm.nih.gov/24791752/' target='_blank'>[PubMed]</a>"
     ]
   },
+  {
+    id: "zilucoplan",
+    name: "Zilucoplan",
+    aka: "Zilbrysq, RA101495",
+    category: "immune",
+    categoryLabel: "Sistema Imunológico",
+    description: "Zilucoplan é um peptídeo macrocíclico sintético de 15 aminoácidos (3,5 kDa) que inibe o componente C5 do sistema complemento. Aprovado pelo FDA em outubro de 2023 (Zilbrysq) para miastenia gravis generalizada (gMG) em adultos com anticorpos anti-receptor de acetilcolina (AChR). É o primeiro inibidor peptídico subcutâneo de C5 aprovado, permitindo autoadministração diária em casa sem necessidade de infusão hospitalar.",
+    mechanism: "Mecanismo dual de inibição do complemento C5: (1) liga-se ao C5 com alta afinidade, impedindo sua clivagem pela C5-convertase nos fragmentos C5a (anafilatoxina pró-inflamatória) e C5b (iniciador do complexo de ataque à membrana - MAC); (2) liga-se ao C5b pré-formado, bloqueando estericamente sua interação com C6 e impedindo a montagem do MAC (C5b-9). Na gMG com anticorpos anti-AChR, o sistema complemento ataca a junção neuromuscular, destruindo receptores de acetilcolina. O bloqueio dual previne a destruição mediada pelo complemento e restaura a transmissão neuromuscular. Contém quatro aminoácidos não-naturais e uma cadeia lipídica C16 via linker PEG para meia-vida prolongada.",
+    benefits: [
+      "Melhora significativa na função muscular e atividades da vida diária (MG-ADL -4,39 vs. placebo -2,30; p=0,0004)",
+      "Início de ação rápido - melhora clínica significativa desde a semana 1",
+      "Autoadministração subcutânea diária em casa, sem infusão hospitalar",
+      "Primeiro inibidor peptídico subcutâneo de C5 aprovado para gMG",
+      "Compatível com IVIg e plasmaférese sem ajuste de dose",
+      "Redução de 58% no risco de piora clínica da miastenia gravis",
+      "Eficácia mantida por até 60 semanas (RAISE-XT)"
+    ],
+    sideEffects: [
+      { name: "Reações no local de injeção (hematoma, dor)", severity: "common" },
+      { name: "Infecção do trato respiratório superior", severity: "common" },
+      { name: "Diarreia", severity: "common" },
+      { name: "Cefaleia", severity: "common" },
+      { name: "Piora da miastenia gravis", severity: "occasional" },
+      { name: "Infecções por Neisseria meningitidis (risco aumentado pelo bloqueio do complemento)", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "Pacientes <56 kg", dose: "16,6mg SC 1x/dia", notes: "Autoadministração subcutânea diária. Vacinação meningocócica obrigatória pelo menos 2 semanas antes do início do tratamento (REMS)." },
+      { protocol: "Pacientes 56-77 kg", dose: "23,0mg SC 1x/dia", notes: "Dose equivalente a 0,3mg/kg. Mesmo requisito de vacinação meningocócica." },
+      { protocol: "Pacientes ≥77 kg", dose: "32,4mg SC 1x/dia", notes: "Dose máxima aprovada." }
+    ],
+    administration: "Subcutânea (SC) - autoadministração diária",
+    halfLife: "~172 horas (~7 dias)",
+    status: "approved",
+    statusLabel: "Aprovado FDA (Outubro 2023)",
+    references: [
+      "Howard JF Jr et al., 2023. 'Safety and efficacy of zilucoplan in patients with generalised myasthenia gravis (RAISE): a randomised, double-blind, placebo-controlled, phase 3 study.' Lancet Neurol, 22(5), 395-406. <a href='https://pubmed.ncbi.nlm.nih.gov/37059508/' target='_blank'>[PubMed]</a>",
+      "Tang GQ et al., 2023. 'Zilucoplan, a macrocyclic peptide inhibitor of human complement component 5, uses a dual mode of action to prevent terminal complement pathway activation.' Front Immunol, 14, 1213920. <a href='https://pubmed.ncbi.nlm.nih.gov/37622108/' target='_blank'>[PubMed]</a>",
+      "Shirley M, 2024. 'Zilucoplan: First Approval.' Drugs, 84(1), 99-104. <a href='https://pubmed.ncbi.nlm.nih.gov/38093160/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "motixafortide",
+    name: "Motixafortide",
+    aka: "Aphexda, BL-8040, BKT140",
+    category: "immune",
+    categoryLabel: "Sistema Imunológico",
+    description: "Motixafortide é um peptídeo cíclico sintético de 14 resíduos que atua como antagonista potente e seletivo do receptor CXCR4, aprovado pelo FDA em setembro de 2023 (Aphexda) para mobilização de células-tronco hematopoéticas (CTH) para transplante autólogo em pacientes com mieloma múltiplo, em combinação com filgrastim (G-CSF). É a primeira nova terapia de mobilização de células-tronco aprovada desde o plerixafor (2008).",
+    mechanism: "Antagonista do receptor CXCR4 com atividade de agonista inverso. Bloqueia a ligação do ligante endógeno CXCL12 (SDF-1α) ao CXCR4 com IC50 de 0,42-4,5 nM (afinidade extremamente alta). Contém seis resíduos catiônicos que formam interações eletrostáticas com resíduos ácidos do CXCR4, e duas porções químicas volumosas que restringem mudanças conformacionais, travando o receptor em estado inativo. O eixo CXCR4/CXCL12 normalmente ancora as CTH à medula óssea. Ao bloquear essa interação, o motixafortide libera as CTH para a circulação periférica, onde podem ser coletadas por aférese.",
+    benefits: [
+      "92,5% dos pacientes atingiram ≥6×10⁶ CD34+/kg em até 2 aféreses (vs. 26,2% com placebo; p<0,0001)",
+      "88,8% atingiram a meta em uma única aférese (vs. 9,5% com placebo)",
+      "Aumento de 5,6 vezes no rendimento mediano de CD34+ na primeira aférese",
+      "Eficácia comprovada em subgrupos de alto risco (idade >65 anos, exposição prévia a lenalidomida)",
+      "Enxerto rápido e durável confirmado após transplante"
+    ],
+    sideEffects: [
+      { name: "Dor no local de injeção", severity: "common" },
+      { name: "Eritema no local de injeção", severity: "common" },
+      { name: "Prurido no local de injeção", severity: "common" },
+      { name: "Rubor facial (flushing)", severity: "common" },
+      { name: "Dor lombar", severity: "occasional" },
+      { name: "Choque anafilático/reações de hipersensibilidade graves", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "Pré-aférese (aprovado)", dose: "1,25mg/kg SC", notes: "Administrado 10-14 horas antes do início da aférese, em combinação com filgrastim (G-CSF) 10 mcg/kg/dia por 4 dias prévios. Máximo de 2 doses totais. Pré-medicação obrigatória: anti-histamínico H1, bloqueador H2, inibidor de leucotrienos e analgésico. Monitoramento por 1 hora após administração." }
+    ],
+    administration: "Subcutânea (SC) - administração em ambiente clínico",
+    halfLife: "~2 horas (plasmática); ocupação do receptor >72 horas",
+    status: "approved",
+    statusLabel: "Aprovado FDA (Setembro 2023)",
+    references: [
+      "Crees ZD et al., 2023. 'Motixafortide and G-CSF to mobilize hematopoietic stem cells for autologous transplantation in multiple myeloma: a randomized phase 3 trial (GENESIS).' Nat Med, 29(4), 869-879. <a href='https://pubmed.ncbi.nlm.nih.gov/37069359/' target='_blank'>[PubMed]</a>",
+      "Hoy SM, 2023. 'Motixafortide: First Approval.' Drugs, 83(17), 1635-1643. <a href='https://pubmed.ncbi.nlm.nih.gov/37996648/' target='_blank'>[PubMed]</a>",
+      "Rebolledo-Bustillo M et al., 2023. 'Structural Basis of the Binding Mode of the Antineoplastic Compound Motixafortide (BL-8040) in the CXCR4 Chemokine Receptor.' Int J Mol Sci, 24(5), 4393. <a href='https://pubmed.ncbi.nlm.nih.gov/36901829/' target='_blank'>[PubMed]</a>"
+    ]
+  },
 
   // ============================================================
   // HORMONAL E REPRODUTIVO
@@ -774,6 +850,43 @@ var peptidesPart3 = [
     statusLabel: "Em Pesquisa",
     references: [
       "Kolonin MG et al., 2004. 'Reversal of obesity by targeted ablation of adipose tissue.' Nat Med. <a href='https://pubmed.ncbi.nlm.nih.gov/15133506/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "palopegteriparatide",
+    name: "Palopegteriparatida",
+    aka: "Yorvipath, TransCon PTH",
+    category: "hormonal",
+    categoryLabel: "Hormonal e Reprodutivo",
+    description: "Palopegteriparatida é uma pró-droga de PTH(1-34) (teriparatida) conjugada a um carreador de polietilenoglicol ramificado (mPEG) via linker TransCon proprietário da Ascendis Pharma. Aprovada pelo FDA em agosto de 2024 como primeira e única terapia de reposição hormonal para hipoparatireoidismo em adultos. O linker sofre hidrólise espontânea em pH e temperatura fisiológicos, liberando PTH(1-34) ativo de forma sustentada ao longo de 24 horas, permitindo dosagem diária única.",
+    mechanism: "Pró-droga que libera PTH(1-34) de forma controlada e sustentada. Após injeção subcutânea, o linker TransCon protege o PTH(1-34) da ligação ao receptor PTH1R, prevenindo pico hormonal agudo. O carreador PEG estende a meia-vida e previne depuração renal. A hidrólise espontânea do linker em condições fisiológicas libera PTH(1-34) ativo e seu metabólito PTH(1-33) ao longo de 24 horas. O PTH liberado atua em osso e rins: aumenta cálcio sérico por reabsorção óssea e renal, reduz fosfato sérico e estimula produção renal de 1,25-dihidroxivitamina D, replicando a fisiologia endógena do paratormônio.",
+    benefits: [
+      "79% dos pacientes atingiram o desfecho primário composto vs. 5% placebo (p<0,0001) no PaTHway",
+      "95% alcançaram independência da terapia convencional (sem vitamina D ativa, cálcio ≤600mg/dia)",
+      "Melhora significativa na função renal: aumento de eGFR de 8,9 mL/min/1,73m² em 52 semanas",
+      "Primeira terapia de reposição hormonal aprovada para hipoparatireoidismo",
+      "Melhora significativa em escalas de qualidade de vida (HPES) e funcionalidade física (SF-36)",
+      "Sem casos de nefrolitíase reportados no grupo tratado durante o estudo pivotal"
+    ],
+    sideEffects: [
+      { name: "Reações no local de injeção", severity: "common" },
+      { name: "Sintomas vasodilatatórios (rubor, calor)", severity: "common" },
+      { name: "Cefaleia", severity: "common" },
+      { name: "Hipercalcemia", severity: "occasional" },
+      { name: "Diarreia", severity: "occasional" },
+      { name: "Hipocalcemia (na descontinuação abrupta)", severity: "occasional" },
+      { name: "Risco de osteossarcoma (alerta de classe, baseado em estudos animais)", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "Diário (aprovado)", dose: "18-30 mcg SC 1x/dia", notes: "Dose inicial de 18 mcg/dia SC, com titulação em incrementos de 3 mcg conforme cálcio sérico. Dose máxima de 30 mcg/dia. Monitoramento do cálcio sérico a cada 7-10 dias após ajuste de dose, depois a cada 4-6 semanas na manutenção. Vitamina D ativa deve ser descontinuada em até 8 semanas." }
+    ],
+    administration: "Subcutânea (SC) - injeção diária",
+    halfLife: "~60 horas (pró-droga); liberação de PTH ativo por 24 horas",
+    status: "approved",
+    statusLabel: "Aprovado FDA (Agosto 2024)",
+    references: [
+      "Clarke BL et al., 2025. 'Efficacy and Safety of TransCon PTH in Adults With Hypoparathyroidism: 52-Week Results From the Phase 3 PaTHway Trial.' J Clin Endocrinol Metab, 110(4), 951-960. <a href='https://pubmed.ncbi.nlm.nih.gov/39376010/' target='_blank'>[PubMed]</a>",
+      "Rejnmark L et al., 2024. 'Palopegteriparatide Treatment Improves Renal Function in Adults with Chronic Hypoparathyroidism: 1-Year Results from the Phase 3 PaTHway Trial.' Adv Ther, 41(6), 2500-2518. <a href='https://pubmed.ncbi.nlm.nih.gov/38691316/' target='_blank'>[PubMed]</a>"
     ]
   },
 
