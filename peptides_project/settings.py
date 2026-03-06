@@ -114,6 +114,12 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Cookies — unique names to avoid conflicts with other Django apps on the same domain
+SESSION_COOKIE_NAME = 'peptides_sessionid'
+CSRF_COOKIE_NAME = 'peptides_csrftoken'
+SESSION_COOKIE_PATH = f'{FORCE_SCRIPT_NAME}/' if FORCE_SCRIPT_NAME else '/'
+CSRF_COOKIE_PATH = f'{FORCE_SCRIPT_NAME}/' if FORCE_SCRIPT_NAME else '/'
+
 # Security
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -122,8 +128,8 @@ SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False').lower() in ('true', '1', 'yes')
-    SESSION_COOKIE_SECURE = True
-    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'False').lower() in ('true', '1', 'yes')
+    CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'False').lower() in ('true', '1', 'yes')
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Logging

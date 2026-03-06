@@ -358,6 +358,147 @@ var peptidesPart1 = [
       "Astrup A et al., 2008. 'Effect of tesofensine on bodyweight loss, body composition, and quality of life in obese patients.' Lancet. <a href='https://pubmed.ncbi.nlm.nih.gov/18950853/' target='_blank'>[PubMed]</a>"
     ]
   },
+  {
+    id: "pemvidutide",
+    name: "Pemvidutide",
+    aka: "ALT-801",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Pemvidutide é um agonista dual dos receptores de GLP-1 e glucagon em razão equilibrada (1:1), desenvolvido pela Altimmune. Diferencia-se dos agonistas puros de GLP-1 por combinar supressão de apetite (via GLP-1) com ação direta no fígado (via glucagon), promovendo oxidação de ácidos graxos hepáticos e redução da esteatose independente da perda de peso. Em estudos clínicos de Fase 2 (MOMENTUM), demonstrou perda de peso de até 15,6% em 48 semanas. Recebeu designação FDA Breakthrough Therapy para MASH em janeiro de 2026.",
+    mechanism: "Ativa simultaneamente os receptores de GLP-1 e glucagon. O componente GLP-1 promove supressão do apetite por mecanismos centrais e periféricos, reduzindo a ingestão calórica. O componente glucagon atua diretamente no fígado, estimulando a oxidação de ácidos graxos, inibindo a lipogênese de novo e acelerando a mobilização de gordura hepática. A sinergia GLP-1+glucagon mimetiza os efeitos complementares de dieta (apetite) e exercício (gasto energético). Utiliza tecnologia EuPort (cadeia diácida C18 com ligação glicosídica) para ligação à albumina sérica, prolongando a meia-vida e viabilizando dosagem semanal.",
+    benefits: [
+      "Perda de peso de até 15,6% em 48 semanas (MOMENTUM)",
+      "Redução de gordura hepática de até 75% (superior a agonistas puros de GLP-1)",
+      "Resolução de MASH em 52-59% dos pacientes (estudo IMPACT)",
+      "Preservação de massa magra (apenas 22% da perda de peso é massa magra vs. 40% com incretínicos tradicionais)",
+      "Melhora de marcadores de fibrose hepática (ELF score, FibroScan)",
+      "Redução de lipídeos séricos e pressão arterial sem desequilíbrios cardíacos"
+    ],
+    sideEffects: [
+      { name: "Náusea", severity: "common" },
+      { name: "Vômito", severity: "occasional" },
+      { name: "Diarreia", severity: "occasional" },
+      { name: "Constipação", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Semanal (em estudos)", dose: "1,2-2,4mg/semana", notes: "Doses de 1,2mg, 1,8mg e 2,4mg foram avaliadas em Fase 2. Doses de 1,2 e 1,8mg sem necessidade de titulação. Dose de 2,4mg com período de titulação de 4 semanas. A dose de 1,8mg é a mais estudada para MASH." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~5-8 dias (ligação à albumina via tecnologia EuPort)",
+    status: "trial",
+    statusLabel: "Fase 2b/3 (Breakthrough Therapy FDA)",
+    references: [
+      "Harrison SA et al., 2025. 'Effect of pemvidutide, a GLP-1/glucagon dual receptor agonist, on MASLD: A randomized, double-blind, placebo-controlled study.' J Hepatol, 82(1), 7-17. <a href='https://pubmed.ncbi.nlm.nih.gov/39002641/' target='_blank'>[PubMed]</a>",
+      "Noureddin M et al., 2025. 'Safety and efficacy of weekly pemvidutide versus placebo for MASH (IMPACT): 24-week results from a phase 2b study.' Lancet, 406, 2644-2655. <a href='https://pubmed.ncbi.nlm.nih.gov/41237796/' target='_blank'>[PubMed]</a>",
+      "Nestor JJ et al., 2022. 'Effects of ALT-801, a GLP-1 and glucagon receptor dual agonist, in a translational mouse model of non-alcoholic steatohepatitis.' Sci Rep, 12(1), 6666. <a href='https://pubmed.ncbi.nlm.nih.gov/35461369/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "maridebart-cafraglutide",
+    name: "Maridebart Cafraglutide",
+    aka: "MariTide, AMG 133",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Maridebart cafraglutide é um conjugado anticorpo-peptídeo (APC) bispecífico desenvolvido pela Amgen para tratamento da obesidade. Combina antagonismo do receptor GIP (GIPR) via anticorpo monoclonal humano com agonismo do receptor GLP-1 via dois peptídeos análogos acoplados. Sua meia-vida de aproximadamente 21-24 dias permite dosagem mensal por via subcutânea. Em Fase 2 (MARITIME-1), demonstrou redução média de até 20% do peso corporal em 52 semanas, com trajetória descendente contínua sem platô.",
+    mechanism: "O anticorpo IgG humano bloqueia o receptor GIP (GIPR), enquanto dois peptídeos análogos de GLP-1 conjugados nas posições E384C ativam o receptor GLP-1 (GLP-1R). O antagonismo do GIPR baseia-se em dados genéticos populacionais que associam variantes de perda de função no gene GIPR a menor IMC. Esta abordagem é mecanisticamente oposta à tirzepatida (que ativa o GIPR), porém demonstrou sinergismo superior em modelos pré-clínicos. O backbone de anticorpo confere meia-vida prolongada (~21 dias) via reciclagem endossomal pelo receptor FcRn.",
+    benefits: [
+      "Redução de peso corporal de até 20% em 52 semanas (Fase 2, sem diabetes)",
+      "Dosagem mensal (a cada 4 semanas) vs. semanal dos análogos de GLP-1 atuais",
+      "Perda de peso sem platô em 52 semanas, indicando potencial para redução adicional",
+      "Redução de HbA1c de até 2,2 pontos percentuais em pacientes com DM2",
+      "Efeito durável: redução de 11% do peso mantida até 150 dias após última dose (Fase 1)",
+      "Melhora de perfil lipídico, pressão arterial e marcadores inflamatórios (hs-CRP)"
+    ],
+    sideEffects: [
+      { name: "Náusea", severity: "common" },
+      { name: "Vômito", severity: "common" },
+      { name: "Constipação", severity: "common" },
+      { name: "Diarreia", severity: "occasional" },
+      { name: "Elevação transitória de enzimas pancreáticas (lipase/amilase)", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "Mensal (em estudos - Fase 2)", dose: "140-420mg SC a cada 4 semanas", notes: "Fase 2 avaliou doses de 140, 280 e 420mg a cada 4 semanas. Escalonamento de dose em 12 semanas reduz significativamente eventos gastrointestinais. Fase 3 utiliza protocolo otimizado: início 21mg → 35mg → dose-alvo em 8 semanas de escalonamento." }
+    ],
+    administration: "Subcutânea (SC) via autoinjetor, a cada 4 semanas (mensal)",
+    halfLife: "~21-24 dias (conjugação com anticorpo IgG, reciclagem via FcRn)",
+    status: "trial",
+    statusLabel: "Fase 3 (Programa MARITIME)",
+    references: [
+      "Veniant MM et al., 2024. 'A GIPR antagonist conjugated to GLP-1 analogues promotes weight loss with improved metabolic parameters in preclinical and phase 1 settings.' Nat Metab, 6(2), 290-303. <a href='https://pubmed.ncbi.nlm.nih.gov/38316982/' target='_blank'>[PubMed]</a>",
+      "Jastreboff AM et al., 2025. 'Once-Monthly Maridebart Cafraglutide for the Treatment of Obesity - A Phase 2 Trial.' N Engl J Med, 393(9), 843-857. <a href='https://pubmed.ncbi.nlm.nih.gov/40549887/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "ecnoglutide",
+    name: "Ecnoglutida",
+    aka: "XW003",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Ecnoglutida é um agonista de GLP-1 de longa ação com sinalização enviesada para cAMP (cAMP-biased), desenvolvido pela Sciwind Biosciences. Diferencia-se dos agonistas tradicionais de GLP-1 por ativar seletivamente a via do cAMP enquanto reduz drasticamente o recrutamento de beta-arrestina e a internalização do receptor, resultando em maior disponibilidade sustentada do receptor e potencialmente melhor eficácia. Aprovada na China para diabetes tipo 2 (janeiro 2026) e com NDA em avaliação para obesidade. No estudo SLIMMER (Fase 3), demonstrou perda de peso de até 15,4% em 48 semanas.",
+    mechanism: "Análogo modificado do GLP-1(7-37) com substituição Ala8Val que confere agonismo enviesado (biased). A substituição potencializa seletivamente a produção de cAMP (EC50 = 0,018 nM) enquanto reduz marcadamente o recrutamento de beta-arrestina e a internalização do receptor (EC50 >10.000 nM). Isso mantém o receptor GLP-1 disponível na superfície celular por mais tempo, potencializando a resposta terapêutica. Conjugada com ácido graxo C18 via linker gamma-Glu-2xAEEA na lisina-30 para ligação à albumina, permitindo administração semanal. Fabricada por síntese recombinante (apenas aminoácidos naturais), potencialmente reduzindo custos de produção.",
+    benefits: [
+      "Perda de peso de até 15,4% em 48 semanas (SLIMMER, dose 2,4mg)",
+      "Redução de HbA1c de até 2,39% (superior a semaglutida e comparável a tirzepatida)",
+      "Primeiro agonista biased de GLP-1 validado clinicamente",
+      "Redução de gordura hepática de até 53% em pacientes com esteatose",
+      "Fabricação por síntese recombinante com potencial de menor custo",
+      "Melhora de perfil lipídico, pressão arterial e ácido úrico"
+    ],
+    sideEffects: [
+      { name: "Náusea", severity: "common" },
+      { name: "Vômito", severity: "common" },
+      { name: "Diarreia", severity: "occasional" },
+      { name: "Diminuição do apetite", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Semanal (Fase 3 - Obesidade)", dose: "1,2-2,4mg/semana", notes: "Estudo SLIMMER avaliou doses de 1,2mg, 1,8mg e 2,4mg SC semanais com escalonamento gradual. Dose de 2,4mg com maior eficácia. Perda de peso sem platô em 48 semanas nas doses de 1,8 e 2,4mg." },
+      { protocol: "Semanal (Fase 3 - Diabetes)", dose: "0,6-1,2mg/semana", notes: "Doses de 0,6mg e 1,2mg avaliadas para diabetes tipo 2 com escalonamento de 24 semanas." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~124-138 horas (~5-6 dias)",
+    status: "approved",
+    statusLabel: "Aprovado na China (DM2); NDA em avaliação (obesidade)",
+    references: [
+      "Guo W et al., 2023. 'Discovery of ecnoglutide - A novel, long-acting, cAMP-biased glucagon-like peptide-1 (GLP-1) analog.' Mol Metab, 75, 101762. <a href='https://pubmed.ncbi.nlm.nih.gov/37364710/' target='_blank'>[PubMed]</a>",
+      "Zhu D et al., 2024. 'Efficacy and safety of GLP-1 analog ecnoglutide in adults with type 2 diabetes: a randomized, double-blind, placebo-controlled phase 2 trial.' Nat Commun, 15(1), 8408. <a href='https://pubmed.ncbi.nlm.nih.gov/39333121/' target='_blank'>[PubMed]</a>",
+      "Ji L et al., 2025. 'Efficacy and safety of ecnoglutide in adults with overweight or obesity: a phase 3 trial (SLIMMER).' Lancet Diabetes Endocrinol, 13(9), 777-789. <a href='https://pubmed.ncbi.nlm.nih.gov/40555243/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "efinopegdutide",
+    name: "Efinopegdutide",
+    aka: "MK-6024, HM12525A",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Efinopegdutide é um co-agonista dual dos receptores de GLP-1 e glucagon desenvolvido pela Merck (licenciado da Hanmi Pharmaceutical), baseado na estrutura da oxintomodulina. Conjugado a fragmento Fc de IgG4 via linker PEG para meia-vida prolongada. Em estudo de Fase 2a comparativo com semaglutida, demonstrou redução de gordura hepática significativamente superior (72,7% vs. 42,3%) com perda de peso semelhante, confirmando efeito hepático direto do componente glucagon. Possui designação FDA Fast Track para NASH/MASH.",
+    mechanism: "Análogo sintético da oxintomodulina com potência relativa GLP-1R:GCGR de aproximadamente 2:1. O componente GLP-1 estimula secreção de insulina dependente de glicose, suprime glucagon, retarda esvaziamento gástrico e reduz apetite centralmente. O componente glucagon estimula diretamente a beta-oxidação de ácidos graxos hepáticos, inibe a lipogênese de novo e aumenta o gasto energético via termogênese. Conjugado a fragmento Fc de IgG4 via linker PEG, explorando a reciclagem endossomal via receptor FcRn para prolongar a meia-vida.",
+    benefits: [
+      "Redução de gordura hepática de 72,7% (vs. 42,3% da semaglutida) em 24 semanas",
+      "Normalização da gordura hepática (<5%) em dois terços dos pacientes",
+      "Perda de peso de 8,5% em 24 semanas",
+      "Efeito hepático direto superior aos agonistas puros de GLP-1",
+      "Designação FDA Fast Track para NASH/MASH",
+      "Potencial para dosagem quinzenal (em avaliação)"
+    ],
+    sideEffects: [
+      { name: "Náusea", severity: "common" },
+      { name: "Vômito", severity: "common" },
+      { name: "Dor abdominal", severity: "occasional" },
+      { name: "Diarreia", severity: "occasional" },
+      { name: "Aumento leve de frequência cardíaca", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Semanal (em estudos)", dose: "4-10mg/semana", notes: "Fase 2a utilizou 10mg/semana SC com titulação de 8 semanas. Fase 2b avalia doses de 4, 7 e 10mg/semana com titulação gradual (2mg→4mg→7mg→10mg a cada 4 semanas). Dosagem quinzenal também em avaliação." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~112-276 horas (~5-12 dias, conjugação Fc-PEG)",
+    status: "trial",
+    statusLabel: "Fase 2b (Fast Track FDA)",
+    references: [
+      "Romero-Gómez M et al., 2023. 'A phase IIa active-comparator-controlled study to evaluate the efficacy and safety of efinopegdutide in patients with non-alcoholic fatty liver disease.' J Hepatol, 79(4), 888-897. <a href='https://pubmed.ncbi.nlm.nih.gov/37355043/' target='_blank'>[PubMed]</a>",
+      "Hope DCD et al., 2021. 'Striking the Balance: GLP-1/Glucagon Co-Agonism as a Treatment Strategy for Obesity.' Front Endocrinol, 12, 735019. <a href='https://pubmed.ncbi.nlm.nih.gov/34566894/' target='_blank'>[PubMed]</a>"
+    ]
+  },
 
   // =============================================
   // CATEGORIA: HORMÔNIO DO CRESCIMENTO (growth-hormone)
