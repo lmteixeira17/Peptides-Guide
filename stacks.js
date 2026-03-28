@@ -1439,5 +1439,370 @@ var peptideStacks = [
       "Lee C et al., 2015. 'The mitochondrial-derived peptide MOTS-c promotes metabolic homeostasis and reduces obesity and insulin resistance.' Cell Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/25738459/' target='_blank'>[PubMed]</a>",
       "Pooyandjoo M et al., 2016. 'The effect of (L-)carnitine on weight loss in adults: a systematic review and meta-analysis.' Obes Rev. <a href='https://pubmed.ncbi.nlm.nih.gov/27335245/' target='_blank'>[PubMed]</a>"
     ]
+  },
+
+  // =============================================
+  // PERDA DE PESO - 100% ORAL
+  // =============================================
+  {
+    id: "weight-loss-oral",
+    name: "Perda de Peso - 100% Oral (Sem Inje\u00e7\u00f5es)",
+    goal: "weight-loss",
+    goalLabel: "Perda de Peso",
+    level: "Iniciante",
+    description: "Primeiro stack de perda de peso completamente oral, eliminando a necessidade de qualquer inje\u00e7\u00e3o. Combina o agonista GLP-1 oral de nova gera\u00e7\u00e3o (orforglipron) com suporte metab\u00f3lico cl\u00e1ssico. Ideal para pacientes com avers\u00e3o a agulhas ou que preferem conveni\u00eancia m\u00e1xima.",
+    peptides: [
+      {
+        id: "orforglipron",
+        name: "Orforglipron",
+        role: "Agonista oral n\u00e3o-pept\u00eddico do receptor GLP-1 \u2014 redu\u00e7\u00e3o de apetite, retardo do esvaziamento g\u00e1strico e melhora glic\u00eamica",
+        dose: "36-72mg/dia (ap\u00f3s escalonamento)",
+        timing: "1x ao dia, com ou sem alimentos"
+      },
+      {
+        id: "l-carnitine",
+        name: "L-Carnitina",
+        role: "Transportador de \u00e1cidos graxos para oxida\u00e7\u00e3o mitocondrial \u2014 potencializa a queima de gordura mobilizada pelo GLP-1",
+        dose: "500-2000mg/dia oral",
+        timing: "Di\u00e1rio, pela manh\u00e3 ou antes do exerc\u00edcio"
+      },
+      {
+        id: "vitamin-b12",
+        name: "Vitamina B12",
+        role: "Cofator metab\u00f3lico essencial \u2014 suporte \u00e0 produ\u00e7\u00e3o de energia e preven\u00e7\u00e3o de fadiga durante restri\u00e7\u00e3o cal\u00f3rica",
+        dose: "1000mcg/dia sublingual ou oral",
+        timing: "Di\u00e1rio, pela manh\u00e3"
+      }
+    ],
+    synergy: "Orforglipron reduz o apetite e o esvaziamento g\u00e1strico via GLP-1R, promovendo d\u00e9ficit cal\u00f3rico sustent\u00e1vel. L-Carnitina maximiza a utiliza\u00e7\u00e3o dos \u00e1cidos graxos liberados, transportando-os para oxida\u00e7\u00e3o mitocondrial. B12 mant\u00e9m a produ\u00e7\u00e3o energ\u00e9tica e previne fadiga associada \u00e0 restri\u00e7\u00e3o cal\u00f3rica. Todos os tr\u00eas s\u00e3o administrados por via oral.",
+    application: "Todos via oral \u2014 sem necessidade de inje\u00e7\u00f5es. Orforglipron: comprimido 1x/dia. L-Carnitina: c\u00e1psula ou l\u00edquido oral. B12: comprimido sublingual ou oral.",
+    duration: "12-24 semanas com monitoramento de peso e composi\u00e7\u00e3o corporal",
+    warnings: "Orforglipron est\u00e1 em Fase 3 \u2014 ainda n\u00e3o aprovado. Escalonamento de dose obrigat\u00f3rio para minimizar n\u00e1usea. Manter ingest\u00e3o proteica adequada para preservar massa muscular. N\u00e3o substitui dieta e exerc\u00edcio.",
+    evidenceLevel: "Alto (Orforglipron: Fase 3 ACHIEVE) / Moderado (L-Carnitina: meta-an\u00e1lise) / Alto (B12: bem estabelecido)",
+    references: [
+      "Rosenstock J et al., 2026. 'Efficacy and safety of once-daily oral orforglipron compared with oral semaglutide in adults with type 2 diabetes (ACHIEVE-3).' Lancet. <a href='https://pubmed.ncbi.nlm.nih.gov/41765029/' target='_blank'>[PubMed]</a>",
+      "Wharton S et al., 2025. 'Oral Semaglutide at a Dose of 25 mg in Adults with Overweight or Obesity.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/40934115/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
+  // =============================================
+  // PERDA DE PESO - ORAL AVANCADO
+  // =============================================
+  {
+    id: "weight-loss-oral-advanced",
+    name: "Perda de Peso - Oral Avan\u00e7ado (Dual GLP-1/Amilina)",
+    goal: "weight-loss",
+    goalLabel: "Perda de Peso",
+    level: "Intermedi\u00e1rio",
+    description: "Stack avan\u00e7ado centrado no amycretin, o primeiro agonista dual oral GLP-1/amilina. Com dados de at\u00e9 13% de perda de peso em 12 semanas, \u00e9 potencialmente o oral mais potente em desenvolvimento. Combinado com MOTS-c para ativa\u00e7\u00e3o metab\u00f3lica e 5-Amino-1MQ para inibi\u00e7\u00e3o de NNMT.",
+    peptides: [
+      {
+        id: "amycretin",
+        name: "Amycretin",
+        role: "Agonista dual oral GLP-1/amilina \u2014 supress\u00e3o de apetite por duas vias complementares, potencialmente o oral mais potente",
+        dose: "Dose em investiga\u00e7\u00e3o (escalonamento)",
+        timing: "1x ao dia, oral"
+      },
+      {
+        id: "mots-c",
+        name: "MOTS-c",
+        role: "Pept\u00eddeo mitocondrial \u2014 ativador de AMPK, sensibiliza\u00e7\u00e3o \u00e0 insulina e mim\u00e9tico de exerc\u00edcio",
+        dose: "5-10mg SC, 3-5x por semana",
+        timing: "3-5x por semana, preferencialmente em dias de exerc\u00edcio"
+      },
+      {
+        id: "5-amino-1mq",
+        name: "5-Amino-1MQ",
+        role: "Inibidor de NNMT \u2014 ativa o metabolismo de gordura e previne acumula\u00e7\u00e3o adiposa via reprograma\u00e7\u00e3o metab\u00f3lica",
+        dose: "50-100mg/dia oral",
+        timing: "Di\u00e1rio, pela manh\u00e3"
+      }
+    ],
+    synergy: "Amycretin suprime o apetite por duas vias distintas: GLP-1 (saciedade central e retardo g\u00e1strico) e amilina (saciedade adicional e inibi\u00e7\u00e3o de glucagon). MOTS-c ativa AMPK nas c\u00e9lulas musculares, mimetizando exerc\u00edcio e aumentando oxida\u00e7\u00e3o de gorduras. 5-Amino-1MQ inibe NNMT, reprogramando o metabolismo adiposo para favorecer lip\u00f3lise. Os tr\u00eas atuam em vias n\u00e3o-sobrepostas.",
+    application: "Amycretin: oral 1x/dia. 5-Amino-1MQ: oral, di\u00e1rio. MOTS-c: \u00fanica inje\u00e7\u00e3o SC do stack, em seringa pr\u00f3pria nos dias programados. N\u00e3o misturar MOTS-c com outros compostos.",
+    duration: "12-20 semanas",
+    warnings: "Amycretin est\u00e1 em Fase 2 \u2014 dados cl\u00ednicos ainda limitados. MOTS-c e 5-Amino-1MQ s\u00e3o experimentais. Monitorar glicemia, perfil lip\u00eddico e composi\u00e7\u00e3o corporal. Manter ingest\u00e3o proteica adequada.",
+    evidenceLevel: "Moderado (Amycretin: Fase 2 promissora) / Moderado (MOTS-c) / Baixo (5-Amino-1MQ: dados pr\u00e9-cl\u00ednicos)",
+    references: [
+      "Fu L et al., 2026. 'Amycretin in obesity: Mechanisms, clinical efficacy, and future perspectives.' Metabolism. <a href='https://pubmed.ncbi.nlm.nih.gov/41850421/' target='_blank'>[PubMed]</a>",
+      "Bailey CJ et al., 2026. 'Long-acting amylin-related peptides as therapies for obesity and type 2 diabetes.' Peptides. <a href='https://pubmed.ncbi.nlm.nih.gov/41747885/' target='_blank'>[PubMed]</a>",
+      "Vienghirun J et al., 2026. 'GLP-1 Receptor/Dual Agonists for Weight Loss: A Systematic Review and Network Meta-Analysis of RCTs.' Diabetes Obes Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/41872986/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
+  // =============================================
+  // RECOMPOSICAO CORPORAL - MAXIMA
+  // =============================================
+  {
+    id: "body-recomp-max",
+    name: "Recomposi\u00e7\u00e3o Corporal - M\u00e1xima (Anti-Miostatina + GLP-1)",
+    goal: "body-comp",
+    goalLabel: "Composi\u00e7\u00e3o Corporal",
+    level: "Avan\u00e7ado",
+    description: "Stack revolucion\u00e1rio combinando bimagrumab (o \u00fanico agente que reduz gordura E aumenta massa magra simultaneamente) com semaglutida para perda de peso potente e tesamorelin para otimiza\u00e7\u00e3o do GH. Baseado em ensaio cl\u00ednico de Fase 2 que demonstrou superioridade da combina\u00e7\u00e3o bimagrumab+semaglutida.",
+    peptides: [
+      {
+        id: "bimagrumab",
+        name: "Bimagrumab",
+        role: "Anticorpo anti-ActRII \u2014 bloqueia miostatina/activina, promovendo ganho de massa magra E perda de massa gorda simultaneamente",
+        dose: "10mg/kg IV a cada 4 semanas",
+        timing: "Infus\u00e3o IV mensal"
+      },
+      {
+        id: "semaglutide",
+        name: "Semaglutida",
+        role: "Agonista GLP-1 \u2014 redu\u00e7\u00e3o robusta de peso com saciedade central e retardo g\u00e1strico",
+        dose: "0.25-2.4mg SC/semana (escalonamento)",
+        timing: "1x por semana, dia fixo"
+      },
+      {
+        id: "tesamorelin",
+        name: "Tesamorelin",
+        role: "An\u00e1logo de GHRH \u2014 estimula secre\u00e7\u00e3o pulsat\u00edtil de GH, reduz gordura visceral e suporta massa magra",
+        dose: "1-2mg SC/dia",
+        timing: "Di\u00e1rio, \u00e0 noite antes de dormir"
+      }
+    ],
+    synergy: "Bimagrumab bloqueia ActRII, removendo o freio sobre o crescimento muscular e promovendo adiposidade bege/marrom. Semaglutida promove d\u00e9ficit cal\u00f3rico sustent\u00e1vel via GLP-1. Tesamorelin eleva GH de forma fisiol\u00f3gica, reduzindo gordura visceral e suportando anabolismo proteico. O ensaio cl\u00ednico Heymsfield 2026 demonstrou que bimagrumab preserva massa magra durante perda de peso com semaglutida.",
+    application: "Bimagrumab: infus\u00e3o IV mensal em ambiente cl\u00ednico \u2014 n\u00e3o \u00e9 para autoadministra\u00e7\u00e3o. Semaglutida: SC 1x/semana, seringa pr\u00f3pria. Tesamorelin: SC di\u00e1rio, seringa pr\u00f3pria. N\u00e3o misturar nenhum dos compostos na mesma seringa.",
+    duration: "24-48 semanas (ciclos de bimagrumab com avalia\u00e7\u00e3o a cada 12 semanas)",
+    warnings: "Bimagrumab requer infus\u00e3o IV profissional. Pode causar eleva\u00e7\u00e3o transit\u00f3ria de FSH e espasmos musculares. Semaglutida requer escalonamento. Stack de custo elevado e complexidade log\u00edstica. Monitorar composi\u00e7\u00e3o corporal via DEXA.",
+    evidenceLevel: "Alto (Semaglutida: Fase 3 STEP) / Moderado-Alto (Bimagrumab: Fase 2 em Nat Med) / Alto (Tesamorelin: aprovado FDA)",
+    references: [
+      "Heymsfield SB et al., 2026. 'Bimagrumab plus semaglutide alone or in combination for the treatment of obesity: a randomized phase 2 trial.' Nat Med. <a href='https://pubmed.ncbi.nlm.nih.gov/41772149/' target='_blank'>[PubMed]</a>",
+      "Kaiser M et al., 2025. 'Bimagrumab: Novel Medical Therapy for Inclusion Body Myositis, Sarcopenia, and Medication-Induced Lean Body Mass Loss.' Cardiol Rev. <a href='https://pubmed.ncbi.nlm.nih.gov/41248895/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
+  // =============================================
+  // MIMETICO DE EXERCICIO COMPLETO
+  // =============================================
+  {
+    id: "exercise-mimetic-complete",
+    name: "Mim\u00e9tico de Exerc\u00edcio - Completo (Triplo Ativador)",
+    goal: "body-comp",
+    goalLabel: "Composi\u00e7\u00e3o Corporal",
+    level: "Intermedi\u00e1rio",
+    description: "Stack triplo de mim\u00e9ticos de exerc\u00edcio com o acr\u00e9scimo de apelin-13, o pept\u00eddeo end\u00f3geno que declina com a idade e cujos efeitos reproduzem os benef\u00edcios cardiovasculares e musculares da atividade f\u00edsica. Combina quatro vias distintas de ativa\u00e7\u00e3o metab\u00f3lica.",
+    peptides: [
+      {
+        id: "apelin-13",
+        name: "Apelin-13",
+        role: "Ligante do receptor APJ \u2014 cardioprote\u00e7\u00e3o, regenera\u00e7\u00e3o muscular, biog\u00eanese mitocondrial e sensibiliza\u00e7\u00e3o \u00e0 insulina. Declina com o envelhecimento",
+        dose: "Doses em investiga\u00e7\u00e3o (nmol/kg SC)",
+        timing: "Di\u00e1rio, pela manh\u00e3"
+      },
+      {
+        id: "mots-c",
+        name: "MOTS-c",
+        role: "Pept\u00eddeo mitocondrial \u2014 ativador de AMPK end\u00f3geno, mimetiza sinaliza\u00e7\u00e3o metab\u00f3lica do exerc\u00edcio",
+        dose: "5-10mg SC, 3-5x por semana",
+        timing: "3-5x por semana"
+      },
+      {
+        id: "aicar",
+        name: "AICAR",
+        role: "Ativador direto de AMPK via an\u00e1logo de AMP \u2014 for\u00e7a estado de d\u00e9ficit energ\u00e9tico simulado",
+        dose: "50-150mg/dia SC",
+        timing: "Di\u00e1rio, antes do exerc\u00edcio"
+      }
+    ],
+    synergy: "Apelin-13 ativa o receptor APJ promovendo biog\u00eanese mitocondrial, vasodilata\u00e7\u00e3o e regenera\u00e7\u00e3o muscular \u2014 efeitos que declinam naturalmente com a idade. MOTS-c ativa AMPK por via mitocondrial end\u00f3gena. AICAR ativa AMPK diretamente como an\u00e1logo de AMP. As tr\u00eas vias convergem em aumento da oxida\u00e7\u00e3o de gorduras, biog\u00eanese mitocondrial e melhora da sensibilidade \u00e0 insulina, por mecanismos n\u00e3o-sobrepostos.",
+    application: "Todos separados \u2014 vias e formula\u00e7\u00f5es distintas. Apelin-13: SC em seringa pr\u00f3pria. MOTS-c: SC em seringa separada. AICAR: SC em seringa separada. N\u00e3o misturar nenhum composto.",
+    duration: "8-12 semanas com avalia\u00e7\u00e3o de resultados",
+    warnings: "Apelin-13 tem meia-vida muito curta (~5min); an\u00e1logos est\u00e1veis est\u00e3o em desenvolvimento. AICAR pode causar hipoglicemia \u2014 monitorar glicemia. AICAR \u00e9 substância proibida pela WADA. Stack altamente experimental. N\u00e3o substitui exerc\u00edcio f\u00edsico real.",
+    evidenceLevel: "Baixo-Moderado (Apelin-13: pesquisa ativa) / Moderado (MOTS-c) / Moderado (AICAR: pr\u00e9-cl\u00ednico robusto)",
+    references: [
+      "Davenport AP et al., 2026. 'Apelin receptor pharmacology in the human cardiovascular system and emerging clinical applications.' Pharmacol Rev. <a href='https://pubmed.ncbi.nlm.nih.gov/41895070/' target='_blank'>[PubMed]</a>",
+      "Alizadeh Pahlavani H et al., 2022. 'Exercise Therapy for People With Sarcopenic Obesity: Myokines and Adipokines as Effective Actors.' Front Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/35250869/' target='_blank'>[PubMed]</a>",
+      "Lee DJ et al., 2026. 'Role of apelin as a biomarker in functional recovery and post-stroke-associated sarcopenia.' PeerJ. <a href='https://pubmed.ncbi.nlm.nih.gov/41809696/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
+  // =============================================
+  // SAUDE INTESTINAL - BARREIRA
+  // =============================================
+  {
+    id: "gut-barrier",
+    name: "Sa\u00fade Intestinal - Restaura\u00e7\u00e3o da Barreira",
+    goal: "healing",
+    goalLabel: "Cura e Recupera\u00e7\u00e3o",
+    level: "Intermedi\u00e1rio",
+    description: "Stack focado na restaura\u00e7\u00e3o da integridade da barreira intestinal, combinando o modulador de tight junctions (larazotide) com pept\u00eddeos de reparo mucoso (BPC-157) e anti-inflamat\u00f3rio intestinal (KPV). Indicado para permeabilidade intestinal aumentada, doen\u00e7a cel\u00edaca e condi\u00e7\u00f5es inflamat\u00f3rias intestinais.",
+    peptides: [
+      {
+        id: "larazotide",
+        name: "Larazotide",
+        role: "Antagonista de zonulina \u2014 restaura tight junctions e previne permeabilidade intestinal aumentada",
+        dose: "0.5mg 3x/dia oral",
+        timing: "3x ao dia, antes das refei\u00e7\u00f5es"
+      },
+      {
+        id: "bpc-157",
+        name: "BPC-157",
+        role: "Pentadecapept\u00eddeo g\u00e1strico \u2014 reparo da mucosa intestinal, angiog\u00eanese e modula\u00e7\u00e3o do eixo c\u00e9rebro-intestino",
+        dose: "250-500mcg SC/dia ou oral",
+        timing: "Di\u00e1rio, em jejum"
+      },
+      {
+        id: "kpv",
+        name: "KPV",
+        role: "Tripept\u00eddeo anti-inflamat\u00f3rio derivado de \u03b1-MSH \u2014 redu\u00e7\u00e3o da inflama\u00e7\u00e3o intestinal via inibi\u00e7\u00e3o de NF-\u03baB",
+        dose: "200-500mcg SC/dia ou oral",
+        timing: "Di\u00e1rio, em jejum"
+      }
+    ],
+    synergy: "Larazotide atua na causa da permeabilidade intestinal, bloqueando zonulina e restaurando as tight junctions. BPC-157 promove reparo ativo da mucosa danificada atrav\u00e9s de angiog\u00eanese e modula\u00e7\u00e3o do \u00f3xido n\u00edtrico. KPV suprime a inflama\u00e7\u00e3o intestinal via inibi\u00e7\u00e3o de NF-\u03baB nos enter\u00f3citos. Os tr\u00eas atuam em n\u00edveis diferentes: barreira (larazotide), reparo (BPC-157) e inflama\u00e7\u00e3o (KPV).",
+    application: "Larazotide: oral, antes das refei\u00e7\u00f5es \u2014 a\u00e7\u00e3o local no lumen. BPC-157: SC ou oral (estabilidade oral razo\u00e1vel). KPV: SC ou oral. Se usar BPC-157 e KPV injet\u00e1veis, podem ser aplicados SC em locais separados. N\u00e3o misturar na mesma seringa.",
+    duration: "8-16 semanas com avalia\u00e7\u00e3o de sintomas e marcadores inflamat\u00f3rios",
+    warnings: "Larazotide est\u00e1 em Fase 3 para doen\u00e7a cel\u00edaca. BPC-157 enfrenta escr\u00fat\u00ednio regulat\u00f3rio do FDA. Di\u00e9ta adequada (redu\u00e7\u00e3o de gl\u00faten se cel\u00edaco) \u00e9 essencial em conjunto. Consultar gastroenterologista.",
+    evidenceLevel: "Moderado-Alto (Larazotide: Fase 3) / Moderado (BPC-157: extensa pesquisa pr\u00e9-cl\u00ednica) / Moderado (KPV: dados pr\u00e9-cl\u00ednicos)",
+    references: [
+      "Kim J et al., 2025. 'Larazotide Acetate Protects the Intestinal Mucosal Barrier from Anoxia/Reoxygenation Injury via Various Cellular Mechanisms.' Biomedicines. <a href='https://pubmed.ncbi.nlm.nih.gov/41153766/' target='_blank'>[PubMed]</a>",
+      "Girbal-Gonz\u00e1lez M et al., 2025. 'Is There a Future Without Gluten Restrictions for Celiac Patients? Update on Current Treatments.' Nutrients. <a href='https://pubmed.ncbi.nlm.nih.gov/41010485/' target='_blank'>[PubMed]</a>",
+      "Sikiric P et al., 2018. 'Brain-gut Axis and Pentadecapeptide BPC 157: Theoretical and Practical Implications.' Curr Neuropharmacol. <a href='https://pubmed.ncbi.nlm.nih.gov/27138887/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
+  // =============================================
+  // ANTI-INFLAMATORIO SISTEMICO
+  // =============================================
+  {
+    id: "anti-inflammatory",
+    name: "Anti-Inflamat\u00f3rio Sist\u00eamico - Tr\u00edplice Via",
+    goal: "immune",
+    goalLabel: "Sistema Imunol\u00f3gico",
+    level: "Intermedi\u00e1rio",
+    description: "Stack anti-inflamat\u00f3rio combinando tr\u00eas pept\u00eddeos que atuam em vias complementares do sistema melanocortina e imunol\u00f3gico. Alpha-MSH \u00e9 o pept\u00eddeo end\u00f3geno anti-inflamat\u00f3rio mais potente, KPV \u00e9 seu derivado tripept\u00eddeo com a\u00e7\u00e3o intestinal preferencial, e TA-1 \u00e9 o imunomodulador de refer\u00eancia.",
+    peptides: [
+      {
+        id: "alpha-msh",
+        name: "Alpha-MSH",
+        role: "Pept\u00eddeo anti-inflamat\u00f3rio end\u00f3geno \u2014 suprime TNF-\u03b1, IL-1\u03b2 e IL-6 via MC1R em macr\u00f3fagos e neutr\u00f3filos",
+        dose: "Doses em investiga\u00e7\u00e3o (mcg SC)",
+        timing: "Di\u00e1rio, SC"
+      },
+      {
+        id: "kpv",
+        name: "KPV",
+        role: "Tripept\u00eddeo C-terminal do \u03b1-MSH \u2014 inibi\u00e7\u00e3o de NF-\u03baB com tropismo intestinal. Penetra\u00e7\u00e3o oral vi\u00e1vel",
+        dose: "200-500mcg SC/dia ou oral",
+        timing: "Di\u00e1rio"
+      },
+      {
+        id: "thymosin-alpha-1",
+        name: "Thymosin Alpha-1",
+        role: "Imunomodulador \u2014 ativa c\u00e9lulas dendr\u00edticas, NK e T-helper, equilibrando resposta Th1/Th2",
+        dose: "1.6mg SC, 2-3x por semana",
+        timing: "2-3x por semana"
+      }
+    ],
+    synergy: "Alpha-MSH suprime inflama\u00e7\u00e3o via receptores de melanocortina (MC1R) em c\u00e9lulas imunes inatas, reduzindo citocinas pr\u00f3-inflamat\u00f3rias. KPV, como fragmento ativo do \u03b1-MSH, complementa com a\u00e7\u00e3o anti-inflamat\u00f3ria preferencial no intestino via inibi\u00e7\u00e3o direta de NF-\u03baB. TA-1 modula a resposta imune adaptativa, equilibrando Th1/Th2 e ativando c\u00e9lulas dendr\u00edticas. A combina\u00e7\u00e3o abrange imunidade inata (\u03b1-MSH, KPV) e adaptativa (TA-1).",
+    application: "Alpha-MSH: SC em seringa pr\u00f3pria. KPV: SC ou oral, separado. TA-1: SC em seringa pr\u00f3pria. N\u00e3o misturar nenhum composto na mesma seringa.",
+    duration: "8-12 semanas com monitoramento de marcadores inflamat\u00f3rios (PCR, IL-6)",
+    warnings: "Alpha-MSH causa hiperpigmenta\u00e7\u00e3o cut\u00e2nea como efeito colateral. Meia-vida muito curta (~15min). TA-1 pode exacerbar doen\u00e7as autoimunes ativas \u2014 avaliar antes de iniciar. Consultar imunologista para condi\u00e7\u00f5es autoimunes.",
+    evidenceLevel: "Moderado (Alpha-MSH: pesquisa pr\u00e9-cl\u00ednica robusta) / Moderado (KPV: dados in vivo) / Alto (TA-1: aprovado em v\u00e1rios pa\u00edses)",
+    references: [
+      "Sch\u00e4fer N et al., 2026. 'The \u03b1-MSH-MC1R Axis Modulates Sex-Specific Senescence and Inflammation Processes in Human Articular Chondrocytes and Mice Knee Joints.' Aging Dis. <a href='https://pubmed.ncbi.nlm.nih.gov/41824482/' target='_blank'>[PubMed]</a>",
+      "Kamermans A et al., 2019. 'Setmelanotide, a Novel, Selective Melanocortin Receptor-4 Agonist Exerts Anti-inflammatory Actions in Astrocytes and Promotes an Anti-inflammatory Macrophage Phenotype.' Front Immunol. <a href='https://pubmed.ncbi.nlm.nih.gov/31636637/' target='_blank'>[PubMed]</a>",
+      "Garaci E et al., 2007. 'Thymosin alpha 1: from bench to bedside.' Ann N Y Acad Sci. <a href='https://pubmed.ncbi.nlm.nih.gov/17600290/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
+  // =============================================
+  // NEUROPROTECAO COMPLETA
+  // =============================================
+  {
+    id: "neuroprotection-complete",
+    name: "Neuroprote\u00e7\u00e3o Completa - Biorregulador + Nootr\u00f3picos + NCAM",
+    goal: "cognitive",
+    goalLabel: "Cognitivo",
+    level: "Avan\u00e7ado",
+    description: "Stack cognitivo avan\u00e7ado que combina o biorregulador cortical de Khavinson (Cortagen) com os nootr\u00f3picos nasais cl\u00e1ssicos (Semax, Selank) e o pept\u00eddeo neurog\u00eanico derivado de NCAM (FGL). Aborda neuroprote\u00e7\u00e3o, neurog\u00eanese, plasticidade sin\u00e1ptica e regula\u00e7\u00e3o emocional por quatro vias distintas.",
+    peptides: [
+      {
+        id: "cortagen",
+        name: "Cortagen",
+        role: "Tetrapept\u00eddeo biorregulador do c\u00f3rtex cerebral \u2014 neuroprote\u00e7\u00e3o epigen\u00e9tica e antioxidante espec\u00edfica do tecido cortical",
+        dose: "10-20mg/dia SC ou IN",
+        timing: "Di\u00e1rio, em ciclos de 10-20 dias"
+      },
+      {
+        id: "semax",
+        name: "Semax",
+        role: "An\u00e1logo de ACTH(4-10) \u2014 nootr\u00f3pico com a\u00e7\u00e3o neuroprotetora, ativa\u00e7\u00e3o dopamin\u00e9rgica e serotonin\u00e9rgica e produ\u00e7\u00e3o de BDNF",
+        dose: "200-600mcg/dia intranasal",
+        timing: "1-2x ao dia, intranasal"
+      },
+      {
+        id: "selank",
+        name: "Selank",
+        role: "Pept\u00eddeo ansiol\u00edtico \u2014 modula GABA, serotonina e BDNF sem seda\u00e7\u00e3o. Complementa Semax na regula\u00e7\u00e3o emocional",
+        dose: "200-600mcg/dia intranasal",
+        timing: "1-2x ao dia, intranasal"
+      },
+      {
+        id: "fgl-peptide",
+        name: "FGL Peptide",
+        role: "Derivado de NCAM \u2014 promove plasticidade sin\u00e1ptica, neurog\u00eanese e mobiliza c\u00e9lulas-tronco neurais end\u00f3genas via FGFR",
+        dose: "Vari\u00e1vel conforme estudo (SC)",
+        timing: "3-5x por semana, SC"
+      }
+    ],
+    synergy: "Cortagen modula epigeneticamente neur\u00f4nios corticais, normalizando express\u00e3o g\u00eanica e combatendo estresse oxidativo. Semax ativa sistemas dopamin\u00e9rgico e serotonin\u00e9rgico, estimulando BDNF e neuroprote\u00e7\u00e3o. Selank complementa com anxiolis e BDNF adicional por vias GABAergicas. FGL promove neurog\u00eanese e plasticidade sin\u00e1ptica via ativa\u00e7\u00e3o de FGFR. As quatro vias (epigen\u00e9tica, monoamin\u00e9rgica, GABAergica e NCAM/FGFR) s\u00e3o n\u00e3o-sobrepostas.",
+    application: "Semax + Selank: intranasal na mesma sess\u00e3o (um por narina ou sequencialmente). Cortagen: SC ou intranasal separado. FGL: SC em seringa pr\u00f3pria. N\u00e3o misturar injet\u00e1veis.",
+    duration: "Cortagen: ciclos de 10-20 dias / Semax e Selank: ciclos de 4-8 semanas / FGL: 4-8 semanas",
+    warnings: "Cortagen e FGL t\u00eam dados cl\u00ednicos limitados em humanos. FGL n\u00e3o possui protocolo de dosagem humana estabelecido. Stack altamente experimental. Monitorar fun\u00e7\u00e3o cognitiva e humor com avalia\u00e7\u00f5es peri\u00f3dicas.",
+    evidenceLevel: "Moderado (Semax, Selank: aprovados na R\u00fassia) / Baixo-Moderado (Cortagen: pesquisa pr\u00e9-cl\u00ednica) / Baixo (FGL: pesquisa pr\u00e9-cl\u00ednica)",
+    references: [
+      "Kolbaev SN et al., 2025. 'The Effect of Peptide Semax, an ACTH(4-10) Analogue, on Intracellular Calcium Dynamics in Rat Brain Neurons.' Bull Exp Biol Med. <a href='https://pubmed.ncbi.nlm.nih.gov/41171324/' target='_blank'>[PubMed]</a>",
+      "Ilina AR et al., 2024. 'Prospects for use of short peptides in pharmacotherapeutic correction of Alzheimer\\'s disease.' Adv Gerontol. <a href='https://pubmed.ncbi.nlm.nih.gov/38944767/' target='_blank'>[PubMed]</a>",
+      "Klein R et al., 2016. 'The NCAM-Peptide FG Loop (FGL) Mobilizes Endogenous Neural Stem Cells after Stroke.' J Neuroimmune Pharmacol. <a href='https://pubmed.ncbi.nlm.nih.gov/27352075/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
+  // =============================================
+  // REJUVENESCIMENTO CAPILAR
+  // =============================================
+  {
+    id: "hair-rejuvenation",
+    name: "Rejuvenescimento Capilar - Duplo Cobre Pept\u00eddeo",
+    goal: "skin",
+    goalLabel: "Pele e Est\u00e9tica",
+    level: "Intermedi\u00e1rio",
+    description: "Stack focado em crescimento capilar e sa\u00fade do couro cabeludo, combinando dois pept\u00eddeos de cobre com mecanismos complementares (GHK-Cu e AHK-Cu) e Epithalon para suporte anti-envelhecimento celular. AHK-Cu demonstrou ativa\u00e7\u00e3o direta de c\u00e9lulas da papila d\u00e9rmica, enquanto GHK-Cu modula mais de 4.000 genes envolvidos em regenera\u00e7\u00e3o tecidual.",
+    peptides: [
+      {
+        id: "ahk-cu",
+        name: "AHK-Cu",
+        role: "Tripept\u00eddeo de cobre \u2014 estimula\u00e7\u00e3o direta de c\u00e9lulas da papila d\u00e9rmica, crescimento capilar e produ\u00e7\u00e3o de VEGF/FGF-7",
+        dose: "1-5ppm em s\u00e9rum capilar",
+        timing: "1-2x ao dia, aplica\u00e7\u00e3o t\u00f3pica no couro cabeludo"
+      },
+      {
+        id: "ghk-cu",
+        name: "GHK-Cu",
+        role: "Tripept\u00eddeo de cobre cl\u00e1ssico \u2014 modula\u00e7\u00e3o gen\u00e9tica ampla (4.000+ genes), regenera\u00e7\u00e3o tecidual, anti-inflamat\u00f3rio e antioxidante",
+        dose: "1-2ml de solu\u00e7\u00e3o t\u00f3pica",
+        timing: "1-2x ao dia, aplica\u00e7\u00e3o t\u00f3pica"
+      },
+      {
+        id: "epithalon",
+        name: "Epithalon",
+        role: "Tetrapept\u00eddeo ativador de telomerase \u2014 suporte anti-envelhecimento celular para c\u00e9lulas do fol\u00edculo capilar",
+        dose: "5-10mg SC/dia em ciclos",
+        timing: "Di\u00e1rio por 10-20 dias (ciclos)"
+      }
+    ],
+    synergy: "AHK-Cu ativa diretamente c\u00e9lulas da papila d\u00e9rmica via VEGF e FGF-7, estimulando fase an\u00e1gena do ciclo capilar. GHK-Cu complementa com modula\u00e7\u00e3o gen\u00e9tica ampla que favorece regenera\u00e7\u00e3o tecidual, s\u00edntese de col\u00e1geno e prote\u00e7\u00e3o antioxidante do couro cabeludo. Epithalon ativa telomerase, prolongando a capacidade replicativa das c\u00e9lulas do fol\u00edculo. Os dois cobre-pept\u00eddeos atuam em vias distintas, permitindo sinergia.",
+    application: "AHK-Cu: t\u00f3pico no couro cabeludo, 1-2x/dia. GHK-Cu: t\u00f3pico no couro cabeludo, 1-2x/dia (pode ser misturado com AHK-Cu no mesmo s\u00e9rum). NUNCA misturar GHK-Cu com \u00e1cidos (vitamina C, AHA/BHA) \u2014 o cobre \u00e9 inativado. Epithalon: SC em seringa pr\u00f3pria, separado dos t\u00f3picos.",
+    duration: "12-24 semanas para avalia\u00e7\u00e3o de crescimento capilar (ciclo capilar \u00e9 lento)",
+    warnings: "Resultados capilares requerem meses de uso consistente. N\u00e3o usar cobre-pept\u00eddeos com vitamina C ou \u00e1cidos no mesmo hor\u00e1rio. AHK-Cu tem dados cl\u00ednicos limitados (principalmente in vitro). Excesso de cobre t\u00f3pico pode causar discromia local.",
+    evidenceLevel: "Moderado (GHK-Cu: m\u00faltiplos estudos Pickart) / Baixo-Moderado (AHK-Cu: dados in vitro) / Moderado (Epithalon: estudos Khavinson)",
+    references: [
+      "Pyo HK et al., 2007. 'The effect of tripeptide-copper complex on human hair growth in vitro.' Arch Pharm Res. <a href='https://pubmed.ncbi.nlm.nih.gov/17703734/' target='_blank'>[PubMed]</a>",
+      "Pickart L et al., 2018. 'Regenerative and Protective Actions of the GHK-Cu Peptide in the Light of the New Gene Data.' Int J Mol Sci. <a href='https://pubmed.ncbi.nlm.nih.gov/29986520/' target='_blank'>[PubMed]</a>",
+      "Pickart L et al., 2015. 'GHK Peptide as a Natural Modulator of Multiple Cellular Pathways in Skin Regeneration.' Biomed Res Int. <a href='https://pubmed.ncbi.nlm.nih.gov/26236730/' target='_blank'>[PubMed]</a>"
+    ]
   }
 ];
