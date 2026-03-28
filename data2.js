@@ -135,35 +135,6 @@ var peptidesPart2 = [
     ]
   },
   {
-    id: "ahk-cu",
-    name: "AHK-Cu",
-    aka: "Peptídeo de Cobre AHK",
-    category: "healing",
-    categoryLabel: "Cura e Recuperação",
-    description: "Variante do tripeptídeo de cobre, estruturalmente similar ao GHK-Cu, contendo a sequência alanil-histidil-lisina ligada ao cobre. Este peptídeo possui propriedades regenerativas e rejuvenescedoras, sendo particularmente utilizado em aplicações dermatológicas e cosméticas para restauração da pele.",
-    mechanism: "O AHK-Cu atua de forma análoga ao GHK-Cu, funcionando como transportador de cobre e modulando a expressão gênica envolvida na reparação tecidual. Estimula a produção de componentes da matriz extracelular, incluindo colágeno e elastina, e promove a proliferação de fibroblastos. Seu mecanismo inclui a ativação de vias de sinalização celular envolvidas na regeneração e remodelação cutânea.",
-    benefits: [
-      "Rejuvenescimento e revitalização da pele",
-      "Cicatrização acelerada de feridas",
-      "Estimulação da produção de colágeno",
-      "Melhora da textura e elasticidade cutânea",
-      "Redução de sinais de envelhecimento"
-    ],
-    sideEffects: [
-      { name: "Efeitos adversos mínimos documentados", severity: "rare" }
-    ],
-    dosage: [
-      { protocol: "Tópico/Injetável", dose: "Similar ao GHK-Cu", notes: "Pode ser utilizado topicamente em formulações cosméticas ou por via injetável. Protocolos seguem diretrizes semelhantes ao GHK-Cu." }
-    ],
-    administration: "Tópica / Subcutânea (SC)",
-    halfLife: "Não bem estabelecida",
-    status: "research",
-    statusLabel: "Pesquisa",
-    references: [
-      "Pickart L et al., 2012. 'GHK-Cu in prevention of oxidative stress and degenerative conditions of aging.' Oxid Med Cell Longev. <a href='https://pubmed.ncbi.nlm.nih.gov/22666519/' target='_blank'>[PubMed]</a>"
-    ]
-  },
-  {
     id: "ll-37",
     name: "LL-37",
     aka: "Catelicidina",
@@ -607,35 +578,6 @@ var peptidesPart2 = [
     statusLabel: "Pesquisa",
     references: [
       "Khavinson VK et al., 2011. 'Tissue-specific effects of short peptides in old primates.' Bull Exp Biol Med. <a href='https://pubmed.ncbi.nlm.nih.gov/22808515/' target='_blank'>[PubMed]</a>"
-    ]
-  },
-  {
-    id: "cortagen",
-    name: "Cortagen",
-    aka: "Peptídeo Biorregulador do Córtex Cerebral",
-    category: "anti-aging",
-    categoryLabel: "Anti-Envelhecimento",
-    description: "Peptídeo biorregulador curto desenvolvido especificamente para suporte e proteção do córtex cerebral. Pertence à classe de biorreguladores peptídicos de Khavinson e é direcionado à manutenção da função neural cortical, com potencial aplicação na prevenção do declínio cognitivo associado ao envelhecimento.",
-    mechanism: "O Cortagen atua na regulação da expressão gênica em neurônios corticais. Penetra nas células nervosas e modula a transcrição de genes envolvidos na neurotransmissão, plasticidade sináptica e sobrevivência neuronal. Promove a síntese de fatores neurotróficos endógenos e proteínas sinápticas, potencialmente preservando a integridade e função do córtex cerebral contra a neurodegeneração associada ao envelhecimento.",
-    benefits: [
-      "Suporte ao córtex cerebral e função neuronal",
-      "Melhora da função cognitiva",
-      "Neuroproteção contra degeneração relacionada à idade",
-      "Promoção da plasticidade sináptica",
-      "Potencial na preservação da memória e aprendizado"
-    ],
-    sideEffects: [
-      { name: "Efeitos adversos mínimos documentados", severity: "rare" }
-    ],
-    dosage: [
-      { protocol: "Padrão", dose: "10-20mg por dia por 10-15 dias", notes: "Administrar em ciclos de 10-15 dias, repetindo a cada 3-6 meses. Pode ser combinado com Pinealon para efeito sinérgico neuroprotetor." }
-    ],
-    administration: "Subcutânea (SC)",
-    halfLife: "Não bem estabelecida",
-    status: "research",
-    statusLabel: "Pesquisa",
-    references: [
-      "Khavinson VK, 2002. 'Peptides and Ageing.' Neuroendocrinol Lett. <a href='https://pubmed.ncbi.nlm.nih.gov/12374906/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
