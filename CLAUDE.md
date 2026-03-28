@@ -171,10 +171,9 @@ Converte notacao JS para JSON valido usando processamento boundary-aware:
 ### Servidor de Producao
 - **IP:** 45.63.90.69
 - **OS:** Ubuntu 22.04.5 LTS
-- **Acesso SSH:** root (porta 22)
+- **Acesso SSH:** `ssh -i C:\Users\lm\.ssh\id_rsa root@45.63.90.69`
 - **URL do site:** http://45.63.90.69/peptides/
-- **Admin Django:** http://45.63.90.69/peptides/admin/
-  - Usuario: `admin` / `PeptidesAdmin2026!`
+- **Admin Django:** http://45.63.90.69/peptides/admin/ (credenciais no MEMORY.md)
 
 ### Containers Docker
 | Container | Imagem | Porta | Funcao |
@@ -206,7 +205,7 @@ nginx-proxy (nginx:alpine) → porta 80/443
 ```
 
 ### Como Fazer Redeploy
-1. SSH no servidor: `ssh root@45.63.90.69`
+1. SSH no servidor: `ssh -i C:\Users\lm\.ssh\id_rsa root@45.63.90.69`
 2. Atualizar codigo:
    ```bash
    cd /var/www/peptides-guide && git pull
@@ -431,13 +430,11 @@ O campo `application` deve descrever quais peptideos podem ser co-administrados:
 
 ## Acesso ao Servidor (SSH)
 
-Para operacoes no servidor, usar PuTTY (plink/pscp) a partir do ambiente Windows:
+Usar chave SSH a partir do ambiente Windows:
 ```
-plink -ssh -batch -pw "SENHA" root@45.63.90.69 "comando"
-pscp -batch -pw "SENHA" arquivo_local root@45.63.90.69:/caminho/remoto
+ssh -i C:\Users\lm\.ssh\id_rsa root@45.63.90.69 "comando"
+scp -i C:\Users\lm\.ssh\id_rsa arquivo_local root@45.63.90.69:/caminho/remoto
 ```
-
-Python com paramiko tambem esta disponivel no ambiente local para scripts mais complexos.
 
 ---
 ---
@@ -450,7 +447,7 @@ Plataforma Django para gerenciamento de exames de sangue com extracao e analise 
 
 **Idioma do conteudo:** Portugues (pt-BR)
 **URL:** https://mlt.com.br/blood/
-**Admin Django:** https://mlt.com.br/blood/admin/ (admin / admin123)
+**Admin Django:** https://mlt.com.br/blood/admin/ (credenciais no MEMORY.md)
 
 ---
 
@@ -664,9 +661,9 @@ docker exec -it blood-exams python manage.py shell -c "exec(open('backfill_refs.
 **Staging local:** `C:\Users\lm\AppData\Local\Temp\blood-upload\`
 
 1. Editar arquivos localmente no staging
-2. Upload via pscp:
+2. Upload via scp:
    ```
-   pscp -batch -pw "SENHA" arquivo_local root@45.63.90.69:/var/www/blood-exams/caminho/
+   scp -i C:\Users\lm\.ssh\id_rsa arquivo_local root@45.63.90.69:/var/www/blood-exams/caminho/
    ```
 3. Build e restart:
    ```bash

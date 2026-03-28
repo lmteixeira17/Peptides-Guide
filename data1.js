@@ -316,7 +316,7 @@ var peptidesPart1 = [
       { name: "Reações no local da injeção", severity: "occasional" }
     ],
     dosage: [
-      { protocol: "Diário (em estudos)", dose: "250-500mcg/dia", notes: "Em protocolos de pesquisa, doses de 250-500mcg/dia foram utilizadas, tipicamente administradas em jejum pela manhã. Dados clínicos robustos em humanos ainda são limitados." }
+      { protocol: "Diário (em estudos)", dose: "250-500mcg/dia", notes: "Em protocolos de pesquisa, doses de 250-500mcg/dia foram utilizadas. Administrar em jejum — pela manhã (antes do café) ou à noite (2-3h após última refeição, antes de dormir). A aplicação noturna aproveita o pico natural de GH durante o sono. Dados clínicos robustos em humanos ainda são limitados." }
     ],
     administration: "Subcutânea (SC)",
     halfLife: "Não bem estabelecida",
