@@ -1080,5 +1080,138 @@ var peptidesPart2 = [
     references: [
       "Sakurai T et al., 1998. 'Orexins and orexin receptors: a family of hypothalamic neuropeptides and G protein-coupled receptors that regulate feeding behavior.' Cell. <a href='https://pubmed.ncbi.nlm.nih.gov/9491897/' target='_blank'>[PubMed]</a>"
     ]
+  },
+
+  // ========================================
+  // COGNITIVO - BIORREGULADORES E NCAM
+  // ========================================
+  {
+    id: "cortagen",
+    name: "Cortagen",
+    aka: "Pept\u00eddeo biorregulador do c\u00f3rtex cerebral",
+    category: "cognitive",
+    categoryLabel: "Cognitivo",
+    description: "Cortagen \u00e9 um tetrapept\u00eddeo biorregulador (Ala-Glu-Asp-Pro) desenvolvido pelo grupo de Khavinson no Instituto de Biorregula\u00e7\u00e3o e Gerontologia de S\u00e3o Petersburgo. Pertence \u00e0 mesma classe de pept\u00eddeos biorreguladores que Pinealon, Vesugen e Cardiogen, com especificidade para o c\u00f3rtex cerebral. Estudos pr\u00e9-cl\u00ednicos demonstram efeitos neuroprotetores e antioxidantes, com capacidade de corrigir dist\u00farbios funcionais e metab\u00f3licos cerebrais em modelos de isquemia cr\u00f4nica.",
+    mechanism: "Atua como biorregulador epigen\u00e9tico espec\u00edfico do tecido cortical cerebral. Modula a express\u00e3o g\u00eanica em neur\u00f4nios corticais, regulando processos de repara\u00e7\u00e3o celular e prote\u00e7\u00e3o contra estresse oxidativo. Demonstrou capacidade de normalizar biomarcadores de envelhecimento cerebral e reduzir processos de radicais livres no tecido nervoso.",
+    benefits: [
+      "Neuroprote\u00e7\u00e3o em modelos de isquemia cerebral cr\u00f4nica",
+      "Atividade antioxidante no tecido nervoso",
+      "Corre\u00e7\u00e3o de dist\u00farbios metab\u00f3licos cerebrais",
+      "Complemento aos biorreguladores Pinealon e Vesugen",
+      "Perfil de seguran\u00e7a favor\u00e1vel (tetrapept\u00eddeo natural)"
+    ],
+    sideEffects: [
+      { name: "Dados limitados em humanos", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "Pesquisa (biorregulador)", dose: "10-20mg/dia", notes: "Protocolos baseados em estudos pr\u00e9-cl\u00ednicos e uso cl\u00ednico limitado na R\u00fassia. Tipicamente em ciclos de 10-20 dias, via subcut\u00e2nea ou nasal." }
+    ],
+    administration: "Subcut\u00e2nea (SC) ou Intranasal (IN)",
+    halfLife: "Curta (minutos, como outros tetrapept\u00eddeos)",
+    status: "research",
+    statusLabel: "Pesquisa",
+    references: [
+      "Zarubina IV et al., 2011. 'Cortexin and cortagen as correcting agents in functional and metabolic disorders in the brain in chronic ischemia.' Eksp Klin Farmakol. <a href='https://pubmed.ncbi.nlm.nih.gov/21476278/' target='_blank'>[PubMed]</a>",
+      "Kozina LS et al., 2007. 'Effects of bioactive tetrapeptides on free-radical processes.' Bull Exp Biol Med. <a href='https://pubmed.ncbi.nlm.nih.gov/18239817/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "fgl-peptide",
+    name: "FGL Peptide",
+    aka: "FG Loop Peptide / Pept\u00eddeo derivado de NCAM",
+    category: "cognitive",
+    categoryLabel: "Cognitivo",
+    description: "O FGL (FG Loop) \u00e9 um pept\u00eddeo sint\u00e9tico derivado da segunda fibronectina tipo III (F3II) da mol\u00e9cula de ades\u00e3o celular neural (NCAM). Promove plasticidade sin\u00e1ptica, neurog\u00eanese e regenera\u00e7\u00e3o neural. Estudos em modelos animais demonstraram mobiliza\u00e7\u00e3o de c\u00e9lulas-tronco neurais end\u00f3genas ap\u00f3s AVC e modula\u00e7\u00e3o de comportamentos emocionais em primatas n\u00e3o-humanos. Considerado uma alternativa mais segura ao Dihexa no campo dos nootr\u00f3picos.",
+    mechanism: "Mimetiza a intera\u00e7\u00e3o do dom\u00ednio FG loop da NCAM com o receptor FGFR (receptor do fator de crescimento de fibroblastos). Ativa cascatas de sinaliza\u00e7\u00e3o FGFR/Ras/MAPK e PI3K/Akt, promovendo neuritog\u00eanese, sobreviv\u00eancia neuronal, plasticidade sin\u00e1ptica e mobiliza\u00e7\u00e3o de c\u00e9lulas-tronco neurais end\u00f3genas.",
+    benefits: [
+      "Promo\u00e7\u00e3o de plasticidade sin\u00e1ptica e neurog\u00eanese",
+      "Mobiliza\u00e7\u00e3o de c\u00e9lulas-tronco neurais end\u00f3genas",
+      "Capacidade regenerativa ap\u00f3s les\u00e3o cerebral (AVC)",
+      "Modula\u00e7\u00e3o de emotividade em modelos animais",
+      "Alternativa ao Dihexa com potencial de menor risco"
+    ],
+    sideEffects: [
+      { name: "Dados limitados (pesquisa pr\u00e9-cl\u00ednica)", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "Pesquisa", dose: "Vari\u00e1vel conforme estudo", notes: "Doses utilizadas em modelos animais variam conforme via de administra\u00e7\u00e3o. Sem protocolos cl\u00ednicos estabelecidos em humanos." }
+    ],
+    administration: "Subcut\u00e2nea (SC)",
+    halfLife: "N\u00e3o bem estabelecida",
+    status: "research",
+    statusLabel: "Pesquisa",
+    references: [
+      "Klein R et al., 2016. 'The Neural Cell Adhesion Molecule-Derived (NCAM)-Peptide FG Loop (FGL) Mobilizes Endogenous Neural Stem Cells and Promotes Endogenous Regenerative Capacity after Stroke.' J Neuroimmune Pharmacol. <a href='https://pubmed.ncbi.nlm.nih.gov/27352075/' target='_blank'>[PubMed]</a>",
+      "Turner CA et al., 2019. 'Neural cell adhesion molecule peptide mimetics modulate emotionality: pharmacokinetic and behavioral studies in rats and non-human primates.' Neuropsychopharmacology. <a href='https://pubmed.ncbi.nlm.nih.gov/29703997/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
+  // ========================================
+  // PELE E ESTETICA
+  // ========================================
+  {
+    id: "ahk-cu",
+    name: "AHK-Cu",
+    aka: "Alanil-Histidil-Lisina Cobre / Tripept\u00eddeo de Cobre AHK",
+    category: "skin",
+    categoryLabel: "Pele e Est\u00e9tica",
+    description: "AHK-Cu (Alanil-Histidil-Lisina complexado com cobre) \u00e9 um tripept\u00eddeo de cobre de pr\u00f3xima gera\u00e7\u00e3o, distinto do GHK-Cu. Demonstrou capacidade de estimular o crescimento capilar in vitro atrav\u00e9s da ativa\u00e7\u00e3o de c\u00e9lulas da papila d\u00e9rmica. Tamb\u00e9m promove a cicatriza\u00e7\u00e3o cut\u00e2nea e prolifera\u00e7\u00e3o de fibroblastos. Vem ganhando tra\u00e7\u00e3o significativa em formula\u00e7\u00f5es cosm\u00e9ticas como alternativa e complemento ao GHK-Cu.",
+    mechanism: "O complexo tripept\u00eddeo-cobre ativa as c\u00e9lulas da papila d\u00e9rmica, estimulando a express\u00e3o de fatores de crescimento (VEGF, FGF-7) e promovendo a prolifera\u00e7\u00e3o de fibroblastos. O cobre serve como cofator enzim\u00e1tico para lisil oxidase (forma\u00e7\u00e3o de col\u00e1geno) e superoxido dismutase (prote\u00e7\u00e3o antioxidante). Atua em vias distintas do GHK-Cu, permitindo a\u00e7\u00e3o complementar.",
+    benefits: [
+      "Estimula\u00e7\u00e3o do crescimento capilar in vitro",
+      "Ativa\u00e7\u00e3o de c\u00e9lulas da papila d\u00e9rmica",
+      "Promo\u00e7\u00e3o da cicatriza\u00e7\u00e3o cut\u00e2nea",
+      "Prolifera\u00e7\u00e3o de fibroblastos",
+      "A\u00e7\u00e3o complementar ao GHK-Cu"
+    ],
+    sideEffects: [
+      { name: "Irrita\u00e7\u00e3o local (uso t\u00f3pico)", severity: "occasional" },
+      { name: "Discromia local (excesso de cobre)", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "T\u00f3pico", dose: "1-5ppm em formula\u00e7\u00f5es", notes: "Utilizado em s\u00e9runs capilares e cremes anti-envelhecimento em concentra\u00e7\u00f5es de 1-5 partes por milh\u00e3o (ppm). Pode ser combinado com GHK-Cu para efeito sin\u00e9rgico." }
+    ],
+    administration: "T\u00f3pica",
+    halfLife: "Uso t\u00f3pico apenas",
+    status: "research",
+    statusLabel: "Pesquisa",
+    references: [
+      "Pyo HK et al., 2007. 'The effect of tripeptide-copper complex on human hair growth in vitro.' Arch Pharm Res. <a href='https://pubmed.ncbi.nlm.nih.gov/17703734/' target='_blank'>[PubMed]</a>",
+      "Buffoni F et al., 1995. 'Effect of tripeptide-copper complexes on the process of skin wound healing and on cultured fibroblasts.' Arch Int Pharmacodyn Ther. <a href='https://pubmed.ncbi.nlm.nih.gov/8836453/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
+  // ========================================
+  // CURA E RECUPERACAO
+  // ========================================
+  {
+    id: "c16-peptide",
+    name: "Pept\u00eddeo C16",
+    aka: "C16 Laminin Peptide",
+    category: "healing",
+    categoryLabel: "Cura e Recupera\u00e7\u00e3o",
+    description: "O pept\u00eddeo C16 \u00e9 derivado da laminina, uma prote\u00edna da matriz extracelular. Atua como modulador da permeabilidade vascular e da infiltra\u00e7\u00e3o leucocit\u00e1ria, com potente efeito neuroprotetor demonstrado em modelos de doen\u00e7a de Parkinson e distonia. Reduz a ativa\u00e7\u00e3o microglial e protege neur\u00f4nios dopamin\u00e9rgicos. Representa uma nova abordagem terap\u00eautica para doen\u00e7as neurodegenerativas atrav\u00e9s da modula\u00e7\u00e3o da barreira hematoencef\u00e1lica.",
+    mechanism: "Liga-se \u00e0s integrinas \u03b1v\u03b23 e \u03b15\u03b21, modulando a permeabilidade da barreira hematoencef\u00e1lica. Reduz a infiltra\u00e7\u00e3o de leuc\u00f3citos no tecido nervoso, diminui a ativa\u00e7\u00e3o microglial e atenua a neuroinflama\u00e7\u00e3o. Em modelos de Parkinson, protege neur\u00f4nios dopamin\u00e9rgicos da degenera\u00e7\u00e3o. Sinergiza com angiopoietina-1 para refor\u00e7ar a integridade vascular cerebral.",
+    benefits: [
+      "Neuroprote\u00e7\u00e3o em modelos de Parkinson",
+      "Redu\u00e7\u00e3o da ativa\u00e7\u00e3o microglial",
+      "Modula\u00e7\u00e3o da permeabilidade da barreira hematoencef\u00e1lica",
+      "Efeito anti-neuroinflamat\u00f3rio",
+      "Sinergia com angiopoietina-1 para reparo vascular cerebral"
+    ],
+    sideEffects: [
+      { name: "Dados limitados (pesquisa pr\u00e9-cl\u00ednica)", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "Pesquisa (pr\u00e9-cl\u00ednica)", dose: "Vari\u00e1vel conforme modelo animal", notes: "Sem protocolos cl\u00ednicos estabelecidos. Estudos utilizam administra\u00e7\u00e3o intravenosa ou intraperitoneal em modelos animais." }
+    ],
+    administration: "Intravenosa (IV)",
+    halfLife: "N\u00e3o bem estabelecida",
+    status: "research",
+    statusLabel: "Pesquisa",
+    references: [
+      "Cai HY et al., 2021. 'Adjusting vascular permeability, leukocyte infiltration, and microglial cell activation to rescue dopaminergic neurons in rodent models of Parkinson\\'s disease.' NPJ Parkinsons Dis. <a href='https://pubmed.ncbi.nlm.nih.gov/34625569/' target='_blank'>[PubMed]</a>",
+      "Fu XX et al., 2021. 'Combined treatment with C16 peptide and angiopoietin-1 confers neuroprotection and reduces inflammation in 3-nitropropionic acid-induced dystonia mice.' Aging. <a href='https://pubmed.ncbi.nlm.nih.gov/34326273/' target='_blank'>[PubMed]</a>"
+    ]
   }
 ];
