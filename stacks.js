@@ -1756,7 +1756,7 @@ var peptideStacks = [
     evidenceLevel: "Moderado (Semax, Selank: aprovados na R\u00fassia) / Baixo-Moderado (Cortagen: pesquisa pr\u00e9-cl\u00ednica) / Baixo (FGL: pesquisa pr\u00e9-cl\u00ednica)",
     references: [
       "Kolbaev SN et al., 2025. 'The Effect of Peptide Semax, an ACTH(4-10) Analogue, on Intracellular Calcium Dynamics in Rat Brain Neurons.' Bull Exp Biol Med. <a href='https://pubmed.ncbi.nlm.nih.gov/41171324/' target='_blank'>[PubMed]</a>",
-      "Ilina AR et al., 2024. 'Prospects for use of short peptides in pharmacotherapeutic correction of Alzheimer\\'s disease.' Adv Gerontol. <a href='https://pubmed.ncbi.nlm.nih.gov/38944767/' target='_blank'>[PubMed]</a>",
+      "Ilina AR et al., 2024. 'Prospects for use of short peptides in pharmacotherapeutic correction of Alzheimer disease.' Adv Gerontol. <a href='https://pubmed.ncbi.nlm.nih.gov/38944767/' target='_blank'>[PubMed]</a>",
       "Klein R et al., 2016. 'The NCAM-Peptide FG Loop (FGL) Mobilizes Endogenous Neural Stem Cells after Stroke.' J Neuroimmune Pharmacol. <a href='https://pubmed.ncbi.nlm.nih.gov/27352075/' target='_blank'>[PubMed]</a>"
     ]
   },
