@@ -1071,5 +1071,111 @@ var peptidesPart1 = [
     references: [
       "Attie KM et al., 2013. 'A single ascending-dose study of muscle regulator ACE-031 in healthy volunteers.' Muscle Nerve. <a href='https://pubmed.ncbi.nlm.nih.gov/23169607/' target='_blank'>[PubMed]</a>"
     ]
+  },
+
+  // ========================================
+  // PERDA DE PESO - GLP-1 ORAIS
+  // ========================================
+  {
+    id: "orforglipron",
+    name: "Orforglipron",
+    aka: "LY3502970",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Orforglipron \u00e9 o primeiro agonista oral n\u00e3o-pept\u00eddico do receptor GLP-1, desenvolvido pela Eli Lilly. Ao contr\u00e1rio dos GLP-1 injet\u00e1veis (semaglutida, tirzepatide), \u00e9 uma mol\u00e9cula pequena administrada por via oral uma vez ao dia. Em ensaios cl\u00ednicos de Fase 3 (ACHIEVE), demonstrou efic\u00e1cia compar\u00e1vel \u00e0 semaglutida oral com perfil de tolerabilidade semelhante. Representa uma poss\u00edvel mudan\u00e7a de paradigma ao eliminar a necessidade de inje\u00e7\u00f5es.",
+    mechanism: "Agonista n\u00e3o-pept\u00eddico do receptor GLP-1 (GLP-1R). Liga-se ao receptor GLP-1 de forma alost\u00e9rica, ativando as mesmas vias de sinaliza\u00e7\u00e3o intracelular que o GLP-1 end\u00f3geno: aumento da secre\u00e7\u00e3o de insulina dependente de glicose, redu\u00e7\u00e3o do glucagon, retardo do esvaziamento g\u00e1strico e a\u00e7\u00e3o central sobre saciedade. Por ser uma mol\u00e9cula pequena, n\u00e3o \u00e9 degradado no trato gastrointestinal como os pept\u00eddeos.",
+    benefits: [
+      "Administra\u00e7\u00e3o oral (elimina inje\u00e7\u00f5es)",
+      "Perda de peso significativa em ensaios cl\u00ednicos de Fase 3",
+      "Efic\u00e1cia compar\u00e1vel \u00e0 semaglutida oral (ACHIEVE-3)",
+      "Sem restri\u00e7\u00f5es de jejum para administra\u00e7\u00e3o",
+      "Melhora do controle glic\u00eamico em diab\u00e9ticos tipo 2"
+    ],
+    sideEffects: [
+      { name: "N\u00e1usea", severity: "common" },
+      { name: "V\u00f4mito", severity: "common" },
+      { name: "Diarreia", severity: "occasional" },
+      { name: "Constipa\u00e7\u00e3o", severity: "occasional" },
+      { name: "Disgeusia (altera\u00e7\u00e3o do paladar)", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Fase 3 (ACHIEVE)", dose: "12-36-72mg/dia", notes: "Escalonamento de dose progressivo: 12mg por 2 semanas, depois 24mg, depois 36mg, alcan\u00e7ando dose de manuten\u00e7\u00e3o de 36mg ou 72mg/dia. Uma vez ao dia, com ou sem alimentos." }
+    ],
+    administration: "Oral (VO)",
+    halfLife: "~29-49 horas",
+    status: "trial",
+    statusLabel: "Fase 3",
+    references: [
+      "Rosenstock J et al., 2026. 'Efficacy and safety of once-daily oral orforglipron compared with oral semaglutide in adults with type 2 diabetes (ACHIEVE-3).' Lancet. <a href='https://pubmed.ncbi.nlm.nih.gov/41765029/' target='_blank'>[PubMed]</a>",
+      "Odeleye V et al., 2026. 'Oral Glucagon-Like Peptide-1 Receptor Agonists for Preventing Cardiorenal Complications.' Curr Cardiol Rep. <a href='https://pubmed.ncbi.nlm.nih.gov/41870800/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "amycretin",
+    name: "Amycretin",
+    aka: "NNC0487-0111",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Amycretin \u00e9 um agonista dual oral dos receptores GLP-1 e amilina, desenvolvido pela Novo Nordisk. \u00c9 o primeiro composto oral a combinar a\u00e7\u00e3o em ambos os receptores. Em dados preliminares de Fase 2, demonstrou at\u00e9 13% de perda de peso em apenas 12 semanas \u2014 resultados extraordin\u00e1rios para um f\u00e1rmaco oral, potencialmente superior a qualquer outro agente oral em desenvolvimento.",
+    mechanism: "Agonista dual dos receptores GLP-1 e amilina (AMYR). O componente GLP-1 promove secre\u00e7\u00e3o de insulina, retardo do esvaziamento g\u00e1strico e saciedade central. O componente amilina complementa com redu\u00e7\u00e3o adicional do apetite, retardo do esvaziamento g\u00e1strico e inibi\u00e7\u00e3o da secre\u00e7\u00e3o de glucagon. A a\u00e7\u00e3o combinada produz supress\u00e3o do apetite superior aos agonistas GLP-1 isolados.",
+    benefits: [
+      "Administra\u00e7\u00e3o oral (sem inje\u00e7\u00f5es)",
+      "Perda de peso extraordin\u00e1ria para um oral (~13% em 12 semanas em Fase 2)",
+      "Duplo mecanismo GLP-1 + amilina",
+      "Potencialmente o agente oral mais potente em desenvolvimento",
+      "Boa toler\u00e2ncia nos ensaios cl\u00ednicos iniciais"
+    ],
+    sideEffects: [
+      { name: "N\u00e1usea", severity: "common" },
+      { name: "V\u00f4mito", severity: "occasional" },
+      { name: "Diarreia", severity: "occasional" },
+      { name: "Constipa\u00e7\u00e3o", severity: "occasional" },
+      { name: "Dor abdominal", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Fase 2 (em avalia\u00e7\u00e3o)", dose: "Doses em investiga\u00e7\u00e3o", notes: "Protocolo de escalonamento de dose ainda em defini\u00e7\u00e3o. Administra\u00e7\u00e3o oral di\u00e1ria. Dados preliminares de Fase 2 com resultados promissores." }
+    ],
+    administration: "Oral (VO)",
+    halfLife: "N\u00e3o divulgada (em investiga\u00e7\u00e3o)",
+    status: "trial",
+    statusLabel: "Fase 2",
+    references: [
+      "Fu L et al., 2026. 'Amycretin in obesity: Mechanisms, clinical efficacy, and future perspectives.' Metabolism. <a href='https://pubmed.ncbi.nlm.nih.gov/41850421/' target='_blank'>[PubMed]</a>",
+      "Bailey CJ et al., 2026. 'Long-acting amylin-related peptides as therapies for obesity and type 2 diabetes.' Peptides. <a href='https://pubmed.ncbi.nlm.nih.gov/41747885/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "danuglipron",
+    name: "Danuglipron",
+    aka: "PF-06882961",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Danuglipron \u00e9 um agonista oral n\u00e3o-pept\u00eddico do receptor GLP-1, desenvolvido pela Pfizer. Inicialmente testado em dose duas vezes ao dia, foi reformulado para administra\u00e7\u00e3o uma vez ao dia ap\u00f3s problemas de tolerabilidade. Demonstrou redu\u00e7\u00e3o significativa de peso e melhora glic\u00eamica em ensaios cl\u00ednicos. Representa a segunda op\u00e7\u00e3o de GLP-1 oral n\u00e3o-pept\u00eddico em desenvolvimento avan\u00e7ado.",
+    mechanism: "Agonista n\u00e3o-pept\u00eddico de mol\u00e9cula pequena do receptor GLP-1. Ativa as mesmas cascatas de sinaliza\u00e7\u00e3o do GLP-1 end\u00f3geno: aumento da secre\u00e7\u00e3o de insulina glicose-dependente, supress\u00e3o do glucagon, retardo do esvaziamento g\u00e1strico e redu\u00e7\u00e3o central do apetite. Sua resist\u00eancia \u00e0 degrada\u00e7\u00e3o proteol\u00edtica permite biodisponibilidade oral.",
+    benefits: [
+      "Administra\u00e7\u00e3o oral (sem inje\u00e7\u00f5es)",
+      "Perda de peso clinicamente significativa",
+      "Melhora do controle glic\u00eamico",
+      "Reformulado para dose \u00fanica di\u00e1ria",
+      "Alternativa ao orforglipron como GLP-1 oral"
+    ],
+    sideEffects: [
+      { name: "N\u00e1usea", severity: "common" },
+      { name: "V\u00f4mito", severity: "common" },
+      { name: "Diarreia", severity: "occasional" },
+      { name: "Disgeusia", severity: "occasional" },
+      { name: "Aumento da frequ\u00eancia card\u00edaca", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Fase 2b/3 (reformulado)", dose: "Doses em investiga\u00e7\u00e3o", notes: "Formulado inicialmente para 120mg 2x/dia, agora reformulado para dose \u00fanica di\u00e1ria com libera\u00e7\u00e3o controlada. Escalonamento de dose gradual para minimizar efeitos gastrointestinais." }
+    ],
+    administration: "Oral (VO)",
+    halfLife: "~6-10 horas (formulação de liberação imediata)",
+    status: "trial",
+    statusLabel: "Fase 2b/3",
+    references: [
+      "Zhou J et al., 2025. 'The efficacy and safety of danuglipron and orforglipron in patients with type 2 diabetes and obesity: a systematic review and meta-analysis.' Front Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/41450584/' target='_blank'>[PubMed]</a>",
+      "Tolkacheva EV et al., 2025. 'Next-in-class GLP-1R Danuglipron- and Lotiglipron-like Agonists: A Patent Review (2020-2024).' Curr Med Chem. <a href='https://pubmed.ncbi.nlm.nih.gov/40873282/' target='_blank'>[PubMed]</a>"
+    ]
   }
 ];

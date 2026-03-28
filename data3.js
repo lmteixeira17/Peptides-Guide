@@ -1086,5 +1086,141 @@ var peptidesPart3 = [
     references: [
       "Stabler SP, 2013. 'Vitamin B12 Deficiency.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/23697526/' target='_blank'>[PubMed]</a>"
     ]
+  },
+
+  // ========================================
+  // SISTEMA IMUNOLOGICO
+  // ========================================
+  {
+    id: "alpha-msh",
+    name: "Alpha-MSH",
+    aka: "\u03b1-MSH / Horm\u00f4nio Estimulador de Melan\u00f3citos Alfa",
+    category: "immune",
+    categoryLabel: "Sistema Imunol\u00f3gico",
+    description: "O Alpha-MSH (\u03b1-MSH) \u00e9 um tridecapept\u00eddeo end\u00f3geno derivado da proopiomelanocortina (POMC), distinto dos pept\u00eddeos de bronzeamento Melanotan I e II. Embora compartilhe a\u00e7\u00e3o melanog\u00eanica, o \u03b1-MSH \u00e9 primariamente reconhecido por suas potentes propriedades anti-inflamat\u00f3rias e imunomoduladoras. Atua em m\u00faltiplos \u00f3rg\u00e3os e sistemas, incluindo pele, sistema nervoso central, pulm\u00f5es e intestino, com potencial terap\u00eautico em doen\u00e7as autoimunes e inflamat\u00f3rias.",
+    mechanism: "Liga-se aos receptores de melanocortina MC1R, MC3R e MC5R. A ativa\u00e7\u00e3o do MC1R em c\u00e9lulas imunes (macr\u00f3fagos, neutr\u00f3filos, linf\u00f3citos) suprime a produ\u00e7\u00e3o de citocinas pr\u00f3-inflamat\u00f3rias (TNF-\u03b1, IL-1\u03b2, IL-6) e estimula citocinas anti-inflamat\u00f3rias (IL-10). Tamb\u00e9m inibe a via NF-\u03baB e atenua a fibrose tecidual. No SNC, exerce efeitos antipir\u00e9ticos e anorex\u00edgenos.",
+    benefits: [
+      "Potente a\u00e7\u00e3o anti-inflamat\u00f3ria sist\u00eamica",
+      "Supress\u00e3o de citocinas pr\u00f3-inflamat\u00f3rias (TNF-\u03b1, IL-1\u03b2, IL-6)",
+      "Efeito antifibr\u00f3tico em m\u00faltiplos tecidos",
+      "Neuroprote\u00e7\u00e3o e a\u00e7\u00e3o antipir\u00e9tica",
+      "Potencial em doen\u00e7as autoimunes e inflamat\u00f3rias respirat\u00f3rias"
+    ],
+    sideEffects: [
+      { name: "Hiperpigmenta\u00e7\u00e3o cut\u00e2nea", severity: "common" },
+      { name: "N\u00e1usea", severity: "occasional" },
+      { name: "Rubor facial", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Pesquisa", dose: "Vari\u00e1vel conforme estudo", notes: "Sem protocolos cl\u00ednicos padronizados. Estudos pr\u00e9-cl\u00ednicos utilizam doses na faixa de microgramas via subcut\u00e2nea ou intravenosa." }
+    ],
+    administration: "Subcut\u00e2nea (SC) / Intravenosa (IV)",
+    halfLife: "~15-20 minutos (muito curta)",
+    status: "research",
+    statusLabel: "Pesquisa",
+    references: [
+      "Dinparastisaleh R et al., 2021. 'Antifibrotic and Anti-Inflammatory Actions of \u03b1-Melanocytic Hormone: New Roles for an Old Player.' Pharmaceuticals (Basel). <a href='https://pubmed.ncbi.nlm.nih.gov/33430064/' target='_blank'>[PubMed]</a>",
+      "Lonati C et al., 2020. 'Activation of Melanocortin Receptors as a Potential Strategy to Reduce Local and Systemic Reactions Induced by Respiratory Viruses.' Front Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/33362713/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "larazotide",
+    name: "Larazotide",
+    aka: "AT-1001 / Larazotide Acetato",
+    category: "immune",
+    categoryLabel: "Sistema Imunol\u00f3gico",
+    description: "Larazotide (AT-1001) \u00e9 um octapept\u00eddeo sint\u00e9tico que atua como modulador das tight junctions (jun\u00e7\u00f5es firmes) do epit\u00e9lio intestinal. Desenvolvido especificamente para doen\u00e7a cel\u00edaca, \u00e9 o primeiro f\u00e1rmaco a abordar a permeabilidade intestinal como alvo terap\u00eautico. Em ensaios cl\u00ednicos de Fase 3, demonstrou redu\u00e7\u00e3o significativa dos sintomas cel\u00edacos. Tamb\u00e9m atrai enorme interesse da comunidade de medicina funcional para s\u00edndrome do intestino perme\u00e1vel.",
+    mechanism: "Atua como antagonista da zonulina, a prote\u00edna end\u00f3gena que regula a permeabilidade paracelular intestinal. Ao bloquear a a\u00e7\u00e3o da zonulina, previne a abertura das tight junctions e mant\u00e9m a integridade da barreira epitelial intestinal. Isso reduz a passagem de gl\u00fauten e outros ant\u00edgenos pela barreira intestinal, diminuindo a resposta imune e a inflama\u00e7\u00e3o associada.",
+    benefits: [
+      "Redu\u00e7\u00e3o de sintomas da doen\u00e7a cel\u00edaca em ensaios cl\u00ednicos",
+      "Restaura\u00e7\u00e3o da integridade da barreira intestinal",
+      "Primeiro f\u00e1rmaco a alvejar permeabilidade intestinal",
+      "Prote\u00e7\u00e3o contra dano mucoso por an\u00f3xia/reoxigena\u00e7\u00e3o",
+      "Potencial em outras condi\u00e7\u00f5es de permeabilidade intestinal alterada"
+    ],
+    sideEffects: [
+      { name: "Cefaleia", severity: "occasional" },
+      { name: "Desconforto abdominal", severity: "occasional" },
+      { name: "N\u00e1usea", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Fase 3 (doen\u00e7a cel\u00edaca)", dose: "0.5mg 3x/dia", notes: "Administrado via oral 3 vezes ao dia antes das refei\u00e7\u00f5es. Dose de 0.5mg demonstrou melhor rela\u00e7\u00e3o efic\u00e1cia/seguran\u00e7a nos ensaios cl\u00ednicos." }
+    ],
+    administration: "Oral (VO)",
+    halfLife: "Curta (a\u00e7\u00e3o local no lumen intestinal)",
+    status: "trial",
+    statusLabel: "Fase 3",
+    references: [
+      "Kim J et al., 2025. 'Larazotide Acetate Protects the Intestinal Mucosal Barrier from Anoxia/Reoxygenation Injury via Various Cellular Mechanisms.' Biomedicines. <a href='https://pubmed.ncbi.nlm.nih.gov/41153766/' target='_blank'>[PubMed]</a>",
+      "Damianos JA et al., 2026. 'Coeliac disease and the intestinal barrier: mechanisms of disruption and strategies for restoration.' Gut. <a href='https://pubmed.ncbi.nlm.nih.gov/40579122/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
+  // ========================================
+  // COMPOSICAO CORPORAL
+  // ========================================
+  {
+    id: "bimagrumab",
+    name: "Bimagrumab",
+    aka: "BYM338",
+    category: "body-comp",
+    categoryLabel: "Composi\u00e7\u00e3o Corporal",
+    description: "Bimagrumab \u00e9 um anticorpo monoclonal humano que bloqueia os receptores de activina tipo II (ActRII), inibindo a sinaliza\u00e7\u00e3o de miostatina e activina. \u00c9 o \u00fanico agente que demonstrou capacidade de reduzir massa gorda E aumentar massa magra simultaneamente. Adquirido pela Eli Lilly (via Versanis Bio), est\u00e1 sendo estudado em combina\u00e7\u00e3o com semaglutida, onde a adi\u00e7\u00e3o de bimagrumab preservou massa muscular durante a perda de peso.",
+    mechanism: "Bloqueia competitivamente os receptores ActRIIA e ActRIIB, impedindo a liga\u00e7\u00e3o de miostatina, activina A e GDF-11. O bloqueio da miostatina/activina remove o freio fisiol\u00f3gico sobre o crescimento muscular, promovendo hipertrofia do m\u00fasculo esquel\u00e9tico. Simultaneamente, a inibi\u00e7\u00e3o da sinaliza\u00e7\u00e3o ActRII no tecido adiposo promove a diferencia\u00e7\u00e3o de adiposidade bege/marrom e aumenta o gasto energ\u00e9tico, resultando em redu\u00e7\u00e3o da massa gorda.",
+    benefits: [
+      "Redu\u00e7\u00e3o de massa gorda com preserva\u00e7\u00e3o/ganho de massa magra",
+      "Efeito sin\u00e9rgico com semaglutida em Fase 2",
+      "\u00danico agente com duplo efeito: -gordura +m\u00fasculo",
+      "Melhora da composi\u00e7\u00e3o corporal independente de dieta",
+      "Potencial para sarcopenia e obesidade sarcopênica"
+    ],
+    sideEffects: [
+      { name: "Espasmos musculares", severity: "common" },
+      { name: "Diarreia", severity: "occasional" },
+      { name: "Rea\u00e7\u00f5es no local da inje\u00e7\u00e3o", severity: "occasional" },
+      { name: "Eleva\u00e7\u00e3o transit\u00f3ria de FSH", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Fase 2 (com semaglutida)", dose: "10mg/kg IV a cada 4 semanas", notes: "Infus\u00e3o intravenosa a cada 4 semanas. Na combina\u00e7\u00e3o com semaglutida, demonstrou perda de gordura superior com preserva\u00e7\u00e3o da massa magra. Fase 3 em planejamento." }
+    ],
+    administration: "Intravenosa (IV)",
+    halfLife: "~21-28 dias",
+    status: "trial",
+    statusLabel: "Fase 2/3",
+    references: [
+      "Heymsfield SB et al., 2026. 'Bimagrumab plus semaglutide alone or in combination for the treatment of obesity: a randomized phase 2 trial.' Nat Med. <a href='https://pubmed.ncbi.nlm.nih.gov/41772149/' target='_blank'>[PubMed]</a>",
+      "Rooks D et al., 2026. 'Cardiac Safety of Chronic Inhibition of the Myostatin-Activin Pathway with Bimagrumab in Healthy Older Adults.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/41873146/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "apelin-13",
+    name: "Apelin-13",
+    aka: "Pept\u00eddeo Apelin / Ligante do receptor APJ",
+    category: "body-comp",
+    categoryLabel: "Composi\u00e7\u00e3o Corporal",
+    description: "Apelin-13 \u00e9 a isoforma mais ativa do sistema apelin\u00e9rgico, um pept\u00eddeo end\u00f3geno que diminui com o envelhecimento. Atua como ligante do receptor APJ (receptor orf\u00e3o acoplado \u00e0 prote\u00edna G) com efeitos cardiovasculares, metab\u00f3licos e de regenera\u00e7\u00e3o muscular. Chamado de 'pept\u00eddeo mim\u00e9tico de exerc\u00edcio' por seus efeitos ben\u00e9ficos sobre m\u00fasculo, cora\u00e7\u00e3o e metabolismo, similares aos obtidos com atividade f\u00edsica.",
+    mechanism: "Liga-se ao receptor APJ (receptor apelin), ativando vias de sinaliza\u00e7\u00e3o Gi/Gq. No cora\u00e7\u00e3o, aumenta a contratilidade mioc\u00e1rdica (efeito inotr\u00f3pico positivo) e promove vasodilata\u00e7\u00e3o via libera\u00e7\u00e3o de \u00f3xido n\u00edtrico. No m\u00fasculo esquel\u00e9tico, estimula a biog\u00eanese mitocondrial e a regenera\u00e7\u00e3o muscular. No metabolismo, melhora a sensibilidade \u00e0 insulina e aumenta a capta\u00e7\u00e3o de glicose.",
+    benefits: [
+      "Efeito cardioprotetor (inotr\u00f3pico positivo e vasodilatador)",
+      "Regenera\u00e7\u00e3o muscular e biog\u00eanese mitocondrial",
+      "Melhora da sensibilidade \u00e0 insulina",
+      "Mim\u00e9tico de exerc\u00edcio (efeitos similares \u00e0 atividade f\u00edsica)",
+      "Potencial em diabetes e suas complica\u00e7\u00f5es"
+    ],
+    sideEffects: [
+      { name: "Hipotens\u00e3o (vasodilata\u00e7\u00e3o)", severity: "occasional" },
+      { name: "Dados cl\u00ednicos limitados em humanos", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "Pesquisa", dose: "Vari\u00e1vel conforme estudo", notes: "Sem protocolos cl\u00ednicos estabelecidos em humanos. Estudos pr\u00e9-cl\u00ednicos utilizam doses na faixa de nmol/kg via subcut\u00e2nea ou intravenosa." }
+    ],
+    administration: "Subcut\u00e2nea (SC) / Intravenosa (IV)",
+    halfLife: "~5 minutos (muito curta, an\u00e1logos est\u00e1veis em desenvolvimento)",
+    status: "research",
+    statusLabel: "Pesquisa",
+    references: [
+      "Davenport AP et al., 2026. 'Apelin receptor pharmacology in the human cardiovascular system and emerging clinical applications.' Pharmacol Rev. <a href='https://pubmed.ncbi.nlm.nih.gov/41895070/' target='_blank'>[PubMed]</a>",
+      "Singla S et al., 2026. 'The emerging endogenous peptide Apelin 13 in diabetes and its related complications: a narrative review.' Expert Opin Ther Targets. <a href='https://pubmed.ncbi.nlm.nih.gov/41782481/' target='_blank'>[PubMed]</a>"
+    ]
   }
 ];
