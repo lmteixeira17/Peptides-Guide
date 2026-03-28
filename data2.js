@@ -1210,7 +1210,7 @@ var peptidesPart2 = [
     status: "research",
     statusLabel: "Pesquisa",
     references: [
-      "Cai HY et al., 2021. 'Adjusting vascular permeability, leukocyte infiltration, and microglial cell activation to rescue dopaminergic neurons in rodent models of Parkinson\\'s disease.' NPJ Parkinsons Dis. <a href='https://pubmed.ncbi.nlm.nih.gov/34625569/' target='_blank'>[PubMed]</a>",
+      "Cai HY et al., 2021. 'Adjusting vascular permeability, leukocyte infiltration, and microglial cell activation to rescue dopaminergic neurons in rodent models of Parkinson disease.' NPJ Parkinsons Dis. <a href='https://pubmed.ncbi.nlm.nih.gov/34625569/' target='_blank'>[PubMed]</a>",
       "Fu XX et al., 2021. 'Combined treatment with C16 peptide and angiopoietin-1 confers neuroprotection and reduces inflammation in 3-nitropropionic acid-induced dystonia mice.' Aging. <a href='https://pubmed.ncbi.nlm.nih.gov/34326273/' target='_blank'>[PubMed]</a>"
     ]
   }
