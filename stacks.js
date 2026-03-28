@@ -582,7 +582,7 @@ var peptideStacks = [
         timing: "1-2x por dia, pode ser combinado com Semax"
       }
     ],
-    synergy: "Semax aumenta BDNF e melhora a neurotransmiss\u00e3o dopamin\u00e9rgica e serotonin\u00e9rgica, melhorando foco e mem\u00f3ria. Selank modula o sistema GABAergico e tamb\u00e9m aumenta BDNF, reduzindo ansiedade sem causar sonol\u00eancia. Juntos, criam um estado de 'fluxo cognitivo': alta performance mental com calma emocional. Ambos aprovados na R\u00fassia como medicamentos.",
+    synergy: "Semax aumenta BDNF e melhora a neurotransmiss\u00e3o dopamin\u00e9rgica e serotonin\u00e9rgica, melhorando foco e mem\u00f3ria. Selank modula o sistema GABA\u00e9rgico e tamb\u00e9m aumenta BDNF, reduzindo ansiedade sem causar sonol\u00eancia. Juntos, criam um estado de 'fluxo cognitivo': alta performance mental com calma emocional. Ambos aprovados na R\u00fassia como medicamentos.",
     application: "Semax + Selank: PODEM ser aplicados na mesma sessão por via intranasal — aplicar sequencialmente, um spray em cada narina ou alternando. Alguns fornecedores oferecem formulações combinadas. Não requerem injeção.",
     duration: "Ciclos de 2-4 semanas com pausas de 1-2 semanas",
     warnings: "Ambos aprovados na R\u00fassia, mas n\u00e3o em pa\u00edses ocidentais. Irrita\u00e7\u00e3o nasal ocasional.",
@@ -1749,7 +1749,7 @@ var peptideStacks = [
         timing: "3-5x por semana, SC"
       }
     ],
-    synergy: "Cortagen modula epigeneticamente neur\u00f4nios corticais, normalizando express\u00e3o g\u00eanica e combatendo estresse oxidativo. Semax ativa sistemas dopamin\u00e9rgico e serotonin\u00e9rgico, estimulando BDNF e neuroprote\u00e7\u00e3o. Selank complementa com anxiolis e BDNF adicional por vias GABAergicas. FGL promove neurog\u00eanese e plasticidade sin\u00e1ptica via ativa\u00e7\u00e3o de FGFR. As quatro vias (epigen\u00e9tica, monoamin\u00e9rgica, GABAergica e NCAM/FGFR) s\u00e3o n\u00e3o-sobrepostas.",
+    synergy: "Cortagen modula epigeneticamente neur\u00f4nios corticais, normalizando express\u00e3o g\u00eanica e combatendo estresse oxidativo. Semax ativa sistemas dopamin\u00e9rgico e serotonin\u00e9rgico, estimulando BDNF e neuroprote\u00e7\u00e3o. Selank complementa com a\u00e7\u00e3o ansiol\u00edtica e BDNF adicional por vias GABA\u00e9rgicas. FGL promove neurog\u00eanese e plasticidade sin\u00e1ptica via ativa\u00e7\u00e3o de FGFR. As quatro vias (epigen\u00e9tica, monoamin\u00e9rgica, GABA\u00e9rgica e NCAM/FGFR) s\u00e3o n\u00e3o-sobrepostas.",
     application: "Semax + Selank: intranasal na mesma sess\u00e3o (um por narina ou sequencialmente). Cortagen: SC ou intranasal separado. FGL: SC em seringa pr\u00f3pria. N\u00e3o misturar injet\u00e1veis.",
     duration: "Cortagen: ciclos de 10-20 dias / Semax e Selank: ciclos de 4-8 semanas / FGL: 4-8 semanas",
     warnings: "Cortagen e FGL t\u00eam dados cl\u00ednicos limitados em humanos. FGL n\u00e3o possui protocolo de dosagem humana estabelecido. Stack altamente experimental. Monitorar fun\u00e7\u00e3o cognitiva e humor com avalia\u00e7\u00f5es peri\u00f3dicas.",
