@@ -21,7 +21,7 @@ if not SECRET_KEY:
             "Generate one with: python -c \"from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())\""
         )
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,45.63.90.69').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,45.63.90.69,mlt.com.br').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
