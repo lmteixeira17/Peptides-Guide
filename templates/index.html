@@ -24,7 +24,9 @@
     <meta name="twitter:title" content="Guia Completo de Pept&iacute;deos - Refer&ecirc;ncia Cient&iacute;fica">
     <meta name="twitter:description" content="108 pept&iacute;deos terap&ecirc;uticos com dosagens, efeitos colaterais e 282 refer&ecirc;ncias PubMed.">
 
+    <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    <link rel="preload" href="{% static 'core/app.js' %}" as="script">
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -175,6 +177,40 @@
             </div>
         </div>
     </div>
+
+    <!-- SEO: Static content for search engine crawlers -->
+    <noscript>
+    <div class="seo-content">
+        <h2>Pept&iacute;deos Terap&ecirc;uticos</h2>
+        {% for p in peptides %}
+        <article id="{{ p.id }}">
+            <h3>{{ p.name }}{% if p.aka %} ({{ p.aka }}){% endif %}</h3>
+            <p><strong>Categoria:</strong> {{ p.category_label }} | <strong>Status:</strong> {{ p.status_label }}</p>
+            <p>{{ p.description }}</p>
+            <p><strong>Mecanismo:</strong> {{ p.mechanism }}</p>
+            <p><strong>Administra&ccedil;&atilde;o:</strong> {{ p.administration }} | <strong>Meia-vida:</strong> {{ p.half_life }}</p>
+            <h4>Benef&iacute;cios</h4>
+            <ul>{% for b in p.benefits.all %}<li>{{ b.text }}</li>{% endfor %}</ul>
+            <h4>Efeitos Colaterais</h4>
+            <ul>{% for se in p.side_effects.all %}<li>{{ se.name }} ({{ se.get_severity_display }})</li>{% endfor %}</ul>
+            <h4>Refer&ecirc;ncias</h4>
+            <ul>{% for r in p.references.all %}<li>{{ r.text|safe }}</li>{% endfor %}</ul>
+        </article>
+        {% endfor %}
+        <h2>Combina&ccedil;&otilde;es Recomendadas</h2>
+        {% for s in stacks %}
+        <article id="stack-{{ s.id }}">
+            <h3>{{ s.name }}</h3>
+            <p><strong>Objetivo:</strong> {{ s.goal_label }} | <strong>N&iacute;vel:</strong> {{ s.level }}</p>
+            <p>{{ s.description }}</p>
+            <p><strong>Sinergia:</strong> {{ s.synergy }}</p>
+            <p><strong>Dura&ccedil;&atilde;o:</strong> {{ s.duration }}</p>
+            <h4>Refer&ecirc;ncias</h4>
+            <ul>{% for r in s.references.all %}<li>{{ r.text|safe }}</li>{% endfor %}</ul>
+        </article>
+        {% endfor %}
+    </div>
+    </noscript>
 
     <!-- Footer -->
     <footer class="footer">
