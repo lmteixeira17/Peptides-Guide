@@ -23,7 +23,7 @@ services:
     environment:
       - DEBUG=False
       - SECRET_KEY=${SECRET_KEY:-django-peptides-change-me-in-production}
-      - ALLOWED_HOSTS=localhost,127.0.0.1,45.63.90.69,mlt.com.br
+      - ALLOWED_HOSTS=localhost,127.0.0.1,45.63.90.69,mlt.com.br,guiadepeptideos.com.br,www.guiadepeptideos.com.br
       - FORCE_SCRIPT_NAME=/peptides
       - DB_ENGINE=django.db.backends.postgresql
       - DB_NAME=peptides

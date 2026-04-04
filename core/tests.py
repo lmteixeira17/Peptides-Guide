@@ -1439,8 +1439,8 @@ class TestRealDataFiles:
 class TestDeploymentConfig:
     """Tests for deployment configuration consistency."""
 
-    def test_docker_compose_allowed_hosts_includes_domain(self):
-        """docker-compose.yml must include mlt.com.br in ALLOWED_HOSTS."""
+    def test_docker_compose_allowed_hosts_includes_domains(self):
+        """docker-compose.yml must include all production domains in ALLOWED_HOSTS."""
         compose_path = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
             'docker-compose.yml',
@@ -1449,21 +1449,22 @@ class TestDeploymentConfig:
             pytest.skip('docker-compose.yml not found')
         with open(compose_path, 'r') as f:
             content = f.read()
-        assert 'mlt.com.br' in content, (
-            'docker-compose.yml ALLOWED_HOSTS must include mlt.com.br'
-        )
+        for domain in ['mlt.com.br', 'guiadepeptideos.com.br']:
+            assert domain in content, (
+                f'docker-compose.yml ALLOWED_HOSTS must include {domain}'
+            )
 
-    def test_settings_allowed_hosts_default_includes_domain(self):
-        """Settings ALLOWED_HOSTS default must include mlt.com.br."""
-        import importlib
+    def test_settings_allowed_hosts_default_includes_domains(self):
+        """Settings ALLOWED_HOSTS default must include all production domains."""
         settings_path = os.path.join(
             os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
             'peptides_project', 'settings.py',
         )
         with open(settings_path, 'r') as f:
             content = f.read()
-        assert 'mlt.com.br' in content, (
-            'settings.py ALLOWED_HOSTS default must include mlt.com.br'
+        for domain in ['mlt.com.br', 'guiadepeptideos.com.br']:
+            assert domain in content, (
+                f'settings.py ALLOWED_HOSTS default must include {domain}'
         )
 
     def test_docker_compose_force_script_name(self):
