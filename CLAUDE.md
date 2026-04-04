@@ -2,7 +2,7 @@
 
 ## Visao Geral do Projeto
 
-Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoes detalhadas sobre 107 peptideos individuais e 40 combinacoes (stacks) recomendadas, com dados baseados em estudos cientificos publicados.
+Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoes detalhadas sobre 108 peptideos individuais e 41 combinacoes (stacks) recomendadas, com dados baseados em estudos cientificos publicados.
 
 **Idioma do conteudo:** Portugues (pt-BR)
 **Publico-alvo:** Profissionais de saude e pesquisadores
@@ -62,8 +62,8 @@ _Peptides/
 │       └── app.js                 # Logica da aplicacao (inalterado)
 ├── data1.js                       # 36 peptideos (backup/fonte para seed)
 ├── data2.js                       # 36 peptideos (backup/fonte para seed)
-├── data3.js                       # 35 peptideos (backup/fonte para seed)
-├── stacks.js                      # 40 combinacoes (backup/fonte para seed)
+├── data3.js                       # 36 peptideos (backup/fonte para seed)
+├── stacks.js                      # 41 combinacoes (backup/fonte para seed)
 ├── manage.py                      # Django CLI
 ├── requirements.txt               # Django, gunicorn, whitenoise, psycopg2-binary
 ├── pytest.ini                     # Configuracao pytest
@@ -144,7 +144,7 @@ serialize_stack(stack) → {
 Os peptideos sao divididos em 3 partes por categoria (mantendo compatibilidade com o JS original):
 - **Part1:** weight-loss + growth-hormone (36 peptideos)
 - **Part2:** healing + anti-aging + skin + cognitive (36 peptideos)
-- **Part3:** immune + hormonal + sleep + body-comp + other (35 peptideos)
+- **Part3:** immune + hormonal + sleep + body-comp + other (36 peptideos)
 
 ---
 
@@ -277,7 +277,7 @@ python -m pytest core/tests.py --cov=core -v
 | **Seed Command** | TestSeedCommand | 11 | Peptides, benefits, side effects, dosages, refs, stacks, links, stack refs, idempotente, ordem, data3 vazio |
 | **Integracao** | TestEndToEndFlow | 2 | Seed→render, logica de particao (11 categorias) |
 | **URLs** | TestURLRouting | 3 | Resolve index, health, admin |
-| **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 107 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 277 refs, seed completo |
+| **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 108 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 282 refs, seed completo |
 | **Deploy Config** | TestDeploymentConfig | 3 | ALLOWED_HOSTS inclui mlt.com.br, FORCE_SCRIPT_NAME, docker-compose.yml |
 
 ### Dados Reais vs Dados de Teste
@@ -345,7 +345,7 @@ Todas as referencias devem incluir um link PubMed clicavel:
 - `target='_blank'` e obrigatorio em todos os links
 - PMID deve ser um numero valido do PubMed
 - Toda referencia DEVE ter um link PubMed verificavel
-- Total atual: 277 referencias com links PubMed (57 em data1 + 52 em data2 + 48 em data3 + 120 em stacks)
+- Total atual: 282 referencias com links PubMed (57 em data1 + 52 em data2 + 50 em data3 + 123 em stacks)
 
 ---
 

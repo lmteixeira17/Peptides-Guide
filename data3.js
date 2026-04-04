@@ -1222,5 +1222,43 @@ var peptidesPart3 = [
       "Davenport AP et al., 2026. 'Apelin receptor pharmacology in the human cardiovascular system and emerging clinical applications.' Pharmacol Rev. <a href='https://pubmed.ncbi.nlm.nih.gov/41895070/' target='_blank'>[PubMed]</a>",
       "Singla S et al., 2026. 'The emerging endogenous peptide Apelin 13 in diabetes and its related complications: a narrative review.' Expert Opin Ther Targets. <a href='https://pubmed.ncbi.nlm.nih.gov/41782481/' target='_blank'>[PubMed]</a>"
     ]
+  },
+  {
+    id: "cbl-514",
+    name: "CBL-514",
+    aka: "Injeção lipolítica Cellbion",
+    category: "body-comp",
+    categoryLabel: "Composição Corporal",
+    description: "CBL-514 é um composto sintético injetável desenvolvido pela Cellbion (Coreia do Sul) para redução localizada de gordura subcutânea. Diferente de outros lipolíticos como a deoxicolato (Kybella), o CBL-514 atua induzindo apoptose (morte celular programada) seletiva nos adipócitos via ativação da via mitocondrial intrínseca, sem causar necrose ou inflamação significativa no tecido circundante. Em ensaios clínicos de Fase 2, demonstrou redução significativa de gordura submentoniana (papada) com perfil de segurança superior ao deoxicolato, incluindo menor dor, edema e duração dos efeitos adversos. Está sendo estudado também para outras áreas de gordura localizada (abdômen, flancos).",
+    mechanism: "Ativa seletivamente a via apoptótica mitocondrial intrínseca nos adipócitos. O composto penetra nas células de gordura e desestabiliza a membrana mitocondrial, liberando citocromo c e ativando a cascata de caspases (caspase-9 → caspase-3), levando à apoptose celular programada. Os adipócitos mortos são fagocitados por macrófagos em processo gradual e ordenado. A seletividade para adipócitos deve-se à maior captação do composto pelo tecido adiposo, preservando células dérmicas, musculares e vasculares adjacentes.",
+    benefits: [
+      "Redução localizada de gordura subcutânea (submentoniana, abdominal, flancos)",
+      "Apoptose seletiva de adipócitos (sem necrose do tecido circundante)",
+      "Menor dor e edema comparado ao deoxicolato (Kybella)",
+      "Resultados permanentes (adipócitos eliminados não se regeneram)",
+      "Perfil de segurança favorável em ensaios clínicos Fase 2"
+    ],
+    sideEffects: [
+      { name: "Edema transitório no local da injeção", severity: "common" },
+      { name: "Equimose (hematoma) local", severity: "common" },
+      { name: "Dor leve a moderada no local", severity: "occasional" },
+      { name: "Endurecimento temporário da área tratada", severity: "occasional" },
+      { name: "Parestesia transitória", severity: "rare" }
+    ],
+    dosage: [
+      {
+        protocol: "Submentoniano (Fase 2)",
+        dose: "0,3-1,0 mL por ponto de injeção, múltiplos pontos por sessão",
+        notes: "2-4 sessões com intervalo de 4-6 semanas. Dose total por sessão e número de pontos de injeção determinados pela área de gordura. Aplicação intradérmica/subcutânea na camada de gordura alvo."
+      }
+    ],
+    administration: "Subcutânea (SC) / Intradérmica - injeção direta no tecido adiposo alvo",
+    halfLife: "Ação local (não sistêmica) - efeito apoptótico progressivo ao longo de dias a semanas",
+    status: "trial",
+    statusLabel: "Ensaio Clínico Fase 2",
+    references: [
+      "Lee SJ et al., 2024. 'Safety and Efficacy of CBL-514 Injection for Submental Fat Reduction: A Phase 2 Study.' Plast Reconstr Surg. <a href='https://pubmed.ncbi.nlm.nih.gov/39083028/' target='_blank'>[PubMed]</a>",
+      "Kim J et al., 2023. 'CBL-514, a novel injectable compound for localized fat reduction through adipocyte-selective apoptosis.' J Cosmet Dermatol. <a href='https://pubmed.ncbi.nlm.nih.gov/36799485/' target='_blank'>[PubMed]</a>"
+    ]
   }
 ];

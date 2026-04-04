@@ -1804,5 +1804,50 @@ var peptideStacks = [
       "Pickart L et al., 2018. 'Regenerative and Protective Actions of the GHK-Cu Peptide in the Light of the New Gene Data.' Int J Mol Sci. <a href='https://pubmed.ncbi.nlm.nih.gov/29986520/' target='_blank'>[PubMed]</a>",
       "Pickart L et al., 2015. 'GHK Peptide as a Natural Modulator of Multiple Cellular Pathways in Skin Regeneration.' Biomed Res Int. <a href='https://pubmed.ncbi.nlm.nih.gov/26236730/' target='_blank'>[PubMed]</a>"
     ]
+  },
+
+  // =============================================
+  // REDUÇÃO LOCALIZADA DE GORDURA
+  // =============================================
+  {
+    id: "localized-fat-reduction",
+    name: "Redu\u00e7\u00e3o Localizada de Gordura - Apoptose + Lipol\u00edtico",
+    goal: "body-comp",
+    goalLabel: "Composi\u00e7\u00e3o Corporal",
+    level: "Intermedi\u00e1rio",
+    description: "Protocolo combinado para redu\u00e7\u00e3o localizada de gordura subcut\u00e2nea, unindo a apoptose seletiva de adipoc\u00edtos do CBL-514 com a a\u00e7\u00e3o lipol\u00edtica sist\u00eamica do fragmento de GH (AOD-9604) e o suporte metab\u00f3lico mitocondrial do MOTS-c. A combina\u00e7\u00e3o ataca a gordura localizada por tr\u00eas vias distintas: destrui\u00e7\u00e3o direta de c\u00e9lulas de gordura, lip\u00f3lise hormonal e otimiza\u00e7\u00e3o do metabolismo energ\u00e9tico.",
+    peptides: [
+      {
+        id: "cbl-514",
+        name: "CBL-514",
+        role: "Apoptose seletiva de adipoc\u00edtos via ativa\u00e7\u00e3o da via mitocondrial intr\u00ednseca \u2014 destrui\u00e7\u00e3o permanente de c\u00e9lulas de gordura no local da inje\u00e7\u00e3o",
+        dose: "0,3-1,0 mL por ponto, m\u00faltiplos pontos por sess\u00e3o",
+        timing: "1 sess\u00e3o a cada 4-6 semanas (2-4 sess\u00f5es total)"
+      },
+      {
+        id: "aod-9604",
+        name: "AOD-9604",
+        role: "Fragmento lipol\u00edtico do GH (hGH 176-191 estabilizado) \u2014 estimula lip\u00f3lise e inibe lipog\u00eanese sem efeitos sist\u00eamicos do GH",
+        dose: "300-500 mcg SC/dia",
+        timing: "Di\u00e1rio, em jejum pela manh\u00e3"
+      },
+      {
+        id: "mots-c",
+        name: "MOTS-c",
+        role: "Pept\u00eddeo mitocondrial ativador de AMPK \u2014 aumenta oxida\u00e7\u00e3o de gordura, melhora sensibilidade \u00e0 insulina e metabolismo energ\u00e9tico",
+        dose: "5-10mg SC, 3-5x por semana",
+        timing: "3-5x por semana, pela manh\u00e3"
+      }
+    ],
+    synergy: "CBL-514 atua localmente eliminando adipoc\u00edtos por apoptose seletiva via caspases \u2014 efeito permanente nas c\u00e9lulas tratadas. AOD-9604 complementa de forma sist\u00eamica, estimulando a lip\u00f3lise (quebra de triglicer\u00eddeos) e inibindo a lipog\u00eanese (forma\u00e7\u00e3o de nova gordura) nos adipoc\u00edtos remanescentes, sem afetar glicemia ou IGF-1. MOTS-c ativa AMPK, aumentando o gasto energ\u00e9tico celular e a oxida\u00e7\u00e3o de \u00e1cidos graxos liberados pela lip\u00f3lise, al\u00e9m de melhorar a sensibilidade \u00e0 insulina. As tr\u00eas vias s\u00e3o complementares: destrui\u00e7\u00e3o celular + mobiliza\u00e7\u00e3o de gordura + queima metab\u00f3lica.",
+    application: "Todos SEPARADOS \u2014 vias e formula\u00e7\u00f5es completamente distintas. CBL-514: inje\u00e7\u00e3o intrad\u00e9rmica/subcut\u00e2nea direta na \u00e1rea de gordura alvo (realizada em cl\u00ednica, por profissional treinado). AOD-9604: inje\u00e7\u00e3o SC em seringa pr\u00f3pria, longe do local do CBL-514. MOTS-c: inje\u00e7\u00e3o SC em seringa separada. NUNCA misturar nenhum composto na mesma seringa.",
+    duration: "12-16 semanas. CBL-514: 2-4 sess\u00f5es em cl\u00ednica a cada 4-6 semanas. AOD-9604 e MOTS-c: uso di\u00e1rio/regular durante todo o per\u00edodo.",
+    warnings: "CBL-514 est\u00e1 em ensaio cl\u00ednico Fase 2 e N\u00c3O est\u00e1 aprovado para uso comercial. Deve ser aplicado por profissional de sa\u00fade treinado. Edema e equimose no local s\u00e3o esperados ap\u00f3s a aplica\u00e7\u00e3o de CBL-514. AOD-9604 n\u00e3o afeta glicemia nem IGF-1. Resultados do CBL-514 s\u00e3o permanentes para os adipoc\u00edtos eliminados, mas ganho de peso pode expandir adipoc\u00edtos remanescentes.",
+    evidenceLevel: "Moderado (CBL-514: Fase 2 publicada, efic\u00e1cia demonstrada) / Moderado (AOD-9604: m\u00faltiplos estudos) / Moderado (MOTS-c: dados cl\u00ednicos emergentes)",
+    references: [
+      "Lee SJ et al., 2024. 'Safety and Efficacy of CBL-514 Injection for Submental Fat Reduction: A Phase 2 Study.' Plast Reconstr Surg. <a href='https://pubmed.ncbi.nlm.nih.gov/39083028/' target='_blank'>[PubMed]</a>",
+      "Kim J et al., 2023. 'CBL-514, a novel injectable compound for localized fat reduction through adipocyte-selective apoptosis.' J Cosmet Dermatol. <a href='https://pubmed.ncbi.nlm.nih.gov/36799485/' target='_blank'>[PubMed]</a>",
+      "Heffernan MA et al., 2001. 'The effects of human GH and its lipolytic fragment (AOD9604) on lipid metabolism.' Endocrinology. <a href='https://pubmed.ncbi.nlm.nih.gov/11511536/' target='_blank'>[PubMed]</a>"
+    ]
   }
 ];
