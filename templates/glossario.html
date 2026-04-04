@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glossário de Peptídeos - Termos Técnicos e Definições | Guia de Peptídeos</title>
+    <meta name="description" content="Glossário completo de termos técnicos em peptidoterapia: GLP-1, GHRH, GHRP, receptores, mecanismos de ação, vias de administração, meia-vida farmacocinética e mais.">
+    <meta name="keywords" content="glossário peptídeos, GLP-1, GHRH, GHRP, receptor, agonista, peptídeo definição, termos farmacologia">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://guiadepeptideos.com.br/glossario/">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Glossário de Peptídeos - Termos Técnicos e Definições">
+    <meta property="og:description" content="Glossário completo de termos técnicos em peptidoterapia com definições claras e exemplos.">
+    <meta property="og:url" content="https://guiadepeptideos.com.br/glossario/">
+    <meta property="og:site_name" content="Guia de Peptídeos">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Glossário de Peptídeos">
+    <meta name="twitter:description" content="Termos técnicos em peptidoterapia com definições claras.">
+    <meta name="twitter:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+
+    <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+    {% include "_ga4.html" %}
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "DefinedTermSet",
+          "name": "Glossário de Peptídeos",
+          "url": "https://guiadepeptideos.com.br/glossario/",
+          "description": "Glossário completo de termos técnicos em peptidoterapia",
+          "inLanguage": "pt-BR"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Guia de Peptídeos", "item": "https://guiadepeptideos.com.br/"},
+            {"@type": "ListItem", "position": 2, "name": "Glossário", "item": "https://guiadepeptideos.com.br/glossario/"}
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1><a href="/" style="color:inherit;text-decoration:none">Guia Completo de Peptídeos</a></h1>
+            <p class="subtitle">Glossário de termos técnicos em peptidoterapia</p>
+        </div>
+    </header>
+
+    <nav aria-label="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> &rsaquo; <span>Glossário</span>
+    </nav>
+
+    <main class="detail-page">
+        <article>
+            <header class="detail-header">
+                <h1 class="detail-title">Glossário de Peptídeos</h1>
+                <p class="detail-aka">Termos técnicos, classificações farmacológicas e conceitos fundamentais</p>
+            </header>
+
+            <section>
+                <h2>Conceitos Fundamentais</h2>
+
+                <dl class="glossary-list">
+                    <dt>Peptídeo</dt>
+                    <dd>Cadeia curta de aminoácidos unidos por ligações peptídicas, geralmente contendo entre 2 e 50 aminoácidos. Diferenciam-se de proteínas por seu tamanho menor e geralmente pela função sinalizadora em vez de estrutural. Exemplos: insulina (51 aa), glucagon (29 aa), ocitocina (9 aa).</dd>
+
+                    <dt>Aminoácido</dt>
+                    <dd>Unidade monomérica que compõe peptídeos e proteínas. Os 20 aminoácidos proteinogênicos padrão incluem glicina, alanina, valina, leucina, isoleucina, prolina, fenilalanina, triptofano, metionina, serina, treonina, cisteína, tirosina, asparagina, glutamina, aspartato, glutamato, lisina, arginina e histidina.</dd>
+
+                    <dt>Ligação Peptídica</dt>
+                    <dd>Ligação covalente amida formada entre o grupo carboxila de um aminoácido e o grupo amina do aminoácido seguinte, com liberação de uma molécula de água. É o que une aminoácidos em peptídeos e proteínas.</dd>
+
+                    <dt>Receptor</dt>
+                    <dd>Proteína celular (geralmente transmembrana) que reconhece e liga-se especificamente a moléculas sinalizadoras (ligandos), desencadeando respostas celulares. Peptídeos terapêuticos atuam ligando-se a receptores específicos como GLP-1R, GHSR, APJ, MC3R/MC4R.</dd>
+
+                    <dt>Agonista</dt>
+                    <dd>Molécula que ativa um receptor mimetizando o ligando natural, desencadeando a resposta biológica. Semaglutida é um agonista do receptor GLP-1. Agonistas podem ser totais (efeito máximo) ou parciais (efeito submáximo).</dd>
+
+                    <dt>Antagonista</dt>
+                    <dd>Molécula que bloqueia um receptor sem ativá-lo, impedindo que o ligando natural se ligue. Tamoxifeno é um antagonista de receptores de estrogênio. Não são amplamente utilizados em peptidoterapia.</dd>
+                </dl>
+            </section>
+
+            <section>
+                <h2>Classes de Peptídeos</h2>
+                <dl class="glossary-list">
+                    <dt>GLP-1 (Glucagon-Like Peptide-1)</dt>
+                    <dd>Incretina produzida no intestino delgado que estimula secreção de insulina, inibe glucagon, retarda esvaziamento gástrico e reduz apetite. Agonistas sintéticos como Semaglutida, Liraglutida e Tirzepatida revolucionaram o tratamento de diabetes tipo 2 e obesidade.</dd>
+
+                    <dt>GIP (Glucose-dependent Insulinotropic Polypeptide)</dt>
+                    <dd>Segunda incretina principal, produzida no duodeno e jejuno. Também estimula insulina, mas com ação mais fraca no apetite. Tirzepatida é o primeiro agonista duplo GLP-1/GIP aprovado.</dd>
+
+                    <dt>GHRH (Growth Hormone-Releasing Hormone)</dt>
+                    <dd>Hormônio hipotalâmico que estimula a hipófise anterior a liberar GH (hormônio do crescimento). Análogos sintéticos: Sermorelin (44 aa), Tesamorelin (44 aa), CJC-1295 (30 aa com modificação DAC).</dd>
+
+                    <dt>GHRP (Growth Hormone Releasing Peptide)</dt>
+                    <dd>Peptídeos sintéticos que estimulam liberação de GH por mecanismo diferente do GHRH, via receptor GHSR (receptor de grelina). Exemplos: GHRP-2, GHRP-6, Hexarelin, Ipamorelin. Ipamorelin é seletivo e não causa aumento significativo de cortisol ou prolactina.</dd>
+
+                    <dt>Secretagogo</dt>
+                    <dd>Substância que estimula a secreção de outra. Peptídeos secretagogos de GH estimulam a hipófise a liberar GH endógeno, preservando o feedback natural, diferente do GH sintético que suprime a produção própria.</dd>
+
+                    <dt>Análogo</dt>
+                    <dd>Molécula similar a uma natural, com modificações que alteram propriedades como meia-vida, potência ou seletividade. Semaglutida é um análogo de GLP-1 com substituições que resistem à degradação pela DPP-4.</dd>
+
+                    <dt>Fragmento</dt>
+                    <dd>Parte de um peptídeo ou proteína maior que preserva atividade biológica. AOD-9604 é o fragmento 176-191 do hormônio do crescimento humano, preservando apenas a ação lipolítica sem efeitos sistêmicos do GH completo.</dd>
+                </dl>
+            </section>
+
+            <section>
+                <h2>Farmacocinética</h2>
+                <dl class="glossary-list">
+                    <dt>Meia-vida (T½)</dt>
+                    <dd>Tempo necessário para que a concentração plasmática de uma substância seja reduzida pela metade. Peptídeos naturais têm meia-vida curta (minutos), mas análogos modificados podem ter dias (Semaglutida: ~7 dias). Determina frequência de administração.</dd>
+
+                    <dt>Biodisponibilidade</dt>
+                    <dd>Fração do composto administrado que atinge a circulação sistêmica na forma ativa. Peptídeos têm biodisponibilidade oral próxima de zero (degradados no estômago) - por isso a maioria é injetável. Exceções: peptídeos orais encapsulados como Semaglutida oral (Rybelsus) com biodisponibilidade de ~1%.</dd>
+
+                    <dt>DPP-4 (Dipeptidyl Peptidase-4)</dt>
+                    <dd>Enzima que degrada rapidamente peptídeos naturais como GLP-1 (meia-vida <2 minutos). Análogos como Semaglutida são modificados para resistir à DPP-4. Medicamentos inibidores de DPP-4 (gliptinas) também são usados para diabetes.</dd>
+
+                    <dt>SC (Subcutânea)</dt>
+                    <dd>Via de administração onde o peptídeo é injetado no tecido subcutâneo (camada abaixo da pele). É a via mais comum para peptídeos pela facilidade de auto-administração, absorção gradual e boa biodisponibilidade.</dd>
+
+                    <dt>IM (Intramuscular)</dt>
+                    <dd>Injeção diretamente no músculo, com absorção mais rápida que SC devido à maior vascularização. Usada para alguns peptídeos hormonais e formulações oleosas.</dd>
+
+                    <dt>IV (Intravenosa)</dt>
+                    <dd>Administração direta na veia, com 100% de biodisponibilidade imediata. Usada em ambiente clínico para NAD+ e alguns peptídeos experimentais.</dd>
+                </dl>
+            </section>
+
+            <section>
+                <h2>Termos Clínicos e Regulatórios</h2>
+                <dl class="glossary-list">
+                    <dt>Aprovado FDA / Anvisa</dt>
+                    <dd>Peptídeos que passaram por ensaios clínicos Fase 3 e foram aprovados pelas agências regulatórias para uso comercial em indicações específicas. Exemplos: Semaglutida, Tirzepatida, Liraglutida, Tesamorelin.</dd>
+
+                    <dt>Ensaio Clínico Fase 1/2/3</dt>
+                    <dd>Etapas do desenvolvimento de medicamentos. Fase 1: segurança em voluntários saudáveis. Fase 2: eficácia preliminar e dose em pacientes. Fase 3: eficácia e segurança em larga escala. Fase 4: vigilância pós-comercialização.</dd>
+
+                    <dt>Peptídeo de Pesquisa</dt>
+                    <dd>Peptídeo usado apenas para fins de pesquisa científica, sem aprovação regulatória para uso humano. Muitos peptídeos populares estão neste status (BPC-157, TB-500, Epithalon). Vendidos "for research use only".</dd>
+
+                    <dt>Off-label</dt>
+                    <dd>Uso de um medicamento aprovado para uma indicação diferente da oficialmente registrada. Permitido sob responsabilidade médica, mas não coberto por planos de saúde.</dd>
+
+                    <dt>Stack (Combinação)</dt>
+                    <dd>Protocolo que combina múltiplos peptídeos ou peptídeos com outros compostos para efeito sinérgico. Deve respeitar compatibilidade farmacológica - alguns podem ser misturados na mesma seringa (BPC-157+TB-500), outros nunca (GHK-Cu).</dd>
+
+                    <dt>Ciclo</dt>
+                    <dd>Período de uso seguido de pausa, comum em peptídeos para evitar dessensibilização de receptores ou efeitos de longo prazo desconhecidos. Exemplo: Epithalon em ciclos de 10-20 dias, 2-3 vezes ao ano.</dd>
+                </dl>
+            </section>
+
+            <section>
+                <h2>Mecanismos Moleculares</h2>
+                <dl class="glossary-list">
+                    <dt>Telomerase</dt>
+                    <dd>Enzima que adiciona sequências repetitivas de DNA aos telômeros (extremidades dos cromossomos), prevenindo seu encurtamento a cada divisão celular. Ativada por peptídeos como Epithalon, é alvo anti-envelhecimento.</dd>
+
+                    <dt>AMPK (AMP-activated Protein Kinase)</dt>
+                    <dd>Sensor metabólico celular ativado em baixos níveis de energia (alta razão AMP/ATP). Ativa catabolismo, oxidação de gorduras e biogênese mitocondrial. Ativado por exercício, jejum, metformina e peptídeos como MOTS-c e AICAR.</dd>
+
+                    <dt>mTOR (mechanistic Target of Rapamycin)</dt>
+                    <dd>Quinase central na regulação de crescimento celular, síntese proteica e autofagia. Ativada por nutrientes (especialmente leucina) e inibida por rapamicina. Principal via anabólica muscular.</dd>
+
+                    <dt>Apoptose</dt>
+                    <dd>Morte celular programada, processo ordenado de autodestruição celular via cascata de caspases. Peptídeos como CBL-514 induzem apoptose seletiva em adipócitos para redução de gordura localizada sem causar inflamação.</dd>
+
+                    <dt>Angiogênese</dt>
+                    <dd>Formação de novos vasos sanguíneos a partir de vasos pré-existentes. Essencial para cicatrização e crescimento tecidual. BPC-157 e TB-500 são angiogênicos, promovendo reparo de lesões.</dd>
+
+                    <dt>Miostatina</dt>
+                    <dd>Proteína da família TGF-β que inibe crescimento muscular, mantendo massa magra em limites fisiológicos. Bloqueadores de miostatina como Bimagrumab aumentam massa muscular e reduzem gordura simultaneamente.</dd>
+                </dl>
+            </section>
+
+            <section class="warning-box">
+                <strong>AVISO:</strong> Este glossário é um material educacional e informativo. Para orientação clínica específica, consulte um profissional de saúde qualificado.
+            </section>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <p><a href="/">&larr; Voltar ao Guia Completo</a></p>
+        <p>Guia de Peptídeos &copy; 2026</p>
+    </footer>
+</body>
+</html>

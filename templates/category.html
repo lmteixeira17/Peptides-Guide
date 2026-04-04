@@ -1,0 +1,131 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ meta.title }} | Guia de Peptídeos</title>
+    <meta name="description" content="{{ meta.description }}">
+    <meta name="keywords" content="peptídeos {{ meta.label|lower }}, {{ meta.label|lower }}, {% for p in peptides|slice:':10' %}{{ p.name }}{% if not forloop.last %}, {% endif %}{% endfor %}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://guiadepeptideos.com.br/categorias/{{ slug }}/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{{ meta.title }}">
+    <meta property="og:description" content="{{ meta.description }}">
+    <meta property="og:url" content="https://guiadepeptideos.com.br/categorias/{{ slug }}/">
+    <meta property="og:site_name" content="Guia de Peptídeos">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ meta.title }}">
+    <meta name="twitter:description" content="{{ meta.description }}">
+    <meta name="twitter:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+
+    <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+    {% include "_ga4.html" %}
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "CollectionPage",
+          "name": "{{ meta.title|escapejs }}",
+          "url": "https://guiadepeptideos.com.br/categorias/{{ slug }}/",
+          "description": "{{ meta.description|escapejs }}",
+          "inLanguage": "pt-BR"
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Guia de Peptídeos", "item": "https://guiadepeptideos.com.br/"},
+            {"@type": "ListItem", "position": 2, "name": "{{ meta.label|escapejs }}", "item": "https://guiadepeptideos.com.br/categorias/{{ slug }}/"}
+          ]
+        },
+        {
+          "@type": "ItemList",
+          "name": "Peptídeos de {{ meta.label|escapejs }}",
+          "numberOfItems": {{ peptides|length }},
+          "itemListElement": [
+            {% for p in peptides %}
+            {"@type": "ListItem", "position": {{ forloop.counter }}, "name": "{{ p.name|escapejs }}", "url": "https://guiadepeptideos.com.br/peptideos/{{ p.id }}/"}{% if not forloop.last %},{% endif %}
+            {% endfor %}
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1><a href="/" style="color:inherit;text-decoration:none">Guia Completo de Peptídeos</a></h1>
+            <p class="subtitle">Referência científica com descrições, efeitos colaterais e dosagens</p>
+        </div>
+    </header>
+
+    <nav aria-label="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> &rsaquo;
+        <a href="/categorias/">Categorias</a> &rsaquo;
+        <span>{{ meta.label }}</span>
+    </nav>
+
+    <main class="detail-page">
+        <article>
+            <header class="detail-header">
+                <h1 class="detail-title">Peptídeos para {{ meta.label }}</h1>
+                <p class="detail-aka">{{ peptides|length }} peptídeos individuais e {{ stacks|length }} combinações disponíveis</p>
+            </header>
+
+            <section>
+                <h2>Sobre esta categoria</h2>
+                <p>{{ meta.intro }}</p>
+            </section>
+
+            <section>
+                <h2>Peptídeos em {{ meta.label }}</h2>
+                <div class="related-grid">
+                    {% for p in peptides %}
+                    <a href="/peptideos/{{ p.id }}/" class="related-card">
+                        <h3>{{ p.name }}</h3>
+                        {% if p.aka %}<p class="related-aka">{{ p.aka }}</p>{% endif %}
+                        <p class="related-desc">{{ p.description|truncatechars:140 }}</p>
+                        <p style="margin-top:0.5rem;font-size:0.8rem;color:#3730a3;font-weight:600">{{ p.status_label }}</p>
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+
+            {% if stacks %}
+            <section style="margin-top:2.5rem">
+                <h2>Combinações Recomendadas para {{ meta.label }}</h2>
+                <div class="related-grid">
+                    {% for s in stacks %}
+                    <a href="/combinacoes/{{ s.id }}/" class="related-card">
+                        <h3>{{ s.name }}</h3>
+                        <p class="related-aka">Nível: {{ s.level }}</p>
+                        <p class="related-desc">{{ s.description|truncatechars:140 }}</p>
+                    </a>
+                    {% endfor %}
+                </div>
+            </section>
+            {% endif %}
+
+            <section class="warning-box">
+                <strong>AVISO:</strong> As informações apresentadas são baseadas em estudos científicos publicados e têm finalidade exclusivamente informativa e educacional. Não constituem aconselhamento médico. Consulte sempre um profissional de saúde qualificado antes de utilizar qualquer substância.
+            </section>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <p><a href="/">&larr; Voltar ao Guia Completo</a></p>
+        <p>Guia de Peptídeos &copy; 2026 - Conteúdo baseado em literatura científica publicada</p>
+    </footer>
+</body>
+</html>
