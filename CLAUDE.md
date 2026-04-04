@@ -7,6 +7,8 @@ Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoe
 **Idioma do conteudo:** Portugues (pt-BR)
 **Publico-alvo:** Profissionais de saude e pesquisadores
 **Repositorio:** https://github.com/lmteixeira17/Peptides-Guide
+**Dominio de producao:** https://guiadepeptideos.com.br/ (Cloudflare + Let's Encrypt SSL)
+**Dominio legado:** https://mlt.com.br/peptides/ (ainda funciona)
 
 ---
 
@@ -228,6 +230,83 @@ nginx-proxy (nginx:alpine) → porta 80/443
    curl -sI http://localhost:3007/health/
    curl -sI http://localhost/peptides/
    ```
+
+---
+
+## SEO e Analytics
+
+### Dominio e CDN
+- **Dominio:** `guiadepeptideos.com.br` (registrado via Registro.br)
+- **DNS/CDN:** Cloudflare (zone ID: `25b7723d5eddebf566bfaffd7316cdbe`)
+- **Nameservers:** `rafe.ns.cloudflare.com`, `trace.ns.cloudflare.com`
+- **SSL:** Flexible (Cloudflare emite certificado, proxy HTTP ao servidor)
+- **Redirects:** Always HTTPS ativo + www→raiz (301 via page rule)
+
+### Endpoints SEO
+- `/robots.txt` - Allow todos exceto /admin/ e /health/, aponta sitemap
+- `/sitemap.xml` - 150 URLs (main + 108 peptideos + 41 stacks com anchors)
+- `/llms.txt` - Inventario completo para IAs (ChatGPT, Claude, Perplexity)
+- `/favicon.svg` - Favicon SVG com emoji DNA
+
+### Meta Tags e Structured Data
+Em `templates/index.html`:
+- Meta description, keywords, author, robots
+- Canonical URL → `https://guiadepeptideos.com.br/`
+- Open Graph (og:title, og:description, og:url, og:locale, og:site_name)
+- Twitter Cards (summary_large_image)
+- JSON-LD: `WebSite` (com SearchAction), `MedicalWebPage`, `ItemList`
+
+### SEO para Crawlers (sem JavaScript)
+Bloco `<noscript>` em `templates/index.html` com **149 articles** contendo:
+- Todos os 108 peptideos com descricao, mecanismo, beneficios, efeitos colaterais, referencias
+- Todos os 41 stacks com descricao, sinergia, duracao, referencias
+- Googlebot e outros crawlers indexam esse conteudo completo
+
+### SEO Dinamico (JavaScript)
+Em `static/core/app.js`:
+- `document.title` atualiza ao abrir modal (ex: "Semaglutida - Guia de Peptideos")
+- URL hash atualiza via `history.replaceState` (ex: `#semaglutide`, `#stack-weight-loss-beginner`)
+- Deep links funcionam: `guiadepeptideos.com.br/#bpc-157` abre modal direto
+- Meta description atualiza dinamicamente com info do peptideo
+
+### Google Search Console
+- **Propriedade:** `sc-domain:guiadepeptideos.com.br`
+- **Verificacao:** automatica via Cloudflare
+- **Sitemap:** `https://guiadepeptideos.com.br/sitemap.xml` (submetido)
+- **API OAuth:** configurado com refresh token permanente
+
+### Consultar Dados do Search Console via API
+
+**IMPORTANTE:** As credenciais OAuth (client_id, client_secret, refresh_token) NAO sao commitadas no repositorio. Estao salvas apenas na memoria local do Claude (`MEMORY.md` em `C:\Users\lm\.claude\projects\...\memory\reference_gsc_oauth.md`).
+
+Endpoints disponiveis com as credenciais salvas:
+
+```bash
+# 1. Obter access token fresco usando refresh token
+curl -X POST "https://oauth2.googleapis.com/token" \
+  -d "client_id=<CLIENT_ID>" \
+  -d "client_secret=<CLIENT_SECRET>" \
+  -d "refresh_token=<REFRESH_TOKEN>" \
+  -d "grant_type=refresh_token"
+
+# 2. Listar sites acessiveis
+GET https://www.googleapis.com/webmasters/v3/sites
+Authorization: Bearer <ACCESS_TOKEN>
+
+# 3. Search Analytics (impressoes, cliques, CTR, posicao)
+POST https://www.googleapis.com/webmasters/v3/sites/sc-domain%3Aguiadepeptideos.com.br/searchAnalytics/query
+Authorization: Bearer <ACCESS_TOKEN>
+Body: {"startDate":"YYYY-MM-DD","endDate":"YYYY-MM-DD","dimensions":["query"],"rowLimit":25}
+
+# 4. Inspecionar status de indexacao de uma URL
+POST https://searchconsole.googleapis.com/v1/urlInspection/index:inspect
+Authorization: Bearer <ACCESS_TOKEN>
+Body: {"inspectionUrl":"https://guiadepeptideos.com.br/","siteUrl":"sc-domain:guiadepeptideos.com.br"}
+```
+
+**Dimensoes disponiveis no searchAnalytics:** `query`, `page`, `country`, `device`, `searchAppearance`, `date`
+
+**Quando o usuario perguntar "como esta o SEO" ou "mostra os dados do Google":** usar as credenciais salvas em `reference_gsc_oauth.md` (memoria local) para consultar a API.
 
 ---
 
