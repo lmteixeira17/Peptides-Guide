@@ -1,0 +1,165 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ stack.name }} - Protocolo Completo | Guia de Peptídeos</title>
+    <meta name="description" content="{{ stack.name }}: {{ stack.description|truncatechars:155 }}">
+    <meta name="keywords" content="{{ stack.name }}, stack peptídeos, combinação peptídeos, {{ stack.goal_label }}, protocolo {{ stack.goal_label }}">
+    <meta name="author" content="Guia de Peptídeos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://guiadepeptideos.com.br/combinacoes/{{ stack.id }}/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ stack.name }}">
+    <meta property="og:description" content="{{ stack.description|truncatechars:200 }}">
+    <meta property="og:url" content="https://guiadepeptideos.com.br/combinacoes/{{ stack.id }}/">
+    <meta property="og:site_name" content="Guia de Peptídeos">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ stack.name }}">
+    <meta name="twitter:description" content="{{ stack.description|truncatechars:200 }}">
+    <meta name="twitter:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+
+    <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "MedicalWebPage",
+          "name": "{{ stack.name|escapejs }}",
+          "url": "https://guiadepeptideos.com.br/combinacoes/{{ stack.id }}/",
+          "description": "{{ stack.description|escapejs|truncatechars:200 }}",
+          "inLanguage": "pt-BR",
+          "about": {
+            "@type": "MedicalTherapy",
+            "name": "{{ stack.name|escapejs }}"
+          },
+          "audience": {
+            "@type": "MedicalAudience",
+            "audienceType": "Profissionais de saúde e pesquisadores"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Guia de Peptídeos", "item": "https://guiadepeptideos.com.br/"},
+            {"@type": "ListItem", "position": 2, "name": "Combinações", "item": "https://guiadepeptideos.com.br/#stacks"},
+            {"@type": "ListItem", "position": 3, "name": "{{ stack.name|escapejs }}", "item": "https://guiadepeptideos.com.br/combinacoes/{{ stack.id }}/"}
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1><a href="/" style="color:inherit;text-decoration:none">Guia Completo de Peptídeos</a></h1>
+            <p class="subtitle">Combinações recomendadas baseadas em lógica farmacológica</p>
+        </div>
+    </header>
+
+    <nav aria-label="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> &rsaquo;
+        <a href="/#stacks">Combinações</a> &rsaquo;
+        <span>{{ stack.name }}</span>
+    </nav>
+
+    <main class="detail-page">
+        <article>
+            <header class="detail-header">
+                <span class="category-badge">{{ stack.goal_label }}</span>
+                <span class="status-badge">{{ stack.level }}</span>
+                <h1 class="detail-title">{{ stack.name }}</h1>
+            </header>
+
+            <section>
+                <h2>Descrição do Protocolo</h2>
+                <p>{{ stack.description }}</p>
+            </section>
+
+            <section>
+                <h2>Peptídeos do Stack</h2>
+                <div class="stack-peptides-list">
+                    {% for sp in stack.stack_peptides.all %}
+                    <div class="stack-peptide-item">
+                        {% if sp.peptide %}
+                        <h3><a href="/peptideos/{{ sp.peptide.id }}/">{{ sp.name }}</a></h3>
+                        {% else %}
+                        <h3>{{ sp.name }}</h3>
+                        {% endif %}
+                        <p><strong>Papel:</strong> {{ sp.role }}</p>
+                        <p><strong>Dose:</strong> {{ sp.dose }}</p>
+                        {% if sp.timing %}<p><strong>Timing:</strong> {{ sp.timing }}</p>{% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section>
+                <h2>Sinergia</h2>
+                <p>{{ stack.synergy }}</p>
+            </section>
+
+            <section>
+                <h2>Aplicação (Co-administração)</h2>
+                <p>{{ stack.application }}</p>
+            </section>
+
+            <section class="detail-meta">
+                <div><strong>Duração:</strong> {{ stack.duration }}</div>
+                <div><strong>Nível de Evidência:</strong> {{ stack.evidence_level }}</div>
+            </section>
+
+            <section>
+                <h2>Avisos Importantes</h2>
+                <p>{{ stack.warnings }}</p>
+            </section>
+
+            <section>
+                <h2>Referências Científicas</h2>
+                <ol class="references-list">
+                    {% for r in stack.references.all %}<li>{{ r.text|safe }}</li>{% endfor %}
+                </ol>
+            </section>
+
+            <section class="warning-box">
+                <strong>AVISO IMPORTANTE:</strong> As combinações listadas são baseadas em lógica farmacológica e relatos de pesquisa. Não há ensaios clínicos testando estas combinações específicas. Consulte sempre um médico qualificado.
+            </section>
+        </article>
+
+        {% if related %}
+        <aside class="related-section">
+            <h2>Outras Combinações para {{ stack.goal_label }}</h2>
+            <div class="related-grid">
+                {% for r in related %}
+                <a href="/combinacoes/{{ r.id }}/" class="related-card">
+                    <h3>{{ r.name }}</h3>
+                    <p class="related-aka">{{ r.level }}</p>
+                    <p class="related-desc">{{ r.description|truncatechars:120 }}</p>
+                </a>
+                {% endfor %}
+            </div>
+        </aside>
+        {% endif %}
+    </main>
+
+    <footer class="footer">
+        <p><a href="/">&larr; Voltar ao Guia Completo</a></p>
+        <p>Guia de Peptídeos &copy; 2026 - Conteúdo baseado em literatura científica publicada</p>
+        <p class="footer-disclaimer">Este material é para fins educacionais. Não substitui orientação médica profissional.</p>
+    </footer>
+</body>
+</html>

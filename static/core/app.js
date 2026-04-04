@@ -230,6 +230,7 @@ function openModal(id) {
     html += '    <span class="tag" style="background:#f3e8ff;color:#7c3aed">Meia-vida: ' + p.halfLife + '</span>';
     html += '    <span class="tag" style="background:#ecfdf5;color:#065f46">Via: ' + p.administration + '</span>';
     html += '  </div>';
+    html += '  <div style="margin-top:1rem"><a href="/peptideos/' + p.id + '/" style="color:#3730a3;font-weight:600;text-decoration:none">Ver p\u00e1gina completa &rarr;</a></div>';
     html += '</div>';
 
     html += '<div class="modal-section">';
@@ -326,6 +327,7 @@ function openStackModal(id) {
     html += '    <span class="tag" style="background:#f3e8ff;color:#7c3aed">N\u00edvel: ' + s.level + '</span>';
     html += '    <span class="tag" style="background:#ecfdf5;color:#065f46">' + s.peptides.length + ' pept\u00eddeos</span>';
     html += '  </div>';
+    html += '  <div style="margin-top:1rem"><a href="/combinacoes/' + s.id + '/" style="color:#3730a3;font-weight:600;text-decoration:none">Ver p\u00e1gina completa &rarr;</a></div>';
     html += '</div>';
 
     html += '<div class="modal-section">';

@@ -1284,10 +1284,133 @@ class TestURLRouting:
         url = reverse('health')
         assert url == '/health/'
 
+    def test_peptide_detail_url_resolves(self):
+        url = reverse('peptide_detail', kwargs={'slug': 'semaglutide'})
+        assert url == '/peptideos/semaglutide/'
+
+    def test_stack_detail_url_resolves(self):
+        url = reverse('stack_detail', kwargs={'slug': 'weight-loss-beginner'})
+        assert url == '/combinacoes/weight-loss-beginner/'
+
+    def test_robots_url_resolves(self):
+        url = reverse('robots_txt')
+        assert url == '/robots.txt'
+
+    def test_sitemap_url_resolves(self):
+        url = reverse('sitemap_xml')
+        assert url == '/sitemap.xml'
+
+    def test_llms_url_resolves(self):
+        url = reverse('llms_txt')
+        assert url == '/llms.txt'
+
     def test_admin_url_accessible(self, client, admin_user):
         client.login(username='admin', password='testpass123')
         response = client.get('/admin/')
         assert response.status_code == 200
+
+
+@pytest.mark.django_db
+class TestSEOEndpoints:
+    """Tests for SEO endpoints (robots.txt, sitemap.xml, llms.txt, detail pages)."""
+
+    @pytest.fixture
+    def peptide(self):
+        p = Peptide.objects.create(
+            id='test-peptide', name='Test Peptide', aka='TP',
+            category='weight-loss', category_label='Perda de Peso',
+            description='Test description', mechanism='Test mechanism',
+            administration='SC', half_life='1h',
+            status='approved', status_label='Aprovado', order=1,
+        )
+        return p
+
+    @pytest.fixture
+    def stack(self):
+        s = Stack.objects.create(
+            id='test-stack', name='Test Stack',
+            goal='weight-loss', goal_label='Perda de Peso',
+            level='Iniciante', description='Test desc',
+            synergy='Test synergy', application='Test app',
+            duration='4 weeks', warnings='Test warnings',
+            evidence_level='High', order=1,
+        )
+        return s
+
+    def test_robots_txt_returns_200(self, client):
+        response = client.get('/robots.txt')
+        assert response.status_code == 200
+        assert 'text/plain' in response['Content-Type']
+        assert b'User-agent: *' in response.content
+        assert b'Sitemap:' in response.content
+        assert b'guiadepeptideos.com.br' in response.content
+
+    def test_sitemap_xml_returns_200(self, client):
+        response = client.get('/sitemap.xml')
+        assert response.status_code == 200
+        assert 'application/xml' in response['Content-Type']
+        assert b'<?xml version="1.0"' in response.content
+        assert b'<urlset' in response.content
+        assert b'<lastmod>' in response.content
+
+    def test_sitemap_includes_peptide_urls(self, client, peptide):
+        response = client.get('/sitemap.xml')
+        assert b'/peptideos/test-peptide/' in response.content
+
+    def test_sitemap_includes_stack_urls(self, client, stack):
+        response = client.get('/sitemap.xml')
+        assert b'/combinacoes/test-stack/' in response.content
+
+    def test_llms_txt_returns_200(self, client):
+        response = client.get('/llms.txt')
+        assert response.status_code == 200
+        assert b'Guia Completo de Peptideos' in response.content
+        assert b'guiadepeptideos.com.br' in response.content
+
+    def test_peptide_detail_page_returns_200(self, client, peptide):
+        response = client.get('/peptideos/test-peptide/')
+        assert response.status_code == 200
+        assert b'Test Peptide' in response.content
+        assert b'Test description' in response.content
+
+    def test_peptide_detail_404_for_missing(self, client):
+        response = client.get('/peptideos/does-not-exist/')
+        assert response.status_code == 404
+
+    def test_peptide_detail_has_canonical(self, client, peptide):
+        response = client.get('/peptideos/test-peptide/')
+        assert b'rel="canonical"' in response.content
+        assert b'/peptideos/test-peptide/' in response.content
+
+    def test_peptide_detail_has_schema_drug(self, client, peptide):
+        response = client.get('/peptideos/test-peptide/')
+        assert b'"@type": "Drug"' in response.content
+        assert b'BreadcrumbList' in response.content
+
+    def test_stack_detail_page_returns_200(self, client, stack):
+        response = client.get('/combinacoes/test-stack/')
+        assert response.status_code == 200
+        assert b'Test Stack' in response.content
+
+    def test_stack_detail_404_for_missing(self, client):
+        response = client.get('/combinacoes/does-not-exist/')
+        assert response.status_code == 404
+
+    def test_index_has_faqpage_schema(self, client):
+        response = client.get('/')
+        assert b'"@type": "FAQPage"' in response.content
+        assert b'"@type": "Question"' in response.content
+
+    def test_index_has_og_image(self, client):
+        response = client.get('/')
+        assert b'og:image' in response.content
+        assert b'og-image.png' in response.content
+
+    def test_index_has_noscript_content(self, client, peptide, stack):
+        response = client.get('/')
+        assert b'<noscript>' in response.content
+        assert b'<article' in response.content
+        assert b'Test Peptide' in response.content
 
 
 # =============================================================================
