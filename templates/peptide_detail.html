@@ -31,7 +31,9 @@
     <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
 
-    <!-- JSON-LD: Drug + BreadcrumbList + MedicalWebPage -->
+    {% include "_ga4.html" %}
+
+    <!-- JSON-LD: Drug + Article + BreadcrumbList + MedicalWebPage -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -48,6 +50,31 @@
           "url": "https://guiadepeptideos.com.br/peptideos/{{ peptide.id }}/"
         },
         {
+          "@type": "Article",
+          "headline": "{{ peptide.name|escapejs }} - Dosagem, Efeitos Colaterais e Mecanismo",
+          "description": "{{ peptide.description|escapejs|truncatechars:200 }}",
+          "url": "https://guiadepeptideos.com.br/peptideos/{{ peptide.id }}/",
+          "datePublished": "2026-01-01",
+          "dateModified": "2026-04-04",
+          "inLanguage": "pt-BR",
+          "author": {
+            "@type": "Organization",
+            "name": "Guia de Peptídeos",
+            "url": "https://guiadepeptideos.com.br/sobre/"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Guia de Peptídeos",
+            "url": "https://guiadepeptideos.com.br/",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://guiadepeptideos.com.br/static/core/og-image.png"
+            }
+          },
+          "mainEntityOfPage": "https://guiadepeptideos.com.br/peptideos/{{ peptide.id }}/",
+          "image": "https://guiadepeptideos.com.br/static/core/og-image.png"
+        },
+        {
           "@type": "MedicalWebPage",
           "name": "{{ peptide.name|escapejs }} - Guia Completo",
           "url": "https://guiadepeptideos.com.br/peptideos/{{ peptide.id }}/",
@@ -60,13 +87,14 @@
           "audience": {
             "@type": "MedicalAudience",
             "audienceType": "Profissionais de saúde e pesquisadores"
-          }
+          },
+          "lastReviewed": "2026-04-04"
         },
         {
           "@type": "BreadcrumbList",
           "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Guia de Peptídeos", "item": "https://guiadepeptideos.com.br/"},
-            {"@type": "ListItem", "position": 2, "name": "{{ peptide.category_label|escapejs }}", "item": "https://guiadepeptideos.com.br/#{{ peptide.category }}"},
+            {"@type": "ListItem", "position": 2, "name": "{{ peptide.category_label|escapejs }}", "item": "https://guiadepeptideos.com.br/categorias/{{ peptide.category }}/"},
             {"@type": "ListItem", "position": 3, "name": "{{ peptide.name|escapejs }}", "item": "https://guiadepeptideos.com.br/peptideos/{{ peptide.id }}/"}
           ]
         }
@@ -84,7 +112,7 @@
 
     <nav aria-label="breadcrumb" class="breadcrumb">
         <a href="/">Início</a> &rsaquo;
-        <a href="/#{{ peptide.category }}">{{ peptide.category_label }}</a> &rsaquo;
+        <a href="/categorias/{{ peptide.category }}/">{{ peptide.category_label }}</a> &rsaquo;
         <span>{{ peptide.name }}</span>
     </nav>
 

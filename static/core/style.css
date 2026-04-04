@@ -1147,3 +1147,39 @@ body {
     .detail-title { font-size: 1.6rem; }
     .breadcrumb { padding: 0.5rem 1rem; }
 }
+
+/* Glossary page */
+.glossary-list {
+    margin: 1rem 0;
+}
+.glossary-list dt {
+    font-weight: 700;
+    color: var(--primary);
+    margin-top: 1.25rem;
+    font-size: 1.1rem;
+}
+.glossary-list dd {
+    margin: 0.4rem 0 0 0;
+    padding-left: 1rem;
+    border-left: 3px solid #e5e7eb;
+    color: var(--text);
+    line-height: 1.7;
+}
+
+/* Footer navigation */
+.footer-nav {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    padding-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    flex-wrap: wrap;
+}
+.footer-nav a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.footer-nav a:hover { text-decoration: underline; }

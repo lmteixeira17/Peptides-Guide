@@ -1304,6 +1304,22 @@ class TestURLRouting:
         url = reverse('llms_txt')
         assert url == '/llms.txt'
 
+    def test_category_url_resolves(self):
+        url = reverse('category', kwargs={'slug': 'weight-loss'})
+        assert url == '/categorias/weight-loss/'
+
+    def test_glossario_url_resolves(self):
+        url = reverse('glossario')
+        assert url == '/glossario/'
+
+    def test_sobre_url_resolves(self):
+        url = reverse('sobre')
+        assert url == '/sobre/'
+
+    def test_peptides_api_url_resolves(self):
+        url = reverse('peptides_api')
+        assert url == '/api/peptides.json'
+
     def test_admin_url_accessible(self, client, admin_user):
         client.login(username='admin', password='testpass123')
         response = client.get('/admin/')
@@ -1411,6 +1427,81 @@ class TestSEOEndpoints:
         assert b'<noscript>' in response.content
         assert b'<article' in response.content
         assert b'Test Peptide' in response.content
+
+    def test_category_page_returns_200(self, client, peptide):
+        response = client.get('/categorias/weight-loss/')
+        assert response.status_code == 200
+        assert b'Perda de Peso' in response.content
+
+    def test_category_page_404_for_invalid(self, client):
+        response = client.get('/categorias/invalid-category/')
+        assert response.status_code == 404
+
+    def test_category_page_has_schema(self, client, peptide):
+        response = client.get('/categorias/weight-loss/')
+        assert b'CollectionPage' in response.content
+        assert b'BreadcrumbList' in response.content
+        assert b'ItemList' in response.content
+
+    def test_glossario_page_returns_200(self, client):
+        response = client.get('/glossario/')
+        assert response.status_code == 200
+        assert b'Gloss' in response.content
+        assert b'DefinedTermSet' in response.content
+
+    def test_sobre_page_returns_200(self, client):
+        response = client.get('/sobre/')
+        assert response.status_code == 200
+        assert b'Sobre' in response.content
+        assert b'AboutPage' in response.content
+        assert b'E-E-A-T' not in response.content  # not user-facing term
+
+    def test_peptides_api_returns_json(self, client, peptide):
+        response = client.get('/api/peptides.json')
+        assert response.status_code == 200
+        assert 'application/json' in response['Content-Type']
+        data = json.loads(response.content)
+        assert 'version' in data
+        assert 'peptides' in data
+        assert 'stacks' in data
+        assert len(data['peptides']) >= 1
+
+    def test_peptides_api_has_cors_header(self, client):
+        response = client.get('/api/peptides.json')
+        assert response['Access-Control-Allow-Origin'] == '*'
+
+    def test_sitemap_includes_category_urls(self, client, peptide):
+        response = client.get('/sitemap.xml')
+        assert b'/categorias/weight-loss/' in response.content
+
+    def test_sitemap_includes_static_pages(self, client):
+        response = client.get('/sitemap.xml')
+        assert b'/sobre/' in response.content
+        assert b'/glossario/' in response.content
+
+    def test_robots_includes_ai_bots(self, client):
+        response = client.get('/robots.txt')
+        assert b'GPTBot' in response.content
+        assert b'ClaudeBot' in response.content
+        assert b'PerplexityBot' in response.content
+        assert b'Google-Extended' in response.content
+
+    def test_llms_txt_has_api_link(self, client):
+        response = client.get('/llms.txt')
+        assert b'/api/peptides.json' in response.content
+        assert b'guiadepeptideos.com.br/sobre/' in response.content
+
+    def test_peptide_detail_has_article_schema(self, client, peptide):
+        response = client.get('/peptideos/test-peptide/')
+        assert b'"@type": "Article"' in response.content
+        assert b'datePublished' in response.content
+        assert b'dateModified' in response.content
+
+    def test_index_footer_has_nav_links(self, client):
+        response = client.get('/')
+        assert b'/sobre/' in response.content
+        assert b'/glossario/' in response.content
+        assert b'/api/peptides.json' in response.content
 
 
 # =============================================================================

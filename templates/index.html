@@ -33,6 +33,17 @@
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
     <link rel="preload" href="{% static 'core/app.js' %}" as="script">
 
+    {% if ga4_id %}
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ ga4_id }}');
+    </script>
+    {% endif %}
+
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
@@ -379,6 +390,12 @@
 
     <!-- Footer -->
     <footer class="footer">
+        <nav class="footer-nav" aria-label="Navegação do rodapé">
+            <a href="/sobre/">Sobre</a>
+            <a href="/glossario/">Gloss&aacute;rio</a>
+            <a href="/sitemap.xml">Sitemap</a>
+            <a href="/api/peptides.json">API JSON</a>
+        </nav>
         <p>Guia de Pept&iacute;deos &copy; 2026 - Conte&uacute;do baseado em literatura cient&iacute;fica publicada</p>
         <p class="footer-disclaimer">Este material &eacute; para fins educacionais. N&atilde;o substitui orienta&ccedil;&atilde;o m&eacute;dica profissional.</p>
     </footer>

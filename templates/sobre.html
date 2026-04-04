@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre o Guia - Metodologia, Fontes e Critérios | Guia de Peptídeos</title>
+    <meta name="description" content="Conheça a metodologia do Guia de Peptídeos: critérios de inclusão, fontes científicas (PubMed), processo de revisão e princípios editoriais para conteúdo médico confiável.">
+    <meta name="keywords" content="sobre guia peptídeos, metodologia, fontes científicas, PubMed, conteúdo médico confiável">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://guiadepeptideos.com.br/sobre/">
+
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Sobre o Guia de Peptídeos - Metodologia e Fontes">
+    <meta property="og:description" content="Conheça a metodologia, fontes científicas e critérios editoriais do Guia de Peptídeos.">
+    <meta property="og:url" content="https://guiadepeptideos.com.br/sobre/">
+    <meta property="og:site_name" content="Guia de Peptídeos">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sobre o Guia de Peptídeos">
+    <meta name="twitter:description" content="Metodologia, fontes e critérios editoriais.">
+    <meta name="twitter:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+
+    <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+    {% include "_ga4.html" %}
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "AboutPage",
+          "name": "Sobre o Guia de Peptídeos",
+          "url": "https://guiadepeptideos.com.br/sobre/",
+          "description": "Metodologia, fontes científicas e critérios editoriais do Guia de Peptídeos.",
+          "inLanguage": "pt-BR",
+          "mainEntity": {
+            "@type": "Organization",
+            "name": "Guia de Peptídeos",
+            "url": "https://guiadepeptideos.com.br/",
+            "description": "Referência científica independente sobre peptídeos terapêuticos em português",
+            "knowsAbout": [
+              "Peptídeos terapêuticos",
+              "Farmacologia",
+              "Endocrinologia",
+              "Medicina regenerativa",
+              "Composição corporal",
+              "GLP-1 agonistas",
+              "Hormônio do crescimento",
+              "Anti-envelhecimento"
+            ]
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Guia de Peptídeos", "item": "https://guiadepeptideos.com.br/"},
+            {"@type": "ListItem", "position": 2, "name": "Sobre", "item": "https://guiadepeptideos.com.br/sobre/"}
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1><a href="/" style="color:inherit;text-decoration:none">Guia Completo de Peptídeos</a></h1>
+            <p class="subtitle">Referência científica sobre peptídeos terapêuticos</p>
+        </div>
+    </header>
+
+    <nav aria-label="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> &rsaquo; <span>Sobre</span>
+    </nav>
+
+    <main class="detail-page">
+        <article>
+            <header class="detail-header">
+                <h1 class="detail-title">Sobre o Guia de Peptídeos</h1>
+                <p class="detail-aka">Metodologia, fontes e critérios editoriais</p>
+            </header>
+
+            <section>
+                <h2>Nossa Missão</h2>
+                <p>O Guia de Peptídeos é uma referência científica independente em português brasileiro sobre peptídeos terapêuticos. Nossa missão é tornar acessível e compreensível a literatura científica sobre peptídeos, preenchendo uma lacuna importante entre estudos clínicos publicados em inglês e profissionais de saúde, pesquisadores e pacientes informados de língua portuguesa.</p>
+                <p>Acreditamos que o acesso a informação científica de qualidade é fundamental para decisões clínicas e pessoais bem fundamentadas. Por isso, este guia é <strong>100% gratuito, sem anúncios e sem venda de produtos</strong>.</p>
+            </section>
+
+            <section>
+                <h2>Conteúdo Atual</h2>
+                <div class="detail-meta">
+                    <div><strong>{{ peptide_count }} peptídeos</strong> individuais com descrição completa</div>
+                    <div><strong>{{ stack_count }} combinações (stacks)</strong> recomendadas com protocolos detalhados</div>
+                    <div><strong>282 referências científicas</strong> com links diretos para PubMed</div>
+                    <div><strong>11 categorias</strong> cobrindo desde perda de peso até anti-envelhecimento</div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Metodologia Editorial</h2>
+
+                <h3 style="font-size:1.15rem;margin:1.5rem 0 0.5rem;color:#3730a3">Critérios de Inclusão</h3>
+                <p>Um peptídeo é incluído no guia quando atende a pelo menos um dos seguintes critérios:</p>
+                <ul class="detail-list">
+                    <li><strong>Aprovação regulatória:</strong> FDA, EMA, Anvisa ou outras agências reconhecidas</li>
+                    <li><strong>Ensaios clínicos Fase 2 ou 3:</strong> com resultados publicados em periódicos indexados</li>
+                    <li><strong>Pesquisa pré-clínica robusta:</strong> múltiplos estudos publicados em PubMed</li>
+                    <li><strong>Relevância clínica atual:</strong> uso documentado na prática médica ou em pesquisa</li>
+                </ul>
+
+                <h3 style="font-size:1.15rem;margin:1.5rem 0 0.5rem;color:#3730a3">Fontes</h3>
+                <p>Todas as informações do guia são baseadas em fontes primárias científicas:</p>
+                <ul class="detail-list">
+                    <li><strong>PubMed/MEDLINE:</strong> base de dados principal, com links verificáveis em cada referência</li>
+                    <li><strong>Ensaios clínicos publicados:</strong> Nature Medicine, NEJM, The Lancet, JAMA, Cell, entre outros</li>
+                    <li><strong>Agências regulatórias:</strong> FDA Drug Labels, EMA Product Information, Anvisa</li>
+                    <li><strong>ClinicalTrials.gov:</strong> para status de ensaios em andamento</li>
+                </ul>
+                <p>Cada peptídeo tem um mínimo de 2 referências científicas, e stacks têm uma média de 3 referências. Todas incluem link PubMed clicável para o estudo original.</p>
+
+                <h3 style="font-size:1.15rem;margin:1.5rem 0 0.5rem;color:#3730a3">Processo de Revisão</h3>
+                <p>O conteúdo é revisado periodicamente para:</p>
+                <ul class="detail-list">
+                    <li>Atualizar status regulatório (novas aprovações FDA/Anvisa)</li>
+                    <li>Incorporar novos estudos clínicos publicados</li>
+                    <li>Corrigir erros de tradução ou interpretação reportados</li>
+                    <li>Adicionar novos peptídeos de relevância clínica</li>
+                </ul>
+
+                <h3 style="font-size:1.15rem;margin:1.5rem 0 0.5rem;color:#3730a3">Princípios Editoriais</h3>
+                <ul class="detail-list">
+                    <li><strong>Neutralidade:</strong> apresentamos evidências positivas e negativas, sem promover qualquer peptídeo específico</li>
+                    <li><strong>Transparência:</strong> diferenciamos claramente peptídeos aprovados daqueles em pesquisa experimental</li>
+                    <li><strong>Precisão técnica:</strong> usamos terminologia farmacológica correta, com explicações acessíveis</li>
+                    <li><strong>Disclaimer médico:</strong> todo conteúdo é explicitamente educacional e não substitui aconselhamento médico</li>
+                    <li><strong>Independência:</strong> não recebemos financiamento de fabricantes, farmácias de manipulação ou vendedores de peptídeos</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>O que Este Guia <em>Não é</em></h2>
+                <ul class="detail-list">
+                    <li><strong>Não é um guia de prescrição:</strong> dosagens listadas são baseadas em estudos publicados e servem como referência informativa, não como orientação clínica individualizada</li>
+                    <li><strong>Não vende peptídeos:</strong> não somos uma farmácia, clínica ou distribuidor</li>
+                    <li><strong>Não recomenda auto-medicação:</strong> peptídeos são medicamentos/substâncias com riscos reais e devem ser administrados sob supervisão médica qualificada</li>
+                    <li><strong>Não substitui literatura primária:</strong> para decisões clínicas, sempre consulte as fontes originais (PubMed) e diretrizes médicas atualizadas</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Público-Alvo</h2>
+                <p>Este guia é direcionado principalmente a:</p>
+                <ul class="detail-list">
+                    <li>Médicos e outros profissionais de saúde que desejam informações consolidadas em português</li>
+                    <li>Pesquisadores em farmacologia, endocrinologia e medicina regenerativa</li>
+                    <li>Estudantes de medicina, farmácia e ciências biológicas</li>
+                    <li>Pacientes e público em geral buscando entender tratamentos discutidos com seus médicos</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Reporte de Erros e Sugestões</h2>
+                <p>Se você identificar um erro, informação desatualizada ou quiser sugerir um peptídeo que deveria estar incluído no guia, entre em contato. Buscamos manter a máxima precisão científica e agradecemos contribuições da comunidade.</p>
+            </section>
+
+            <section>
+                <h2>Tecnologia</h2>
+                <p>O site é construído com tecnologia moderna e acessível:</p>
+                <ul class="detail-list">
+                    <li><strong>Backend:</strong> Django 4.2+ com PostgreSQL 16</li>
+                    <li><strong>Frontend:</strong> HTML5, CSS3 e JavaScript puro (sem frameworks)</li>
+                    <li><strong>Performance:</strong> CDN Cloudflare, HTTPS obrigatório, HTTP/2</li>
+                    <li><strong>Acessibilidade:</strong> HTML semântico, ARIA labels, contraste WCAG AA</li>
+                    <li><strong>Open Source friendly:</strong> API JSON pública em <code>/api/peptides.json</code></li>
+                </ul>
+            </section>
+
+            <section class="warning-box">
+                <strong>DISCLAIMER LEGAL:</strong> Este site é uma ferramenta educacional e informativa. Não fornecemos aconselhamento médico, diagnóstico ou tratamento. Consulte sempre um profissional de saúde qualificado antes de iniciar, modificar ou interromper qualquer tratamento. O uso de peptídeos experimentais (sem aprovação regulatória) apresenta riscos desconhecidos e deve ser discutido criticamente com seu médico.
+            </section>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <p><a href="/">&larr; Voltar ao Guia Completo</a></p>
+        <p>Guia de Peptídeos &copy; 2026 - Conteúdo baseado em literatura científica publicada</p>
+    </footer>
+</body>
+</html>
