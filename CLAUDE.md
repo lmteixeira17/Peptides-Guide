@@ -19,7 +19,7 @@ Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoe
 - **Banco de dados:** PostgreSQL 16-alpine (SQLite em dev/testes)
 - **Static files:** WhiteNoise
 - **Deploy:** Docker (multi-stage build)
-- **Testes:** pytest + pytest-django (117 testes)
+- **Testes:** pytest + pytest-django (136 testes)
 
 ### Frontend (JavaScript puro)
 - **Stack:** HTML5 + CSS3 + JavaScript puro (ES5) — zero mudancas no frontend
@@ -52,7 +52,7 @@ _Peptides/
 │   ├── urls.py                    # / e /health/
 │   ├── admin.py                   # Admin com TabularInlines para CRUD
 │   ├── serializers.py             # Converte modelos → JSON (camelCase, formato JS)
-│   ├── tests.py                   # Suite de testes completa (117 testes)
+│   ├── tests.py                   # Suite de testes completa (136 testes)
 │   └── management/
 │       └── commands/
 │           └── seed_peptides.py   # Importa dados dos arquivos JS para o banco
@@ -244,17 +244,29 @@ nginx-proxy (nginx:alpine) → porta 80/443
 
 ### Endpoints SEO
 - `/robots.txt` - Allow todos exceto /admin/ e /health/, aponta sitemap
-- `/sitemap.xml` - 150 URLs (main + 108 peptideos + 41 stacks com anchors)
+- `/sitemap.xml` - 150 URLs com lastmod (main + 108 peptideos + 41 stacks)
 - `/llms.txt` - Inventario completo para IAs (ChatGPT, Claude, Perplexity)
 - `/favicon.svg` - Favicon SVG com emoji DNA
+- `/peptideos/<slug>/` - Pagina individual por peptideo (SEO-friendly)
+- `/combinacoes/<slug>/` - Pagina individual por stack
+
+### Paginas Individuais por Peptideo/Stack
+Cada peptideo e stack tem uma URL propria com SEO otimizado:
+- **Views:** `peptide_detail_view`, `stack_detail_view` em `core/views.py`
+- **Templates:** `templates/peptide_detail.html`, `templates/stack_detail.html`
+- **Schema por pagina:** Drug + MedicalWebPage + BreadcrumbList
+- **Meta tags por pagina:** title, description, canonical, OG, Twitter Cards
+- **Related section:** 6 peptideos/stacks da mesma categoria no final de cada pagina
+- **Modal no index:** link "Ver pagina completa →" para a URL SEO
 
 ### Meta Tags e Structured Data
 Em `templates/index.html`:
 - Meta description, keywords, author, robots
 - Canonical URL → `https://guiadepeptideos.com.br/`
-- Open Graph (og:title, og:description, og:url, og:locale, og:site_name)
-- Twitter Cards (summary_large_image)
-- JSON-LD: `WebSite` (com SearchAction), `MedicalWebPage`, `ItemList`
+- Open Graph (og:title, og:description, og:url, og:locale, og:site_name, og:image 1200x630)
+- Twitter Cards (summary_large_image com og-image.png)
+- JSON-LD: `WebSite` (com SearchAction), `MedicalWebPage`, `ItemList`, `FAQPage` com 13 perguntas frequentes
+- OG Image: `static/core/og-image.png` (1200x630 PNG gerada via PIL, gradient azul/roxo)
 
 ### SEO para Crawlers (sem JavaScript)
 Bloco `<noscript>` em `templates/index.html` com **149 articles** contendo:
@@ -314,7 +326,7 @@ Body: {"inspectionUrl":"https://guiadepeptideos.com.br/","siteUrl":"sc-domain:gu
 
 ### Configuracao
 - **Framework:** pytest + pytest-django
-- **Arquivo:** `core/tests.py` (117 testes)
+- **Arquivo:** `core/tests.py` (136 testes)
 - **Config:** `pytest.ini` (DJANGO_SETTINGS_MODULE = peptides_project.settings)
 - **Banco de testes:** SQLite in-memory (automatico, sem necessidade de PostgreSQL)
 

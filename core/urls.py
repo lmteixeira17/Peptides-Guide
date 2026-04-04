@@ -3,6 +3,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index_view, name='index'),
+    path('peptideos/<slug:slug>/', views.peptide_detail_view, name='peptide_detail'),
+    path('combinacoes/<slug:slug>/', views.stack_detail_view, name='stack_detail'),
     path('health/', views.health_view, name='health'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
     path('sitemap.xml', views.sitemap_xml, name='sitemap_xml'),

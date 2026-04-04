@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ peptide.name }}{% if peptide.aka %} ({{ peptide.aka }}){% endif %} - Dosagem, Efeitos e Estudos | Guia de Peptídeos</title>
+    <meta name="description" content="{{ peptide.name }}{% if peptide.aka %} ({{ peptide.aka }}){% endif %}: {{ peptide.description|truncatechars:155 }}">
+    <meta name="keywords" content="{{ peptide.name }}, {{ peptide.aka }}, {{ peptide.category_label }}, dosagem {{ peptide.name }}, efeitos colaterais {{ peptide.name }}, peptídeo {{ peptide.name }}, mecanismo {{ peptide.name }}">
+    <meta name="author" content="Guia de Peptídeos">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://guiadepeptideos.com.br/peptideos/{{ peptide.id }}/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="{{ peptide.name }} - Dosagem, Efeitos Colaterais e Estudos">
+    <meta property="og:description" content="{{ peptide.description|truncatechars:200 }}">
+    <meta property="og:url" content="https://guiadepeptideos.com.br/peptideos/{{ peptide.id }}/">
+    <meta property="og:site_name" content="Guia de Peptídeos">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ peptide.name }} - Guia de Peptídeos">
+    <meta name="twitter:description" content="{{ peptide.description|truncatechars:200 }}">
+    <meta name="twitter:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+
+    <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+
+    <!-- JSON-LD: Drug + BreadcrumbList + MedicalWebPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Drug",
+          "name": "{{ peptide.name|escapejs }}",
+          {% if peptide.aka %}"alternateName": "{{ peptide.aka|escapejs }}",{% endif %}
+          "description": "{{ peptide.description|escapejs }}",
+          "mechanismOfAction": "{{ peptide.mechanism|escapejs }}",
+          "administrationRoute": "{{ peptide.administration|escapejs }}",
+          "clinicalPharmacology": "Meia-vida: {{ peptide.half_life|escapejs }}",
+          "legalStatus": "{{ peptide.status_label|escapejs }}",
+          "url": "https://guiadepeptideos.com.br/peptideos/{{ peptide.id }}/"
+        },
+        {
+          "@type": "MedicalWebPage",
+          "name": "{{ peptide.name|escapejs }} - Guia Completo",
+          "url": "https://guiadepeptideos.com.br/peptideos/{{ peptide.id }}/",
+          "description": "{{ peptide.description|escapejs|truncatechars:200 }}",
+          "inLanguage": "pt-BR",
+          "about": {
+            "@type": "MedicalTherapy",
+            "name": "{{ peptide.name|escapejs }}"
+          },
+          "audience": {
+            "@type": "MedicalAudience",
+            "audienceType": "Profissionais de saúde e pesquisadores"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Guia de Peptídeos", "item": "https://guiadepeptideos.com.br/"},
+            {"@type": "ListItem", "position": 2, "name": "{{ peptide.category_label|escapejs }}", "item": "https://guiadepeptideos.com.br/#{{ peptide.category }}"},
+            {"@type": "ListItem", "position": 3, "name": "{{ peptide.name|escapejs }}", "item": "https://guiadepeptideos.com.br/peptideos/{{ peptide.id }}/"}
+          ]
+        }
+      ]
+    }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1><a href="/" style="color:inherit;text-decoration:none">Guia Completo de Peptídeos</a></h1>
+            <p class="subtitle">Referência científica com descrições, efeitos colaterais e dosagens baseadas em estudos</p>
+        </div>
+    </header>
+
+    <nav aria-label="breadcrumb" class="breadcrumb">
+        <a href="/">Início</a> &rsaquo;
+        <a href="/#{{ peptide.category }}">{{ peptide.category_label }}</a> &rsaquo;
+        <span>{{ peptide.name }}</span>
+    </nav>
+
+    <main class="detail-page">
+        <article>
+            <header class="detail-header">
+                <span class="category-badge">{{ peptide.category_label }}</span>
+                <span class="status-badge status-{{ peptide.status }}">{{ peptide.status_label }}</span>
+                <h1 class="detail-title">{{ peptide.name }}</h1>
+                {% if peptide.aka %}<p class="detail-aka">Também conhecido como: {{ peptide.aka }}</p>{% endif %}
+            </header>
+
+            <section>
+                <h2>Descrição</h2>
+                <p>{{ peptide.description }}</p>
+            </section>
+
+            <section>
+                <h2>Mecanismo de Ação</h2>
+                <p>{{ peptide.mechanism }}</p>
+            </section>
+
+            <section class="detail-meta">
+                <div><strong>Administração:</strong> {{ peptide.administration }}</div>
+                <div><strong>Meia-vida:</strong> {{ peptide.half_life }}</div>
+                <div><strong>Status regulatório:</strong> {{ peptide.status_label }}</div>
+            </section>
+
+            <section>
+                <h2>Benefícios</h2>
+                <ul class="detail-list">
+                    {% for b in peptide.benefits.all %}<li>{{ b.text }}</li>{% endfor %}
+                </ul>
+            </section>
+
+            <section>
+                <h2>Efeitos Colaterais</h2>
+                <ul class="detail-list side-effects-list">
+                    {% for se in peptide.side_effects.all %}
+                    <li><span class="severity severity-{{ se.severity }}">{{ se.get_severity_display }}</span> {{ se.name }}</li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section>
+                <h2>Dosagem</h2>
+                <div class="dosage-table">
+                    {% for d in peptide.dosages.all %}
+                    <div class="dosage-row">
+                        <div class="dosage-protocol"><strong>{{ d.protocol }}</strong></div>
+                        <div class="dosage-dose">{{ d.dose }}</div>
+                        {% if d.notes %}<div class="dosage-notes">{{ d.notes }}</div>{% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+
+            <section>
+                <h2>Referências Científicas</h2>
+                <ol class="references-list">
+                    {% for r in peptide.references.all %}<li>{{ r.text|safe }}</li>{% endfor %}
+                </ol>
+            </section>
+
+            <section class="warning-box">
+                <strong>AVISO IMPORTANTE:</strong> As informações aqui apresentadas são baseadas em estudos científicos publicados e têm finalidade exclusivamente informativa e educacional. Não constituem aconselhamento médico. Consulte sempre um profissional de saúde qualificado antes de utilizar qualquer substância.
+            </section>
+        </article>
+
+        {% if related %}
+        <aside class="related-section">
+            <h2>Peptídeos Relacionados em {{ peptide.category_label }}</h2>
+            <div class="related-grid">
+                {% for r in related %}
+                <a href="/peptideos/{{ r.id }}/" class="related-card">
+                    <h3>{{ r.name }}</h3>
+                    {% if r.aka %}<p class="related-aka">{{ r.aka }}</p>{% endif %}
+                    <p class="related-desc">{{ r.description|truncatechars:120 }}</p>
+                </a>
+                {% endfor %}
+            </div>
+        </aside>
+        {% endif %}
+    </main>
+
+    <footer class="footer">
+        <p><a href="/">&larr; Voltar ao Guia Completo</a></p>
+        <p>Guia de Peptídeos &copy; 2026 - Conteúdo baseado em literatura científica publicada</p>
+        <p class="footer-disclaimer">Este material é para fins educacionais. Não substitui orientação médica profissional.</p>
+    </footer>
+</body>
+</html>

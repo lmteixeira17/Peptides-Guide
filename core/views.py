@@ -1,7 +1,7 @@
 import json
 
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from .models import Peptide, Stack
 from .serializers import serialize_peptide, serialize_stack
@@ -40,6 +40,37 @@ def health_view(request):
     return JsonResponse({'status': 'ok'})
 
 
+def peptide_detail_view(request, slug):
+    """SEO-friendly individual peptide detail page."""
+    peptide = get_object_or_404(
+        Peptide.objects.prefetch_related('benefits', 'side_effects', 'dosages', 'references'),
+        id=slug,
+    )
+    # Related peptides (same category, exclude current)
+    related = Peptide.objects.filter(
+        category=peptide.category
+    ).exclude(id=peptide.id).order_by('order', 'name')[:6]
+    return render(request, 'peptide_detail.html', {
+        'peptide': peptide,
+        'related': related,
+    })
+
+
+def stack_detail_view(request, slug):
+    """SEO-friendly individual stack detail page."""
+    stack = get_object_or_404(
+        Stack.objects.prefetch_related('stack_peptides__peptide', 'references'),
+        id=slug,
+    )
+    related = Stack.objects.filter(
+        goal=stack.goal
+    ).exclude(id=stack.id).order_by('order', 'name')[:6]
+    return render(request, 'stack_detail.html', {
+        'stack': stack,
+        'related': related,
+    })
+
+
 def robots_txt(request):
     """Serve robots.txt for search engine crawlers."""
     lines = [
@@ -55,6 +86,8 @@ def robots_txt(request):
 
 def sitemap_xml(request):
     """Generate sitemap.xml with all peptide and stack URLs."""
+    from datetime import date
+    today = date.today().isoformat()
     peptides = Peptide.objects.order_by('order', 'name')
     stacks = Stack.objects.order_by('order', 'name')
 
@@ -62,22 +95,25 @@ def sitemap_xml(request):
     # Main page
     urls.append({
         'loc': 'https://guiadepeptideos.com.br/',
+        'lastmod': today,
         'changefreq': 'weekly',
         'priority': '1.0',
     })
-    # Individual peptide anchors
+    # Individual peptide detail pages (SEO-friendly URLs)
     for p in peptides:
         urls.append({
-            'loc': 'https://guiadepeptideos.com.br/#' + p.id,
+            'loc': 'https://guiadepeptideos.com.br/peptideos/' + p.id + '/',
+            'lastmod': today,
             'changefreq': 'monthly',
-            'priority': '0.8',
+            'priority': '0.9',
         })
-    # Individual stack anchors
+    # Individual stack detail pages
     for s in stacks:
         urls.append({
-            'loc': 'https://guiadepeptideos.com.br/#stack-' + s.id,
+            'loc': 'https://guiadepeptideos.com.br/combinacoes/' + s.id + '/',
+            'lastmod': today,
             'changefreq': 'monthly',
-            'priority': '0.7',
+            'priority': '0.8',
         })
 
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -85,6 +121,7 @@ def sitemap_xml(request):
     for u in urls:
         xml += '  <url>\n'
         xml += '    <loc>' + u['loc'] + '</loc>\n'
+        xml += '    <lastmod>' + u['lastmod'] + '</lastmod>\n'
         xml += '    <changefreq>' + u['changefreq'] + '</changefreq>\n'
         xml += '    <priority>' + u['priority'] + '</priority>\n'
         xml += '  </url>\n'
