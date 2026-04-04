@@ -1,6 +1,6 @@
 import json
 
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
 from .models import Peptide, Stack
@@ -36,3 +36,104 @@ def index_view(request):
 def health_view(request):
     """Health check endpoint for Docker."""
     return JsonResponse({'status': 'ok'})
+
+
+def robots_txt(request):
+    """Serve robots.txt for search engine crawlers."""
+    lines = [
+        'User-agent: *',
+        'Allow: /',
+        'Disallow: /admin/',
+        'Disallow: /health/',
+        '',
+        'Sitemap: https://guiadepeptideos.com.br/sitemap.xml',
+    ]
+    return HttpResponse('\n'.join(lines), content_type='text/plain')
+
+
+def sitemap_xml(request):
+    """Generate sitemap.xml with all peptide and stack URLs."""
+    peptides = Peptide.objects.order_by('order', 'name')
+    stacks = Stack.objects.order_by('order', 'name')
+
+    urls = []
+    # Main page
+    urls.append({
+        'loc': 'https://guiadepeptideos.com.br/',
+        'changefreq': 'weekly',
+        'priority': '1.0',
+    })
+    # Individual peptide anchors
+    for p in peptides:
+        urls.append({
+            'loc': 'https://guiadepeptideos.com.br/#' + p.id,
+            'changefreq': 'monthly',
+            'priority': '0.8',
+        })
+    # Individual stack anchors
+    for s in stacks:
+        urls.append({
+            'loc': 'https://guiadepeptideos.com.br/#stack-' + s.id,
+            'changefreq': 'monthly',
+            'priority': '0.7',
+        })
+
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for u in urls:
+        xml += '  <url>\n'
+        xml += '    <loc>' + u['loc'] + '</loc>\n'
+        xml += '    <changefreq>' + u['changefreq'] + '</changefreq>\n'
+        xml += '    <priority>' + u['priority'] + '</priority>\n'
+        xml += '  </url>\n'
+    xml += '</urlset>'
+
+    return HttpResponse(xml, content_type='application/xml')
+
+
+def llms_txt(request):
+    """Serve llms.txt for AI/LLM discoverability."""
+    peptides = Peptide.objects.order_by('order', 'name')
+    stacks = Stack.objects.order_by('order', 'name')
+
+    lines = [
+        '# Guia Completo de Peptideos',
+        '',
+        '> Referencia cientifica sobre peptideos terapeuticos com dosagens, efeitos colaterais e referencias PubMed.',
+        '',
+        'URL: https://guiadepeptideos.com.br/',
+        'Idioma: Portugues (pt-BR)',
+        'Publico: Profissionais de saude e pesquisadores',
+        '',
+        '## Dados Disponiveis',
+        '',
+        '- ' + str(peptides.count()) + ' peptideos terapeuticos individuais',
+        '- ' + str(stacks.count()) + ' combinacoes (stacks) recomendadas',
+        '- Cada peptideo inclui: descricao, mecanismo de acao, beneficios, efeitos colaterais (com severidade), dosagens, administracao, meia-vida, status regulatorio e referencias PubMed',
+        '',
+        '## Categorias',
+        '',
+        '- Perda de Peso (Semaglutida, Tirzepatida, Retatrutide, Orforglipron)',
+        '- Hormonio do Crescimento (Ipamorelin, CJC-1295, Tesamorelin, MK-677)',
+        '- Cura e Recuperacao (BPC-157, TB-500, Pentadecarginia)',
+        '- Anti-Envelhecimento (Epithalon, GHK-Cu, NAD+, SS-31)',
+        '- Pele e Estetica (Melanotan II, PT-141, AHK-Cu)',
+        '- Cognitivo (Semax, Selank, Dihexa, Cerebrolysin)',
+        '- Sistema Imunologico (Thymosin Alpha 1, LL-37)',
+        '- Hormonal (Kisspeptin, Gonadorelin, HCG)',
+        '- Sono (DSIP, Epitalon)',
+        '- Composicao Corporal (AOD-9604, MOTS-c, CBL-514, 5-Amino-1MQ)',
+        '',
+        '## Peptideos',
+        '',
+    ]
+    for p in peptides:
+        lines.append('- ' + p.name + ' (' + p.id + '): ' + p.category_label)
+
+    lines.append('')
+    lines.append('## Combinacoes Recomendadas')
+    lines.append('')
+    for s in stacks:
+        lines.append('- ' + s.name + ' (' + s.id + '): ' + s.goal_label + ' - ' + s.level)
+
+    return HttpResponse('\n'.join(lines), content_type='text/plain; charset=utf-8')

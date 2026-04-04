@@ -302,6 +302,14 @@ function openModal(id) {
     modalContent.innerHTML = html;
     modalOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
+    // SEO: update title and URL hash
+    document.title = p.name + ' - Guia de Pept\u00eddeos';
+    history.replaceState(null, '', '#' + id);
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+        var desc = p.name + (p.aka ? ' (' + p.aka + ')' : '') + ': ' + p.description.substring(0, 140) + '...';
+        metaDesc.setAttribute('content', desc);
+    }
 }
 
 // Open stack modal
@@ -384,13 +392,40 @@ function openStackModal(id) {
     modalContent.innerHTML = html;
     modalOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
+    // SEO: update title and URL hash
+    document.title = s.name + ' - Guia de Pept\u00eddeos';
+    history.replaceState(null, '', '#stack-' + id);
 }
 
 // Close modal
 function closeModal() {
     modalOverlay.classList.remove("active");
     document.body.style.overflow = "";
+    // SEO: restore original title and URL
+    document.title = 'Guia Completo de Pept\u00eddeos - Refer\u00eancia Cient\u00edfica sobre Pept\u00eddeos Terap\u00eauticos';
+    history.replaceState(null, '', window.location.pathname);
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+        metaDesc.setAttribute('content', 'Guia cient\u00edfico com 108 pept\u00eddeos terap\u00eauticos e 41 combina\u00e7\u00f5es recomendadas. Dosagens, efeitos colaterais, mecanismos de a\u00e7\u00e3o e refer\u00eancias PubMed.');
+    }
+}
+
+// Open peptide/stack from URL hash on page load
+function openFromHash() {
+    var hash = window.location.hash.replace('#', '');
+    if (!hash) return;
+    if (hash.indexOf('stack-') === 0) {
+        var stackId = hash.replace('stack-', '');
+        // Switch to stacks section
+        document.querySelector('[data-section="stacks"]').click();
+        setTimeout(function() { openStackModal(stackId); }, 100);
+    } else {
+        openModal(hash);
+    }
 }
 
 // Start
-document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("DOMContentLoaded", function() {
+    init();
+    openFromHash();
+});
