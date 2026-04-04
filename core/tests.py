@@ -1316,26 +1316,26 @@ class TestRealDataFiles:
 
     def test_data1_parses_correctly(self):
         data = self._parse_file('data1.js')
-        assert len(data) == 33
+        assert len(data) == 36
 
     def test_data2_parses_correctly(self):
         data = self._parse_file('data2.js')
-        assert len(data) == 34
+        assert len(data) == 36
 
     def test_data3_parses_correctly(self):
         data = self._parse_file('data3.js')
-        assert len(data) == 31
+        assert len(data) == 35
 
     def test_stacks_parses_correctly(self):
         data = self._parse_file('stacks.js')
-        assert len(data) == 32
+        assert len(data) == 40
 
     def test_total_peptides(self):
         total = sum(
             len(self._parse_file(f))
             for f in ['data1.js', 'data2.js', 'data3.js']
         )
-        assert total == 98
+        assert total == 107
 
     def test_all_peptides_have_required_fields(self):
         required_fields = [
@@ -1420,13 +1420,60 @@ class TestRealDataFiles:
             total += sum(len(p.get('references', [])) for p in data)
         stacks = self._parse_file('stacks.js')
         total += sum(len(s.get('references', [])) for s in stacks)
-        assert total == 235, f'Expected 235 references, got {total}'
+        assert total == 277, f'Expected 277 references, got {total}'
 
     def test_full_seed_with_real_data(self):
         """Run the seed command with actual JS files and verify counts."""
         from django.core.management import call_command
         call_command('seed_peptides', data_dir=self.DATA_DIR, verbosity=0)
 
-        assert Peptide.objects.count() == 98
-        assert Stack.objects.count() == 32
+        assert Peptide.objects.count() == 107
+        assert Stack.objects.count() == 40
         assert PeptideReference.objects.count() + StackReference.objects.count() > 0
+
+
+# =============================================================================
+# Deployment Configuration Tests
+# =============================================================================
+
+class TestDeploymentConfig:
+    """Tests for deployment configuration consistency."""
+
+    def test_docker_compose_allowed_hosts_includes_domain(self):
+        """docker-compose.yml must include mlt.com.br in ALLOWED_HOSTS."""
+        compose_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            'docker-compose.yml',
+        )
+        if not os.path.exists(compose_path):
+            pytest.skip('docker-compose.yml not found')
+        with open(compose_path, 'r') as f:
+            content = f.read()
+        assert 'mlt.com.br' in content, (
+            'docker-compose.yml ALLOWED_HOSTS must include mlt.com.br'
+        )
+
+    def test_settings_allowed_hosts_default_includes_domain(self):
+        """Settings ALLOWED_HOSTS default must include mlt.com.br."""
+        import importlib
+        settings_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            'peptides_project', 'settings.py',
+        )
+        with open(settings_path, 'r') as f:
+            content = f.read()
+        assert 'mlt.com.br' in content, (
+            'settings.py ALLOWED_HOSTS default must include mlt.com.br'
+        )
+
+    def test_docker_compose_force_script_name(self):
+        """docker-compose.yml must set FORCE_SCRIPT_NAME=/peptides."""
+        compose_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            'docker-compose.yml',
+        )
+        if not os.path.exists(compose_path):
+            pytest.skip('docker-compose.yml not found')
+        with open(compose_path, 'r') as f:
+            content = f.read()
+        assert 'FORCE_SCRIPT_NAME=/peptides' in content
