@@ -2,7 +2,7 @@
 
 ## Visao Geral do Projeto
 
-Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoes detalhadas sobre 98 peptideos individuais e 32 combinacoes (stacks) recomendadas, com dados baseados em estudos cientificos publicados.
+Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoes detalhadas sobre 107 peptideos individuais e 40 combinacoes (stacks) recomendadas, com dados baseados em estudos cientificos publicados.
 
 **Idioma do conteudo:** Portugues (pt-BR)
 **Publico-alvo:** Profissionais de saude e pesquisadores
@@ -17,7 +17,7 @@ Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoe
 - **Banco de dados:** PostgreSQL 16-alpine (SQLite em dev/testes)
 - **Static files:** WhiteNoise
 - **Deploy:** Docker (multi-stage build)
-- **Testes:** pytest + pytest-django (114 testes)
+- **Testes:** pytest + pytest-django (117 testes)
 
 ### Frontend (JavaScript puro)
 - **Stack:** HTML5 + CSS3 + JavaScript puro (ES5) — zero mudancas no frontend
@@ -50,7 +50,7 @@ _Peptides/
 │   ├── urls.py                    # / e /health/
 │   ├── admin.py                   # Admin com TabularInlines para CRUD
 │   ├── serializers.py             # Converte modelos → JSON (camelCase, formato JS)
-│   ├── tests.py                   # Suite de testes completa (114 testes)
+│   ├── tests.py                   # Suite de testes completa (117 testes)
 │   └── management/
 │       └── commands/
 │           └── seed_peptides.py   # Importa dados dos arquivos JS para o banco
@@ -60,10 +60,10 @@ _Peptides/
 │   └── core/
 │       ├── style.css              # Estilos do site
 │       └── app.js                 # Logica da aplicacao (inalterado)
-├── data1.js                       # 29 peptideos (backup/fonte para seed)
-├── data2.js                       # 34 peptideos (backup/fonte para seed)
-├── data3.js                       # 28 peptideos (backup/fonte para seed)
-├── stacks.js                      # 32 combinacoes (backup/fonte para seed)
+├── data1.js                       # 36 peptideos (backup/fonte para seed)
+├── data2.js                       # 36 peptideos (backup/fonte para seed)
+├── data3.js                       # 35 peptideos (backup/fonte para seed)
+├── stacks.js                      # 40 combinacoes (backup/fonte para seed)
 ├── manage.py                      # Django CLI
 ├── requirements.txt               # Django, gunicorn, whitenoise, psycopg2-binary
 ├── pytest.ini                     # Configuracao pytest
@@ -142,9 +142,9 @@ serialize_stack(stack) → {
 
 ### Particao de Peptideos no index_view
 Os peptideos sao divididos em 3 partes por categoria (mantendo compatibilidade com o JS original):
-- **Part1:** weight-loss + growth-hormone (33 peptideos)
-- **Part2:** healing + anti-aging + skin + cognitive (34 peptideos)
-- **Part3:** immune + hormonal + sleep + body-comp + other (31 peptideos)
+- **Part1:** weight-loss + growth-hormone (36 peptideos)
+- **Part2:** healing + anti-aging + skin + cognitive (36 peptideos)
+- **Part3:** immune + hormonal + sleep + body-comp + other (35 peptideos)
 
 ---
 
@@ -235,7 +235,7 @@ nginx-proxy (nginx:alpine) → porta 80/443
 
 ### Configuracao
 - **Framework:** pytest + pytest-django
-- **Arquivo:** `core/tests.py` (114 testes)
+- **Arquivo:** `core/tests.py` (117 testes)
 - **Config:** `pytest.ini` (DJANGO_SETTINGS_MODULE = peptides_project.settings)
 - **Banco de testes:** SQLite in-memory (automatico, sem necessidade de PostgreSQL)
 
@@ -277,7 +277,8 @@ python -m pytest core/tests.py --cov=core -v
 | **Seed Command** | TestSeedCommand | 11 | Peptides, benefits, side effects, dosages, refs, stacks, links, stack refs, idempotente, ordem, data3 vazio |
 | **Integracao** | TestEndToEndFlow | 2 | Seed→render, logica de particao (11 categorias) |
 | **URLs** | TestURLRouting | 3 | Resolve index, health, admin |
-| **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 98 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 235 refs, seed completo |
+| **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 107 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 277 refs, seed completo |
+| **Deploy Config** | TestDeploymentConfig | 3 | ALLOWED_HOSTS inclui mlt.com.br, FORCE_SCRIPT_NAME, docker-compose.yml |
 
 ### Dados Reais vs Dados de Teste
 - **Fixtures (pytest):** criam objetos minimos para testes isolados
@@ -344,7 +345,7 @@ Todas as referencias devem incluir um link PubMed clicavel:
 - `target='_blank'` e obrigatorio em todos os links
 - PMID deve ser um numero valido do PubMed
 - Toda referencia DEVE ter um link PubMed verificavel
-- Total atual: 235 referencias com links PubMed (51 em data1 + 46 em data2 + 40 em data3 + 98 em stacks)
+- Total atual: 277 referencias com links PubMed (57 em data1 + 52 em data2 + 48 em data3 + 120 em stacks)
 
 ---
 
