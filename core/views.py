@@ -30,6 +30,8 @@ def index_view(request):
         'peptides_part2_json': json.dumps(part2, ensure_ascii=False),
         'peptides_part3_json': json.dumps(part3, ensure_ascii=False),
         'stacks_json': json.dumps(stacks_list, ensure_ascii=False),
+        'peptides': peptides,
+        'stacks': stacks,
     })
 
 
