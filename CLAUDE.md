@@ -19,7 +19,7 @@ Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoe
 - **Banco de dados:** PostgreSQL 16-alpine (SQLite em dev/testes)
 - **Static files:** WhiteNoise
 - **Deploy:** Docker (multi-stage build)
-- **Testes:** pytest + pytest-django (136 testes)
+- **Testes:** pytest + pytest-django (176 testes)
 
 ### Frontend (JavaScript puro)
 - **Stack:** HTML5 + CSS3 + JavaScript puro (ES5) — zero mudancas no frontend
@@ -52,7 +52,7 @@ _Peptides/
 │   ├── urls.py                    # / e /health/
 │   ├── admin.py                   # Admin com TabularInlines para CRUD
 │   ├── serializers.py             # Converte modelos → JSON (camelCase, formato JS)
-│   ├── tests.py                   # Suite de testes completa (136 testes)
+│   ├── tests.py                   # Suite de testes completa (176 testes)
 │   └── management/
 │       └── commands/
 │           └── seed_peptides.py   # Importa dados dos arquivos JS para o banco
@@ -326,7 +326,7 @@ Body: {"inspectionUrl":"https://guiadepeptideos.com.br/","siteUrl":"sc-domain:gu
 
 ### Configuracao
 - **Framework:** pytest + pytest-django
-- **Arquivo:** `core/tests.py` (136 testes)
+- **Arquivo:** `core/tests.py` (176 testes)
 - **Config:** `pytest.ini` (DJANGO_SETTINGS_MODULE = peptides_project.settings)
 - **Banco de testes:** SQLite in-memory (automatico, sem necessidade de PostgreSQL)
 
