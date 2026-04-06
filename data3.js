@@ -1226,39 +1226,41 @@ var peptidesPart3 = [
   {
     id: "cbl-514",
     name: "CBL-514",
-    aka: "Injeção lipolítica Cellbion",
+    aka: "Caliway CBL-514 / Inibidor de DYRK1b",
     category: "body-comp",
     categoryLabel: "Composição Corporal",
-    description: "CBL-514 é um composto sintético injetável desenvolvido pela Cellbion (Coreia do Sul) para redução localizada de gordura subcutânea. Diferente de outros lipolíticos como a deoxicolato (Kybella), o CBL-514 atua induzindo apoptose (morte celular programada) seletiva nos adipócitos via ativação da via mitocondrial intrínseca, sem causar necrose ou inflamação significativa no tecido circundante. Em ensaios clínicos de Fase 2, demonstrou redução significativa de gordura submentoniana (papada) com perfil de segurança superior ao deoxicolato, incluindo menor dor, edema e duração dos efeitos adversos. Está sendo estudado também para outras áreas de gordura localizada (abdômen, flancos).",
-    mechanism: "Ativa seletivamente a via apoptótica mitocondrial intrínseca nos adipócitos. O composto penetra nas células de gordura e desestabiliza a membrana mitocondrial, liberando citocromo c e ativando a cascata de caspases (caspase-9 → caspase-3), levando à apoptose celular programada. Os adipócitos mortos são fagocitados por macrófagos em processo gradual e ordenado. A seletividade para adipócitos deve-se à maior captação do composto pelo tecido adiposo, preservando células dérmicas, musculares e vasculares adjacentes.",
+    description: "CBL-514 é uma small molecule injetável first-in-class desenvolvida pela Caliway Biopharmaceuticals (Taiwan) para redução localizada de gordura subcutânea em grandes áreas como abdômen. Diferente do deoxicolato (Kybella) que causa necrose celular, o CBL-514 induz apoptose (morte celular programada) seletiva nos adipócitos via inibição da quinase de sobrevivência celular DYRK1b, sem causar necrose, ulceração ou lesão nervosa. Em ensaio clínico Fase IIb (CBL-0202), 69,6% dos participantes perderam ≥150 mL de gordura abdominal (vs 0% placebo), com redução média de 312,1 mL. O estudo Fase 3 (SUPREME-01) foi aprovado pelo FDA (IND cleared) e iniciou recrutamento em 2025 com 300 pacientes em 29 centros nos EUA e Canadá. Também em estudo para uso combinado com agonistas GLP-1 (Semaglutida/Tirzepatida) para tratar reganho de gordura após perda de peso.",
+    mechanism: "Inibe a quinase DYRK1b (Dual-specificity tyrosine-regulated kinase 1b), uma enzima de sobrevivência celular superexpressa em adipócitos. A inibição de DYRK1b leva à upregulação de caspase-3 e aumento da razão Bax/Bcl-2, ativando a via apoptótica mitocondrial intrínseca de forma dose-dependente. Simultaneamente, inibe a adipogênese (formação de novos adipócitos) e promove o metabolismo lipídico. Os adipócitos mortos por apoptose são fagocitados por macrófagos em processo ordenado e gradual, sem inflamação significativa, preservando derme, músculos, vasos e nervos adjacentes.",
     benefits: [
-      "Redução localizada de gordura subcutânea (submentoniana, abdominal, flancos)",
-      "Apoptose seletiva de adipócitos (sem necrose do tecido circundante)",
-      "Menor dor e edema comparado ao deoxicolato (Kybella)",
-      "Resultados permanentes (adipócitos eliminados não se regeneram)",
-      "Perfil de segurança favorável em ensaios clínicos Fase 2"
+      "Redução localizada de gordura abdominal subcutânea (até 312 mL em média no Fase IIb)",
+      "Apoptose seletiva de adipócitos via DYRK1b (sem necrose, ulceração ou lesão nervosa)",
+      "69,6% de resposta ≥150 mL vs 0% placebo no Fase IIb",
+      "42,9% alcançaram resposta com apenas 1 sessão de tratamento",
+      "Perfil de segurança favorável (sem eventos adversos graves relacionados ao tratamento)",
+      "Potencial combinação com GLP-1 agonistas para prevenir reganho de gordura pós-emagrecimento"
     ],
     sideEffects: [
       { name: "Edema transitório no local da injeção", severity: "common" },
       { name: "Equimose (hematoma) local", severity: "common" },
-      { name: "Dor leve a moderada no local", severity: "occasional" },
+      { name: "Dor leve a moderada no local da injeção", severity: "occasional" },
       { name: "Endurecimento temporário da área tratada", severity: "occasional" },
+      { name: "Eritema (vermelhidão) local", severity: "occasional" },
       { name: "Parestesia transitória", severity: "rare" }
     ],
     dosage: [
       {
-        protocol: "Submentoniano (Fase 2)",
-        dose: "0,3-1,0 mL por ponto de injeção, múltiplos pontos por sessão",
-        notes: "2-4 sessões com intervalo de 4-6 semanas. Dose total por sessão e número de pontos de injeção determinados pela área de gordura. Aplicação intradérmica/subcutânea na camada de gordura alvo."
+        protocol: "Abdominal (Fase IIb - CBL-0202)",
+        dose: "2,0 mg/cm² por sessão, injeções subcutâneas em grid na área de gordura",
+        notes: "1-4 sessões com intervalo de 4-8 semanas. Dose de 2,0 mg/cm² demonstrou redução de 24,96% do volume de gordura abdominal no Fase IIa. Aplicação em clínica por profissional treinado."
       }
     ],
-    administration: "Subcutânea (SC) / Intradérmica - injeção direta no tecido adiposo alvo",
-    halfLife: "Ação local (não sistêmica) - efeito apoptótico progressivo ao longo de dias a semanas",
+    administration: "Subcutânea (SC) - injeção direta no tecido adiposo abdominal em grid pattern",
+    halfLife: "Ação local (não sistêmica) - efeito apoptótico progressivo ao longo de semanas",
     status: "trial",
-    statusLabel: "Ensaio Clínico Fase 2",
+    statusLabel: "Ensaio Clínico Fase 3 (FDA IND aprovado)",
     references: [
-      "Lee SJ et al., 2024. 'Safety and Efficacy of CBL-514 Injection for Submental Fat Reduction: A Phase 2 Study.' Plast Reconstr Surg. <a href='https://pubmed.ncbi.nlm.nih.gov/39083028/' target='_blank'>[PubMed]</a>",
-      "Kim J et al., 2023. 'CBL-514, a novel injectable compound for localized fat reduction through adipocyte-selective apoptosis.' J Cosmet Dermatol. <a href='https://pubmed.ncbi.nlm.nih.gov/36799485/' target='_blank'>[PubMed]</a>"
+      "Gold MH et al., 2022. 'Efficacy of a Novel Injection Lipolysis to Induce Targeted Adipocyte Apoptosis: A Randomized, Phase IIa Study of CBL-514 Injection on Abdominal Subcutaneous Fat Reduction.' Dermatol Surg, 48(9), 1002-1008. <a href='https://pubmed.ncbi.nlm.nih.gov/35709509/' target='_blank'>[PubMed]</a>",
+      "Gold MH, Schlessinger J et al., 2025. 'Efficacy and Safety of CBL-514 Injection in Reducing Abdominal Subcutaneous Fat: A Randomized, Single-Blind, Placebo-Controlled Phase II Study.' Aesthet Surg J, 45(6), 611-623. <a href='https://pubmed.ncbi.nlm.nih.gov/39831981/' target='_blank'>[PubMed]</a>"
     ]
   }
 ];

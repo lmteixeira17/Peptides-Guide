@@ -1820,8 +1820,8 @@ var peptideStacks = [
       {
         id: "cbl-514",
         name: "CBL-514",
-        role: "Apoptose seletiva de adipoc\u00edtos via ativa\u00e7\u00e3o da via mitocondrial intr\u00ednseca \u2014 destrui\u00e7\u00e3o permanente de c\u00e9lulas de gordura no local da inje\u00e7\u00e3o",
-        dose: "0,3-1,0 mL por ponto, m\u00faltiplos pontos por sess\u00e3o",
+        role: "Inibidor de DYRK1b (Caliway Biopharma) \u2014 apoptose seletiva de adipoc\u00edtos via caspase-3/Bax, destrui\u00e7\u00e3o permanente de c\u00e9lulas de gordura no local da inje\u00e7\u00e3o",
+        dose: "2,0 mg/cm\u00b2 por sess\u00e3o, inje\u00e7\u00f5es SC em grid na \u00e1rea de gordura",
         timing: "1 sess\u00e3o a cada 4-6 semanas (2-4 sess\u00f5es total)"
       },
       {
@@ -1839,14 +1839,14 @@ var peptideStacks = [
         timing: "3-5x por semana, pela manh\u00e3"
       }
     ],
-    synergy: "CBL-514 atua localmente eliminando adipoc\u00edtos por apoptose seletiva via caspases \u2014 efeito permanente nas c\u00e9lulas tratadas. AOD-9604 complementa de forma sist\u00eamica, estimulando a lip\u00f3lise (quebra de triglicer\u00eddeos) e inibindo a lipog\u00eanese (forma\u00e7\u00e3o de nova gordura) nos adipoc\u00edtos remanescentes, sem afetar glicemia ou IGF-1. MOTS-c ativa AMPK, aumentando o gasto energ\u00e9tico celular e a oxida\u00e7\u00e3o de \u00e1cidos graxos liberados pela lip\u00f3lise, al\u00e9m de melhorar a sensibilidade \u00e0 insulina. As tr\u00eas vias s\u00e3o complementares: destrui\u00e7\u00e3o celular + mobiliza\u00e7\u00e3o de gordura + queima metab\u00f3lica.",
+    synergy: "CBL-514 atua localmente inibindo DYRK1b e eliminando adipoc\u00edtos por apoptose seletiva via caspase-3 e Bax/Bcl-2 \u2014 efeito permanente nas c\u00e9lulas tratadas. AOD-9604 complementa de forma sist\u00eamica, estimulando a lip\u00f3lise (quebra de triglicer\u00eddeos) e inibindo a lipog\u00eanese (forma\u00e7\u00e3o de nova gordura) nos adipoc\u00edtos remanescentes, sem afetar glicemia ou IGF-1. MOTS-c ativa AMPK, aumentando o gasto energ\u00e9tico celular e a oxida\u00e7\u00e3o de \u00e1cidos graxos liberados pela lip\u00f3lise, al\u00e9m de melhorar a sensibilidade \u00e0 insulina. As tr\u00eas vias s\u00e3o complementares: destrui\u00e7\u00e3o celular + mobiliza\u00e7\u00e3o de gordura + queima metab\u00f3lica.",
     application: "Todos SEPARADOS \u2014 vias e formula\u00e7\u00f5es completamente distintas. CBL-514: inje\u00e7\u00e3o intrad\u00e9rmica/subcut\u00e2nea direta na \u00e1rea de gordura alvo (realizada em cl\u00ednica, por profissional treinado). AOD-9604: inje\u00e7\u00e3o SC em seringa pr\u00f3pria, longe do local do CBL-514. MOTS-c: inje\u00e7\u00e3o SC em seringa separada. NUNCA misturar nenhum composto na mesma seringa.",
     duration: "12-16 semanas. CBL-514: 2-4 sess\u00f5es em cl\u00ednica a cada 4-6 semanas. AOD-9604 e MOTS-c: uso di\u00e1rio/regular durante todo o per\u00edodo.",
-    warnings: "CBL-514 est\u00e1 em ensaio cl\u00ednico Fase 2 e N\u00c3O est\u00e1 aprovado para uso comercial. Deve ser aplicado por profissional de sa\u00fade treinado. Edema e equimose no local s\u00e3o esperados ap\u00f3s a aplica\u00e7\u00e3o de CBL-514. AOD-9604 n\u00e3o afeta glicemia nem IGF-1. Resultados do CBL-514 s\u00e3o permanentes para os adipoc\u00edtos eliminados, mas ganho de peso pode expandir adipoc\u00edtos remanescentes.",
-    evidenceLevel: "Moderado (CBL-514: Fase 2 publicada, efic\u00e1cia demonstrada) / Moderado (AOD-9604: m\u00faltiplos estudos) / Moderado (MOTS-c: dados cl\u00ednicos emergentes)",
+    warnings: "CBL-514 est\u00e1 em ensaio cl\u00ednico Fase 3 (SUPREME-01, FDA IND aprovado) e N\u00c3O est\u00e1 aprovado para uso comercial. Desenvolvido pela Caliway Biopharmaceuticals (Taiwan). Deve ser aplicado por profissional de sa\u00fade treinado em cl\u00ednica. Edema e equimose no local s\u00e3o esperados ap\u00f3s aplica\u00e7\u00e3o. AOD-9604 n\u00e3o afeta glicemia nem IGF-1. Resultados do CBL-514 s\u00e3o permanentes para os adipoc\u00edtos eliminados, mas ganho de peso pode expandir adipoc\u00edtos remanescentes.",
+    evidenceLevel: "Alto (CBL-514: Fase IIb publicada com 69,6% resposta, Fase 3 em andamento) / Moderado (AOD-9604: m\u00faltiplos estudos) / Moderado (MOTS-c: dados cl\u00ednicos emergentes)",
     references: [
-      "Lee SJ et al., 2024. 'Safety and Efficacy of CBL-514 Injection for Submental Fat Reduction: A Phase 2 Study.' Plast Reconstr Surg. <a href='https://pubmed.ncbi.nlm.nih.gov/39083028/' target='_blank'>[PubMed]</a>",
-      "Kim J et al., 2023. 'CBL-514, a novel injectable compound for localized fat reduction through adipocyte-selective apoptosis.' J Cosmet Dermatol. <a href='https://pubmed.ncbi.nlm.nih.gov/36799485/' target='_blank'>[PubMed]</a>",
+      "Gold MH et al., 2022. 'Efficacy of a Novel Injection Lipolysis to Induce Targeted Adipocyte Apoptosis: Phase IIa Study of CBL-514.' Dermatol Surg, 48(9), 1002-1008. <a href='https://pubmed.ncbi.nlm.nih.gov/35709509/' target='_blank'>[PubMed]</a>",
+      "Gold MH, Schlessinger J et al., 2025. 'Efficacy and Safety of CBL-514 in Reducing Abdominal Subcutaneous Fat: Phase II Study.' Aesthet Surg J, 45(6), 611-623. <a href='https://pubmed.ncbi.nlm.nih.gov/39831981/' target='_blank'>[PubMed]</a>",
       "Heffernan MA et al., 2001. 'The effects of human GH and its lipolytic fragment (AOD9604) on lipid metabolism.' Endocrinology. <a href='https://pubmed.ncbi.nlm.nih.gov/11511536/' target='_blank'>[PubMed]</a>"
     ]
   }
