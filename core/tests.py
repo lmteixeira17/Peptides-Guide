@@ -1737,3 +1737,128 @@ class TestDeploymentConfig:
         content = result.stdout
         assert 'guiadepeptideos.com.br' in content, 'nginx config must serve guiadepeptideos.com.br'
         assert '/peptides/static/' in content, 'nginx must handle /peptides/static/ rewrite for new domain'
+
+
+# =============================================================================
+# Production Integration Tests (require network access to guiadepeptideos.com.br)
+# =============================================================================
+
+class TestProductionSite:
+    """Integration tests that verify the live production site.
+    Skipped automatically if guiadepeptideos.com.br is unreachable."""
+
+    @pytest.fixture(autouse=True)
+    def check_reachable(self):
+        import subprocess
+        result = subprocess.run(
+            ['curl', '-sI', '--connect-timeout', '3', 'https://guiadepeptideos.com.br/health/'],
+            capture_output=True, text=True, timeout=8,
+        )
+        if result.returncode != 0 or '200' not in result.stdout:
+            pytest.skip('guiadepeptideos.com.br is not reachable')
+
+    def _curl(self, path, head_only=True):
+        import subprocess
+        cmd = ['curl', '-s', '--connect-timeout', '5']
+        if head_only:
+            cmd.append('-I')
+        cmd.append(f'https://guiadepeptideos.com.br{path}')
+        result = subprocess.run(cmd, capture_output=True, timeout=15)
+        return result.stdout.decode('utf-8', errors='replace')
+
+    def test_homepage_returns_200(self):
+        out = self._curl('/')
+        assert 'HTTP/' in out
+        assert '200' in out.split('\n')[0]
+
+    def test_css_loads_on_production(self):
+        """CSS file referenced by the page must return 200 on production."""
+        html = self._curl('/', head_only=False)
+        import re
+        m = re.search(r'href="([^"]*style\.[^"]*\.css)"', html)
+        assert m, 'CSS file not referenced in production HTML'
+        css_path = m.group(1)
+        out = self._curl(css_path)
+        assert '200' in out.split('\n')[0], f'CSS file {css_path} is not accessible (got: {out.split(chr(10))[0]})'
+
+    def test_js_loads_on_production(self):
+        """JS file referenced by the page must return 200 on production."""
+        html = self._curl('/', head_only=False)
+        import re
+        m = re.search(r'src="([^"]*app\.[^"]*\.js)"', html)
+        assert m, 'JS file not referenced in production HTML'
+        js_path = m.group(1)
+        out = self._curl(js_path)
+        assert '200' in out.split('\n')[0], f'JS file {js_path} is not accessible (got: {out.split(chr(10))[0]})'
+
+    def test_favicon_loads(self):
+        out = self._curl('/peptides/static/core/favicon.svg')
+        assert '200' in out.split('\n')[0]
+
+    def test_og_image_loads(self):
+        out = self._curl('/peptides/static/core/og-image.png')
+        assert '200' in out.split('\n')[0]
+
+    def test_peptide_detail_page(self):
+        out = self._curl('/peptideos/semaglutide/')
+        assert '200' in out.split('\n')[0]
+
+    def test_stack_detail_page(self):
+        out = self._curl('/combinacoes/weight-loss-beginner/')
+        assert '200' in out.split('\n')[0]
+
+    def test_category_page(self):
+        out = self._curl('/categorias/weight-loss/')
+        assert '200' in out.split('\n')[0]
+
+    def test_glossario_page(self):
+        out = self._curl('/glossario/')
+        assert '200' in out.split('\n')[0]
+
+    def test_sobre_page(self):
+        out = self._curl('/sobre/')
+        assert '200' in out.split('\n')[0]
+
+    def test_robots_txt(self):
+        out = self._curl('/robots.txt')
+        assert '200' in out.split('\n')[0]
+
+    def test_sitemap_xml(self):
+        out = self._curl('/sitemap.xml')
+        assert '200' in out.split('\n')[0]
+
+    def test_llms_txt(self):
+        out = self._curl('/llms.txt')
+        assert '200' in out.split('\n')[0]
+
+    def test_api_json(self):
+        out = self._curl('/api/peptides.json')
+        assert '200' in out.split('\n')[0]
+
+    def test_https_redirect(self):
+        """HTTP must redirect to HTTPS."""
+        import subprocess
+        result = subprocess.run(
+            ['curl', '-sI', '--connect-timeout', '5', 'http://guiadepeptideos.com.br/'],
+            capture_output=True, text=True, timeout=10,
+        )
+        assert '301' in result.stdout.split('\n')[0]
+
+    def test_www_redirect(self):
+        """www must redirect to non-www."""
+        import subprocess
+        result = subprocess.run(
+            ['curl', '-sI', '--connect-timeout', '5', 'https://www.guiadepeptideos.com.br/'],
+            capture_output=True, text=True, timeout=10,
+        )
+        assert '301' in result.stdout.split('\n')[0]
+
+    def test_detail_page_css_loads(self):
+        """CSS on peptide detail page must be accessible."""
+        html = self._curl('/peptideos/semaglutide/', head_only=False)
+        import re
+        m = re.search(r'href="([^"]*style\.[^"]*\.css)"', html)
+        assert m, 'CSS not referenced on detail page'
+        css_path = m.group(1)
+        out = self._curl(css_path)
+        assert '200' in out.split('\n')[0], f'Detail page CSS {css_path} returns: {out.split(chr(10))[0]}'
