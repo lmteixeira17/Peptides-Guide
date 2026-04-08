@@ -7,7 +7,7 @@ Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoe
 **Idioma do conteudo:** Portugues (pt-BR)
 **Publico-alvo:** Profissionais de saude e pesquisadores
 **Repositorio:** https://github.com/lmteixeira17/Peptides-Guide
-**Dominio de producao:** https://guiadepeptideos.com.br/ (Cloudflare + Let's Encrypt SSL)
+**Dominio de producao:** https://guiadepeptideos.com.br/ (Cloudflare SSL Flexible)
 **Dominio legado:** https://mlt.com.br/peptides/ (ainda funciona)
 
 ---
@@ -53,15 +53,24 @@ _Peptides/
 │   ├── admin.py                   # Admin com TabularInlines para CRUD
 │   ├── serializers.py             # Converte modelos → JSON (camelCase, formato JS)
 │   ├── tests.py                   # Suite de testes completa (176 testes)
+│   ├── context_processors.py      # analytics() - GA4 measurement ID
 │   └── management/
 │       └── commands/
 │           └── seed_peptides.py   # Importa dados dos arquivos JS para o banco
 ├── templates/
-│   └── index.html                 # Template Django (injeta JSON via {{ var|safe }})
+│   ├── index.html                 # Template principal (SEO, JSON-LD, FAQ, noscript)
+│   ├── peptide_detail.html        # Pagina individual de peptideo (Drug schema)
+│   ├── stack_detail.html          # Pagina individual de stack
+│   ├── category.html              # Paginas de categoria (CollectionPage schema)
+│   ├── glossario.html             # Glossario (DefinedTermSet schema)
+│   ├── sobre.html                 # Sobre/E-E-A-T (AboutPage schema)
+│   └── _ga4.html                  # Snippet GA4 reutilizavel
 ├── static/
 │   └── core/
-│       ├── style.css              # Estilos do site
-│       └── app.js                 # Logica da aplicacao (inalterado)
+│       ├── style.css              # Estilos do site (dark theme, responsivo)
+│       ├── app.js                 # Logica da aplicacao (modal, busca, deep links)
+│       ├── og-image.png           # Open Graph image (1200x630)
+│       └── favicon.svg            # Favicon SVG com emoji DNA
 ├── data1.js                       # 36 peptideos (backup/fonte para seed)
 ├── data2.js                       # 36 peptideos (backup/fonte para seed)
 ├── data3.js                       # 36 peptideos (backup/fonte para seed)
@@ -243,12 +252,16 @@ nginx-proxy (nginx:alpine) → porta 80/443
 - **Redirects:** Always HTTPS ativo + www→raiz (301 via page rule)
 
 ### Endpoints SEO
-- `/robots.txt` - Allow todos exceto /admin/ e /health/, aponta sitemap
-- `/sitemap.xml` - 150 URLs com lastmod (main + 108 peptideos + 41 stacks)
+- `/robots.txt` - Allow todos exceto /admin/ e /health/, permite AI bots (GPTBot, ClaudeBot, PerplexityBot)
+- `/sitemap.xml` - 163 URLs com lastmod (main + sobre + glossario + 11 categorias + 108 peptideos + 41 stacks)
 - `/llms.txt` - Inventario completo para IAs (ChatGPT, Claude, Perplexity)
 - `/favicon.svg` - Favicon SVG com emoji DNA
 - `/peptideos/<slug>/` - Pagina individual por peptideo (SEO-friendly)
 - `/combinacoes/<slug>/` - Pagina individual por stack
+- `/categorias/<slug>/` - Paginas de categoria (11 categorias com intro, peptideos e stacks)
+- `/glossario/` - Glossario com 30+ termos tecnicos em 4 secoes
+- `/sobre/` - Pagina sobre/E-E-A-T (metodologia, fontes, criterios editoriais)
+- `/api/peptides.json` - API publica JSON com CORS headers
 
 ### Paginas Individuais por Peptideo/Stack
 Cada peptideo e stack tem uma URL propria com SEO otimizado:
@@ -285,7 +298,8 @@ Em `static/core/app.js`:
 - **Propriedade:** `sc-domain:guiadepeptideos.com.br`
 - **Verificacao:** automatica via Cloudflare
 - **Sitemap:** `https://guiadepeptideos.com.br/sitemap.xml` (submetido)
-- **API OAuth:** configurado com refresh token permanente
+- **API OAuth:** configurado com refresh token permanente (readonly + indexing scopes)
+- **Indexing API:** 50 URLs submetidas via urlNotifications:publish (2026-04-07)
 
 ### Consultar Dados do Search Console via API
 
@@ -314,6 +328,11 @@ Body: {"startDate":"YYYY-MM-DD","endDate":"YYYY-MM-DD","dimensions":["query"],"r
 POST https://searchconsole.googleapis.com/v1/urlInspection/index:inspect
 Authorization: Bearer <ACCESS_TOKEN>
 Body: {"inspectionUrl":"https://guiadepeptideos.com.br/","siteUrl":"sc-domain:guiadepeptideos.com.br"}
+
+# 5. Submeter URL para indexacao (requer refresh token com scope indexing)
+POST https://indexing.googleapis.com/v3/urlNotifications:publish
+Authorization: Bearer <ACCESS_TOKEN>
+Body: {"url":"https://guiadepeptideos.com.br/peptideos/semaglutide/","type":"URL_UPDATED"}
 ```
 
 **Dimensoes disponiveis no searchAnalytics:** `query`, `page`, `country`, `device`, `searchAppearance`, `date`
@@ -347,7 +366,7 @@ python -m pytest core/tests.py::TestRealDataFiles -v
 python -m pytest core/tests.py --cov=core -v
 ```
 
-### Categorias de Testes (114 total)
+### Categorias de Testes (176 total)
 
 | Categoria | Classe de Teste | Qtd | O que testa |
 |-----------|----------------|-----|-------------|
@@ -368,8 +387,10 @@ python -m pytest core/tests.py --cov=core -v
 | **Seed Command** | TestSeedCommand | 11 | Peptides, benefits, side effects, dosages, refs, stacks, links, stack refs, idempotente, ordem, data3 vazio |
 | **Integracao** | TestEndToEndFlow | 2 | Seed→render, logica de particao (11 categorias) |
 | **URLs** | TestURLRouting | 3 | Resolve index, health, admin |
+| **SEO** | TestSEOEndpoints | 32 | robots.txt, sitemap.xml, llms.txt, detail pages, 404s, schemas, og:image, noscript, categorias, glossario, sobre, API JSON, CORS, footer nav, CSS/JS refs |
 | **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 108 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 282 refs, seed completo |
-| **Deploy Config** | TestDeploymentConfig | 3 | ALLOWED_HOSTS inclui mlt.com.br, FORCE_SCRIPT_NAME, docker-compose.yml |
+| **Deploy Config** | TestDeploymentConfig | 4 | ALLOWED_HOSTS (ambos dominios), FORCE_SCRIPT_NAME, docker-compose.yml, nginx static rewrite (SSH) |
+| **Producao** | TestProductionSite | 17 | Homepage, CSS/JS loads, favicon, og-image, todas as paginas, HTTPS redirect, www redirect, detail page CSS |
 
 ### Dados Reais vs Dados de Teste
 - **Fixtures (pytest):** criam objetos minimos para testes isolados
