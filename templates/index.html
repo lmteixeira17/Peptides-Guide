@@ -44,7 +44,12 @@
     </script>
     {% endif %}
 
-    <!-- JSON-LD Structured Data -->
+    window.peptidesApiCandidates = [
+      "/api/peptides.json",
+      "/peptides/api/peptides.json",
+      "https://guiadepeptideos.com.br/api/peptides.json",
+      "https://mlt.com.br/peptides/api/peptides.json"
+    ];
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",

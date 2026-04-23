@@ -60,12 +60,51 @@ function renderCurrentSection() {
     }
 }
 
-function loadData() {
-    if (dataLoaded) {
-        return Promise.resolve();
+function addApiCandidate(candidates, url) {
+    if (!url || candidates.indexOf(url) !== -1) {
+        return;
+    }
+    candidates.push(url);
+}
+
+function buildApiCandidates() {
+    var candidates = [];
+    var configuredCandidates = window.peptidesApiCandidates || [];
+    var origin = window.location.origin || "";
+    var pathname = window.location.pathname || "/";
+
+    configuredCandidates.forEach(function(url) {
+        addApiCandidate(candidates, url);
+    });
+
+    if (pathname === "/peptides" || pathname.indexOf("/peptides/") === 0) {
+        addApiCandidate(candidates, "/peptides/api/peptides.json");
+        if (origin) {
+            addApiCandidate(candidates, origin + "/peptides/api/peptides.json");
+        }
     }
 
-    return fetch(window.peptidesApiUrl || "/api/peptides.json", {
+    addApiCandidate(candidates, "/api/peptides.json");
+    if (origin) {
+        addApiCandidate(candidates, origin + "/api/peptides.json");
+    }
+
+    addApiCandidate(candidates, "https://guiadepeptideos.com.br/api/peptides.json");
+    addApiCandidate(candidates, "https://mlt.com.br/peptides/api/peptides.json");
+
+    if (window.peptidesApiUrl) {
+        addApiCandidate(candidates, window.peptidesApiUrl);
+    }
+
+    return candidates;
+}
+
+function isValidApiPayload(data) {
+    return !!data && typeof data === "object" && Array.isArray(data.peptides) && Array.isArray(data.stacks);
+}
+
+function fetchApiCandidate(url) {
+    return fetch(url, {
         headers: { "Accept": "application/json" },
         cache: "no-store"
     })
@@ -75,6 +114,30 @@ function loadData() {
             }
             return response.json();
         })
+        .then(function(data) {
+            if (!isValidApiPayload(data)) {
+                throw new Error("Invalid peptide payload");
+            }
+            return data;
+        });
+}
+
+function loadDataFromCandidates(candidates, index) {
+    if (index >= candidates.length) {
+        return Promise.reject(new Error("Failed to load peptide data"));
+    }
+
+    return fetchApiCandidate(candidates[index]).catch(function() {
+        return loadDataFromCandidates(candidates, index + 1);
+    });
+}
+
+function loadData() {
+    if (dataLoaded) {
+        return Promise.resolve();
+    }
+
+    return loadDataFromCandidates(buildApiCandidates(), 0)
         .then(function(data) {
             peptides = data.peptides || [];
             stacks = data.stacks || [];

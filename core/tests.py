@@ -13,6 +13,7 @@ Covers:
 import json
 import os
 import tempfile
+from pathlib import Path
 
 import pytest
 from django.contrib.admin.sites import AdminSite
@@ -632,12 +633,14 @@ class TestIndexView:
         response = client.get('/')
         assert response.status_code == 200
 
-    def test_contains_api_bootstrap_url(self, client, peptide_with_relations):
+    def test_contains_api_bootstrap_candidates(self, client, peptide_with_relations):
         response = client.get('/')
         content = response.content.decode()
 
-        assert 'window.peptidesApiUrl' in content
+        assert 'window.peptidesApiCandidates' in content
         assert '/api/peptides.json' in content
+        assert '/peptides/api/peptides.json' in content
+        assert 'https://guiadepeptideos.com.br/api/peptides.json' in content
 
     def test_noscript_contains_seeded_peptide_ids(self, client, peptide_with_relations, second_peptide):
         response = client.get('/')
@@ -652,7 +655,7 @@ class TestIndexView:
 
         assert 'var peptidesPart1' not in content
         assert 'var peptideStacks' not in content
-        assert 'window.peptidesApiUrl' in content
+        assert 'window.peptidesApiCandidates' in content
 
     def test_noscript_contains_stack_ids(self, client, stack_with_relations):
         response = client.get('/')
@@ -660,12 +663,29 @@ class TestIndexView:
 
         assert 'stack-test-stack' in content
 
+    @override_settings(FORCE_SCRIPT_NAME='/peptides')
+    def test_api_bootstrap_is_force_script_name_agnostic(self, client, db):
+        response = client.get('/')
+        content = response.content.decode()
+
+        assert 'window.peptidesApiCandidates' in content
+        assert '/api/peptides.json' in content
+        assert '/peptides/api/peptides.json' in content
+
     def test_empty_database(self, client, db):
         """Page should render even with no data."""
         response = client.get('/')
         assert response.status_code == 200
         content = response.content.decode()
-        assert 'window.peptidesApiUrl' in content
+        assert 'window.peptidesApiCandidates' in content
+
+    def test_frontend_has_multi_endpoint_api_fallbacks(self):
+        app_js = (Path(__file__).resolve().parent.parent / 'static' / 'core' / 'app.js').read_text(encoding='utf-8')
+
+        assert 'function buildApiCandidates()' in app_js
+        assert 'function loadDataFromCandidates(candidates, index)' in app_js
+        assert 'https://guiadepeptideos.com.br/api/peptides.json' in app_js
+        assert 'https://mlt.com.br/peptides/api/peptides.json' in app_js
 
     def test_template_has_static_references(self, client, db):
         response = client.get('/')
