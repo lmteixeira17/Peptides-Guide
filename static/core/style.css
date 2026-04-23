@@ -850,6 +850,33 @@ body {
     color: var(--text-light);
 }
 
+.loading-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 4rem 2rem;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    color: var(--text-light);
+}
+
+.loading-state h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.error-state {
+    border-color: #ea4335;
+    background: #fce8e6;
+    color: #c5221f;
+}
+
+.error-state h3 {
+    color: #c5221f;
+}
+
 .no-results h3 {
     font-size: 1.3rem;
     margin-bottom: 0.5rem;

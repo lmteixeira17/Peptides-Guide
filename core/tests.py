@@ -632,57 +632,40 @@ class TestIndexView:
         response = client.get('/')
         assert response.status_code == 200
 
-    def test_contains_js_variables(self, client, peptide_with_relations):
+    def test_contains_api_bootstrap_url(self, client, peptide_with_relations):
         response = client.get('/')
         content = response.content.decode()
 
-        assert 'var peptidesPart1' in content
-        assert 'var peptidesPart2' in content
-        assert 'var peptidesPart3' in content
-        assert 'var peptideStacks' in content
+        assert 'window.peptidesApiUrl' in content
+        assert '/api/peptides.json' in content
 
-    def test_peptide_data_in_correct_partition(self, client, peptide_with_relations, second_peptide):
+    def test_noscript_contains_seeded_peptide_ids(self, client, peptide_with_relations, second_peptide):
         response = client.get('/')
         content = response.content.decode()
 
-        # weight-loss peptide should be in part1
         assert 'test-peptide' in content
-        # healing peptide should be in part2
         assert 'second-peptide' in content
 
-    def test_valid_json_in_template(self, client, peptide_with_relations):
+    def test_index_does_not_inline_full_dataset(self, client, peptide_with_relations):
         response = client.get('/')
         content = response.content.decode()
 
-        # Extract the JSON from peptidesPart1
-        start = content.index('var peptidesPart1 = ') + len('var peptidesPart1 = ')
-        end = content.index(';\n', start)
-        json_str = content[start:end]
-        data = json.loads(json_str)
+        assert 'var peptidesPart1' not in content
+        assert 'var peptideStacks' not in content
+        assert 'window.peptidesApiUrl' in content
 
-        assert isinstance(data, list)
-        assert len(data) == 1  # one weight-loss peptide
-        assert data[0]['id'] == 'test-peptide'
-
-    def test_stacks_in_template(self, client, stack_with_relations):
+    def test_noscript_contains_stack_ids(self, client, stack_with_relations):
         response = client.get('/')
         content = response.content.decode()
 
-        start = content.index('var peptideStacks = ') + len('var peptideStacks = ')
-        end = content.index(';\n', start)
-        json_str = content[start:end]
-        data = json.loads(json_str)
-
-        assert isinstance(data, list)
-        assert len(data) == 1
-        assert data[0]['id'] == 'test-stack'
+        assert 'stack-test-stack' in content
 
     def test_empty_database(self, client, db):
         """Page should render even with no data."""
         response = client.get('/')
         assert response.status_code == 200
         content = response.content.decode()
-        assert 'var peptidesPart1 = []' in content
+        assert 'window.peptidesApiUrl' in content
 
     def test_template_has_static_references(self, client, db):
         response = client.get('/')
@@ -1206,10 +1189,8 @@ class TestEndToEndFlow:
         assert 'integration-test' in content
         assert 'Integration Peptide' in content
 
-        # Parse the JSON from the page
-        start = content.index('var peptidesPart1 = ') + len('var peptidesPart1 = ')
-        end = content.index(';\n', start)
-        data = json.loads(content[start:end])
+        api_response = client.get('/api/peptides.json')
+        data = json.loads(api_response.content)['peptides']
 
         assert len(data) == 1
         p = data[0]
@@ -1219,8 +1200,8 @@ class TestEndToEndFlow:
         assert p['dosage'][0]['protocol'] == 'P'
         assert 'pubmed' in p['references'][0]
 
-    def test_partition_logic(self, db):
-        """Verify peptides are split into correct partitions by category."""
+    def test_api_includes_all_categories_without_data_loss(self, db):
+        """Verify the public API preserves all categories after bootstrapping changes."""
         categories = {
             'wl': ('weight-loss', 'Perda de Peso'),
             'gh': ('growth-hormone', 'Hormônio do Crescimento'),
@@ -1243,28 +1224,15 @@ class TestEndToEndFlow:
             )
 
         client = Client()
-        response = client.get('/')
-        content = response.content.decode()
+        response = client.get('/api/peptides.json')
+        data = json.loads(response.content)
+        categories_in_api = {p['category'] for p in data['peptides']}
 
-        # Extract all 3 partitions
-        def extract_json(var_name):
-            s = content.index(f'var {var_name} = ') + len(f'var {var_name} = ')
-            e = content.index(';\n', s)
-            return json.loads(content[s:e])
-
-        part1 = extract_json('peptidesPart1')
-        part2 = extract_json('peptidesPart2')
-        part3 = extract_json('peptidesPart3')
-
-        part1_cats = {p['category'] for p in part1}
-        part2_cats = {p['category'] for p in part2}
-        part3_cats = {p['category'] for p in part3}
-
-        assert part1_cats == {'weight-loss', 'growth-hormone'}
-        assert part2_cats == {'healing', 'anti-aging', 'skin', 'cognitive'}
-        assert part3_cats == {'immune', 'hormonal', 'sleep', 'body-comp', 'other'}
-
-        assert len(part1) + len(part2) + len(part3) == 11
+        assert categories_in_api == {
+            'weight-loss', 'growth-hormone', 'healing', 'anti-aging', 'skin',
+            'cognitive', 'immune', 'hormonal', 'sleep', 'body-comp', 'other'
+        }
+        assert len(data['peptides']) == 11
 
 
 # =============================================================================

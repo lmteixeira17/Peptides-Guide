@@ -1,11 +1,28 @@
-// Combine all peptide data parts
-var peptides = [
-    ...(typeof peptidesPart1 !== "undefined" ? peptidesPart1 : []),
-    ...(typeof peptidesPart2 !== "undefined" ? peptidesPart2 : []),
-    ...(typeof peptidesPart3 !== "undefined" ? peptidesPart3 : [])
-];
+function getBootstrappedPeptides() {
+    var bootstrapped = [];
+    if (typeof peptidesPart1 !== "undefined") {
+        bootstrapped = bootstrapped.concat(peptidesPart1);
+    }
+    if (typeof peptidesPart2 !== "undefined") {
+        bootstrapped = bootstrapped.concat(peptidesPart2);
+    }
+    if (typeof peptidesPart3 !== "undefined") {
+        bootstrapped = bootstrapped.concat(peptidesPart3);
+    }
+    return bootstrapped;
+}
 
-var stacks = (typeof peptideStacks !== "undefined") ? peptideStacks : [];
+function getBootstrappedStacks() {
+    return (typeof peptideStacks !== "undefined") ? peptideStacks : [];
+}
+
+var peptides = getBootstrappedPeptides();
+var stacks = getBootstrappedStacks();
+var bootstrapDataPresent =
+    typeof peptidesPart1 !== "undefined" ||
+    typeof peptidesPart2 !== "undefined" ||
+    typeof peptidesPart3 !== "undefined" ||
+    typeof peptideStacks !== "undefined";
 
 // State
 var currentCategory = "all";
@@ -14,6 +31,8 @@ var currentSection = "peptides";
 var currentStackGoal = "all";
 var sourceStackId = null;
 var searchDebounceTimer = null;
+var dataLoaded = bootstrapDataPresent;
+var dataLoadFailed = false;
 
 // DOM elements
 var cardsContainer = document.getElementById("cardsContainer");
@@ -28,20 +47,62 @@ var filterButtons = document.querySelectorAll(".filters .filter-btn");
 var sectionButtons = document.querySelectorAll(".section-btn");
 var stackFilterButtons = document.querySelectorAll("#stacksFilters .filter-btn");
 
+function buildStateMessage(title, text, isError) {
+    var className = isError ? "loading-state error-state" : "loading-state";
+    return '<div class="' + className + '"><h3>' + title + '</h3><p>' + text + '</p></div>';
+}
+
+function renderCurrentSection() {
+    if (currentSection === "peptides") {
+        renderCards();
+    } else {
+        renderStacks();
+    }
+}
+
+function loadData() {
+    if (dataLoaded) {
+        return Promise.resolve();
+    }
+
+    return fetch(window.peptidesApiUrl || "/api/peptides.json", {
+        headers: { "Accept": "application/json" },
+        cache: "no-store"
+    })
+        .then(function(response) {
+            if (!response.ok) {
+                throw new Error("Failed to load peptide data");
+            }
+            return response.json();
+        })
+        .then(function(data) {
+            peptides = data.peptides || [];
+            stacks = data.stacks || [];
+            dataLoaded = true;
+            dataLoadFailed = false;
+        })
+        .catch(function(error) {
+            dataLoadFailed = true;
+            throw error;
+        });
+}
+
 // Initialize
 function init() {
-    renderCards();
     bindEvents();
+    renderCurrentSection();
+    loadData().then(function() {
+        renderCurrentSection();
+        openFromHash();
+    }).catch(function() {
+        renderCurrentSection();
+    });
 }
 
 function scheduleSectionRender() {
     window.clearTimeout(searchDebounceTimer);
     searchDebounceTimer = window.setTimeout(function() {
-        if (currentSection === "peptides") {
-            renderCards();
-        } else {
-            renderStacks();
-        }
+        renderCurrentSection();
     }, 120);
 }
 
@@ -96,13 +157,13 @@ function toggleSection() {
         stacksContainer.style.display = "none";
         controlsEl.classList.remove("stack-mode");
         searchInput.placeholder = "Buscar pept\u00eddeo por nome...";
-        renderCards();
+        renderCurrentSection();
     } else {
         cardsContainer.style.display = "none";
         stacksContainer.style.display = "";
         controlsEl.classList.add("stack-mode");
         searchInput.placeholder = "Buscar combina\u00e7\u00e3o ou pept\u00eddeo do stack...";
-        renderStacks();
+        renderCurrentSection();
     }
 }
 
@@ -121,6 +182,26 @@ function getFilteredPeptides() {
 
 // Render peptide cards
 function renderCards() {
+    if (dataLoadFailed) {
+        countDisplay.textContent = "0";
+        cardsContainer.innerHTML = buildStateMessage(
+            "N\u00e3o foi poss\u00edvel carregar os pept\u00eddeos.",
+            "Atualize a p\u00e1gina para tentar novamente.",
+            true
+        );
+        return;
+    }
+
+    if (!dataLoaded) {
+        countDisplay.textContent = "...";
+        cardsContainer.innerHTML = buildStateMessage(
+            "Carregando pept\u00eddeos...",
+            "Buscando dados cient\u00edficos atualizados.",
+            false
+        );
+        return;
+    }
+
     var filtered = getFilteredPeptides();
     countDisplay.textContent = filtered.length;
 
@@ -174,6 +255,24 @@ function getFilteredStacks() {
 
 // Render stack cards
 function renderStacks() {
+    if (dataLoadFailed) {
+        stacksGrid.innerHTML = buildStateMessage(
+            "N\u00e3o foi poss\u00edvel carregar as combina\u00e7\u00f5es.",
+            "Atualize a p\u00e1gina para tentar novamente.",
+            true
+        );
+        return;
+    }
+
+    if (!dataLoaded) {
+        stacksGrid.innerHTML = buildStateMessage(
+            "Carregando combina\u00e7\u00f5es...",
+            "Preparando os protocolos recomendados.",
+            false
+        );
+        return;
+    }
+
     var filtered = getFilteredStacks();
 
     if (filtered.length === 0) {
@@ -440,5 +539,4 @@ function openFromHash() {
 // Start
 document.addEventListener("DOMContentLoaded", function() {
     init();
-    openFromHash();
 });
