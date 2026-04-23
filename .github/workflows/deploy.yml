@@ -9,6 +9,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Validate Deploy Secrets
+        run: |
+          test -n "${{ secrets.SERVER_IP }}" || (echo "SERVER_IP secret is missing" && exit 1)
+          test -n "${{ secrets.SSH_PRIVATE_KEY }}" || (echo "SSH_PRIVATE_KEY secret is missing" && exit 1)
+          test -n "${{ secrets.PEPTIDES_SECRET_KEY }}" || (echo "PEPTIDES_SECRET_KEY secret is missing" && exit 1)
+          test -n "${{ secrets.PEPTIDES_DB_PASSWORD }}" || (echo "PEPTIDES_DB_PASSWORD secret is missing" && exit 1)
+
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1
         with:
@@ -18,6 +25,11 @@ jobs:
           script: |
             cd /var/www/peptides-guide
             git pull origin master
+            cat > .env <<'EOF'
+            SECRET_KEY=${{ secrets.PEPTIDES_SECRET_KEY }}
+            PEPTIDES_DB_PASSWORD=${{ secrets.PEPTIDES_DB_PASSWORD }}
+            EOF
+            chmod 600 .env
             docker compose down
             docker compose build
             docker compose up -d
