@@ -23,6 +23,7 @@ jobs:
           username: root
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            set -e
             cd /var/www/peptides-guide
             git pull origin master
             cat > .env <<'EOF'
@@ -37,4 +38,7 @@ jobs:
             docker exec peptides-web python manage.py seed_peptides
             docker network connect docker-infra_app-network peptides-web || true
             docker network connect docker-infra_app-network peptides-db || true
+            curl -fsS http://localhost:3007/health/ >/dev/null
+            curl -fsS http://localhost/peptides/ >/dev/null
+            curl -fsS http://localhost/peptides/peptideos/semaglutide/ >/dev/null
             echo "Deploy completed at $(date)"
