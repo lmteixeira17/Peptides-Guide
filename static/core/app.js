@@ -13,6 +13,7 @@ var currentSearch = "";
 var currentSection = "peptides";
 var currentStackGoal = "all";
 var sourceStackId = null;
+var searchDebounceTimer = null;
 
 // DOM elements
 var cardsContainer = document.getElementById("cardsContainer");
@@ -30,19 +31,25 @@ var stackFilterButtons = document.querySelectorAll("#stacksFilters .filter-btn")
 // Initialize
 function init() {
     renderCards();
-    renderStacks();
     bindEvents();
+}
+
+function scheduleSectionRender() {
+    window.clearTimeout(searchDebounceTimer);
+    searchDebounceTimer = window.setTimeout(function() {
+        if (currentSection === "peptides") {
+            renderCards();
+        } else {
+            renderStacks();
+        }
+    }, 120);
 }
 
 // Bind events
 function bindEvents() {
     searchInput.addEventListener("input", function(e) {
         currentSearch = e.target.value.toLowerCase().trim();
-        if (currentSection === "peptides") {
-            renderCards();
-        } else {
-            renderStacks();
-        }
+        scheduleSectionRender();
     });
 
     filterButtons.forEach(function(btn) {
