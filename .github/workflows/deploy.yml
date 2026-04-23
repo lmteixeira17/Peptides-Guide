@@ -4,10 +4,19 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production-master
+  cancel-in-progress: false
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Validate Deploy Secrets
         run: |
@@ -17,7 +26,7 @@ jobs:
           test -n "${{ secrets.PEPTIDES_DB_PASSWORD }}" || (echo "PEPTIDES_DB_PASSWORD secret is missing" && exit 1)
 
       - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2
         with:
           host: ${{ secrets.SERVER_IP }}
           username: root
