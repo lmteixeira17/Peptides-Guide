@@ -87,11 +87,15 @@ function toggleSection() {
     if (currentSection === "peptides") {
         cardsContainer.style.display = "";
         stacksContainer.style.display = "none";
-        controlsEl.style.display = "";
+        controlsEl.classList.remove("stack-mode");
+        searchInput.placeholder = "Buscar pept\u00eddeo por nome...";
+        renderCards();
     } else {
         cardsContainer.style.display = "none";
         stacksContainer.style.display = "";
-        controlsEl.style.display = "none";
+        controlsEl.classList.add("stack-mode");
+        searchInput.placeholder = "Buscar combina\u00e7\u00e3o ou pept\u00eddeo do stack...";
+        renderStacks();
     }
 }
 
