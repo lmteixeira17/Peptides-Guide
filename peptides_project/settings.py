@@ -111,12 +111,12 @@ USE_X_FORWARDED_HOST = True
 STATIC_URL = f'{FORCE_SCRIPT_NAME}/static/' if FORCE_SCRIPT_NAME else '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-if DEBUG:
+if _running_tests:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 else:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-WHITENOISE_AUTOREFRESH = DEBUG
-WHITENOISE_USE_FINDERS = DEBUG
+WHITENOISE_AUTOREFRESH = DEBUG or _running_tests
+WHITENOISE_USE_FINDERS = DEBUG or _running_tests
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
