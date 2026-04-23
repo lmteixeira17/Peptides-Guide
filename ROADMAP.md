@@ -19,9 +19,9 @@ Organizar as correcoes estruturais do projeto antes de ampliar funcionalidades, 
 
 ## Fase 2 - Seguranca e operacao
 
-- [ ] Remover secrets hardcoded do `docker-compose.yml`
-- [ ] Exigir `SECRET_KEY` sem fallback inseguro em ambiente de deploy
-- [ ] Documentar variaveis de ambiente obrigatorias por ambiente
+- [x] Remover secrets hardcoded do `docker-compose.yml`
+- [x] Exigir `SECRET_KEY` sem fallback inseguro em ambiente de deploy
+- [x] Documentar variaveis de ambiente obrigatorias por ambiente
 - [ ] Revisar escopos do token GitHub e rotacionar o PAT exposto nesta sessao
 
 ## Fase 3 - Higiene do repositorio

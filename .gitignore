@@ -24,6 +24,9 @@ venv/
 # Claude
 .claude/
 
+# Local shell artifacts
+_ul*
+
 # OS
 .DS_Store
 Thumbs.db

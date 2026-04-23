@@ -7,7 +7,7 @@ services:
     environment:
       - POSTGRES_DB=peptides
       - POSTGRES_USER=peptides
-      - POSTGRES_PASSWORD=peptides_secure_pwd_2026
+      - POSTGRES_PASSWORD=${PEPTIDES_DB_PASSWORD:?PEPTIDES_DB_PASSWORD is required}
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U peptides -d peptides"]
@@ -21,17 +21,17 @@ services:
     ports:
       - "3007:8000"
     environment:
-      - DEBUG=False
-      - SECRET_KEY=${SECRET_KEY:-django-peptides-change-me-in-production}
-      - ALLOWED_HOSTS=localhost,127.0.0.1,45.63.90.69,mlt.com.br,guiadepeptideos.com.br,www.guiadepeptideos.com.br
+      - DEBUG=${DEBUG:-False}
+      - SECRET_KEY=${SECRET_KEY:?SECRET_KEY is required}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1,45.63.90.69,mlt.com.br,guiadepeptideos.com.br,www.guiadepeptideos.com.br}
       - GA4_MEASUREMENT_ID=${GA4_MEASUREMENT_ID:-}
-      - FORCE_SCRIPT_NAME=/peptides
-      - DB_ENGINE=django.db.backends.postgresql
-      - DB_NAME=peptides
-      - DB_USER=peptides
-      - DB_PASSWORD=peptides_secure_pwd_2026
-      - DB_HOST=db
-      - DB_PORT=5432
+      - FORCE_SCRIPT_NAME=${FORCE_SCRIPT_NAME:-/peptides}
+      - DB_ENGINE=${DB_ENGINE:-django.db.backends.postgresql}
+      - DB_NAME=${DB_NAME:-peptides}
+      - DB_USER=${DB_USER:-peptides}
+      - DB_PASSWORD=${PEPTIDES_DB_PASSWORD:?PEPTIDES_DB_PASSWORD is required}
+      - DB_HOST=${DB_HOST:-db}
+      - DB_PORT=${DB_PORT:-5432}
     depends_on:
       db:
         condition: service_healthy
