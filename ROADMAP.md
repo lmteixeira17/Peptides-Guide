@@ -15,7 +15,7 @@ Organizar as correcoes estruturais do projeto antes de ampliar funcionalidades, 
 - [x] Declarar dependencias de teste em arquivo dedicado de desenvolvimento
 - [x] Instalar dependencias de desenvolvimento na `.venv`
 - [x] Rodar `pytest core/tests.py`
-- [ ] Adicionar um check de CI para testes basicos e `manage.py check`
+- [x] Adicionar um check de CI para testes basicos e `manage.py check`
 
 ## Fase 2 - Seguranca e operacao
 

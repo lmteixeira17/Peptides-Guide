@@ -1470,6 +1470,10 @@ class TestSEOEndpoints:
         response = client.get('/api/peptides.json')
         assert response['Access-Control-Allow-Origin'] == '*'
 
+    def test_peptides_api_has_cache_header(self, client):
+        response = client.get('/api/peptides.json')
+        assert response['Cache-Control'] == 'public, max-age=3600'
+
     def test_sitemap_includes_category_urls(self, client, peptide):
         response = client.get('/sitemap.xml')
         assert b'/categorias/weight-loss/' in response.content
@@ -1490,6 +1494,40 @@ class TestSEOEndpoints:
         response = client.get('/llms.txt')
         assert b'/api/peptides.json' in response.content
         assert b'guiadepeptideos.com.br/sobre/' in response.content
+
+    def test_llms_txt_groups_peptides_by_category(self, client, peptide, second_peptide):
+        response = client.get('/llms.txt')
+        content = response.content.decode('utf-8')
+
+        assert '### Perda de Peso' in content
+        assert '### Cura e Recuperação' in content
+        assert '[Test Peptide' in content
+        assert '[Second Peptide' in content
+
+    def test_llms_txt_groups_stacks_by_goal(self, client, stack):
+        Stack.objects.create(
+            id='healing-stack',
+            name='Healing Stack - Intermediate',
+            goal='healing',
+            goal_label='Cura e Recuperação',
+            level='Intermediário',
+            description='A second stack for llms grouping tests.',
+            synergy='Complementary tissue repair pathways.',
+            application='Apply separately.',
+            duration='8 weeks',
+            warnings='Research use only.',
+            evidence_level='Moderate.',
+            order=2,
+        )
+
+        response = client.get('/llms.txt')
+        content = response.content.decode('utf-8')
+
+        assert '## Combinacoes Recomendadas (2 total)' in content
+        assert '### Perda de Peso' in content
+        assert '### Cura e Recuperação' in content
+        assert 'Test Stack' in content
+        assert 'Healing Stack' in content
 
     def test_peptide_detail_has_article_schema(self, client, peptide):
         response = client.get('/peptideos/test-peptide/')

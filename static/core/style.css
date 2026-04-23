@@ -160,6 +160,15 @@ body {
     padding: 0 1rem;
 }
 
+.controls.stack-mode .filters,
+.controls.stack-mode .peptide-count {
+    display: none;
+}
+
+.controls.stack-mode .search-box {
+    margin-bottom: 0;
+}
+
 .search-box {
     margin-bottom: 1rem;
 }
