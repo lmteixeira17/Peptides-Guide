@@ -50,3 +50,11 @@ jobs:
 
       - name: Run test suite
         run: pytest core/tests.py -q
+
+      - name: Install Playwright browser
+        if: matrix.python-version == '3.11'
+        run: python -m playwright install --with-deps chromium
+
+      - name: Run browser E2E tests
+        if: matrix.python-version == '3.11'
+        run: pytest tests/e2e -q
