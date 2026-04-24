@@ -2,7 +2,7 @@
 
 ## Visao Geral do Projeto
 
-Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoes detalhadas sobre 108 peptideos individuais e 41 combinacoes (stacks) recomendadas, com dados baseados em estudos cientificos publicados.
+Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoes detalhadas sobre 113 peptideos individuais e 41 combinacoes (stacks) recomendadas, com dados baseados em estudos cientificos publicados.
 
 **Idioma do conteudo:** Portugues (pt-BR)
 **Publico-alvo:** Profissionais de saude e pesquisadores
@@ -71,8 +71,8 @@ _Peptides/
 │       ├── app.js                 # Logica da aplicacao (modal, busca, deep links)
 │       ├── og-image.png           # Open Graph image (1200x630)
 │       └── favicon.svg            # Favicon SVG com emoji DNA
-├── data1.js                       # 36 peptideos (backup/fonte para seed)
-├── data2.js                       # 36 peptideos (backup/fonte para seed)
+├── data1.js                       # 40 peptideos (backup/fonte para seed)
+├── data2.js                       # 37 peptideos (backup/fonte para seed)
 ├── data3.js                       # 36 peptideos (backup/fonte para seed)
 ├── stacks.js                      # 41 combinacoes (backup/fonte para seed)
 ├── manage.py                      # Django CLI
@@ -153,8 +153,8 @@ serialize_stack(stack) → {
 
 ### Particao de Peptideos no index_view
 Os peptideos sao divididos em 3 partes por categoria (mantendo compatibilidade com o JS original):
-- **Part1:** weight-loss + growth-hormone (36 peptideos)
-- **Part2:** healing + anti-aging + skin + cognitive (36 peptideos)
+- **Part1:** weight-loss + growth-hormone (40 peptideos)
+- **Part2:** healing + anti-aging + skin + cognitive (37 peptideos)
 - **Part3:** immune + hormonal + sleep + body-comp + other (36 peptideos)
 
 ---
@@ -253,7 +253,7 @@ nginx-proxy (nginx:alpine) → porta 80/443
 
 ### Endpoints SEO
 - `/robots.txt` - Allow todos exceto /admin/ e /health/, permite AI bots (GPTBot, ClaudeBot, PerplexityBot)
-- `/sitemap.xml` - 163 URLs com lastmod (main + sobre + glossario + 11 categorias + 108 peptideos + 41 stacks)
+- `/sitemap.xml` - 168 URLs com lastmod (main + sobre + glossario + 11 categorias + 113 peptideos + 41 stacks)
 - `/llms.txt` - Inventario completo para IAs (ChatGPT, Claude, Perplexity)
 - `/favicon.svg` - Favicon SVG com emoji DNA
 - `/peptideos/<slug>/` - Pagina individual por peptideo (SEO-friendly)
@@ -283,7 +283,7 @@ Em `templates/index.html`:
 
 ### SEO para Crawlers (sem JavaScript)
 Bloco `<noscript>` em `templates/index.html` com **149 articles** contendo:
-- Todos os 108 peptideos com descricao, mecanismo, beneficios, efeitos colaterais, referencias
+- Todos os 113 peptideos com descricao, mecanismo, beneficios, efeitos colaterais, referencias
 - Todos os 41 stacks com descricao, sinergia, duracao, referencias
 - Googlebot e outros crawlers indexam esse conteudo completo
 
@@ -388,7 +388,7 @@ python -m pytest core/tests.py --cov=core -v
 | **Integracao** | TestEndToEndFlow | 2 | Seed→render, logica de particao (11 categorias) |
 | **URLs** | TestURLRouting | 3 | Resolve index, health, admin |
 | **SEO** | TestSEOEndpoints | 32 | robots.txt, sitemap.xml, llms.txt, detail pages, 404s, schemas, og:image, noscript, categorias, glossario, sobre, API JSON, CORS, footer nav, CSS/JS refs |
-| **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 108 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 282 refs, seed completo |
+| **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 113 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 297 refs, seed completo |
 | **Deploy Config** | TestDeploymentConfig | 4 | ALLOWED_HOSTS (ambos dominios), FORCE_SCRIPT_NAME, docker-compose.yml, nginx static rewrite (SSH) |
 | **Producao** | TestProductionSite | 17 | Homepage, CSS/JS loads, favicon, og-image, todas as paginas, HTTPS redirect, www redirect, detail page CSS |
 
@@ -457,7 +457,7 @@ Todas as referencias devem incluir um link PubMed clicavel:
 - `target='_blank'` e obrigatorio em todos os links
 - PMID deve ser um numero valido do PubMed
 - Toda referencia DEVE ter um link PubMed verificavel
-- Total atual: 282 referencias com links PubMed (57 em data1 + 52 em data2 + 50 em data3 + 123 em stacks)
+- Total atual: 297 referencias com links PubMed (69 em data1 + 55 em data2 + 50 em data3 + 123 em stacks)
 
 ---
 

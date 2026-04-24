@@ -173,6 +173,41 @@ var peptidesPart1 = [
     ]
   },
   {
+    id: "setmelanotide",
+    name: "Setmelanotide",
+    aka: "Imcivree",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Setmelanotide é um agonista seletivo do receptor melanocortina-4 (MC4R) aprovado para obesidade monogênica rara causada por deficiência de POMC, PCSK1 ou LEPR, além da síndrome de Bardet-Biedl. Ao contrário dos agonistas de GLP-1, atua restaurando a via leptina-melanocortina central, corrigindo a hiperfagia grave de base genética. Em estudos de Fase 3, demonstrou redução sustentada da fome e perda de peso clinicamente relevante em pacientes com obesidade genética severa.",
+    mechanism: "Liga-se seletivamente ao receptor MC4R no hipotálamo, restaurando o sinal anorexígeno downstream da via leptina-POMC-alfa-MSH. Em pacientes com defeitos genéticos upstream dessa cascata, o setmelanotide reativa o controle central da saciedade, reduzindo hiperfagia, ingestão calórica e impulsividade alimentar sem depender primariamente do retardo do esvaziamento gástrico.",
+    benefits: [
+      "Redução robusta da hiperfagia em obesidade genética rara",
+      "Perda de peso clinicamente significativa em deficiências de POMC, PCSK1 e LEPR",
+      "Benefício comprovado também na síndrome de Bardet-Biedl",
+      "Mecanismo de ação único, restaurando a via melanocortina central",
+      "Melhora do controle metabólico e da qualidade de vida em síndromes de obesidade grave"
+    ],
+    sideEffects: [
+      { name: "Hiperpigmentação cutânea", severity: "common" },
+      { name: "Náusea", severity: "common" },
+      { name: "Reações no local da injeção", severity: "common" },
+      { name: "Vômito", severity: "occasional" },
+      { name: "Diarreia", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Diário (escalonamento)", dose: "1-3mg/dia", notes: "Em adultos, iniciar tipicamente com 2mg SC/dia por 2 semanas e aumentar para 3mg/dia se bem tolerado. Em pacientes pediátricos ou de menor peso, iniciar com 1mg/dia e ajustar conforme resposta clínica e tolerabilidade." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~11 horas",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Clément K et al., 2020. 'Efficacy and safety of setmelanotide, an MC4R agonist, in individuals with severe obesity due to LEPR or POMC deficiency: single-arm, open-label, multicentre, phase 3 trials.' Lancet Diabetes Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/33137293/' target='_blank'>[PubMed]</a>",
+      "Haqq AM et al., 2022. 'Efficacy and safety of setmelanotide, a melanocortin-4 receptor agonist, in patients with Bardet-Biedl syndrome and Alström syndrome: a multicentre, randomised, double-blind, placebo-controlled, phase 3 trial with an open-label period.' Lancet Diabetes Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/36356613/' target='_blank'>[PubMed]</a>",
+      "Markham A, 2021. 'Setmelanotide: First Approval.' Drugs. <a href='https://pubmed.ncbi.nlm.nih.gov/33638809/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
     id: "mazdutide",
     name: "Mazdutide",
     aka: "",
@@ -231,7 +266,7 @@ var peptidesPart1 = [
     status: "trial",
     statusLabel: "Fase 3 de Estudos Clínicos",
     references: [
-      "Nahra R et al., 2021. 'Effects of cotadutide on metabolic and hepatic parameters in adults with overweight or obesity and type 2 diabetes.' Diabetes Care. <a href='https://pubmed.ncbi.nlm.nih.gov/36228195/' target='_blank'>[PubMed]</a>"
+      "Hennige AM et al., 2024. 'Glucagon and GLP-1 receptor dual agonist survodutide for obesity: a randomised, double-blind, placebo-controlled, dose-finding phase 2 trial.' Lancet Diabetes Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/38330987/' target='_blank'>[PubMed]</a>"
     ]
   },
   {
@@ -499,10 +534,114 @@ var peptidesPart1 = [
       "Hope DCD et al., 2021. 'Striking the Balance: GLP-1/Glucagon Co-Agonism as a Treatment Strategy for Obesity.' Front Endocrinol, 12, 735019. <a href='https://pubmed.ncbi.nlm.nih.gov/34566894/' target='_blank'>[PubMed]</a>"
     ]
   },
+  {
+    id: "pegozafermin",
+    name: "Pegozafermin",
+    aka: "BIO89-100",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Pegozafermin é um análogo glicopegilado do FGF21 desenvolvido para MASH/NASH, dislipidemia aterogênica e hipertrigliceridemia grave. Diferencia-se dos agonistas incretínicos por atuar diretamente no eixo FGF21-FGFR1c/beta-Klotho, promovendo efeitos metabólicos hepáticos e adiposos amplos. Em estudos clínicos, demonstrou redução marcante da gordura hepática, melhora do perfil lipídico e perda de peso moderada com impacto relevante em doença hepática metabólica.",
+    mechanism: "Ativa o complexo receptor FGFR1c/beta-Klotho em fígado, tecido adiposo e outros órgãos metabolicamente ativos, mimetizando o hormônio endógeno FGF21. Isso aumenta a oxidação de ácidos graxos, melhora a sensibilidade à insulina, reduz a lipogênese hepática de novo, diminui triglicerídeos circulantes e modula favoravelmente inflamação e estresse metabólico associados à MASH/NASH.",
+    benefits: [
+      "Redução robusta da gordura hepática e potencial resolução de MASH/NASH",
+      "Melhora importante de triglicerídeos e lipoproteínas aterogênicas",
+      "Perda de peso moderada com melhora da sensibilidade à insulina",
+      "Ação metabólica ampla sobre fígado, tecido adiposo e homeostase glicêmica",
+      "Possibilidade de administração semanal ou quinzenal em estudos"
+    ],
+    sideEffects: [
+      { name: "Náusea", severity: "common" },
+      { name: "Diarreia", severity: "common" },
+      { name: "Reações no local da injeção", severity: "common" },
+      { name: "Vômito", severity: "occasional" },
+      { name: "Dor abdominal", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Semanal / Quinzenal (em estudos)", dose: "15-30mg/semana ou 44mg a cada 2 semanas", notes: "Os estudos em MASH/NASH avaliaram esquemas semanais de 15mg e 30mg, além de regime quinzenal de 44mg, com titulação conforme tolerabilidade gastrointestinal e resposta hepática/metabólica." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~2-4 dias",
+    status: "trial",
+    statusLabel: "Fase 2b/3 de Estudos Clínicos",
+    references: [
+      "Loomba R et al., 2023. 'Randomized, Controlled Trial of the FGF21 Analogue Pegozafermin in NASH.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/37356033/' target='_blank'>[PubMed]</a>",
+      "Loomba R et al., 2023. 'Safety, pharmacokinetics, and pharmacodynamics of pegozafermin in patients with non-alcoholic steatohepatitis: a randomised, double-blind, placebo-controlled, phase 1b/2a multiple-ascending-dose study.' Lancet Gastroenterol Hepatol. <a href='https://pubmed.ncbi.nlm.nih.gov/36521501/' target='_blank'>[PubMed]</a>",
+      "Bhatt DL et al., 2023. 'The FGF21 analog pegozafermin in severe hypertriglyceridemia: a randomized phase 2 trial.' Nat Med. <a href='https://pubmed.ncbi.nlm.nih.gov/37355760/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "efruxifermin",
+    name: "Efruxifermin",
+    aka: "EFX, AKR-001",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Efruxifermin é um análogo de FGF21 ligado à fração Fc, desenvolvido para MASH/NASH, fibrose hepática e disfunção metabólica associada. Sua ação não depende de incretinas e combina melhora de sensibilidade à insulina, redução de gordura hepática, perda de peso e potencial antifibrótico. Em estudos clínicos, demonstrou taxas relevantes de resolução de MASH/NASH, melhora histológica e benefício mesmo em estágios avançados de doença hepática compensada.",
+    mechanism: "Ativa o eixo FGFR1c/beta-Klotho, mimetizando o FGF21 endógeno e modulando múltiplas vias metabólicas: aumenta oxidação de ácidos graxos, melhora a utilização periférica de glicose, reduz lipogênese hepática, diminui inflamação metabólica e pode atenuar sinalização pró-fibrótica no fígado. A fusão com Fc prolonga a meia-vida e permite administração semanal.",
+    benefits: [
+      "Redução acentuada da gordura hepática e melhora histológica em MASH/NASH",
+      "Potencial resolução de MASH/NASH com melhora de fibrose",
+      "Perda de peso e melhora da sensibilidade à insulina",
+      "Redução de triglicerídeos e melhora global do perfil metabólico",
+      "Dados promissores inclusive em cirrose compensada por MASH"
+    ],
+    sideEffects: [
+      { name: "Náusea", severity: "common" },
+      { name: "Diarreia", severity: "common" },
+      { name: "Reações no local da injeção", severity: "common" },
+      { name: "Vômito", severity: "occasional" },
+      { name: "Dor abdominal", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Semanal (em estudos)", dose: "28-50mg/semana", notes: "Ensaios clínicos de Fase 2 avaliaram doses semanais de 28mg, 50mg e esquemas relacionados, com escalonamento conforme tolerabilidade e objetivos hepáticos/metabólicos." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~3-5 dias",
+    status: "trial",
+    statusLabel: "Fase 2b/3 de Estudos Clínicos",
+    references: [
+      "Harrison SA et al., 2021. 'Efruxifermin in non-alcoholic steatohepatitis: a randomized, double-blind, placebo-controlled, phase 2a trial.' Nat Med. <a href='https://pubmed.ncbi.nlm.nih.gov/34239138/' target='_blank'>[PubMed]</a>",
+      "Harrison SA et al., 2023. 'Safety and efficacy of once-weekly efruxifermin versus placebo in non-alcoholic steatohepatitis (HARMONY): a multicentre, randomised, double-blind, placebo-controlled, phase 2b trial.' Lancet Gastroenterol Hepatol. <a href='https://pubmed.ncbi.nlm.nih.gov/37802088/' target='_blank'>[PubMed]</a>",
+      "Noureddin M et al., 2025. 'Efruxifermin in Compensated Liver Cirrhosis Caused by MASH.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/40341827/' target='_blank'>[PubMed]</a>"
+    ]
+  },
 
   // =============================================
   // CATEGORIA: HORMÔNIO DO CRESCIMENTO (growth-hormone)
   // =============================================
+  {
+    id: "vosoritide",
+    name: "Vosoritide",
+    aka: "Voxzogo",
+    category: "growth-hormone",
+    categoryLabel: "Hormônio do Crescimento",
+    description: "Vosoritide é um análogo do peptídeo natriurético tipo C (CNP) aprovado para o tratamento da acondroplasia em crianças com cartilagem de crescimento aberta. Embora não seja um secretagogo de GH, é um peptídeo promotor de crescimento com ação direta na placa epifisária, restaurando a ossificação endocondral comprometida pela hiperativação do FGFR3. Representa uma abordagem molecular específica para crescimento linear, distinta da terapia com GH.",
+    mechanism: "Liga-se ao receptor NPR-B/NPR2 em condrócitos da placa de crescimento, aumentando cGMP intracelular e antagonizando a sinalização excessiva do FGFR3 típica da acondroplasia. Isso restaura proliferação e diferenciação condrocitária, melhora a ossificação endocondral e aumenta a velocidade de crescimento linear.",
+    benefits: [
+      "Aumento clinicamente significativo da velocidade anual de crescimento",
+      "Atua na fisiopatologia central da acondroplasia, não apenas como estímulo inespecífico",
+      "Pode beneficiar crianças tratadas precocemente durante a fase de crescimento ativo",
+      "Administração diária com perfil de segurança geralmente manejável",
+      "Primeira terapia peptídica direcionada aprovada para acondroplasia"
+    ],
+    sideEffects: [
+      { name: "Reações no local da injeção", severity: "common" },
+      { name: "Vômito", severity: "common" },
+      { name: "Hipotensão transitória", severity: "occasional" },
+      { name: "Tontura", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Diário", dose: "15mcg/kg/dia", notes: "Dose subcutânea diária baseada em peso corporal, com ajuste periódico conforme o crescimento da criança. Indicado enquanto a cartilagem de crescimento permanecer aberta." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~22-27 minutos",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Savarirayan R et al., 2020. 'Once-daily, subcutaneous vosoritide therapy in children with achondroplasia: a randomised, double-blind, phase 3, placebo-controlled, multicentre trial.' Lancet. <a href='https://pubmed.ncbi.nlm.nih.gov/32891212/' target='_blank'>[PubMed]</a>",
+      "Savarirayan R et al., 2024. 'Vosoritide therapy in children with achondroplasia aged 3-59 months: a multinational, randomised, double-blind, placebo-controlled, phase 2 trial.' Lancet Child Adolesc Health. <a href='https://pubmed.ncbi.nlm.nih.gov/37984383/' target='_blank'>[PubMed]</a>",
+      "Duggan S, 2021. 'Vosoritide: First Approval.' Drugs. <a href='https://pubmed.ncbi.nlm.nih.gov/34694597/' target='_blank'>[PubMed]</a>"
+    ]
+  },
   {
     id: "hgh",
     name: "HGH (Hormônio do Crescimento Humano)",
