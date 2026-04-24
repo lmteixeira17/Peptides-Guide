@@ -18,8 +18,9 @@ Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoe
 - **Framework:** Django 4.2+ com Gunicorn (2 workers)
 - **Banco de dados:** PostgreSQL 16-alpine (SQLite em dev/testes)
 - **Static files:** WhiteNoise
+- **Cache:** LocMemCache em producao para paginas publicas/API estaticas por 5-60 min
 - **Deploy:** Docker (multi-stage build)
-- **Testes:** pytest + pytest-django + pytest-playwright (180 backend/SEO + 6 E2E browser)
+- **Testes:** pytest + pytest-django + pytest-playwright (181 backend/SEO + 6 E2E browser)
 
 ### Frontend (JavaScript puro)
 - **Stack:** HTML5 + CSS3 + JavaScript puro (ES5) — zero mudancas no frontend
@@ -52,7 +53,7 @@ _Peptides/
 │   ├── urls.py                    # / e /health/
 │   ├── admin.py                   # Admin com TabularInlines para CRUD
 │   ├── serializers.py             # Converte modelos → JSON (camelCase, formato JS)
-│   ├── tests.py                   # Suite backend/SEO/dados (180 testes)
+│   ├── tests.py                   # Suite backend/SEO/dados (181 testes)
 │   ├── context_processors.py      # analytics() - GA4 measurement ID
 │   └── management/
 │       └── commands/
@@ -247,6 +248,16 @@ nginx-proxy (nginx:alpine) → porta 80/443
 
 ## SEO e Analytics
 
+## Performance
+
+- **Assets estaticos:** WhiteNoise gera arquivos com hash e `Cache-Control: public, max-age=315360000, immutable` para CSS/JS/favicon em producao.
+- **Compressao:** Cloudflare/WhiteNoise entregam Brotli/Gzip para HTML, JSON, CSS e JS quando o cliente envia `Accept-Encoding`.
+- **Cache server-side:** Views publicas quase estaticas usam cache apenas em producao (`DEBUG=False`): homepage/detalhes/categorias/sobre/glossario por 5 min; API, robots, sitemap e llms.txt por 60 min.
+- **Consultas:** Homepage pre-carrega relacoes usadas no `<noscript>` e evita `count()` duplicado, mantendo consulta local limitada a ate 8 queries.
+- **Payload principal:** A homepage preserva conteudo SEO completo em `<noscript>`; por isso e a maior pagina. O frontend carrega o catalogo estruturado via `/api/peptides.json` para manter o HTML inicial menor do que dados JS inline completos.
+
+---
+
 ### Dominio e CDN
 - **Dominio:** `guiadepeptideos.com.br` (registrado via Registro.br)
 - **DNS/CDN:** Cloudflare (zone ID: `25b7723d5eddebf566bfaffd7316cdbe`)
@@ -348,7 +359,7 @@ Body: {"url":"https://guiadepeptideos.com.br/peptideos/semaglutide/","type":"URL
 
 ### Configuracao
 - **Framework:** pytest + pytest-django + pytest-playwright
-- **Arquivos:** `core/tests.py` (180 testes backend/SEO/dados) + `tests/e2e/test_frontend.py` (6 testes browser)
+- **Arquivos:** `core/tests.py` (181 testes backend/SEO/dados) + `tests/e2e/test_frontend.py` (6 testes browser)
 - **Config:** `pytest.ini` (DJANGO_SETTINGS_MODULE = peptides_project.settings)
 - **Banco de testes:** SQLite in-memory (automatico, sem necessidade de PostgreSQL)
 - **Browser E2E:** Playwright Chromium para fluxos reais do frontend (busca, filtros, modais, deep links, navegacao stack→peptideo e mobile)
@@ -376,7 +387,7 @@ python -m pytest core/tests.py::TestRealDataFiles -v
 python -m pytest core/tests.py --cov=core -v
 ```
 
-### Categorias de Testes (186 total: 180 backend/SEO + 6 E2E browser)
+### Categorias de Testes (187 total: 181 backend/SEO + 6 E2E browser)
 
 | Categoria | Classe de Teste | Qtd | O que testa |
 |-----------|----------------|-----|-------------|
@@ -390,7 +401,7 @@ python -m pytest core/tests.py --cov=core -v
 | | TestStackReferenceModel | 1 | Cascade delete |
 | **Serializers** | TestSerializePeptide | 9 | Campos basicos, camelCase, benefits, sideEffects, dosage, refs HTML, JSON serializable, empty, keys |
 | | TestSerializeStack | 7 | Campos, camelCase, peptides, orphan peptide, refs, keys, JSON |
-| **Views** | TestIndexView | 10 | 200 OK, variaveis JS, particao, JSON valido, stacks, DB vazio, static refs, HTML, banner, unicode |
+| **Views** | TestIndexView | 11 | 200 OK, variaveis JS, particao, JSON valido, stacks, DB vazio, static refs, HTML, banner, unicode, queries limitadas |
 | | TestHealthView | 3 | 200 OK, Content-Type JSON, status ok |
 | **Admin** | TestAdminRegistration | 10 | Paginas acessiveis, list_display, filters, search, inlines, change pages |
 | **Parser JS** | TestJsToJson | 14 | Array simples, var declaration, comentarios, chaves, trailing commas, escaped quotes, HTML, nested, multiplos objetos, complexo, URLs, colons |

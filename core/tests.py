@@ -18,7 +18,9 @@ from pathlib import Path
 import pytest
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import User
+from django.db import connection
 from django.test import Client, TestCase, override_settings
+from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 
 from core.admin import PeptideAdmin, StackAdmin
@@ -670,6 +672,13 @@ class TestIndexView:
         content = response.content.decode()
 
         assert 'stack-test-stack' in content
+
+    def test_index_view_uses_bounded_queries(self, client, peptide_with_relations, stack_with_relations):
+        with CaptureQueriesContext(connection) as queries:
+            response = client.get('/')
+
+        assert response.status_code == 200
+        assert len(queries) <= 8
 
     @override_settings(FORCE_SCRIPT_NAME='/peptides')
     def test_api_bootstrap_is_force_script_name_agnostic(self, client, db):
