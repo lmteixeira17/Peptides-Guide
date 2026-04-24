@@ -43,13 +43,6 @@
         gtag('config', '{{ ga4_id }}');
     </script>
     {% endif %}
-
-    window.peptidesApiCandidates = [
-      "/api/peptides.json",
-      "/peptides/api/peptides.json",
-      "https://guiadepeptideos.com.br/api/peptides.json",
-      "https://mlt.com.br/peptides/api/peptides.json"
-    ];
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -412,7 +405,13 @@
     </footer>
 
     <script>
-    window.peptidesApiUrl = "{% url 'peptides_api' %}";
+    window.peptidesApiCandidates = [
+      "{% url 'peptides_api' %}",
+      "/api/peptides.json",
+      "/peptides/api/peptides.json",
+      "https://guiadepeptideos.com.br/api/peptides.json",
+      "https://mlt.com.br/peptides/api/peptides.json"
+    ];
     </script>
     <script src="{% static 'core/app.js' %}"></script>
 </body>

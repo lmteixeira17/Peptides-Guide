@@ -92,10 +92,6 @@ function buildApiCandidates() {
     addApiCandidate(candidates, "https://guiadepeptideos.com.br/api/peptides.json");
     addApiCandidate(candidates, "https://mlt.com.br/peptides/api/peptides.json");
 
-    if (window.peptidesApiUrl) {
-        addApiCandidate(candidates, window.peptidesApiUrl);
-    }
-
     return candidates;
 }
 

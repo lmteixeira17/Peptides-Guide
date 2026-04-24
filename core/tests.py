@@ -638,9 +638,16 @@ class TestIndexView:
         content = response.content.decode()
 
         assert 'window.peptidesApiCandidates' in content
+        assert content.count('window.peptidesApiCandidates') == 1
+        assert 'window.peptidesApiUrl =' not in content
         assert '/api/peptides.json' in content
         assert '/peptides/api/peptides.json' in content
         assert 'https://guiadepeptideos.com.br/api/peptides.json' in content
+        bootstrap_pos = content.find('window.peptidesApiCandidates')
+        app_script_pos = content.find('<script src="', bootstrap_pos)
+        assert bootstrap_pos != -1
+        assert app_script_pos != -1
+        assert bootstrap_pos < app_script_pos
 
     def test_noscript_contains_seeded_peptide_ids(self, client, peptide_with_relations, second_peptide):
         response = client.get('/')
@@ -656,6 +663,7 @@ class TestIndexView:
         assert 'var peptidesPart1' not in content
         assert 'var peptideStacks' not in content
         assert 'window.peptidesApiCandidates' in content
+        assert 'window.peptidesApiUrl =' not in content
 
     def test_noscript_contains_stack_ids(self, client, stack_with_relations):
         response = client.get('/')
@@ -669,6 +677,7 @@ class TestIndexView:
         content = response.content.decode()
 
         assert 'window.peptidesApiCandidates' in content
+        assert 'window.peptidesApiUrl =' not in content
         assert '/api/peptides.json' in content
         assert '/peptides/api/peptides.json' in content
 
@@ -678,12 +687,14 @@ class TestIndexView:
         assert response.status_code == 200
         content = response.content.decode()
         assert 'window.peptidesApiCandidates' in content
+        assert 'window.peptidesApiUrl =' not in content
 
     def test_frontend_has_multi_endpoint_api_fallbacks(self):
         app_js = (Path(__file__).resolve().parent.parent / 'static' / 'core' / 'app.js').read_text(encoding='utf-8')
 
         assert 'function buildApiCandidates()' in app_js
         assert 'function loadDataFromCandidates(candidates, index)' in app_js
+        assert 'window.peptidesApiUrl' not in app_js
         assert 'https://guiadepeptideos.com.br/api/peptides.json' in app_js
         assert 'https://mlt.com.br/peptides/api/peptides.json' in app_js
 
