@@ -1609,7 +1609,7 @@ class TestRealDataFiles:
 
     def test_stacks_parses_correctly(self):
         data = self._parse_file('stacks.js')
-        assert len(data) == 41
+        assert len(data) == 44
 
     def test_total_peptides(self):
         total = sum(
@@ -1701,7 +1701,7 @@ class TestRealDataFiles:
             total += sum(len(p.get('references', [])) for p in data)
         stacks = self._parse_file('stacks.js')
         total += sum(len(s.get('references', [])) for s in stacks)
-        assert total == 297, f'Expected 297 references, got {total}'
+        assert total == 306, f'Expected 306 references, got {total}'
 
     def test_full_seed_with_real_data(self):
         """Run the seed command with actual JS files and verify counts."""
@@ -1709,7 +1709,7 @@ class TestRealDataFiles:
         call_command('seed_peptides', data_dir=self.DATA_DIR, verbosity=0)
 
         assert Peptide.objects.count() == 113
-        assert Stack.objects.count() == 41
+        assert Stack.objects.count() == 44
         assert PeptideReference.objects.count() + StackReference.objects.count() > 0
 
 

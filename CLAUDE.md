@@ -2,7 +2,7 @@
 
 ## Visao Geral do Projeto
 
-Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoes detalhadas sobre 113 peptideos individuais e 41 combinacoes (stacks) recomendadas, com dados baseados em estudos cientificos publicados.
+Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoes detalhadas sobre 113 peptideos individuais e 44 combinacoes (stacks) recomendadas, com dados baseados em estudos cientificos publicados.
 
 **Idioma do conteudo:** Portugues (pt-BR)
 **Publico-alvo:** Profissionais de saude e pesquisadores
@@ -74,7 +74,7 @@ _Peptides/
 ├── data1.js                       # 40 peptideos (backup/fonte para seed)
 ├── data2.js                       # 37 peptideos (backup/fonte para seed)
 ├── data3.js                       # 36 peptideos (backup/fonte para seed)
-├── stacks.js                      # 41 combinacoes (backup/fonte para seed)
+├── stacks.js                      # 44 combinacoes (backup/fonte para seed)
 ├── manage.py                      # Django CLI
 ├── requirements.txt               # Django, gunicorn, whitenoise, psycopg2-binary
 ├── pytest.ini                     # Configuracao pytest
@@ -253,7 +253,7 @@ nginx-proxy (nginx:alpine) → porta 80/443
 
 ### Endpoints SEO
 - `/robots.txt` - Allow todos exceto /admin/ e /health/, permite AI bots (GPTBot, ClaudeBot, PerplexityBot)
-- `/sitemap.xml` - 168 URLs com lastmod (main + sobre + glossario + 11 categorias + 113 peptideos + 41 stacks)
+- `/sitemap.xml` - 171 URLs com lastmod (main + sobre + glossario + 11 categorias + 113 peptideos + 44 stacks)
 - `/llms.txt` - Inventario completo para IAs (ChatGPT, Claude, Perplexity)
 - `/favicon.svg` - Favicon SVG com emoji DNA
 - `/peptideos/<slug>/` - Pagina individual por peptideo (SEO-friendly)
@@ -388,7 +388,7 @@ python -m pytest core/tests.py --cov=core -v
 | **Integracao** | TestEndToEndFlow | 2 | Seed→render, logica de particao (11 categorias) |
 | **URLs** | TestURLRouting | 3 | Resolve index, health, admin |
 | **SEO** | TestSEOEndpoints | 32 | robots.txt, sitemap.xml, llms.txt, detail pages, 404s, schemas, og:image, noscript, categorias, glossario, sobre, API JSON, CORS, footer nav, CSS/JS refs |
-| **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 113 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 297 refs, seed completo |
+| **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 113 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 306 refs, seed completo |
 | **Deploy Config** | TestDeploymentConfig | 4 | ALLOWED_HOSTS (ambos dominios), FORCE_SCRIPT_NAME, docker-compose.yml, nginx static rewrite (SSH) |
 | **Producao** | TestProductionSite | 17 | Homepage, CSS/JS loads, favicon, og-image, todas as paginas, HTTPS redirect, www redirect, detail page CSS |
 
@@ -457,7 +457,7 @@ Todas as referencias devem incluir um link PubMed clicavel:
 - `target='_blank'` e obrigatorio em todos os links
 - PMID deve ser um numero valido do PubMed
 - Toda referencia DEVE ter um link PubMed verificavel
-- Total atual: 297 referencias com links PubMed (69 em data1 + 55 em data2 + 50 em data3 + 123 em stacks)
+- Total atual: 306 referencias com links PubMed (69 em data1 + 55 em data2 + 50 em data3 + 132 em stacks)
 
 ---
 
