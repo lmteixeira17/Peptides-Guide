@@ -253,8 +253,10 @@ nginx-proxy (nginx:alpine) → porta 80/443
 - **Assets estaticos:** WhiteNoise gera arquivos com hash e `Cache-Control: public, max-age=315360000, immutable` para CSS/JS/favicon em producao.
 - **Compressao:** Cloudflare/WhiteNoise entregam Brotli/Gzip para HTML, JSON, CSS e JS quando o cliente envia `Accept-Encoding`.
 - **Cache server-side:** Views publicas quase estaticas usam cache apenas em producao (`DEBUG=False`): homepage/detalhes/categorias/sobre/glossario por 5 min; API, robots, sitemap e llms.txt por 60 min.
+- **Cache Cloudflare:** Cache Rules na zona `guiadepeptideos.com.br` armazenam na borda: `/api/peptides.json`, `/sitemap.xml`, `/robots.txt`, `/llms.txt` por 1h; HTML publico (`/`, `/sobre/`, `/glossario/`, `/peptideos/*`, `/combinacoes/*`, `/categorias/*`) por 5 min. Nao cachear `/admin/` ou `/health/`.
 - **Consultas:** Homepage pre-carrega relacoes usadas no `<noscript>` e evita `count()` duplicado, mantendo consulta local limitada a ate 8 queries.
 - **Payload principal:** A homepage preserva conteudo SEO completo em `<noscript>`; por isso e a maior pagina. O frontend carrega o catalogo estruturado via `/api/peptides.json` para manter o HTML inicial menor do que dados JS inline completos.
+- **Baseline pos-cache (2026-04-24):** 171 URLs do sitemap retornaram 200; apos aquecer a borda, `cf-cache-status=HIT` em 171/171, media ~0,120s, p50 ~0,099s, p95 ~0,226s.
 
 ---
 
@@ -264,6 +266,7 @@ nginx-proxy (nginx:alpine) → porta 80/443
 - **Nameservers:** `rafe.ns.cloudflare.com`, `trace.ns.cloudflare.com`
 - **SSL:** Flexible (Cloudflare emite certificado, proxy HTTP ao servidor)
 - **Redirects:** Always HTTPS ativo + www→raiz (301 via page rule)
+- **Performance Cloudflare:** Brotli ON, HTTP/3 ON, Early Hints ON, Rocket Loader OFF. Auto Minify mantido OFF para evitar risco de alterar JS/HTML; os assets ja sao pequenos e comprimidos.
 
 ### Endpoints SEO
 - `/robots.txt` - Allow todos exceto /admin/ e /health/, permite AI bots (GPTBot, ClaudeBot, PerplexityBot)
