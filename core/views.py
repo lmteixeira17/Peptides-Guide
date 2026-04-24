@@ -1,10 +1,36 @@
 import os
+import sys
+from functools import wraps
 
+from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.views.decorators.cache import cache_page
 
 from .models import Peptide, PeptideReference, Stack, StackReference
 from .serializers import serialize_peptide, serialize_stack
+
+
+def production_cache_page(timeout):
+    """Cache public, static-like views only in production.
+
+    Tests and local development keep uncached responses so fixture-specific
+    assertions do not leak across test cases.
+    """
+    def decorator(view_func):
+        cached_view = cache_page(timeout)(view_func)
+
+        @wraps(view_func)
+        def wrapped(request, *args, **kwargs):
+            running_tests = 'pytest' in sys.modules or any(
+                'pytest' in arg or 'py.test' in arg for arg in sys.argv
+            )
+            if settings.DEBUG or running_tests:
+                return view_func(request, *args, **kwargs)
+            return cached_view(request, *args, **kwargs)
+
+        return wrapped
+    return decorator
 
 
 def _base_context():
@@ -23,21 +49,22 @@ def _site_counts(peptide_count=None, stack_count=None):
     }
 
 
+@production_cache_page(300)
 def index_view(request):
     """Serve the main peptides page with data from PostgreSQL."""
-    peptides = Peptide.objects.prefetch_related(
+    peptides = list(Peptide.objects.prefetch_related(
         'benefits', 'side_effects', 'references'
-    ).order_by('order', 'name')
+    ).order_by('order', 'name'))
 
-    stacks = Stack.objects.prefetch_related(
+    stacks = list(Stack.objects.prefetch_related(
         'references'
-    ).order_by('order', 'name')
+    ).order_by('order', 'name'))
 
     context = {
         'peptides': peptides,
         'stacks': stacks,
     }
-    context.update(_site_counts(peptide_count=peptides.count(), stack_count=stacks.count()))
+    context.update(_site_counts(peptide_count=len(peptides), stack_count=len(stacks)))
     return render(request, 'index.html', context)
 
 
@@ -46,6 +73,7 @@ def health_view(request):
     return JsonResponse({'status': 'ok'})
 
 
+@production_cache_page(300)
 def peptide_detail_view(request, slug):
     """SEO-friendly individual peptide detail page."""
     peptide = get_object_or_404(
@@ -62,6 +90,7 @@ def peptide_detail_view(request, slug):
     })
 
 
+@production_cache_page(300)
 def stack_detail_view(request, slug):
     """SEO-friendly individual stack detail page."""
     stack = get_object_or_404(
@@ -147,6 +176,7 @@ CATEGORY_META = {
 }
 
 
+@production_cache_page(300)
 def category_view(request, slug):
     """SEO landing page for a peptide category."""
     if slug not in CATEGORY_META:
@@ -163,16 +193,19 @@ def category_view(request, slug):
     })
 
 
+@production_cache_page(300)
 def glossario_view(request):
     """Glossary of technical terms for SEO."""
     return render(request, 'glossario.html')
 
 
+@production_cache_page(300)
 def sobre_view(request):
     """About page with E-E-A-T signals."""
     return render(request, 'sobre.html', _site_counts())
 
 
+@production_cache_page(3600)
 def peptides_api(request):
     """Public JSON API endpoint for AI/LLM consumption."""
     peptides = Peptide.objects.prefetch_related(
@@ -195,6 +228,7 @@ def peptides_api(request):
     return response
 
 
+@production_cache_page(3600)
 def robots_txt(request):
     """Serve robots.txt for search engine crawlers and AI bots."""
     lines = [
@@ -236,6 +270,7 @@ def robots_txt(request):
     return HttpResponse('\n'.join(lines), content_type='text/plain')
 
 
+@production_cache_page(3600)
 def sitemap_xml(request):
     """Generate sitemap.xml with all peptide, stack, category, and static URLs."""
     from datetime import date
@@ -282,6 +317,7 @@ def sitemap_xml(request):
     return HttpResponse(xml, content_type='application/xml')
 
 
+@production_cache_page(3600)
 def llms_txt(request):
     """Serve llms.txt for AI/LLM discoverability (https://llmstxt.org spec)."""
     peptides = Peptide.objects.order_by('category', 'order', 'name')

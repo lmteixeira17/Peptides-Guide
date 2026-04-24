@@ -120,6 +120,16 @@ WHITENOISE_USE_FINDERS = DEBUG or _running_tests
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Lightweight in-process cache for static-like public pages/API responses.
+# Production runs Gunicorn with a small worker count, so LocMem keeps common
+# catalogue pages fast without adding Redis or another infrastructure service.
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'peptides-guide-cache',
+    }
+}
+
 # Cookies — unique names to avoid conflicts with other Django apps on the same domain
 SESSION_COOKIE_NAME = 'peptides_sessionid'
 CSRF_COOKIE_NAME = 'peptides_csrftoken'
