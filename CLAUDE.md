@@ -19,7 +19,7 @@ Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoe
 - **Banco de dados:** PostgreSQL 16-alpine (SQLite em dev/testes)
 - **Static files:** WhiteNoise
 - **Deploy:** Docker (multi-stage build)
-- **Testes:** pytest + pytest-django (176 testes)
+- **Testes:** pytest + pytest-django + pytest-playwright (180 backend/SEO + 6 E2E browser)
 
 ### Frontend (JavaScript puro)
 - **Stack:** HTML5 + CSS3 + JavaScript puro (ES5) — zero mudancas no frontend
@@ -52,11 +52,14 @@ _Peptides/
 │   ├── urls.py                    # / e /health/
 │   ├── admin.py                   # Admin com TabularInlines para CRUD
 │   ├── serializers.py             # Converte modelos → JSON (camelCase, formato JS)
-│   ├── tests.py                   # Suite de testes completa (176 testes)
+│   ├── tests.py                   # Suite backend/SEO/dados (180 testes)
 │   ├── context_processors.py      # analytics() - GA4 measurement ID
 │   └── management/
 │       └── commands/
 │           └── seed_peptides.py   # Importa dados dos arquivos JS para o banco
+├── tests/
+│   └── e2e/
+│       └── test_frontend.py       # Testes E2E browser com Playwright (6 testes)
 ├── templates/
 │   ├── index.html                 # Template principal (SEO, JSON-LD, FAQ, noscript)
 │   ├── peptide_detail.html        # Pagina individual de peptideo (Drug schema)
@@ -344,15 +347,22 @@ Body: {"url":"https://guiadepeptideos.com.br/peptideos/semaglutide/","type":"URL
 ## Testes Automatizados
 
 ### Configuracao
-- **Framework:** pytest + pytest-django
-- **Arquivo:** `core/tests.py` (176 testes)
+- **Framework:** pytest + pytest-django + pytest-playwright
+- **Arquivos:** `core/tests.py` (180 testes backend/SEO/dados) + `tests/e2e/test_frontend.py` (6 testes browser)
 - **Config:** `pytest.ini` (DJANGO_SETTINGS_MODULE = peptides_project.settings)
 - **Banco de testes:** SQLite in-memory (automatico, sem necessidade de PostgreSQL)
+- **Browser E2E:** Playwright Chromium para fluxos reais do frontend (busca, filtros, modais, deep links, navegacao stack→peptideo e mobile)
 
 ### Como Executar
 ```bash
-# Todos os testes
+# Suite backend/SEO/dados
 python -m pytest core/tests.py -v
+
+# Testes E2E browser (requer Chromium instalado: python -m playwright install chromium)
+python -m pytest tests/e2e -v
+
+# Todas as suites locais
+python -m pytest core/tests.py tests/e2e -v
 
 # Testes especificos por classe
 python -m pytest core/tests.py::TestPeptideModel -v
@@ -366,7 +376,7 @@ python -m pytest core/tests.py::TestRealDataFiles -v
 python -m pytest core/tests.py --cov=core -v
 ```
 
-### Categorias de Testes (176 total)
+### Categorias de Testes (186 total: 180 backend/SEO + 6 E2E browser)
 
 | Categoria | Classe de Teste | Qtd | O que testa |
 |-----------|----------------|-----|-------------|
@@ -391,6 +401,7 @@ python -m pytest core/tests.py --cov=core -v
 | **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 113 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 306 refs, seed completo |
 | **Deploy Config** | TestDeploymentConfig | 4 | ALLOWED_HOSTS (ambos dominios), FORCE_SCRIPT_NAME, docker-compose.yml, nginx static rewrite (SSH) |
 | **Producao** | TestProductionSite | 17 | Homepage, CSS/JS loads, favicon, og-image, todas as paginas, HTTPS redirect, www redirect, detail page CSS |
+| **Browser E2E** | tests/e2e/test_frontend.py | 6 | Busca e filtros reais, modais, stacks novos, deep links, navegacao stack→peptideo, paginas detalhe e viewport mobile |
 
 ### Dados Reais vs Dados de Teste
 - **Fixtures (pytest):** criam objetos minimos para testes isolados
