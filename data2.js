@@ -37,6 +37,41 @@ var peptidesPart2 = [
     ]
   },
   {
+    id: "teduglutide",
+    name: "Teduglutide",
+    aka: "Gattex, Revestive",
+    category: "healing",
+    categoryLabel: "Cura e Recuperação",
+    description: "Teduglutide é um análogo do peptídeo semelhante ao glucagon tipo 2 (GLP-2) aprovado para síndrome do intestino curto com insuficiência intestinal em adultos e crianças. Atua promovendo adaptação intestinal, aumento da absorção e redução da dependência de nutrição parenteral. É um dos exemplos mais sólidos de peptídeo terapêutico com ação regenerativa real na mucosa gastrointestinal humana.",
+    mechanism: "Liga-se ao receptor de GLP-2 em células subepiteliais intestinais e circuitos entéricos, promovendo aumento da altura vilositária e profundidade de criptas, maior fluxo sanguíneo intestinal, redução do esvaziamento gástrico e melhora da integridade mucosa. O resultado é maior capacidade absortiva de água, eletrólitos e nutrientes, favorecendo a adaptação intestinal após ressecções extensas.",
+    benefits: [
+      "Redução da necessidade de nutrição e suporte parenteral",
+      "Promoção da adaptação intestinal com melhora da absorção",
+      "Benefício comprovado em adultos e em pacientes pediátricos",
+      "Aumento da autonomia clínica em síndrome do intestino curto",
+      "Exemplo validado de regeneração funcional da mucosa gastrointestinal"
+    ],
+    sideEffects: [
+      { name: "Dor abdominal", severity: "common" },
+      { name: "Distensão abdominal", severity: "common" },
+      { name: "Náusea", severity: "common" },
+      { name: "Reações no local da injeção", severity: "occasional" },
+      { name: "Obstrução intestinal", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "Diário", dose: "0.05mg/kg/dia", notes: "Dose subcutânea diária baseada em peso corporal. Em pacientes com síndrome do intestino curto, monitorar hidratação, eletrólitos, função hepática e necessidade de ajuste do suporte parenteral conforme a resposta." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~2 horas",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Jeppesen PB et al., 2012. 'Teduglutide reduces need for parenteral support among patients with short bowel syndrome with intestinal failure.' Gastroenterology. <a href='https://pubmed.ncbi.nlm.nih.gov/22982184/' target='_blank'>[PubMed]</a>",
+      "Kocoshis SA et al., 2020. 'Safety and Efficacy of Teduglutide in Pediatric Patients With Intestinal Failure due to Short Bowel Syndrome: A 24-Week, Phase III Study.' JPEN J Parenter Enteral Nutr. <a href='https://pubmed.ncbi.nlm.nih.gov/31495952/' target='_blank'>[PubMed]</a>",
+      "Fifi A et al., 2023. 'Effects of Teduglutide on Diarrhea in Pediatric Patients with Short Bowel Syndrome-Associated Intestinal Failure.' J Pediatr Gastroenterol Nutr. <a href='https://pubmed.ncbi.nlm.nih.gov/37889619/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
     id: "tb-500",
     name: "TB-500",
     aka: "Thymosin Beta 4 Acetate",

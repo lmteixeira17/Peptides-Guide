@@ -3,7 +3,7 @@ import os
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 
-from .models import Peptide, Stack
+from .models import Peptide, PeptideReference, Stack, StackReference
 from .serializers import serialize_peptide, serialize_stack
 
 
@@ -11,6 +11,15 @@ def _base_context():
     """Common context available to all pages (GA4, etc)."""
     return {
         'ga4_id': os.environ.get('GA4_MEASUREMENT_ID', ''),
+    }
+
+
+def _site_counts(peptide_count=None, stack_count=None):
+    """Return current site-wide object counts for dynamic copy/SEO."""
+    return {
+        'peptide_count': peptide_count if peptide_count is not None else Peptide.objects.count(),
+        'stack_count': stack_count if stack_count is not None else Stack.objects.count(),
+        'reference_count': PeptideReference.objects.count() + StackReference.objects.count(),
     }
 
 
@@ -24,10 +33,12 @@ def index_view(request):
         'references'
     ).order_by('order', 'name')
 
-    return render(request, 'index.html', {
+    context = {
         'peptides': peptides,
         'stacks': stacks,
-    })
+    }
+    context.update(_site_counts(peptide_count=peptides.count(), stack_count=stacks.count()))
+    return render(request, 'index.html', context)
 
 
 def health_view(request):
@@ -159,12 +170,7 @@ def glossario_view(request):
 
 def sobre_view(request):
     """About page with E-E-A-T signals."""
-    peptide_count = Peptide.objects.count()
-    stack_count = Stack.objects.count()
-    return render(request, 'sobre.html', {
-        'peptide_count': peptide_count,
-        'stack_count': stack_count,
-    })
+    return render(request, 'sobre.html', _site_counts())
 
 
 def peptides_api(request):
@@ -280,11 +286,12 @@ def llms_txt(request):
     """Serve llms.txt for AI/LLM discoverability (https://llmstxt.org spec)."""
     peptides = Peptide.objects.order_by('category', 'order', 'name')
     stacks = Stack.objects.order_by('goal', 'order', 'name')
+    counts = _site_counts(peptide_count=peptides.count(), stack_count=stacks.count())
 
     lines = [
         '# Guia Completo de Peptideos',
         '',
-        '> Referencia cientifica independente sobre peptideos terapeuticos em portugues brasileiro, com 108 peptideos individuais, 41 combinacoes (stacks) recomendadas e 282 referencias PubMed verificaveis. Conteudo educacional para profissionais de saude e pesquisadores.',
+        '> Referencia cientifica independente sobre peptideos terapeuticos em portugues brasileiro, com ' + str(counts['peptide_count']) + ' peptideos individuais, ' + str(counts['stack_count']) + ' combinacoes (stacks) recomendadas e ' + str(counts['reference_count']) + ' referencias PubMed verificaveis. Conteudo educacional para profissionais de saude e pesquisadores.',
         '',
         '**Dominio:** https://guiadepeptideos.com.br/',
         '**Idioma:** Portugues (pt-BR)',

@@ -577,7 +577,7 @@ function closeModal() {
     history.replaceState(null, '', window.location.pathname);
     var metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
-        metaDesc.setAttribute('content', 'Guia cient\u00edfico com 108 pept\u00eddeos terap\u00eauticos e 41 combina\u00e7\u00f5es recomendadas. Dosagens, efeitos colaterais, mecanismos de a\u00e7\u00e3o e refer\u00eancias PubMed.');
+        metaDesc.setAttribute('content', window.defaultMetaDescription || 'Guia cient\u00edfico com pept\u00eddeos terap\u00eauticos, dosagens, efeitos colaterais, mecanismos de a\u00e7\u00e3o e refer\u00eancias PubMed.');
     }
 }
 

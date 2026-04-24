@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia Completo de Pept&iacute;deos - Refer&ecirc;ncia Cient&iacute;fica sobre Pept&iacute;deos Terap&ecirc;uticos</title>
-    <meta name="description" content="Guia cient&iacute;fico com 108 pept&iacute;deos terap&ecirc;uticos e 41 combina&ccedil;&otilde;es recomendadas. Dosagens, efeitos colaterais, mecanismos de a&ccedil;&atilde;o e refer&ecirc;ncias PubMed. Semaglutida, BPC-157, TB-500, GHK-Cu e mais.">
+    <meta name="description" content="Guia cient&iacute;fico com {{ peptide_count }} pept&iacute;deos terap&ecirc;uticos e {{ stack_count }} combina&ccedil;&otilde;es recomendadas. Dosagens, efeitos colaterais, mecanismos de a&ccedil;&atilde;o e {{ reference_count }} refer&ecirc;ncias PubMed. Semaglutida, BPC-157, TB-500, GHK-Cu e mais.">
     <meta name="keywords" content="pept&iacute;deos, peptides, semaglutida, tirzepatida, BPC-157, TB-500, GHK-Cu, ipamorelin, CJC-1295, tesamorelin, AOD-9604, epithalon, MOTS-c, pept&iacute;deos terap&ecirc;uticos, dosagem pept&iacute;deos, efeitos colaterais pept&iacute;deos, guia pept&iacute;deos, refer&ecirc;ncia cient&iacute;fica">
     <meta name="author" content="Guia de Pept&iacute;deos">
     <meta name="robots" content="index, follow">
@@ -14,19 +14,19 @@
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Guia Completo de Pept&iacute;deos - Refer&ecirc;ncia Cient&iacute;fica">
-    <meta property="og:description" content="108 pept&iacute;deos terap&ecirc;uticos com dosagens, efeitos colaterais e 282 refer&ecirc;ncias PubMed. Semaglutida, BPC-157, TB-500, GHK-Cu e 41 combina&ccedil;&otilde;es recomendadas.">
+    <meta property="og:description" content="{{ peptide_count }} pept&iacute;deos terap&ecirc;uticos com dosagens, efeitos colaterais e {{ reference_count }} refer&ecirc;ncias PubMed. Semaglutida, BPC-157, TB-500, GHK-Cu e {{ stack_count }} combina&ccedil;&otilde;es recomendadas.">
     <meta property="og:url" content="https://guiadepeptideos.com.br/">
     <meta property="og:site_name" content="Guia de Pept&iacute;deos">
     <meta property="og:locale" content="pt_BR">
     <meta property="og:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Guia Completo de Pept&iacute;deos - 108 pept&iacute;deos, 41 stacks, 282 refer&ecirc;ncias">
+    <meta property="og:image:alt" content="Guia Completo de Pept&iacute;deos - {{ peptide_count }} pept&iacute;deos, {{ stack_count }} stacks, {{ reference_count }} refer&ecirc;ncias">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Guia Completo de Pept&iacute;deos - Refer&ecirc;ncia Cient&iacute;fica">
-    <meta name="twitter:description" content="108 pept&iacute;deos terap&ecirc;uticos com dosagens, efeitos colaterais e 282 refer&ecirc;ncias PubMed.">
+    <meta name="twitter:description" content="{{ peptide_count }} pept&iacute;deos terap&ecirc;uticos com dosagens, efeitos colaterais e {{ reference_count }} refer&ecirc;ncias PubMed.">
     <meta name="twitter:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
 
     <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
@@ -63,7 +63,7 @@
           "@type": "MedicalWebPage",
           "name": "Guia Completo de Pept\u00eddeos Terap\u00eauticos",
           "url": "https://guiadepeptideos.com.br/",
-          "description": "Guia cient\u00edfico com 108 pept\u00eddeos terap\u00eauticos e 41 combina\u00e7\u00f5es recomendadas. Dosagens baseadas em estudos cl\u00ednicos, efeitos colaterais classificados por frequ\u00eancia e 282 refer\u00eancias PubMed verificadas.",
+          "description": "Guia cient\u00edfico com {{ peptide_count }} pept\u00eddeos terap\u00eauticos e {{ stack_count }} combina\u00e7\u00f5es recomendadas. Dosagens baseadas em estudos cl\u00ednicos, efeitos colaterais classificados por frequ\u00eancia e {{ reference_count }} refer\u00eancias PubMed verificadas.",
           "inLanguage": "pt-BR",
           "about": {
             "@type": "MedicalTherapy",
@@ -82,8 +82,8 @@
         {
           "@type": "ItemList",
           "name": "Pept\u00eddeos Terap\u00eauticos",
-          "description": "Lista de 108 pept\u00eddeos com informa\u00e7\u00f5es cient\u00edficas",
-          "numberOfItems": 108,
+          "description": "Lista de {{ peptide_count }} pept\u00eddeos com informa\u00e7\u00f5es cient\u00edficas",
+          "numberOfItems": {{ peptide_count }},
           "itemListElement": [
             {"@type": "ListItem", "position": 1, "name": "Semaglutida (Ozempic, Wegovy)", "url": "https://guiadepeptideos.com.br/#semaglutide"},
             {"@type": "ListItem", "position": 2, "name": "Tirzepatida (Mounjaro)", "url": "https://guiadepeptideos.com.br/#tirzepatide"},
@@ -177,7 +177,7 @@
               "name": "Posso combinar diferentes pept\u00eddeos (fazer um stack)?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Sim, existem combina\u00e7\u00f5es sin\u00e9rgicas bem documentadas como BPC-157+TB-500 (cicatriza\u00e7\u00e3o), CJC-1295+Ipamorelin (GH end\u00f3geno), Semaglutida+Metformina (perda de peso). Por\u00e9m, NUNCA misturar GHK-Cu com outros pept\u00eddeos, e sempre respeitar vias de administra\u00e7\u00e3o distintas. Este guia lista 41 combina\u00e7\u00f5es recomendadas com prot\u00f3colos completos."
+                "text": "Sim, existem combina\u00e7\u00f5es sin\u00e9rgicas bem documentadas como BPC-157+TB-500 (cicatriza\u00e7\u00e3o), CJC-1295+Ipamorelin (GH end\u00f3geno), Semaglutida+Metformina (perda de peso). Por\u00e9m, NUNCA misturar GHK-Cu com outros pept\u00eddeos, e sempre respeitar vias de administra\u00e7\u00e3o distintas. Este guia lista {{ stack_count }} combina\u00e7\u00f5es recomendadas com prot\u00f3colos completos."
               }
             },
             {
@@ -349,7 +349,7 @@
             </details>
             <details class="faq-item">
                 <summary>Posso combinar diferentes pept&iacute;deos (fazer um stack)?</summary>
-                <p>Sim, existem combina&ccedil;&otilde;es sin&eacute;rgicas bem documentadas como BPC-157+TB-500, CJC-1295+Ipamorelin, Semaglutida+Metformina. Por&eacute;m, NUNCA misturar GHK-Cu com outros pept&iacute;deos. Este guia lista 41 combina&ccedil;&otilde;es recomendadas.</p>
+                <p>Sim, existem combina&ccedil;&otilde;es sin&eacute;rgicas bem documentadas como BPC-157+TB-500, CJC-1295+Ipamorelin, Semaglutida+Metformina. Por&eacute;m, NUNCA misturar GHK-Cu com outros pept&iacute;deos. Este guia lista {{ stack_count }} combina&ccedil;&otilde;es recomendadas.</p>
             </details>
             <details class="faq-item">
                 <summary>Este guia substitui aconselhamento m&eacute;dico?</summary>
@@ -405,6 +405,7 @@
     </footer>
 
     <script>
+    window.defaultMetaDescription = "Guia cient\u00edfico com {{ peptide_count }} pept\u00eddeos terap\u00eauticos e {{ stack_count }} combina\u00e7\u00f5es recomendadas. Dosagens, efeitos colaterais, mecanismos de a\u00e7\u00e3o e {{ reference_count }} refer\u00eancias PubMed.";
     window.peptidesApiCandidates = [
       "{% url 'peptides_api' %}",
       "/api/peptides.json",

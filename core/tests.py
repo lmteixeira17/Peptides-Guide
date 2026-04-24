@@ -1597,11 +1597,11 @@ class TestRealDataFiles:
 
     def test_data1_parses_correctly(self):
         data = self._parse_file('data1.js')
-        assert len(data) == 36
+        assert len(data) == 40
 
     def test_data2_parses_correctly(self):
         data = self._parse_file('data2.js')
-        assert len(data) == 36
+        assert len(data) == 37
 
     def test_data3_parses_correctly(self):
         data = self._parse_file('data3.js')
@@ -1616,7 +1616,7 @@ class TestRealDataFiles:
             len(self._parse_file(f))
             for f in ['data1.js', 'data2.js', 'data3.js']
         )
-        assert total == 108
+        assert total == 113
 
     def test_all_peptides_have_required_fields(self):
         required_fields = [
@@ -1701,14 +1701,14 @@ class TestRealDataFiles:
             total += sum(len(p.get('references', [])) for p in data)
         stacks = self._parse_file('stacks.js')
         total += sum(len(s.get('references', [])) for s in stacks)
-        assert total == 282, f'Expected 282 references, got {total}'
+        assert total == 297, f'Expected 297 references, got {total}'
 
     def test_full_seed_with_real_data(self):
         """Run the seed command with actual JS files and verify counts."""
         from django.core.management import call_command
         call_command('seed_peptides', data_dir=self.DATA_DIR, verbosity=0)
 
-        assert Peptide.objects.count() == 108
+        assert Peptide.objects.count() == 113
         assert Stack.objects.count() == 41
         assert PeptideReference.objects.count() + StackReference.objects.count() > 0
 
