@@ -1360,6 +1360,136 @@ var peptideStacks = [
     ]
   },
   {
+    id: "metabolic-mash-fgf21",
+    name: "MASH/NASH - Eixo FGF21 + Prote\u00e7\u00e3o Hep\u00e1tica",
+    goal: "weight-loss",
+    goalLabel: "Perda de Peso",
+    level: "Avan\u00e7ado",
+    description: "Protocolo investigacional para doen\u00e7a hep\u00e1tica metab\u00f3lica (MASH/NASH), usando a nova classe de an\u00e1logos de FGF21 como eixo central. Pegozafermin e Efruxifermin t\u00eam dados de Fase 2 robustos em gordura hep\u00e1tica, resolu\u00e7\u00e3o de MASH/NASH e melhora de fibrose. O protocolo lista ambos como alternativas terap\u00eauticas da mesma classe — normalmente escolher UM, n\u00e3o combinar os dois.",
+    peptides: [
+      {
+        id: "pegozafermin",
+        name: "Pegozafermin",
+        role: "Alternativa FGF21 principal — melhora gordura hep\u00e1tica, triglicer\u00eddeos e sensibilidade \u00e0 insulina em MASH/NASH",
+        dose: "15-30mg/semana ou 44mg a cada 2 semanas",
+        timing: "SC semanal ou quinzenal conforme protocolo de estudo"
+      },
+      {
+        id: "efruxifermin",
+        name: "Efruxifermin",
+        role: "Alternativa FGF21 principal — redu\u00e7\u00e3o de gordura hep\u00e1tica, resolu\u00e7\u00e3o de MASH/NASH e potencial melhora de fibrose",
+        dose: "28-50mg/semana",
+        timing: "SC 1x por semana conforme protocolo de estudo"
+      },
+      {
+        id: "glutathione",
+        name: "Glutationa",
+        role: "Suporte antioxidante hep\u00e1tico — prote\u00e7\u00e3o contra estresse oxidativo associado \u00e0 MASH/NAFLD",
+        dose: "600-1200mg IV, 1-2x por semana",
+        timing: "IV em sess\u00f5es separadas, com profissional habilitado"
+      },
+      {
+        id: "nad-plus",
+        name: "NAD+",
+        role: "Suporte mitocondrial — otimiza metabolismo energ\u00e9tico hep\u00e1tico e fun\u00e7\u00e3o celular durante interven\u00e7\u00e3o metab\u00f3lica",
+        dose: "250-500mg IV, 1x por semana",
+        timing: "IV semanal, separado dos pept\u00eddeos SC"
+      }
+    ],
+    synergy: "FGF21 atua em f\u00edgado e tecido adiposo via FGFR1c/beta-Klotho, reduzindo lipog\u00eanese hep\u00e1tica, melhorando sensibilidade \u00e0 insulina, triglicer\u00eddeos e inflama\u00e7\u00e3o metab\u00f3lica. Pegozafermin e Efruxifermin s\u00e3o alternativas da mesma classe, n\u00e3o uma combina\u00e7\u00e3o obrigat\u00f3ria. Glutationa adiciona prote\u00e7\u00e3o antioxidante hepatocelular e NAD+ oferece suporte mitocondrial, abordando dano oxidativo e metabolismo energ\u00e9tico que acompanham MASH/NASH.",
+    application: "Escolher UM an\u00e1logo FGF21 (Pegozafermin OU Efruxifermin) — n\u00e3o combinar os dois rotineiramente por mecanismo sobreposto e aus\u00eancia de dados cl\u00ednicos da combina\u00e7\u00e3o. FGF21: SC em seringa pr\u00f3pria. Glutationa e NAD+: IV separados ou sequenciais em ambiente supervisionado. NUNCA misturar NAD+ ou Glutationa com pept\u00eddeos SC na mesma seringa.",
+    duration: "12-24 semanas, com acompanhamento de ALT, AST, GGT, perfil lip\u00eddico, glicemia/insulina e imagem hep\u00e1tica quando dispon\u00edvel",
+    warnings: "Pegozafermin e Efruxifermin ainda est\u00e3o em estudos cl\u00ednicos e n\u00e3o s\u00e3o aprovados para uso comercial amplo. N\u00e1usea, diarreia e rea\u00e7\u00f5es no local da inje\u00e7\u00e3o s\u00e3o comuns. N\u00e3o usar como substituto de avalia\u00e7\u00e3o hepatol\u00f3gica, elastografia, controle de diabetes, perda ponderal estruturada ou manejo de risco cardiovascular. Evitar combinar dois FGF21 sem estudo espec\u00edfico e supervis\u00e3o especializada.",
+    evidenceLevel: "Alto para os compostos FGF21 isolados em Fase 2 (Pegozafermin, Efruxifermin) / Moderado para Glutationa e NAD+ como suporte / Baixo para o protocolo combinado completo",
+    references: [
+      "Loomba R et al., 2023. 'Randomized, Controlled Trial of the FGF21 Analogue Pegozafermin in NASH.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/37356033/' target='_blank'>[PubMed]</a>",
+      "Harrison SA et al., 2023. 'Safety and efficacy of once-weekly efruxifermin versus placebo in non-alcoholic steatohepatitis (HARMONY): a multicentre, randomised, double-blind, placebo-controlled, phase 2b trial.' Lancet Gastroenterol Hepatol. <a href='https://pubmed.ncbi.nlm.nih.gov/37802088/' target='_blank'>[PubMed]</a>",
+      "Honda Y et al., 2017. 'Efficacy of glutathione for the treatment of nonalcoholic fatty liver disease.' BMC Gastroenterol. <a href='https://pubmed.ncbi.nlm.nih.gov/29110623/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "genetic-obesity-mc4r-support",
+    name: "Obesidade Gen\u00e9tica Rara - MC4R + Suporte Metab\u00f3lico",
+    goal: "weight-loss",
+    goalLabel: "Perda de Peso",
+    level: "Especializado",
+    description: "Protocolo especializado para obesidade monog\u00eanica rara com hiperfagia grave, centrado no Setmelanotide. Diferente de stacks comuns de perda de peso, este protocolo s\u00f3 faz sentido quando h\u00e1 diagn\u00f3stico gen\u00e9tico compat\u00edvel (POMC, PCSK1, LEPR ou s\u00edndrome de Bardet-Biedl) e acompanhamento por equipe especializada.",
+    peptides: [
+      {
+        id: "setmelanotide",
+        name: "Setmelanotide",
+        role: "Agente principal — agonista MC4R que restaura sinaliza\u00e7\u00e3o da via leptina-melanocortina e reduz hiperfagia genética",
+        dose: "1-3mg/dia SC conforme idade, peso e tolerabilidade",
+        timing: "Di\u00e1rio, mesmo hor\u00e1rio, com escalonamento gradual"
+      },
+      {
+        id: "l-carnitine",
+        name: "L-Carnitina",
+        role: "Suporte metab\u00f3lico — transporte de \u00e1cidos graxos para oxida\u00e7\u00e3o mitocondrial durante perda ponderal",
+        dose: "600-2000mg/dia",
+        timing: "Di\u00e1rio, pela manh\u00e3 ou antes de exerc\u00edcio"
+      },
+      {
+        id: "vitamin-b12",
+        name: "Vitamina B12",
+        role: "Suporte nutricional — preven\u00e7\u00e3o de defici\u00eancia durante restri\u00e7\u00e3o cal\u00f3rica e melhora de energia",
+        dose: "1000mcg/semana IM ou dose oral diária equivalente",
+        timing: "Semanal IM ou diariamente por via oral"
+      }
+    ],
+    synergy: "Setmelanotide atua diretamente no receptor MC4R, corrigindo a falha central de saciedade em subgrupos gen\u00e9ticos raros. L-Carnitina e B12 n\u00e3o tratam a causa da hiperfagia, mas ajudam no suporte metab\u00f3lico e nutricional durante redu\u00e7\u00e3o de ingest\u00e3o alimentar e perda de peso. A combina\u00e7\u00e3o \u00e9 de suporte, n\u00e3o de sinergia farmacol\u00f3gica direta.",
+    application: "Setmelanotide: SC di\u00e1rio em seringa/caneta pr\u00f3pria, nunca misturar. L-Carnitina: oral ou inje\u00e7\u00e3o separada. B12: oral ou IM separada. As subst\u00e2ncias t\u00eam vias e frequ\u00eancias distintas; n\u00e3o coadministrar na mesma seringa.",
+    duration: "Tratamento cr\u00f4nico quando indicado, com avalia\u00e7\u00e3o de resposta em 12-16 semanas e seguimento gen\u00e9tico/endocrinol\u00f3gico",
+    warnings: "N\u00e3o \u00e9 protocolo para obesidade comum. Exige confirma\u00e7\u00e3o diagn\u00f3stica e monitoramento m\u00e9dico. Hiperpigmenta\u00e7\u00e3o, n\u00e1usea e rea\u00e7\u00f5es no local da inje\u00e7\u00e3o s\u00e3o frequentes. Monitorar crescimento em pediatria, press\u00e3o arterial, comportamento alimentar, humor e eventos gastrointestinais.",
+    evidenceLevel: "Alto para Setmelanotide nas indica\u00e7\u00f5es aprovadas / Moderado para suporte nutricional / Baixo para o protocolo combinado como stack",
+    references: [
+      "Clément K et al., 2020. 'Efficacy and safety of setmelanotide, an MC4R agonist, in individuals with severe obesity due to LEPR or POMC deficiency: single-arm, open-label, multicentre, phase 3 trials.' Lancet Diabetes Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/33137293/' target='_blank'>[PubMed]</a>",
+      "Haqq AM et al., 2022. 'Efficacy and safety of setmelanotide, a melanocortin-4 receptor agonist, in patients with Bardet-Biedl syndrome and Alstr\u00f6m syndrome: a multicentre, randomised, double-blind, placebo-controlled, phase 3 trial with an open-label period.' Lancet Diabetes Endocrinol. <a href='https://pubmed.ncbi.nlm.nih.gov/36356613/' target='_blank'>[PubMed]</a>",
+      "Pooyandjoo M et al., 2016. 'The effect of (L-)carnitine on weight loss in adults: a systematic review and meta-analysis.' Obes Rev. <a href='https://pubmed.ncbi.nlm.nih.gov/27335245/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "intestinal-failure-adaptation",
+    name: "Intestino Curto - Adapta\u00e7\u00e3o Intestinal + Reparo de Mucosa",
+    goal: "healing",
+    goalLabel: "Cura e Recupera\u00e7\u00e3o",
+    level: "Especializado",
+    description: "Protocolo especializado para s\u00edndrome do intestino curto com insufici\u00eancia intestinal, centrado no Teduglutide, an\u00e1logo de GLP-2 aprovado para reduzir depend\u00eancia de suporte parenteral. BPC-157 e Glutationa entram como suporte te\u00f3rico de mucosa/estresse oxidativo, n\u00e3o como substitutos da terapia nutricional e gastroenterol\u00f3gica formal.",
+    peptides: [
+      {
+        id: "teduglutide",
+        name: "Teduglutide",
+        role: "Agente principal — an\u00e1logo GLP-2 que promove adapta\u00e7\u00e3o intestinal e reduz necessidade de nutri\u00e7\u00e3o parenteral",
+        dose: "0.05mg/kg/dia SC",
+        timing: "Di\u00e1rio, mesmo hor\u00e1rio, com monitoramento de hidrata\u00e7\u00e3o e eletr\u00f3litos"
+      },
+      {
+        id: "bpc-157",
+        name: "BPC-157",
+        role: "Suporte de mucosa — pept\u00eddeo g\u00e1strico com dados pr\u00e9-cl\u00ednicos de reparo, angiog\u00eanese e prote\u00e7\u00e3o intestinal",
+        dose: "250-500mcg, 1-2x por dia",
+        timing: "Oral ou SC, separado do Teduglutide"
+      },
+      {
+        id: "glutathione",
+        name: "Glutationa",
+        role: "Suporte antioxidante — redu\u00e7\u00e3o de estresse oxidativo sist\u00eamico e mucoso em contexto inflamat\u00f3rio/nutricional complexo",
+        dose: "600-1200mg IV, 1x por semana ou conforme protocolo cl\u00ednico",
+        timing: "IV semanal, separado dos pept\u00eddeos SC"
+      }
+    ],
+    synergy: "Teduglutide \u00e9 o componente com evid\u00eancia humana forte: ativa GLP-2R, aumenta superf\u00edcie absortiva e favorece adapta\u00e7\u00e3o intestinal. BPC-157 pode complementar, de forma experimental, com sinaliza\u00e7\u00e3o de reparo e prote\u00e7\u00e3o mucosa. Glutationa oferece suporte antioxidante em pacientes com inflama\u00e7\u00e3o, nutri\u00e7\u00e3o parenteral e maior carga metab\u00f3lica. A sinergia cl\u00ednica formal do trio ainda n\u00e3o foi testada.",
+    application: "Teduglutide: SC di\u00e1rio, seringa/caneta pr\u00f3pria. BPC-157: oral ou SC separado, nunca misturar com Teduglutide. Glutationa: IV em sess\u00e3o separada com profissional. Manter suporte nutricional, hidrata\u00e7\u00e3o, eletr\u00f3litos e acompanhamento gastroenterol\u00f3gico como base obrigat\u00f3ria.",
+    duration: "24 semanas para avalia\u00e7\u00e3o inicial de resposta, podendo ser terapia cr\u00f4nica quando indicada; suporte BPC/Glutationa por 8-12 semanas conforme objetivo",
+    warnings: "Uso altamente especializado. Teduglutide pode causar dor abdominal, distens\u00e3o, reten\u00e7\u00e3o de fluidos, obstru\u00e7\u00e3o intestinal e crescimento de p\u00f3lipos; colonoscopia e rastreio conforme protocolo s\u00e3o importantes. Ajustes do suporte parenteral devem ser feitos por equipe especializada para evitar hiper-hidrata\u00e7\u00e3o, desidrata\u00e7\u00e3o ou dist\u00farbios eletrol\u00edticos.",
+    evidenceLevel: "Alto para Teduglutide em s\u00edndrome do intestino curto / Moderado-Baixo para BPC-157 / Moderado para Glutationa / Baixo para o protocolo combinado completo",
+    references: [
+      "Jeppesen PB et al., 2012. 'Teduglutide reduces need for parenteral support among patients with short bowel syndrome with intestinal failure.' Gastroenterology. <a href='https://pubmed.ncbi.nlm.nih.gov/22982184/' target='_blank'>[PubMed]</a>",
+      "Kocoshis SA et al., 2020. 'Safety and Efficacy of Teduglutide in Pediatric Patients With Intestinal Failure due to Short Bowel Syndrome: A 24-Week, Phase III Study.' JPEN J Parenter Enteral Nutr. <a href='https://pubmed.ncbi.nlm.nih.gov/31495952/' target='_blank'>[PubMed]</a>",
+      "Sikiric P et al., 2022. 'Stable gastric pentadecapeptide BPC 157-therapy and the nervous system.' Curr Pharm Des. <a href='https://pubmed.ncbi.nlm.nih.gov/37242459/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
     id: "weight-loss-monthly",
     name: "Perda de Peso - Dosagem Mensal (Simplificado)",
     goal: "weight-loss",
