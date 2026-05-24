@@ -1,7 +1,7 @@
 {% if ga4_id %}
 <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
-<script>
+<script nonce="{{ csp_nonce }}" async src="https://www.googletagmanager.com/gtag/js?id={{ ga4_id }}"></script>
+<script nonce="{{ csp_nonce }}">
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());

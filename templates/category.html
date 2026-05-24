@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <script>
+    <script nonce="{{ csp_nonce }}">
     (function() {
         var saved = localStorage.getItem('peptides-theme');
         var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -40,7 +40,7 @@
 
     {% include "_ga4.html" %}
 
-    <script type="application/ld+json">
+    <script nonce="{{ csp_nonce }}" type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@graph": [
@@ -141,7 +141,7 @@
         <p><a href="{{ site_path_prefix }}/">&larr; Voltar ao Guia Completo</a></p>
         <p>Guia de Peptídeos &copy; 2026 - Conteúdo baseado em literatura científica publicada</p>
     </footer>
-    <script>
+    <script nonce="{{ csp_nonce }}">
     (function() {
         var themeToggle = document.getElementById('themeToggle');
         var themeIcon = document.getElementById('themeIcon');

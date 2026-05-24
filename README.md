@@ -45,6 +45,7 @@ A suite cobre:
 - crawler local de cobertura total para todas as paginas indexaveis;
 - E2E Playwright para busca, filtros, modais, mobile e acessibilidade;
 - regressao visual desktop/mobile com screenshots.
+- CSP nonce-based e ausencia de handlers inline no frontend dinamico.
 
 Para gerar screenshots visuais localmente:
 
@@ -92,5 +93,4 @@ Para uma varredura rapida das URLs publicadas, use o sitemap de producao e confi
 
 - Definir oficialmente se a fonte de verdade sera JS, admin Django ou um fluxo editorial hibrido.
 - Versionar formalmente a API publica (`/api/v1/...`) antes de integracoes externas dependerem dela.
-- Implementar CSP com nonce/hash para endurecer seguranca contra scripts inline.
 - Melhorar observabilidade de seed, deploy e falhas de importacao.

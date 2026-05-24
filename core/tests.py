@@ -12,6 +12,7 @@ Covers:
 
 import json
 import os
+import re
 import subprocess
 import tempfile
 from pathlib import Path
@@ -32,7 +33,11 @@ from django.urls import reverse
 
 from core.admin import PeptideAdmin, StackAdmin
 from core.management.commands.seed_peptides import js_to_json
-from core.middleware import AdminSecurityMiddleware, RateLimitMiddleware
+from core.middleware import (
+    AdminSecurityMiddleware,
+    ContentSecurityPolicyMiddleware,
+    RateLimitMiddleware,
+)
 from core.models import (
     CATEGORY_CHOICES,
     SEVERITY_CHOICES,
@@ -664,10 +669,9 @@ class TestIndexView:
         assert '/peptides/api/peptides.json' in content
         assert 'https://guiadepeptideos.com.br/api/peptides.json' in content
         bootstrap_pos = content.find('window.peptidesApiCandidates')
-        app_script_pos = content.find('<script src="', bootstrap_pos)
+        app_script_match = re.search(r'<script\b[^>]*\bsrc="[^"]*core/app\.js"', content[bootstrap_pos:])
         assert bootstrap_pos != -1
-        assert app_script_pos != -1
-        assert bootstrap_pos < app_script_pos
+        assert app_script_match is not None
 
     def test_header_nav_does_not_show_api_link(self, client, db):
         response = client.get('/')
@@ -738,6 +742,8 @@ class TestIndexView:
         assert 'https://guiadepeptideos.com.br/peptides/api/peptides.json' in app_js
         assert 'https://guiadepeptideos.com.br/api/peptides.json' in app_js
         assert 'https://mlt.com.br/peptides/api/peptides.json' in app_js
+        assert 'onclick=' not in app_js
+        assert 'javascript:void' not in app_js
 
     @override_settings(FORCE_SCRIPT_NAME='/peptides')
     def test_template_exposes_site_path_prefix_for_frontend_links(self, client, db):
@@ -2591,6 +2597,9 @@ class TestSettingsConfiguration:
     def test_gzip_middleware_is_configured(self):
         assert 'django.middleware.gzip.GZipMiddleware' in settings.MIDDLEWARE
 
+    def test_csp_middleware_is_configured(self):
+        assert 'core.middleware.ContentSecurityPolicyMiddleware' in settings.MIDDLEWARE
+
     def test_cached_template_loader_is_used(self):
         loaders = settings.TEMPLATES[0]['OPTIONS'].get('loaders', [])
         assert any('cached.Loader' in str(loader) for loader in loaders)
@@ -2624,6 +2633,49 @@ class TestSettingsConfiguration:
 
     def test_cache_middleware_key_prefix_is_versioned(self):
         assert settings.CACHE_MIDDLEWARE_KEY_PREFIX.startswith('peptides-v')
+
+
+@pytest.mark.django_db
+class TestContentSecurityPolicy:
+    """Validate nonce-based CSP headers and script markup."""
+
+    def test_html_response_has_nonce_based_csp(self, client, db):
+        response = client.get('/')
+        content = response.content.decode()
+        csp = response.headers['Content-Security-Policy']
+
+        nonce_match = re.search(r'<script nonce="([^"]+)">', content)
+        assert nonce_match is not None
+        nonce = nonce_match.group(1)
+
+        assert f"'nonce-{nonce}'" in csp
+        assert "default-src 'self'" in csp
+        assert "script-src-attr 'none'" in csp
+        assert "object-src 'none'" in csp
+        assert "base-uri 'self'" in csp
+        assert "frame-ancestors 'none'" in csp
+        assert 'https://www.googletagmanager.com' in csp
+        assert 'https://fonts.googleapis.com' in csp
+        assert 'unsafe-inline' not in csp.split("style-src", 1)[0]
+
+    def test_every_rendered_script_tag_has_nonce(self, client, db):
+        response = client.get('/')
+        content = response.content.decode()
+        script_tags = re.findall(r'<script\b[^>]*>', content)
+
+        assert script_tags
+        assert all('nonce="' in tag for tag in script_tags)
+
+    def test_csp_middleware_does_not_override_existing_header(self, rf):
+        def get_response(request):
+            response = JsonResponse({'ok': True})
+            response['Content-Security-Policy'] = "default-src 'none'"
+            return response
+
+        request = rf.get('/')
+        response = ContentSecurityPolicyMiddleware(get_response)(request)
+
+        assert response['Content-Security-Policy'] == "default-src 'none'"
 
 
 # =============================================================================

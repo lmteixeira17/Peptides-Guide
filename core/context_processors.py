@@ -12,6 +12,7 @@ def analytics(request):
 
     return {
         'ga4_id': os.environ.get('GA4_MEASUREMENT_ID', ''),
+        'csp_nonce': getattr(request, 'csp_nonce', '') if request else '',
         'canonical_url': canonical_url,
         'site_base_url': settings.SITE_BASE_URL,
         'site_path_prefix': site_prefix,

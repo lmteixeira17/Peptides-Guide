@@ -3,8 +3,9 @@ Simple rate limiting middleware using Django cache.
 No external dependencies required.
 """
 
-import time
 import ipaddress
+import secrets
+import time
 
 from django.conf import settings
 from django.core.cache import cache
@@ -37,6 +38,43 @@ def get_client_ip(request):
                 return ip
 
     return _valid_ip(request.META.get('REMOTE_ADDR')) or 'unknown'
+
+
+class ContentSecurityPolicyMiddleware:
+    """Attach a nonce-based Content-Security-Policy to public responses."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        request.csp_nonce = secrets.token_urlsafe(16)
+        response = self.get_response(request)
+
+        if response.has_header('Content-Security-Policy'):
+            return response
+
+        nonce = request.csp_nonce
+        directives = [
+            "default-src 'self'",
+            "script-src 'self' 'nonce-" + nonce + "' https://www.googletagmanager.com https://www.google-analytics.com",
+            "script-src-attr 'none'",
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+            "font-src 'self' https://fonts.gstatic.com data:",
+            "img-src 'self' data: https:",
+            "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com https://www.googletagmanager.com",
+            "object-src 'none'",
+            "base-uri 'self'",
+            "frame-ancestors 'none'",
+            "frame-src 'none'",
+            "form-action 'self'",
+            "manifest-src 'self'",
+            "worker-src 'self'",
+        ]
+        if not settings.DEBUG:
+            directives.append('upgrade-insecure-requests')
+
+        response['Content-Security-Policy'] = '; '.join(directives)
+        return response
 
 
 class RateLimitMiddleware:

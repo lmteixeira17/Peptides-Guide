@@ -474,7 +474,7 @@ function renderCards() {
         var categoryClass = safeClassToken(p.category);
         var initials = escapeHtml(p.name.substring(0, 2).toUpperCase());
         var statusClass = p.status === "approved" ? "" : (p.status === "trial" ? "trial" : "research");
-        html += '<button class="card ' + categoryClass + '" type="button" onclick="openModal(\'' + escapeHtml(escapeJsString(p.id)) + '\')">';
+        html += '<button class="card ' + categoryClass + '" type="button" data-peptide-id="' + escapeHtml(p.id) + '">';
         html += '  <div class="card-header">';
         html += '    <div class="card-icon ' + categoryClass + '">' + initials + '</div>';
         html += '    <div class="card-title-group">';
@@ -501,18 +501,32 @@ function renderCards() {
     if (filtered.length > peptidesVisibleCount) {
         var remaining = filtered.length - peptidesVisibleCount;
         html += '<div class="load-more-container">';
-        html += '  <button class="load-more-btn" id="loadMorePeptides" onclick="loadMorePeptides()">';
+        html += '  <button class="load-more-btn" id="loadMorePeptides" type="button" data-action="load-more-peptides">';
         html += '    Carregar mais (' + remaining + ' restantes)';
         html += '  </button>';
         html += '</div>';
     }
 
     cardsContainer.innerHTML = html;
+    bindPeptideCardActions();
 }
 
 function loadMorePeptides() {
     peptidesVisibleCount += peptidesPageSize;
     renderCards();
+}
+
+function bindPeptideCardActions() {
+    cardsContainer.querySelectorAll("[data-peptide-id]").forEach(function(card) {
+        card.addEventListener("click", function() {
+            openModal(card.getAttribute("data-peptide-id"));
+        });
+    });
+
+    var loadMoreButton = cardsContainer.querySelector('[data-action="load-more-peptides"]');
+    if (loadMoreButton) {
+        loadMoreButton.addEventListener("click", loadMorePeptides);
+    }
 }
 
 // Filter stacks
@@ -561,7 +575,7 @@ function renderStacks() {
     var html = "";
     visible.forEach(function(s) {
         var goalClass = safeClassToken(s.goal);
-        html += '<button class="stack-card ' + goalClass + '" type="button" onclick="openStackModal(\'' + escapeHtml(escapeJsString(s.id)) + '\')">';
+        html += '<button class="stack-card ' + goalClass + '" type="button" data-stack-id="' + escapeHtml(s.id) + '">';
         html += '  <div class="stack-card-header ' + goalClass + '">';
         html += '    <div class="stack-card-name">' + escapeHtml(s.name) + '</div>';
         html += '    <div class="stack-card-level">' + escapeHtml(s.goalLabel) + ' \u2022 N\u00edvel: ' + escapeHtml(s.level) + '</div>';
@@ -584,18 +598,32 @@ function renderStacks() {
     if (filtered.length > stacksVisibleCount) {
         var remaining = filtered.length - stacksVisibleCount;
         html += '<div class="load-more-container">';
-        html += '  <button class="load-more-btn" id="loadMoreStacks" onclick="loadMoreStacks()">';
+        html += '  <button class="load-more-btn" id="loadMoreStacks" type="button" data-action="load-more-stacks">';
         html += '    Carregar mais (' + remaining + ' restantes)';
         html += '  </button>';
         html += '</div>';
     }
 
     stacksGrid.innerHTML = html;
+    bindStackCardActions();
 }
 
 function loadMoreStacks() {
     stacksVisibleCount += stacksPageSize;
     renderStacks();
+}
+
+function bindStackCardActions() {
+    stacksGrid.querySelectorAll("[data-stack-id]").forEach(function(card) {
+        card.addEventListener("click", function() {
+            openStackModal(card.getAttribute("data-stack-id"));
+        });
+    });
+
+    var loadMoreButton = stacksGrid.querySelector('[data-action="load-more-stacks"]');
+    if (loadMoreButton) {
+        loadMoreButton.addEventListener("click", loadMoreStacks);
+    }
 }
 
 // Open peptide from stack (with back navigation)
@@ -616,7 +644,7 @@ function openModal(id) {
         var srcStack = stacks.find(function(item) { return item.id === sourceStackId; });
         if (srcStack) {
             html += '<div class="modal-back">';
-            html += '  <a href="javascript:void(0)" onclick="openStackModal(\'' + escapeHtml(escapeJsString(sourceStackId)) + '\')">&larr; Voltar para ' + escapeHtml(srcStack.name) + '</a>';
+            html += '  <a href="#" data-modal-stack-id="' + escapeHtml(sourceStackId) + '">&larr; Voltar para ' + escapeHtml(srcStack.name) + '</a>';
             html += '</div>';
         }
     }
@@ -704,6 +732,7 @@ function openModal(id) {
     html += '</div>';
 
     modalContent.innerHTML = html;
+    bindModalActionHandlers();
     modalOverlay.style.opacity = '';
     modalOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
@@ -749,7 +778,7 @@ function openStackModal(id) {
         var hasDetail = p.id && peptides.some(function(item) { return item.id === p.id; });
         html += '  <div class="stack-peptide-detail">';
         if (hasDetail) {
-            html += '    <h4><a href="javascript:void(0)" class="peptide-link" onclick="openPeptideFromStack(\'' + escapeHtml(escapeJsString(p.id)) + '\', \'' + escapeHtml(escapeJsString(s.id)) + '\')" title="Ver detalhes completos de ' + escapeHtml(p.name) + '">' + escapeHtml(p.name) + ' \u2197</a></h4>';
+            html += '    <h4><a href="#" class="peptide-link" data-modal-peptide-id="' + escapeHtml(p.id) + '" data-source-stack-id="' + escapeHtml(s.id) + '" title="Ver detalhes completos de ' + escapeHtml(p.name) + '">' + escapeHtml(p.name) + ' \u2197</a></h4>';
         } else {
             html += '    <h4>' + escapeHtml(p.name) + '</h4>';
         }
@@ -800,6 +829,7 @@ function openStackModal(id) {
     html += '</div>';
 
     modalContent.innerHTML = html;
+    bindModalActionHandlers();
     modalOverlay.style.opacity = '';
     modalOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
@@ -809,6 +839,25 @@ function openStackModal(id) {
     // SEO: update title and URL hash
     document.title = String(s.name || '') + ' - Guia de Pept\u00eddeos';
     history.replaceState(null, '', '#stack-' + id);
+}
+
+function bindModalActionHandlers() {
+    modalContent.querySelectorAll("[data-modal-stack-id]").forEach(function(link) {
+        link.addEventListener("click", function(event) {
+            event.preventDefault();
+            openStackModal(link.getAttribute("data-modal-stack-id"));
+        });
+    });
+
+    modalContent.querySelectorAll("[data-modal-peptide-id][data-source-stack-id]").forEach(function(link) {
+        link.addEventListener("click", function(event) {
+            event.preventDefault();
+            openPeptideFromStack(
+                link.getAttribute("data-modal-peptide-id"),
+                link.getAttribute("data-source-stack-id")
+            );
+        });
+    });
 }
 
 function enableModalTrap() {

@@ -9,7 +9,7 @@
 ### 1. Pre-Commit (Local)
 
 - [ ] `ruff check .` passa
-- [ ] `pytest -q` passa 100% (atual: 281 testes, 19 skips esperados)
+- [ ] `pytest -q` passa 100% (atual: 285 testes, 19 skips esperados)
 - [ ] Nao ha conflitos de merge pendentes (`git status` limpo)
 - [ ] Arquivos novos estao adicionados (`git add`)
 - [ ] Commit message descritiva em portugues ou ingles
@@ -93,5 +93,6 @@ pytest tests/e2e/test_visual_regression.py -q
 - O deploy e automatico via GitHub Actions (`.github/workflows/deploy.yml`)
 - O CI roda testes unitarios/integracao, crawler de cobertura total e E2E Playwright
 - Screenshots visuais ficam no artefato `visual-regression-screenshots`
+- O app usa Content-Security-Policy com nonce para scripts e bloqueio de handlers inline
 - Static files usam WhiteNoise com hash, mas o browser pode cachear — sempre pedir hard refresh
 - Cloudflare pode cachear static files — em caso de duvida, verificar via `curl` com cache-bypass
