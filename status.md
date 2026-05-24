@@ -9,7 +9,7 @@
 ### 1. Pre-Commit (Local)
 
 - [ ] `ruff check .` passa
-- [ ] `pytest -q` passa 100% (atual: 285 testes, 19 skips esperados)
+- [ ] `pytest -q` passa 100% (atual: 286 testes, 19 skips esperados)
 - [ ] Nao ha conflitos de merge pendentes (`git status` limpo)
 - [ ] Arquivos novos estao adicionados (`git add`)
 - [ ] Commit message descritiva em portugues ou ingles

@@ -2666,6 +2666,13 @@ class TestContentSecurityPolicy:
         assert script_tags
         assert all('nonce="' in tag for tag in script_tags)
 
+    def test_nonce_app_script_is_not_inside_offline_compressor_block(self):
+        template_path = Path(settings.BASE_DIR) / 'templates' / 'index.html'
+        content = template_path.read_text(encoding='utf-8')
+
+        assert '{% compress js %}' not in content
+        assert '<script nonce="{{ csp_nonce }}" src="{% static \'core/app.js\' %}"></script>' in content
+
     def test_csp_middleware_does_not_override_existing_header(self, rf):
         def get_response(request):
             response = JsonResponse({'ok': True})
