@@ -854,3 +854,39 @@ for r in ExamResult.objects.select_related('biomarker').all():
 
 ### Alertas Falsos no Dashboard
 A IA pode marcar biomarcadores como alerta mesmo quando estao dentro da faixa de referencia. Solucao: o `_enrich()` no views.py usa `filter_abnormal=True` para filtrar alertas contra o campo `is_abnormal` real do ExamResult.
+
+---
+
+## Deploy e Validacao — Instrucoes para IA
+
+> **REGRA ABSOLUTA:** Antes de dizer ao usuario que algo "foi publicado" ou "esta pronto", voce DEVE:
+
+1. **Rodar testes:** `pytest` deve passar 100%
+2. **Commit + Push:** Enviar para `origin/master`
+3. **Aguardar CI/CD:** Verificar que GitHub Actions `Deploy to Production` ficou `completed` + `success`
+4. **Validar producao:**
+   - `curl -s https://guiadepeptideos.com.br/health/`
+   - `curl -s https://guiadepeptideos.com.br/ | grep` (verificar elementos novos)
+   - Se mudanca visual: confirmar que apareceu no site (considerar cache do browser/Cloudflare)
+5. **Só entao dizer que esta pronto**
+
+### Checklist Rápido (copiar e colar)
+```markdown
+- [ ] pytest passou
+- [ ] commit + push feito
+- [ ] GitHub Actions Deploy = success
+- [ ] health check OK
+- [ ] pagina inicial OK
+- [ ] mudancas visuais confirmadas (screenshot ou curl)
+```
+
+### Cache — Problema Comum
+O usuario pode ver o site "antigo" mesmo depois do deploy. Razoes:
+- **Browser cache:** Resolver com `Ctrl+F5`
+- **Cloudflare cache:** Pode demorar alguns minutos
+- **WhiteNoise cache:** Arquivos com hash novo, mas o HTML pode referenciar o antigo
+
+**Sempre avisar o usuario sobre a possibilidade de cache e como fazer hard refresh.**
+
+### Documento de Status
+Consultar e atualizar `status.md` a cada deploy.
