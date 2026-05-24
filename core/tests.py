@@ -2597,6 +2597,15 @@ class TestCssSanity:
         assert 'appearance: none' in content
         assert '.card,' in content or '.card' in content
 
+    def test_css_has_detail_page_layout(self):
+        css_path = Path(settings.BASE_DIR) / 'static' / 'core' / 'style.css'
+        content = css_path.read_text(encoding='utf-8')
+        assert '.breadcrumb' in content
+        assert '.detail-page' in content
+        assert '.detail-meta' in content
+        assert '.detail-list' in content
+        assert '.glossary-list' in content
+
     def test_og_image_webp_exists(self):
         webp_path = Path(settings.BASE_DIR) / 'static' / 'core' / 'og-image.webp'
         assert webp_path.exists()
