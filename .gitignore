@@ -27,6 +27,7 @@ venv/
 
 # Local shell artifacts
 _ul*
+test-results/
 
 # OS
 .DS_Store

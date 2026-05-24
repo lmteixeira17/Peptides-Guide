@@ -8,7 +8,8 @@
 
 ### 1. Pre-Commit (Local)
 
-- [ ] `pytest` passa 100% (182 testes)
+- [ ] `ruff check .` passa
+- [ ] `pytest -q` passa 100% (atual: 281 testes, 19 skips esperados)
 - [ ] Nao ha conflitos de merge pendentes (`git status` limpo)
 - [ ] Arquivos novos estao adicionados (`git add`)
 - [ ] Commit message descritiva em portugues ou ingles
@@ -22,15 +23,15 @@
 ### 3. Pos-Deploy (Producao) — VALIDACAO OBRIGATORIA
 
 - [ ] Aguardar workflow "Deploy to Production" ficar `completed` + `success`
-- [ ] Verificar health check: `curl -s https://guiadepeptideos.com.br/health/ | grep "ok"`
-- [ ] Verificar pagina inicial carrega: `curl -sI https://guiadepeptideos.com.br/ | grep "200"`
-- [ ] Se houver mudancas visuais: **capturar screenshot** ou verificar manualmente no browser
+- [ ] Verificar health check: `curl -s https://guiadepeptideos.com.br/peptides/health/ | grep "ok"`
+- [ ] Verificar pagina inicial carrega: `curl -sI https://guiadepeptideos.com.br/peptides/ | grep "200"`
+- [ ] Se houver mudancas visuais: conferir screenshots gerados pelo CI (`visual-regression-screenshots`)
 - [ ] Se houver mudancas em static files (CSS/JS): verificar se apareceu (pode precisar `Ctrl+F5`)
 - [ ] Verificar que nao ha erro 500 em paginas principais:
-  - `/`
-  - `/peptideos/semaglutide/`
-  - `/combinacoes/cjc-ipamorelin/`
-  - `/api/peptides.json`
+  - `/peptides/`
+  - `/peptides/peptideos/semaglutide/`
+  - `/peptides/combinacoes/gh-long-acting-options/`
+  - `/peptides/api/peptides.json`
 
 ### 4. Rollback (se necessario)
 
@@ -47,15 +48,15 @@ git push origin master
 ### Metodo 1: curl + grep (rapido)
 ```bash
 # Verificar se uma classe/elemento novo existe no HTML
-curl -s https://guiadepeptideos.com.br/ | grep -c "themeToggle"
-curl -s https://guiadepeptideos.com.br/ | grep -c "scrollProgress"
+curl -s https://guiadepeptideos.com.br/peptides/ | grep -c "themeToggle"
+curl -s https://guiadepeptideos.com.br/peptides/ | grep -c "scrollProgress"
 
 # Verificar se CSS tem a regra nova
-curl -s https://guiadepeptideos.com.br/static/core/style.css | grep -c "data-theme"
+curl -s https://guiadepeptideos.com.br/peptides/static/core/style.css | grep -c "data-theme"
 ```
 
 ### Metodo 2: Browser + DevTools
-1. Abrir `https://guiadepeptideos.com.br/`
+1. Abrir `https://guiadepeptideos.com.br/peptides/`
 2. `Ctrl+F5` (hard refresh)
 3. Verificar Elementos:
    - Header tem `#themeToggle`?
@@ -64,9 +65,13 @@ curl -s https://guiadepeptideos.com.br/static/core/style.css | grep -c "data-the
 4. Verificar Network → CSS/JS: status 200 e conteudo atualizado
 
 ### Metodo 3: Playwright (automatizado)
-```python
-# Rodar testes E2E contra producao
-pytest tests/e2e/test_frontend.py -v --base-url=https://guiadepeptideos.com.br
+```powershell
+# Rodar testes E2E locais
+pytest tests/e2e -q
+
+# Gerar screenshots visuais locais
+$env:VISUAL_SNAPSHOT_DIR="test-results/visual-local"
+pytest tests/e2e/test_visual_regression.py -q
 ```
 
 ---
@@ -77,11 +82,16 @@ pytest tests/e2e/test_frontend.py -v --base-url=https://guiadepeptideos.com.br
 |------|--------|-----------|------------|
 | 2026-05-23 | 6638749 | Dark mode, scroll progress, paginacao | SIM |
 | 2026-05-23 | 2b99c73 | Rate limit middleware, backup_db | SIM |
+| 2026-05-24 | 2c52372 | Expansao cientifica do catalogo para 129 peptideos e 46 stacks | SIM |
+| 2026-05-24 | 5ea569b | Hardening de frontend, rotas, rate limit e menu sem API | SIM |
+| 2026-05-24 | 0a09358 | Crawler de cobertura total do site | SIM |
 
 ---
 
 ## Notas
 
 - O deploy e automatico via GitHub Actions (`.github/workflows/deploy.yml`)
+- O CI roda testes unitarios/integracao, crawler de cobertura total e E2E Playwright
+- Screenshots visuais ficam no artefato `visual-regression-screenshots`
 - Static files usam WhiteNoise com hash, mas o browser pode cachear — sempre pedir hard refresh
 - Cloudflare pode cachear static files — em caso de duvida, verificar via `curl` com cache-bypass

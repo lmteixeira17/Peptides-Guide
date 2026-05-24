@@ -16,6 +16,8 @@ Organizar as correcoes estruturais do projeto antes de ampliar funcionalidades, 
 - [x] Instalar dependencias de desenvolvimento na `.venv`
 - [x] Rodar `pytest core/tests.py`
 - [x] Adicionar um check de CI para testes basicos e `manage.py check`
+- [x] Rodar todos os testes nao-E2E no CI, incluindo crawler de cobertura total
+- [x] Adicionar testes visuais Playwright desktop/mobile com screenshots
 
 ## Fase 2 - Seguranca e operacao
 
@@ -28,7 +30,7 @@ Organizar as correcoes estruturais do projeto antes de ampliar funcionalidades, 
 
 - [ ] Decidir o destino dos arquivos duplicados da raiz (`app.js`, `style.css`, `index.html`) versus os arquivos servidos pelo Django
 - [ ] Limpar artefatos e placeholders nao essenciais do repositorio
-- [ ] Criar documentacao operacional minima (`README.md`) com setup, testes e deploy
+- [x] Criar documentacao operacional minima (`README.md`) com setup, testes e deploy
 
 ## Fase 4 - Dados e deploy
 
@@ -48,4 +50,4 @@ Organizar as correcoes estruturais do projeto antes de ampliar funcionalidades, 
 - [x] Migracao inicial versionada
 - [x] Dependencias de teste declaradas
 - [x] Validar ambiente de testes
-- [ ] Publicar estas correcoes no GitHub
+- [x] Publicar estas correcoes no GitHub

@@ -51,9 +51,9 @@ jobs:
       - name: Run test suite
         run: |
           if [ "${{ matrix.python-version }}" = "3.11" ]; then
-            pytest core/tests.py --cov=core --cov=peptides_project --cov-report=term-missing --cov-fail-under=90 -q
+            pytest --ignore=tests/e2e --cov=core --cov=peptides_project --cov-report=term-missing --cov-fail-under=90 -q
           else
-            pytest core/tests.py -q
+            pytest --ignore=tests/e2e -q
           fi
 
       - name: Install Playwright browser
@@ -62,4 +62,14 @@ jobs:
 
       - name: Run browser E2E tests
         if: matrix.python-version == '3.11'
+        env:
+          VISUAL_SNAPSHOT_DIR: test-results/visual
         run: pytest tests/e2e -q
+
+      - name: Upload visual screenshots
+        if: always() && matrix.python-version == '3.11'
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-regression-screenshots
+          path: test-results/visual
+          if-no-files-found: ignore
