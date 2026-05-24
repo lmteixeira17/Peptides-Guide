@@ -225,15 +225,51 @@
     <div class="scroll-progress" id="scrollProgress"></div>
     <!-- Header -->
     <header class="header" id="mainHeader">
-        <button class="theme-toggle" id="themeToggle" type="button" title="Alternar tema">
-            <span id="themeIcon">&#x1F319;</span>
-            <span id="themeLabel">Escuro</span>
-        </button>
-        <div class="header-content">
-            <h1>Guia Completo de Pept&iacute;deos</h1>
-            <p class="subtitle">Refer&ecirc;ncia cient&iacute;fica com descri&ccedil;&otilde;es, efeitos colaterais e dosagens baseadas em estudos</p>
+        <div class="header-inner">
+            <a href="/" class="header-brand">
+                <h1>Guia de Pept&iacute;deos</h1>
+                <span>v2</span>
+            </a>
+            <nav class="header-nav">
+                <a href="/sobre/">Sobre</a>
+                <a href="/glossario/">Gloss&aacute;rio</a>
+                <a href="/api/peptides.json">API</a>
+                <button class="theme-toggle" id="themeToggle" type="button" title="Alternar tema">
+                    <span id="themeIcon">&#x1F319;</span>
+                    <span id="themeLabel">Escuro</span>
+                </button>
+            </nav>
         </div>
     </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                {{ peptide_count }} pept&iacute;deos catalogados
+            </div>
+            <h2>A biblioteca que faltava pra quem leva <span class="accent">pept&iacute;deos</span> a s&eacute;rio</h2>
+            <p>Refer&ecirc;ncia cient&iacute;fica completa em portugu&ecirc;s. Protocolos, dosagens, efeitos colaterais e {{ reference_count }} refer&ecirc;ncias PubMed verific&aacute;veis.</p>
+            <a href="#catalogo" class="hero-cta">Explorar pept&iacute;deos &darr;</a>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <div class="stat-value">{{ peptide_count }}</div>
+            <div class="stat-label">Pept&iacute;deos</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ stack_count }}</div>
+            <div class="stat-label">Stacks</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value">{{ reference_count }}</div>
+            <div class="stat-label">Refer&ecirc;ncias</div>
+        </div>
+    </div>
 
     <!-- Blood Lab Banner -->
     <div class="blood-lab-banner">
@@ -249,7 +285,9 @@
 
     <!-- Disclaimer -->
     <div class="disclaimer">
-        <strong>AVISO:</strong> Este site tem finalidade exclusivamente informativa e educacional. As informa&ccedil;&otilde;es aqui apresentadas s&atilde;o baseadas em estudos cient&iacute;ficos publicados e n&atilde;o constituem aconselhamento m&eacute;dico. Consulte sempre um profissional de sa&uacute;de antes de utilizar qualquer subst&acirc;ncia.
+        <div class="disclaimer-inner">
+            <strong>AVISO:</strong> Este site tem finalidade exclusivamente informativa e educacional. As informa&ccedil;&otilde;es aqui apresentadas s&atilde;o baseadas em estudos cient&iacute;ficos publicados e n&atilde;o constituem aconselhamento m&eacute;dico. Consulte sempre um profissional de sa&uacute;de antes de utilizar qualquer subst&acirc;ncia.
+        </div>
     </div>
 
     <!-- Search and Filters -->
@@ -283,7 +321,7 @@
     </div>
 
     <!-- Peptide Cards Container -->
-    <main class="cards-container" id="cardsContainer">
+    <main class="cards-container" id="catalogo">
       <div class="loading-state">
         <h3>Carregando pept&iacute;deos...</h3>
         <p>Buscando dados cient&iacute;ficos atualizados.</p>
