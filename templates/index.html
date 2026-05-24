@@ -271,6 +271,76 @@
         </div>
     </div>
 
+    <!-- Search & Tabs -->
+    <div class="search-section">
+        <div class="search-box">
+            <span class="search-icon">&#x1F50D;</span>
+            <input type="text" id="searchInput" placeholder="Buscar pept&iacute;deo, stack ou categoria..." autocomplete="off">
+        </div>
+        <div class="section-tabs">
+            <button class="section-tab active" data-section="peptides">
+                <span class="tab-icon">&#x1F9EA;</span>
+                Pept&iacute;deos
+            </button>
+            <button class="section-tab" data-section="stacks">
+                <span class="tab-icon">&#x1F9F5;</span>
+                Combina&ccedil;&otilde;es
+            </button>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-bar">
+        <div class="filters-scroll" id="filtersScroll">
+            <button class="filter-chip active" data-category="all">Todos</button>
+            <button class="filter-chip" data-category="weight-loss">Perda de Peso</button>
+            <button class="filter-chip" data-category="growth-hormone">Horm&ocirc;nio do Crescimento</button>
+            <button class="filter-chip" data-category="healing">Cura e Recupera&ccedil;&atilde;o</button>
+            <button class="filter-chip" data-category="anti-aging">Anti-Envelhecimento</button>
+            <button class="filter-chip" data-category="skin">Pele e Est&eacute;tica</button>
+            <button class="filter-chip" data-category="cognitive">Cognitivo</button>
+            <button class="filter-chip" data-category="immune">Sistema Imunol&oacute;gico</button>
+            <button class="filter-chip" data-category="hormonal">Hormonal</button>
+            <button class="filter-chip" data-category="sleep">Sono</button>
+            <button class="filter-chip" data-category="body-comp">Composi&ccedil;&atilde;o Corporal</button>
+            <button class="filter-chip" data-category="other">Outros</button>
+        </div>
+        <div class="results-count">
+            <span id="countDisplay">0</span> resultados
+        </div>
+    </div>
+
+    <!-- Peptide Cards Container -->
+    <main class="cards-container" id="cardsContainer">
+      <div class="loading-state">
+        <h3>Carregando pept&iacute;deos...</h3>
+        <p>Buscando dados cient&iacute;ficos atualizados.</p>
+      </div>
+    </main>
+
+    <!-- Stacks Container -->
+    <div class="stacks-container" id="stacksContainer" style="display:none">
+        <div class="filters-scroll" id="stacksFilters">
+            <button class="filter-chip active" data-goal="all">Todas</button>
+            <button class="filter-chip" data-goal="weight-loss">Perda de Peso</button>
+            <button class="filter-chip" data-goal="anti-aging">Anti-Envelhecimento</button>
+            <button class="filter-chip" data-goal="healing">Cura e Recupera&ccedil;&atilde;o</button>
+            <button class="filter-chip" data-goal="growth-hormone">Horm&ocirc;nio do Crescimento</button>
+            <button class="filter-chip" data-goal="cognitive">Cognitivo</button>
+            <button class="filter-chip" data-goal="immune">Sistema Imunol&oacute;gico</button>
+            <button class="filter-chip" data-goal="skin">Pele e Est&eacute;tica</button>
+            <button class="filter-chip" data-goal="body-comp">Composi&ccedil;&atilde;o Corporal</button>
+            <button class="filter-chip" data-goal="sleep">Sono</button>
+            <button class="filter-chip" data-goal="hormonal">Hormonal</button>
+        </div>
+        <div class="stacks-grid" id="stacksGrid">
+          <div class="loading-state">
+            <h3>Carregando combina&ccedil;&otilde;es...</h3>
+            <p>Preparando os protocolos recomendados.</p>
+          </div>
+        </div>
+    </div>
+
     <!-- Blood Lab Banner -->
     <div class="blood-lab-banner">
         <a href="https://mlt.com.br/blood/" target="_blank" rel="noopener noreferrer" class="blood-lab-link">
@@ -287,67 +357,6 @@
     <div class="disclaimer">
         <div class="disclaimer-inner">
             <strong>AVISO:</strong> Este site tem finalidade exclusivamente informativa e educacional. As informa&ccedil;&otilde;es aqui apresentadas s&atilde;o baseadas em estudos cient&iacute;ficos publicados e n&atilde;o constituem aconselhamento m&eacute;dico. Consulte sempre um profissional de sa&uacute;de antes de utilizar qualquer subst&acirc;ncia.
-        </div>
-    </div>
-
-    <!-- Search and Filters -->
-    <div class="controls">
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Buscar pept&iacute;deo por nome..." autocomplete="off">
-        </div>
-        <div class="filters">
-            <button class="filter-btn active" data-category="all">Todos</button>
-            <button class="filter-btn" data-category="weight-loss">Perda de Peso</button>
-            <button class="filter-btn" data-category="growth-hormone">Horm&ocirc;nio do Crescimento</button>
-            <button class="filter-btn" data-category="healing">Cura e Recupera&ccedil;&atilde;o</button>
-            <button class="filter-btn" data-category="anti-aging">Anti-Envelhecimento</button>
-            <button class="filter-btn" data-category="skin">Pele e Est&eacute;tica</button>
-            <button class="filter-btn" data-category="cognitive">Cognitivo</button>
-            <button class="filter-btn" data-category="immune">Sistema Imunol&oacute;gico</button>
-            <button class="filter-btn" data-category="hormonal">Hormonal</button>
-            <button class="filter-btn" data-category="sleep">Sono</button>
-            <button class="filter-btn" data-category="body-comp">Composi&ccedil;&atilde;o Corporal</button>
-            <button class="filter-btn" data-category="other">Outros</button>
-        </div>
-        <div class="peptide-count">
-            Exibindo <span id="countDisplay">0</span> pept&iacute;deos
-        </div>
-    </div>
-
-    <!-- Section Toggle -->
-    <div class="section-toggle">
-        <button class="section-btn active" data-section="peptides">Pept&iacute;deos Individuais</button>
-        <button class="section-btn" data-section="stacks">Combina&ccedil;&otilde;es Recomendadas</button>
-    </div>
-
-    <!-- Peptide Cards Container -->
-    <main class="cards-container" id="cardsContainer">
-      <div class="loading-state">
-        <h3>Carregando pept&iacute;deos...</h3>
-        <p>Buscando dados cient&iacute;ficos atualizados.</p>
-      </div>
-    </main>
-
-    <!-- Stacks Container -->
-    <div class="stacks-container" id="stacksContainer" style="display:none">
-        <div class="stacks-filters" id="stacksFilters">
-            <button class="filter-btn active" data-goal="all">Todas</button>
-            <button class="filter-btn" data-goal="weight-loss">Perda de Peso</button>
-            <button class="filter-btn" data-goal="anti-aging">Anti-Envelhecimento</button>
-            <button class="filter-btn" data-goal="healing">Cura e Recupera&ccedil;&atilde;o</button>
-            <button class="filter-btn" data-goal="growth-hormone">Horm&ocirc;nio do Crescimento</button>
-            <button class="filter-btn" data-goal="cognitive">Cognitivo</button>
-            <button class="filter-btn" data-goal="immune">Sistema Imunol&oacute;gico</button>
-            <button class="filter-btn" data-goal="skin">Pele e Est&eacute;tica</button>
-            <button class="filter-btn" data-goal="body-comp">Composi&ccedil;&atilde;o Corporal</button>
-            <button class="filter-btn" data-goal="sleep">Sono</button>
-            <button class="filter-btn" data-goal="hormonal">Hormonal</button>
-        </div>
-        <div class="stacks-grid" id="stacksGrid">
-          <div class="loading-state">
-            <h3>Carregando combina&ccedil;&otilde;es...</h3>
-            <p>Preparando os protocolos recomendados.</p>
-          </div>
         </div>
     </div>
 

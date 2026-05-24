@@ -43,9 +43,9 @@ var countDisplay = document.getElementById("countDisplay");
 var modalOverlay = document.getElementById("modalOverlay");
 var modalContent = document.getElementById("modalContent");
 var modalClose = document.getElementById("modalClose");
-var filterButtons = document.querySelectorAll(".filters .filter-btn");
-var sectionButtons = document.querySelectorAll(".section-btn");
-var stackFilterButtons = document.querySelectorAll("#stacksFilters .filter-btn");
+var filterButtons = document.querySelectorAll(".filters-scroll .filter-chip");
+var sectionButtons = document.querySelectorAll(".section-tab");
+var stackFilterButtons = document.querySelectorAll("#stacksFilters .filter-chip");
 var themeToggle = document.getElementById("themeToggle");
 var themeIcon = document.getElementById("themeIcon");
 var themeLabel = document.getElementById("themeLabel");
@@ -278,17 +278,14 @@ function bindEvents() {
 
 // Toggle sections
 function toggleSection() {
-    var controlsEl = document.querySelector(".controls");
     if (currentSection === "peptides") {
         cardsContainer.style.display = "";
         stacksContainer.style.display = "none";
-        controlsEl.classList.remove("stack-mode");
         searchInput.placeholder = "Buscar pept\u00eddeo por nome...";
         renderCurrentSection();
     } else {
         cardsContainer.style.display = "none";
         stacksContainer.style.display = "";
-        controlsEl.classList.add("stack-mode");
         searchInput.placeholder = "Buscar combina\u00e7\u00e3o ou pept\u00eddeo do stack...";
         renderCurrentSection();
     }
