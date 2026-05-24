@@ -295,7 +295,7 @@ def peptides_api(request):
         'version': '1.0',
         'source': _site_url('/'),
         'license': 'Educational use only - consult references for primary sources',
-        'last_updated': '2026-04-04',
+        'last_updated': '2026-05-24',
         'peptides': [serialize_peptide(p) for p in peptides],
         'stacks': [serialize_stack(s) for s in stacks],
     }

@@ -4,10 +4,39 @@ No external dependencies required.
 """
 
 import time
+import ipaddress
 
 from django.conf import settings
 from django.core.cache import cache
-from django.http import HttpResponseForbidden, JsonResponse
+from django.http import HttpResponseForbidden, HttpResponseNotFound, JsonResponse
+
+
+def _valid_ip(value):
+    """Return a normalized IP string or None for invalid input."""
+    if not value:
+        return None
+    value = str(value).strip()
+    try:
+        return str(ipaddress.ip_address(value))
+    except ValueError:
+        return None
+
+
+def get_client_ip(request):
+    """Extract a usable client IP from common proxy headers."""
+    for header in ('HTTP_CF_CONNECTING_IP', 'HTTP_X_REAL_IP'):
+        ip = _valid_ip(request.META.get(header))
+        if ip:
+            return ip
+
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        for part in x_forwarded_for.split(','):
+            ip = _valid_ip(part)
+            if ip:
+                return ip
+
+    return _valid_ip(request.META.get('REMOTE_ADDR')) or 'unknown'
 
 
 class RateLimitMiddleware:
@@ -19,7 +48,7 @@ class RateLimitMiddleware:
     def __call__(self, request):
         # path_info excludes FORCE_SCRIPT_NAME, so /peptides/api/... is covered.
         if request.path_info == '/api/peptides.json':
-            client_ip = self._get_client_ip(request)
+            client_ip = get_client_ip(request)
             cache_key = f'ratelimit:api:peptides:{client_ip}'
 
             data = cache.get(cache_key)
@@ -54,15 +83,6 @@ class RateLimitMiddleware:
 
         return self.get_response(request)
 
-    def _get_client_ip(self, request):
-        """Extract client IP from request headers."""
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0].strip()
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip or 'unknown'
-
 
 class AdminSecurityMiddleware:
     """Hide admin panel and rate-limit admin login attempts.
@@ -80,11 +100,11 @@ class AdminSecurityMiddleware:
 
         # Block the default /admin/ path entirely.
         if path.startswith('/admin/'):
-            return HttpResponseForbidden()
+            return HttpResponseNotFound()
 
         # Rate limit admin login attempts.
         if path == '/gestao/login/':
-            client_ip = self._get_client_ip(request)
+            client_ip = get_client_ip(request)
             cache_key = f'ratelimit:admin:login:{client_ip}'
 
             data = cache.get(cache_key)
@@ -110,12 +130,3 @@ class AdminSecurityMiddleware:
                         return HttpResponseForbidden()
 
         return self.get_response(request)
-
-    def _get_client_ip(self, request):
-        """Extract client IP from request headers."""
-        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-        if x_forwarded_for:
-            ip = x_forwarded_for.split(',')[0].strip()
-        else:
-            ip = request.META.get('REMOTE_ADDR')
-        return ip or 'unknown'

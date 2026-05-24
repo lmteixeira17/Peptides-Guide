@@ -657,6 +657,7 @@ class TestIndexView:
         content = response.content.decode()
 
         assert 'window.peptidesApiCandidates' in content
+        assert 'window.sitePathPrefix' in content
         assert content.count('window.peptidesApiCandidates') == 1
         assert 'window.peptidesApiUrl =' not in content
         assert '/api/peptides.json' in content
@@ -728,10 +729,22 @@ class TestIndexView:
 
         assert 'function buildApiCandidates()' in app_js
         assert 'function loadDataFromCandidates(candidates, index)' in app_js
+        assert 'function escapeHtml(value)' in app_js
+        assert 'function sanitizeReferenceHtml(value)' in app_js
+        assert 'function withSitePath(path)' in app_js
+        assert "withSitePath('/peptideos/'" in app_js
+        assert "withSitePath('/combinacoes/'" in app_js
         assert 'window.peptidesApiUrl' not in app_js
         assert 'https://guiadepeptideos.com.br/peptides/api/peptides.json' in app_js
         assert 'https://guiadepeptideos.com.br/api/peptides.json' in app_js
         assert 'https://mlt.com.br/peptides/api/peptides.json' in app_js
+
+    @override_settings(FORCE_SCRIPT_NAME='/peptides')
+    def test_template_exposes_site_path_prefix_for_frontend_links(self, client, db):
+        response = client.get('/')
+        content = response.content.decode()
+
+        assert 'window.sitePathPrefix = "/peptides";' in content
 
     def test_template_has_static_references(self, client, db):
         response = client.get('/')
@@ -1409,7 +1422,9 @@ class TestEndToEndFlow:
         assert 'Integration Peptide' in content
 
         api_response = client.get('/api/peptides.json')
-        data = json.loads(api_response.content)['peptides']
+        payload = json.loads(api_response.content)
+        assert payload['last_updated'] == '2026-05-24'
+        data = payload['peptides']
 
         assert len(data) == 1
         p = data[0]
@@ -2363,15 +2378,15 @@ class TestProductionSite:
 class TestAdminSecurityMiddleware:
     """Tests for AdminSecurityMiddleware."""
 
-    def test_default_admin_path_returns_403(self, client):
+    def test_default_admin_path_returns_404(self, client):
         """The default /admin/ path must be blocked."""
         response = client.get('/admin/')
-        assert response.status_code == 403
+        assert response.status_code == 404
 
-    def test_default_admin_subpaths_return_403(self, client):
+    def test_default_admin_subpaths_return_404(self, client):
         """Any subpath under /admin/ must be blocked."""
         response = client.get('/admin/login/')
-        assert response.status_code == 403
+        assert response.status_code == 404
 
     def test_gestao_login_rate_limited(self, client, settings):
         """Admin login must be rate limited."""
@@ -2429,6 +2444,56 @@ class TestAdminSecurityMiddleware:
             '/gestao/login/',
             HTTP_X_FORWARDED_FOR='198.51.100.30, 10.0.0.1',
             REMOTE_ADDR='10.0.0.1',
+        )
+        assert middleware(request).status_code == 403
+
+    def test_gestao_login_cf_connecting_ip_preferred(self, client, settings):
+        """Cloudflare's client IP header should be preferred when present."""
+        from django.core.cache import cache
+        cache.clear()
+        settings.RATE_LIMIT_ADMIN_REQUESTS = 1
+        settings.RATE_LIMIT_ADMIN_WINDOW_SECONDS = 60
+
+        factory = RequestFactory()
+        middleware = AdminSecurityMiddleware(lambda request: JsonResponse({'ok': True}))
+
+        request = factory.get(
+            '/gestao/login/',
+            HTTP_CF_CONNECTING_IP='198.51.100.40',
+            HTTP_X_FORWARDED_FOR='203.0.113.99',
+            REMOTE_ADDR='10.0.0.1',
+        )
+        assert middleware(request).status_code == 200
+
+        request = factory.get(
+            '/gestao/login/',
+            HTTP_CF_CONNECTING_IP='198.51.100.40',
+            HTTP_X_FORWARDED_FOR='203.0.113.98',
+            REMOTE_ADDR='10.0.0.1',
+        )
+        assert middleware(request).status_code == 403
+
+    def test_gestao_login_invalid_forwarded_ip_falls_back(self, client, settings):
+        """Invalid proxy IP values must not collapse all users into one bucket."""
+        from django.core.cache import cache
+        cache.clear()
+        settings.RATE_LIMIT_ADMIN_REQUESTS = 1
+        settings.RATE_LIMIT_ADMIN_WINDOW_SECONDS = 60
+
+        factory = RequestFactory()
+        middleware = AdminSecurityMiddleware(lambda request: JsonResponse({'ok': True}))
+
+        request = factory.get(
+            '/gestao/login/',
+            HTTP_X_FORWARDED_FOR='not-an-ip',
+            REMOTE_ADDR='203.0.113.60',
+        )
+        assert middleware(request).status_code == 200
+
+        request = factory.get(
+            '/gestao/login/',
+            HTTP_X_FORWARDED_FOR='also-not-an-ip',
+            REMOTE_ADDR='203.0.113.60',
         )
         assert middleware(request).status_code == 403
 

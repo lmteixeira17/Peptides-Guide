@@ -63,7 +63,108 @@ var stacksVisibleCount = 12;
 
 function buildStateMessage(title, text, isError) {
     var className = isError ? "loading-state error-state" : "loading-state";
-    return '<div class="' + className + '"><h3>' + title + '</h3><p>' + text + '</p></div>';
+    return '<div class="' + className + '"><h3>' + escapeHtml(title) + '</h3><p>' + escapeHtml(text) + '</p></div>';
+}
+
+function escapeHtml(value) {
+    return String(value == null ? "" : value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function escapeJsString(value) {
+    return String(value == null ? "" : value)
+        .replace(/\\/g, "\\\\")
+        .replace(/'/g, "\\'")
+        .replace(/\r/g, "\\r")
+        .replace(/\n/g, "\\n");
+}
+
+function safeClassToken(value) {
+    return String(value == null ? "" : value).replace(/[^a-zA-Z0-9_-]/g, "");
+}
+
+function withSitePath(path) {
+    var prefix = (window.sitePathPrefix || "").replace(/\/$/, "");
+    if (!path || path.charAt(0) !== "/" || path.indexOf("//") === 0) {
+        return path || "";
+    }
+    if (prefix && path.indexOf(prefix + "/") === 0) {
+        return path;
+    }
+    return prefix + path;
+}
+
+function sanitizeReferenceHtml(value) {
+    var template = document.createElement("template");
+    template.innerHTML = String(value == null ? "" : value);
+
+    function appendCleanChildren(source, target) {
+        Array.prototype.forEach.call(source.childNodes, function(child) {
+            var cleaned = cleanNode(child);
+            if (cleaned) {
+                target.appendChild(cleaned);
+            }
+        });
+    }
+
+    function isAllowedHref(href) {
+        try {
+            var url = new URL(href, window.location.href);
+            return ["http:", "https:", "mailto:", "tel:"].indexOf(url.protocol) !== -1;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function cleanNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            return document.createTextNode(node.textContent || "");
+        }
+        if (node.nodeType !== Node.ELEMENT_NODE) {
+            return null;
+        }
+
+        var tag = node.tagName.toLowerCase();
+        if (tag === "br") {
+            return document.createElement("br");
+        }
+        if (tag === "strong" || tag === "em") {
+            var formatted = document.createElement(tag);
+            appendCleanChildren(node, formatted);
+            return formatted;
+        }
+        if (tag === "a") {
+            var href = node.getAttribute("href") || "";
+            if (!isAllowedHref(href)) {
+                var fallback = document.createDocumentFragment();
+                appendCleanChildren(node, fallback);
+                return fallback;
+            }
+            var link = document.createElement("a");
+            link.href = href;
+            if (node.getAttribute("title")) {
+                link.title = node.getAttribute("title");
+            }
+            if (node.getAttribute("target") === "_blank") {
+                link.target = "_blank";
+                link.rel = "noopener noreferrer";
+            }
+            appendCleanChildren(node, link);
+            return link;
+        }
+
+        var fragment = document.createDocumentFragment();
+        appendCleanChildren(node, fragment);
+        return fragment;
+    }
+
+    var wrapper = document.createElement("span");
+    appendCleanChildren(template.content, wrapper);
+    return wrapper.innerHTML;
 }
 
 function initTheme() {
@@ -370,24 +471,25 @@ function renderCards() {
     var visible = filtered.slice(0, peptidesVisibleCount);
     var html = "";
     visible.forEach(function(p) {
-        var initials = p.name.substring(0, 2).toUpperCase();
+        var categoryClass = safeClassToken(p.category);
+        var initials = escapeHtml(p.name.substring(0, 2).toUpperCase());
         var statusClass = p.status === "approved" ? "" : (p.status === "trial" ? "trial" : "research");
-        html += '<button class="card ' + p.category + '" type="button" onclick="openModal(\'' + p.id + '\')">';
+        html += '<button class="card ' + categoryClass + '" type="button" onclick="openModal(\'' + escapeHtml(escapeJsString(p.id)) + '\')">';
         html += '  <div class="card-header">';
-        html += '    <div class="card-icon ' + p.category + '">' + initials + '</div>';
+        html += '    <div class="card-icon ' + categoryClass + '">' + initials + '</div>';
         html += '    <div class="card-title-group">';
-        html += '      <div class="card-title">' + p.name + '</div>';
+        html += '      <div class="card-title">' + escapeHtml(p.name) + '</div>';
         if (p.aka) {
-            html += '      <div class="card-aka">' + p.aka + '</div>';
+            html += '      <div class="card-aka">' + escapeHtml(p.aka) + '</div>';
         }
         html += '    </div>';
         html += '  </div>';
         html += '  <div class="card-body">';
-        html += '    <p class="card-description">' + p.description + '</p>';
+        html += '    <p class="card-description">' + escapeHtml(p.description) + '</p>';
         html += '  </div>';
         html += '  <div class="card-tags">';
-        html += '    <span class="tag tag-category">' + p.categoryLabel + '</span>';
-        html += '    <span class="tag tag-status ' + statusClass + '">' + p.statusLabel + '</span>';
+        html += '    <span class="tag tag-category">' + escapeHtml(p.categoryLabel) + '</span>';
+        html += '    <span class="tag tag-status ' + statusClass + '">' + escapeHtml(p.statusLabel) + '</span>';
         html += '  </div>';
         html += '  <div class="card-footer">';
         html += '    <span>Ver detalhes completos</span>';
@@ -458,16 +560,17 @@ function renderStacks() {
     var visible = filtered.slice(0, stacksVisibleCount);
     var html = "";
     visible.forEach(function(s) {
-        html += '<button class="stack-card ' + s.goal + '" type="button" onclick="openStackModal(\'' + s.id + '\')">';
-        html += '  <div class="stack-card-header ' + s.goal + '">';
-        html += '    <div class="stack-card-name">' + s.name + '</div>';
-        html += '    <div class="stack-card-level">' + s.goalLabel + ' \u2022 N\u00edvel: ' + s.level + '</div>';
+        var goalClass = safeClassToken(s.goal);
+        html += '<button class="stack-card ' + goalClass + '" type="button" onclick="openStackModal(\'' + escapeHtml(escapeJsString(s.id)) + '\')">';
+        html += '  <div class="stack-card-header ' + goalClass + '">';
+        html += '    <div class="stack-card-name">' + escapeHtml(s.name) + '</div>';
+        html += '    <div class="stack-card-level">' + escapeHtml(s.goalLabel) + ' \u2022 N\u00edvel: ' + escapeHtml(s.level) + '</div>';
         html += '  </div>';
         html += '  <div class="stack-card-body">';
-        html += '    <p class="stack-card-desc">' + s.description + '</p>';
+        html += '    <p class="stack-card-desc">' + escapeHtml(s.description) + '</p>';
         html += '    <div class="stack-peptide-list">';
         s.peptides.forEach(function(p) {
-            html += '      <span class="stack-peptide-chip">' + p.name + '</span>';
+            html += '      <span class="stack-peptide-chip">' + escapeHtml(p.name) + '</span>';
         });
         html += '    </div>';
         html += '  </div>';
@@ -513,41 +616,41 @@ function openModal(id) {
         var srcStack = stacks.find(function(item) { return item.id === sourceStackId; });
         if (srcStack) {
             html += '<div class="modal-back">';
-            html += '  <a href="javascript:void(0)" onclick="openStackModal(\'' + sourceStackId + '\')">&larr; Voltar para ' + srcStack.name + '</a>';
+            html += '  <a href="javascript:void(0)" onclick="openStackModal(\'' + escapeHtml(escapeJsString(sourceStackId)) + '\')">&larr; Voltar para ' + escapeHtml(srcStack.name) + '</a>';
             html += '</div>';
         }
     }
 
     html += '<div class="modal-header">';
-    html += '  <div class="modal-title" id="modalTitle">' + p.name + '</div>';
+    html += '  <div class="modal-title" id="modalTitle">' + escapeHtml(p.name) + '</div>';
     if (p.aka) {
-        html += '  <div class="modal-aka">Tamb\u00e9m conhecido como: ' + p.aka + '</div>';
+        html += '  <div class="modal-aka">Tamb\u00e9m conhecido como: ' + escapeHtml(p.aka) + '</div>';
     }
     html += '  <div class="modal-tags" style="margin-top:0.8rem">';
     var statusClass = p.status === "approved" ? "" : (p.status === "trial" ? "trial" : "research");
-    html += '    <span class="tag tag-category">' + p.categoryLabel + '</span>';
-    html += '    <span class="tag tag-status ' + statusClass + '">' + p.statusLabel + '</span>';
-    html += '    <span class="tag" style="background:#f3e8ff;color:#7c3aed">Meia-vida: ' + p.halfLife + '</span>';
-    html += '    <span class="tag" style="background:#ecfdf5;color:#065f46">Via: ' + p.administration + '</span>';
+    html += '    <span class="tag tag-category">' + escapeHtml(p.categoryLabel) + '</span>';
+    html += '    <span class="tag tag-status ' + statusClass + '">' + escapeHtml(p.statusLabel) + '</span>';
+    html += '    <span class="tag" style="background:#f3e8ff;color:#7c3aed">Meia-vida: ' + escapeHtml(p.halfLife) + '</span>';
+    html += '    <span class="tag" style="background:#ecfdf5;color:#065f46">Via: ' + escapeHtml(p.administration) + '</span>';
     html += '  </div>';
-    html += '  <div style="margin-top:1rem"><a href="/peptideos/' + p.id + '/" style="color:#3730a3;font-weight:600;text-decoration:none">Ver p\u00e1gina completa &rarr;</a></div>';
+    html += '  <div style="margin-top:1rem"><a href="' + escapeHtml(withSitePath('/peptideos/' + encodeURIComponent(p.id) + '/')) + '" style="color:#3730a3;font-weight:600;text-decoration:none">Ver p\u00e1gina completa &rarr;</a></div>';
     html += '</div>';
 
     html += '<div class="modal-section">';
     html += '  <h3>Descri\u00e7\u00e3o</h3>';
-    html += '  <p>' + p.description + '</p>';
+    html += '  <p>' + escapeHtml(p.description) + '</p>';
     html += '</div>';
 
     html += '<div class="modal-section">';
     html += '  <h3>Mecanismo de A\u00e7\u00e3o</h3>';
-    html += '  <p>' + p.mechanism + '</p>';
+    html += '  <p>' + escapeHtml(p.mechanism) + '</p>';
     html += '</div>';
 
     html += '<div class="modal-section">';
     html += '  <h3>Benef\u00edcios e Usos</h3>';
     html += '  <ul>';
     p.benefits.forEach(function(b) {
-        html += '    <li>' + b + '</li>';
+        html += '    <li>' + escapeHtml(b) + '</li>';
     });
     html += '  </ul>';
     html += '</div>';
@@ -561,8 +664,8 @@ function openModal(id) {
     html += '  </div>';
     p.sideEffects.forEach(function(se) {
         html += '  <div class="side-effect-item">';
-        html += '    <span class="severity-dot ' + se.severity + '"></span>';
-        html += '    <span>' + se.name + '</span>';
+        html += '    <span class="severity-dot ' + safeClassToken(se.severity) + '"></span>';
+        html += '    <span>' + escapeHtml(se.name) + '</span>';
         html += '  </div>';
     });
     html += '</div>';
@@ -574,9 +677,9 @@ function openModal(id) {
     html += '    <tbody>';
     p.dosage.forEach(function(d) {
         html += '    <tr>';
-        html += '      <td><strong>' + d.protocol + '</strong></td>';
-        html += '      <td>' + d.dose + '</td>';
-        html += '      <td>' + d.notes + '</td>';
+        html += '      <td><strong>' + escapeHtml(d.protocol) + '</strong></td>';
+        html += '      <td>' + escapeHtml(d.dose) + '</td>';
+        html += '      <td>' + escapeHtml(d.notes) + '</td>';
         html += '    </tr>';
     });
     html += '    </tbody>';
@@ -589,7 +692,7 @@ function openModal(id) {
         html += '  <h3>Refer\u00eancias Cient\u00edficas</h3>';
         html += '  <ul>';
         p.references.forEach(function(r) {
-            html += '    <li>' + r + '</li>';
+            html += '    <li>' + sanitizeReferenceHtml(r) + '</li>';
         });
         html += '  </ul>';
         html += '</div>';
@@ -609,7 +712,7 @@ function openModal(id) {
     // Move focus to the close button for screen readers
     if (modalClose) modalClose.focus();
     // SEO: update title and URL hash
-    document.title = p.name + ' - Guia de Pept\u00eddeos';
+    document.title = String(p.name || '') + ' - Guia de Pept\u00eddeos';
     history.replaceState(null, '', '#' + id);
     var metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) {
@@ -626,18 +729,18 @@ function openStackModal(id) {
 
     var html = '';
     html += '<div class="modal-header">';
-    html += '  <div class="modal-title" id="modalTitle">' + s.name + '</div>';
+    html += '  <div class="modal-title" id="modalTitle">' + escapeHtml(s.name) + '</div>';
     html += '  <div class="modal-tags" style="margin-top:0.8rem">';
-    html += '    <span class="tag tag-category">' + s.goalLabel + '</span>';
-    html += '    <span class="tag" style="background:#f3e8ff;color:#7c3aed">N\u00edvel: ' + s.level + '</span>';
-    html += '    <span class="tag" style="background:#ecfdf5;color:#065f46">' + s.peptides.length + ' pept\u00eddeos</span>';
+    html += '    <span class="tag tag-category">' + escapeHtml(s.goalLabel) + '</span>';
+    html += '    <span class="tag" style="background:#f3e8ff;color:#7c3aed">N\u00edvel: ' + escapeHtml(s.level) + '</span>';
+    html += '    <span class="tag" style="background:#ecfdf5;color:#065f46">' + escapeHtml(s.peptides.length) + ' pept\u00eddeos</span>';
     html += '  </div>';
-    html += '  <div style="margin-top:1rem"><a href="/combinacoes/' + s.id + '/" style="color:#3730a3;font-weight:600;text-decoration:none">Ver p\u00e1gina completa &rarr;</a></div>';
+    html += '  <div style="margin-top:1rem"><a href="' + escapeHtml(withSitePath('/combinacoes/' + encodeURIComponent(s.id) + '/')) + '" style="color:#3730a3;font-weight:600;text-decoration:none">Ver p\u00e1gina completa &rarr;</a></div>';
     html += '</div>';
 
     html += '<div class="modal-section">';
     html += '  <h3>Descri\u00e7\u00e3o do Protocolo</h3>';
-    html += '  <p>' + s.description + '</p>';
+    html += '  <p>' + escapeHtml(s.description) + '</p>';
     html += '</div>';
 
     html += '<div class="modal-section">';
@@ -646,13 +749,13 @@ function openStackModal(id) {
         var hasDetail = p.id && peptides.some(function(item) { return item.id === p.id; });
         html += '  <div class="stack-peptide-detail">';
         if (hasDetail) {
-            html += '    <h4><a href="javascript:void(0)" class="peptide-link" onclick="openPeptideFromStack(\'' + p.id + '\', \'' + s.id + '\')" title="Ver detalhes completos de ' + p.name + '">' + p.name + ' \u2197</a></h4>';
+            html += '    <h4><a href="javascript:void(0)" class="peptide-link" onclick="openPeptideFromStack(\'' + escapeHtml(escapeJsString(p.id)) + '\', \'' + escapeHtml(escapeJsString(s.id)) + '\')" title="Ver detalhes completos de ' + escapeHtml(p.name) + '">' + escapeHtml(p.name) + ' \u2197</a></h4>';
         } else {
-            html += '    <h4>' + p.name + '</h4>';
+            html += '    <h4>' + escapeHtml(p.name) + '</h4>';
         }
-        html += '    <div class="role">' + p.role + '</div>';
-        html += '    <div class="dose-info"><strong>Dosagem:</strong> ' + p.dose + '</div>';
-        html += '    <div class="dose-info"><strong>Frequ\u00eancia:</strong> ' + p.timing + '</div>';
+        html += '    <div class="role">' + escapeHtml(p.role) + '</div>';
+        html += '    <div class="dose-info"><strong>Dosagem:</strong> ' + escapeHtml(p.dose) + '</div>';
+        html += '    <div class="dose-info"><strong>Frequ\u00eancia:</strong> ' + escapeHtml(p.timing) + '</div>';
         html += '  </div>';
     });
     html += '</div>';
@@ -660,23 +763,23 @@ function openStackModal(id) {
     if (s.application) {
         html += '<div class="modal-section">';
         html += '  <h3>Aplica\u00e7\u00e3o</h3>';
-        html += '  <div class="application-box">' + s.application + '</div>';
+        html += '  <div class="application-box">' + escapeHtml(s.application) + '</div>';
         html += '</div>';
     }
 
     html += '<div class="modal-section">';
     html += '  <h3>Sinergia</h3>';
-    html += '  <div class="synergy-box">' + s.synergy + '</div>';
+    html += '  <div class="synergy-box">' + escapeHtml(s.synergy) + '</div>';
     html += '</div>';
 
     html += '<div class="modal-section">';
     html += '  <h3>Dura\u00e7\u00e3o Recomendada</h3>';
-    html += '  <p>' + s.duration + '</p>';
+    html += '  <p>' + escapeHtml(s.duration) + '</p>';
     html += '</div>';
 
     html += '<div class="modal-section">';
     html += '  <h3>N\u00edvel de Evid\u00eancia</h3>';
-    html += '  <div class="evidence-box">' + s.evidenceLevel + '</div>';
+    html += '  <div class="evidence-box">' + escapeHtml(s.evidenceLevel) + '</div>';
     html += '</div>';
 
     // References if available
@@ -685,14 +788,14 @@ function openStackModal(id) {
         html += '  <h3>Refer\u00eancias Cient\u00edficas</h3>';
         html += '  <ul>';
         s.references.forEach(function(r) {
-            html += '    <li>' + r + '</li>';
+            html += '    <li>' + sanitizeReferenceHtml(r) + '</li>';
         });
         html += '  </ul>';
         html += '</div>';
     }
 
     html += '<div class="warning-box">';
-    html += '  <strong>ATEN\u00c7\u00c3O:</strong> ' + s.warnings + ' As combina\u00e7\u00f5es listadas s\u00e3o baseadas em l\u00f3gica farmacol\u00f3gica e relatos de pesquisa. ';
+    html += '  <strong>ATEN\u00c7\u00c3O:</strong> ' + escapeHtml(s.warnings) + ' As combina\u00e7\u00f5es listadas s\u00e3o baseadas em l\u00f3gica farmacol\u00f3gica e relatos de pesquisa. ';
     html += '  N\u00e3o h\u00e1 ensaios cl\u00ednicos testando estas combina\u00e7\u00f5es espec\u00edficas. Consulte sempre um m\u00e9dico.';
     html += '</div>';
 
@@ -704,7 +807,7 @@ function openStackModal(id) {
     enableModalTrap();
     if (modalClose) modalClose.focus();
     // SEO: update title and URL hash
-    document.title = s.name + ' - Guia de Pept\u00eddeos';
+    document.title = String(s.name || '') + ' - Guia de Pept\u00eddeos';
     history.replaceState(null, '', '#stack-' + id);
 }
 
