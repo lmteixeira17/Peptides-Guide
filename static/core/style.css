@@ -43,6 +43,18 @@
 
     --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --cat-weight-loss: #8ee4dc;
+    --cat-growth-hormone: #c4b5fd;
+    --cat-healing: #fde68a;
+    --cat-anti-aging: #f9a8d4;
+    --cat-skin: #a5f3fc;
+    --cat-cognitive: #bfdbfe;
+    --cat-immune: #fecaca;
+    --cat-hormonal: #a7f3d0;
+    --cat-sleep: #cbd5e1;
+    --cat-body-comp: #fed7aa;
+    --cat-other: #d9f99d;
 }
 
 [data-theme="light"] {
@@ -619,22 +631,147 @@ body {
     padding: 0 1.5rem;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    align-items: stretch;
     gap: 1rem;
 }
 
-.card {
-    background: var(--surface);
-    border: 1px solid var(--border);
+.card,
+.stack-card {
+    --card-accent: var(--cat-weight-loss);
+    --card-accent-text: #13776f;
+    --card-tint: rgba(142,228,220,0.14);
+    --card-chip: rgba(142,228,220,0.22);
+    --card-border: rgba(78,205,196,0.34);
+    background:
+        linear-gradient(180deg, var(--card-tint) 0, var(--surface) 96px),
+        var(--surface);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-lg);
     overflow: hidden;
     cursor: pointer;
     transition: var(--transition-slow);
     position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card {
+    min-height: 248px;
+}
+
+.card::before,
+.stack-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: var(--card-accent);
+    z-index: 1;
+}
+
+.card.weight-loss,
+.stack-card.weight-loss {
+    --card-accent: var(--cat-weight-loss);
+    --card-accent-text: #13776f;
+    --card-tint: rgba(142,228,220,0.16);
+    --card-chip: rgba(142,228,220,0.25);
+    --card-border: rgba(78,205,196,0.36);
+}
+
+.card.growth-hormone,
+.stack-card.growth-hormone {
+    --card-accent: var(--cat-growth-hormone);
+    --card-accent-text: #6d54c8;
+    --card-tint: rgba(196,181,253,0.18);
+    --card-chip: rgba(196,181,253,0.28);
+    --card-border: rgba(167,139,250,0.34);
+}
+
+.card.healing,
+.stack-card.healing {
+    --card-accent: var(--cat-healing);
+    --card-accent-text: #a16207;
+    --card-tint: rgba(253,230,138,0.22);
+    --card-chip: rgba(253,230,138,0.32);
+    --card-border: rgba(251,191,36,0.34);
+}
+
+.card.anti-aging,
+.stack-card.anti-aging {
+    --card-accent: var(--cat-anti-aging);
+    --card-accent-text: #be4b8f;
+    --card-tint: rgba(249,168,212,0.18);
+    --card-chip: rgba(249,168,212,0.28);
+    --card-border: rgba(244,114,182,0.32);
+}
+
+.card.skin,
+.stack-card.skin {
+    --card-accent: var(--cat-skin);
+    --card-accent-text: #087ea4;
+    --card-tint: rgba(165,243,252,0.18);
+    --card-chip: rgba(165,243,252,0.28);
+    --card-border: rgba(103,232,249,0.34);
+}
+
+.card.cognitive,
+.stack-card.cognitive {
+    --card-accent: var(--cat-cognitive);
+    --card-accent-text: #2563eb;
+    --card-tint: rgba(191,219,254,0.18);
+    --card-chip: rgba(191,219,254,0.28);
+    --card-border: rgba(147,197,253,0.34);
+}
+
+.card.immune,
+.stack-card.immune {
+    --card-accent: var(--cat-immune);
+    --card-accent-text: #b91c1c;
+    --card-tint: rgba(254,202,202,0.2);
+    --card-chip: rgba(254,202,202,0.3);
+    --card-border: rgba(252,165,165,0.34);
+}
+
+.card.hormonal,
+.stack-card.hormonal {
+    --card-accent: var(--cat-hormonal);
+    --card-accent-text: #047857;
+    --card-tint: rgba(167,243,208,0.18);
+    --card-chip: rgba(167,243,208,0.28);
+    --card-border: rgba(94,234,212,0.32);
+}
+
+.card.sleep,
+.stack-card.sleep {
+    --card-accent: var(--cat-sleep);
+    --card-accent-text: #64748b;
+    --card-tint: rgba(203,213,225,0.18);
+    --card-chip: rgba(203,213,225,0.28);
+    --card-border: rgba(148,163,184,0.32);
+}
+
+.card.body-comp,
+.stack-card.body-comp {
+    --card-accent: var(--cat-body-comp);
+    --card-accent-text: #c2410c;
+    --card-tint: rgba(254,215,170,0.2);
+    --card-chip: rgba(254,215,170,0.3);
+    --card-border: rgba(253,186,116,0.34);
+}
+
+.card.other,
+.stack-card.other {
+    --card-accent: var(--cat-other);
+    --card-accent-text: #4d7c0f;
+    --card-tint: rgba(217,249,157,0.18);
+    --card-chip: rgba(217,249,157,0.28);
+    --card-border: rgba(190,242,100,0.32);
 }
 
 .card:hover {
     transform: translateY(-3px);
-    border-color: var(--border-strong);
+    border-color: var(--card-accent);
     box-shadow: var(--shadow);
 }
 
@@ -642,6 +779,7 @@ body {
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    min-height: 76px;
     padding: 1rem 1rem 0.5rem;
 }
 
@@ -655,22 +793,11 @@ body {
     font-size: 0.8rem;
     font-weight: 700;
     color: #0f0f0f;
+    background: var(--card-accent);
     flex-shrink: 0;
     text-transform: uppercase;
     letter-spacing: 0.03em;
 }
-
-.card-icon.weight-loss { background: var(--teal); }
-.card-icon.growth-hormone { background: #a78bfa; }
-.card-icon.healing { background: #fbbf24; }
-.card-icon.anti-aging { background: #f472b6; }
-.card-icon.skin { background: #67e8f9; }
-.card-icon.cognitive { background: #93c5fd; }
-.card-icon.immune { background: #fca5a5; }
-.card-icon.hormonal { background: #5eead4; }
-.card-icon.sleep { background: #94a3b8; }
-.card-icon.body-comp { background: #fdba74; }
-.card-icon.other { background: #bef264; }
 
 .card-title-group {
     flex: 1;
@@ -682,17 +809,25 @@ body {
     font-weight: 600;
     color: var(--text);
     letter-spacing: -0.01em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .card-aka {
     font-size: 0.75rem;
     color: var(--text-muted);
     margin-top: 0.15rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .card-body {
     padding: 0 1rem;
     margin-bottom: 0.5rem;
+    flex: 1;
 }
 
 .card-description {
@@ -725,8 +860,8 @@ body {
 }
 
 .tag-category {
-    background: var(--teal-soft);
-    color: var(--teal);
+    background: var(--card-chip);
+    color: var(--card-accent-text);
 }
 
 .tag-status {
@@ -757,10 +892,11 @@ body {
     font-size: 0.8rem;
     font-weight: 500;
     transition: var(--transition);
+    margin-top: auto;
 }
 
 .card:hover .card-footer {
-    color: var(--teal);
+    color: var(--card-accent-text);
 }
 
 /* ============================================
@@ -783,27 +919,24 @@ body {
 .stacks-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    align-items: stretch;
     gap: 1rem;
 }
 
 .stack-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    cursor: pointer;
-    transition: var(--transition-slow);
+    min-height: 330px;
 }
 
 .stack-card:hover {
     transform: translateY(-3px);
-    border-color: var(--border-strong);
+    border-color: var(--card-accent);
     box-shadow: var(--shadow);
 }
 
 .stack-card-header {
+    min-height: 96px;
     padding: 1rem;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--card-border);
 }
 
 .stack-card-name {
@@ -811,16 +944,24 @@ body {
     font-weight: 600;
     color: var(--text);
     margin-bottom: 0.15rem;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .stack-card-level {
     font-size: 0.75rem;
-    color: var(--text-muted);
+    color: var(--card-accent-text);
     font-weight: 500;
 }
 
 .stack-card-body {
     padding: 0.75rem 1rem;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
 }
 
 .stack-card-desc {
@@ -828,21 +969,27 @@ body {
     color: var(--text-secondary);
     line-height: 1.6;
     margin-bottom: 0.6rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .stack-peptide-list {
     display: flex;
     flex-wrap: wrap;
     gap: 0.35rem;
+    max-height: 4.2rem;
+    overflow: hidden;
 }
 
 .stack-peptide-chip {
     padding: 0.2rem 0.55rem;
-    background: var(--elevated);
-    border: 1px solid var(--border);
+    background: var(--card-chip);
+    border: 1px solid var(--card-border);
     border-radius: 50px;
     font-size: 0.7rem;
-    color: var(--text-secondary);
+    color: var(--card-accent-text);
     font-weight: 500;
 }
 
@@ -855,10 +1002,11 @@ body {
     color: var(--text-muted);
     font-size: 0.8rem;
     font-weight: 500;
+    margin-top: auto;
 }
 
 .stack-card:hover .stack-card-footer {
-    color: var(--teal);
+    color: var(--card-accent-text);
 }
 
 /* ============================================

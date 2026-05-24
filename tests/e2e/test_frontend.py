@@ -94,6 +94,29 @@ def test_stacks_search_and_new_stack_modal(page: Page, live_server):
     expect(page).to_have_url(re.compile(r"/#stack-metabolic-mash-fgf21$"))
 
 
+def test_stack_cards_have_consistent_size_and_goal_colors(page: Page, live_server):
+    open_home(page, live_server)
+
+    page.locator('[data-section="stacks"]').click()
+    expect(page.locator(".stack-card").nth(2)).to_be_visible()
+
+    heights = page.locator(".stack-card").evaluate_all(
+        "cards => cards.slice(0, 3).map(card => Math.round(card.getBoundingClientRect().height))"
+    )
+    assert max(heights) - min(heights) <= 1
+
+    weight_loss_accent = page.locator(".stack-card").first.evaluate(
+        "card => getComputedStyle(card).getPropertyValue('--card-accent').trim()"
+    )
+    page.locator('[data-goal="healing"]').click()
+    expect(page.locator(".stack-card").first).to_be_visible()
+    healing_accent = page.locator(".stack-card").first.evaluate(
+        "card => getComputedStyle(card).getPropertyValue('--card-accent').trim()"
+    )
+
+    assert weight_loss_accent != healing_accent
+
+
 def test_stack_to_peptide_back_navigation(page: Page, live_server):
     open_home(page, live_server)
 

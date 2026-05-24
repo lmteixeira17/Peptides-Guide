@@ -347,7 +347,7 @@ function renderCards() {
     visible.forEach(function(p) {
         var initials = p.name.substring(0, 2).toUpperCase();
         var statusClass = p.status === "approved" ? "" : (p.status === "trial" ? "trial" : "research");
-        html += '<div class="card" onclick="openModal(\'' + p.id + '\')">';
+        html += '<div class="card ' + p.category + '" onclick="openModal(\'' + p.id + '\')">';
         html += '  <div class="card-header">';
         html += '    <div class="card-icon ' + p.category + '">' + initials + '</div>';
         html += '    <div class="card-title-group">';
@@ -433,7 +433,7 @@ function renderStacks() {
     var visible = filtered.slice(0, stacksVisibleCount);
     var html = "";
     visible.forEach(function(s) {
-        html += '<div class="stack-card" onclick="openStackModal(\'' + s.id + '\')">';
+        html += '<div class="stack-card ' + s.goal + '" onclick="openStackModal(\'' + s.id + '\')">';
         html += '  <div class="stack-card-header ' + s.goal + '">';
         html += '    <div class="stack-card-name">' + s.name + '</div>';
         html += '    <div class="stack-card-level">' + s.goalLabel + ' \u2022 N\u00edvel: ' + s.level + '</div>';
