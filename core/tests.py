@@ -1813,13 +1813,13 @@ class TestProductionSite:
         return result.stdout.decode('utf-8', errors='replace')
 
     def test_homepage_returns_200(self):
-        out = self._curl('/')
+        out = self._curl('/peptides/')
         assert 'HTTP/' in out
         assert '200' in out.split('\n')[0]
 
     def test_css_loads_on_production(self):
         """CSS file referenced by the page must return 200 on production."""
-        html = self._curl('/', head_only=False)
+        html = self._curl('/peptides/', head_only=False)
         import re
         m = re.search(r'href="([^"]*style\.[^"]*\.css)"', html)
         assert m, 'CSS file not referenced in production HTML'
@@ -1829,7 +1829,7 @@ class TestProductionSite:
 
     def test_js_loads_on_production(self):
         """JS file referenced by the page must return 200 on production."""
-        html = self._curl('/', head_only=False)
+        html = self._curl('/peptides/', head_only=False)
         import re
         m = re.search(r'src="([^"]*app\.[^"]*\.js)"', html)
         assert m, 'JS file not referenced in production HTML'
@@ -1846,46 +1846,46 @@ class TestProductionSite:
         assert '200' in out.split('\n')[0]
 
     def test_peptide_detail_page(self):
-        out = self._curl('/peptideos/semaglutide/')
+        out = self._curl('/peptides/peptideos/semaglutide/')
         assert '200' in out.split('\n')[0]
 
     def test_stack_detail_page(self):
-        out = self._curl('/combinacoes/weight-loss-beginner/')
+        out = self._curl('/peptides/combinacoes/weight-loss-beginner/')
         assert '200' in out.split('\n')[0]
 
     def test_category_page(self):
-        out = self._curl('/categorias/weight-loss/')
+        out = self._curl('/peptides/categorias/weight-loss/')
         assert '200' in out.split('\n')[0]
 
     def test_glossario_page(self):
-        out = self._curl('/glossario/')
+        out = self._curl('/peptides/glossario/')
         assert '200' in out.split('\n')[0]
 
     def test_sobre_page(self):
-        out = self._curl('/sobre/')
+        out = self._curl('/peptides/sobre/')
         assert '200' in out.split('\n')[0]
 
     def test_robots_txt(self):
-        out = self._curl('/robots.txt')
+        out = self._curl('/peptides/robots.txt')
         assert '200' in out.split('\n')[0]
 
     def test_sitemap_xml(self):
-        out = self._curl('/sitemap.xml')
+        out = self._curl('/peptides/sitemap.xml')
         assert '200' in out.split('\n')[0]
 
     def test_llms_txt(self):
-        out = self._curl('/llms.txt')
+        out = self._curl('/peptides/llms.txt')
         assert '200' in out.split('\n')[0]
 
     def test_api_json(self):
-        out = self._curl('/api/peptides.json')
+        out = self._curl('/peptides/api/peptides.json')
         assert '200' in out.split('\n')[0]
 
     def test_https_redirect(self):
         """HTTP must redirect to HTTPS."""
         import subprocess
         result = subprocess.run(
-            ['curl', '-sI', '--connect-timeout', '5', 'http://guiadepeptideos.com.br/'],
+            ['curl', '-sI', '--connect-timeout', '5', 'http://guiadepeptideos.com.br/peptides/'],
             capture_output=True, text=True, timeout=10,
         )
         assert '301' in result.stdout.split('\n')[0]
@@ -1894,14 +1894,14 @@ class TestProductionSite:
         """www must redirect to non-www."""
         import subprocess
         result = subprocess.run(
-            ['curl', '-sI', '--connect-timeout', '5', 'https://www.guiadepeptideos.com.br/'],
+            ['curl', '-sI', '--connect-timeout', '5', 'https://www.guiadepeptideos.com.br/peptides/'],
             capture_output=True, text=True, timeout=10,
         )
         assert '301' in result.stdout.split('\n')[0]
 
     def test_detail_page_css_loads(self):
         """CSS on peptide detail page must be accessible."""
-        html = self._curl('/peptideos/semaglutide/', head_only=False)
+        html = self._curl('/peptides/peptideos/semaglutide/', head_only=False)
         import re
         m = re.search(r'href="([^"]*style\.[^"]*\.css)"', html)
         assert m, 'CSS not referenced on detail page'
