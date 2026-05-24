@@ -2,6 +2,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <script>
+    (function() {
+        var saved = localStorage.getItem('peptides-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+    })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia Completo de Pept&iacute;deos - Refer&ecirc;ncia Cient&iacute;fica sobre Pept&iacute;deos Terap&ecirc;uticos</title>
@@ -211,8 +219,13 @@
     </script>
 </head>
 <body>
+    <div class="scroll-progress" id="scrollProgress"></div>
     <!-- Header -->
-    <header class="header">
+    <header class="header" id="mainHeader">
+        <button class="theme-toggle" id="themeToggle" type="button" title="Alternar tema">
+            <span id="themeIcon">&#x1F319;</span>
+            <span id="themeLabel">Escuro</span>
+        </button>
         <div class="header-content">
             <h1>Guia Completo de Pept&iacute;deos</h1>
             <p class="subtitle">Refer&ecirc;ncia cient&iacute;fica com descri&ccedil;&otilde;es, efeitos colaterais e dosagens baseadas em estudos</p>

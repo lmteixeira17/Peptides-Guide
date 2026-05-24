@@ -2,6 +2,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <script>
+    (function() {
+        var saved = localStorage.getItem('peptides-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+    })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre o Guia - Metodologia, Fontes e Critérios | Guia de Peptídeos</title>
@@ -69,7 +77,12 @@
     </script>
 </head>
 <body>
-    <header class="header">
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <header class="header" id="mainHeader">
+        <button class="theme-toggle" id="themeToggle" type="button" title="Alternar tema">
+            <span id="themeIcon">&#x1F319;</span>
+            <span id="themeLabel">Escuro</span>
+        </button>
         <div class="header-content">
             <h1><a href="/" style="color:inherit;text-decoration:none">Guia Completo de Peptídeos</a></h1>
             <p class="subtitle">Referência científica sobre peptídeos terapêuticos</p>
@@ -192,5 +205,49 @@
         <p><a href="/">&larr; Voltar ao Guia Completo</a></p>
         <p>Guia de Peptídeos &copy; 2026 - Conteúdo baseado em literatura científica publicada</p>
     </footer>
+    <script>
+    (function() {
+        var themeToggle = document.getElementById('themeToggle');
+        var themeIcon = document.getElementById('themeIcon');
+        var themeLabel = document.getElementById('themeLabel');
+        var mainHeader = document.getElementById('mainHeader');
+        var scrollProgress = document.getElementById('scrollProgress');
+
+        function updateThemeUI(theme) {
+            if (theme === 'dark') {
+                themeIcon.innerHTML = '\u2600';
+                themeLabel.textContent = 'Claro';
+            } else {
+                themeIcon.innerHTML = '\uD83C\uDF19';
+                themeLabel.textContent = 'Escuro';
+            }
+        }
+
+        var currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        updateThemeUI(currentTheme);
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('peptides-theme', next);
+                updateThemeUI(next);
+            });
+        }
+
+        function onScroll() {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (scrollProgress) scrollProgress.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+            if (mainHeader) {
+                if (scrollTop > 60) mainHeader.classList.add('scrolled');
+                else mainHeader.classList.remove('scrolled');
+            }
+        }
+        window.addEventListener('scroll', onScroll);
+        onScroll();
+    })();
+    </script>
 </body>
 </html>

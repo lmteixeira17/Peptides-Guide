@@ -46,10 +46,71 @@ var modalClose = document.getElementById("modalClose");
 var filterButtons = document.querySelectorAll(".filters .filter-btn");
 var sectionButtons = document.querySelectorAll(".section-btn");
 var stackFilterButtons = document.querySelectorAll("#stacksFilters .filter-btn");
+var themeToggle = document.getElementById("themeToggle");
+var themeIcon = document.getElementById("themeIcon");
+var themeLabel = document.getElementById("themeLabel");
+var mainHeader = document.getElementById("mainHeader");
+var scrollProgress = document.getElementById("scrollProgress");
+
+var peptidesPageSize = 12;
+var peptidesVisibleCount = 12;
+var stacksPageSize = 12;
+var stacksVisibleCount = 12;
 
 function buildStateMessage(title, text, isError) {
     var className = isError ? "loading-state error-state" : "loading-state";
     return '<div class="' + className + '"><h3>' + title + '</h3><p>' + text + '</p></div>';
+}
+
+function initTheme() {
+    var saved = localStorage.getItem('peptides-theme');
+    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    var theme = saved || (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+    updateThemeUI(theme);
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            var current = document.documentElement.getAttribute('data-theme') || 'light';
+            var next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('peptides-theme', next);
+            updateThemeUI(next);
+        });
+    }
+}
+
+function updateThemeUI(theme) {
+    if (!themeIcon || !themeLabel) return;
+    if (theme === 'dark') {
+        themeIcon.innerHTML = '\u2600';
+        themeLabel.textContent = 'Claro';
+    } else {
+        themeIcon.innerHTML = '\uD83C\uDF19';
+        themeLabel.textContent = 'Escuro';
+    }
+}
+
+function updateScrollProgress() {
+    if (!scrollProgress) return;
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    scrollProgress.style.width = percent + '%';
+}
+
+function updateHeaderScroll() {
+    if (!mainHeader) return;
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollTop > 60) {
+        mainHeader.classList.add('scrolled');
+    } else {
+        mainHeader.classList.remove('scrolled');
+    }
+}
+
+function onScroll() {
+    updateScrollProgress();
+    updateHeaderScroll();
 }
 
 function renderCurrentSection() {
@@ -148,8 +209,11 @@ function loadData() {
 
 // Initialize
 function init() {
+    initTheme();
     bindEvents();
     renderCurrentSection();
+    window.addEventListener('scroll', onScroll);
+    onScroll();
     loadData().then(function() {
         renderCurrentSection();
         openFromHash();
@@ -161,8 +225,10 @@ function init() {
 function scheduleSectionRender() {
     window.clearTimeout(searchDebounceTimer);
     searchDebounceTimer = window.setTimeout(function() {
+        peptidesVisibleCount = peptidesPageSize;
+        stacksVisibleCount = stacksPageSize;
         renderCurrentSection();
-    }, 120);
+    }, 200);
 }
 
 // Bind events
@@ -177,6 +243,7 @@ function bindEvents() {
             filterButtons.forEach(function(b) { b.classList.remove("active"); });
             btn.classList.add("active");
             currentCategory = btn.getAttribute("data-category");
+            peptidesVisibleCount = peptidesPageSize;
             renderCards();
         });
     });
@@ -195,6 +262,7 @@ function bindEvents() {
             stackFilterButtons.forEach(function(b) { b.classList.remove("active"); });
             btn.classList.add("active");
             currentStackGoal = btn.getAttribute("data-goal");
+            stacksVisibleCount = stacksPageSize;
             renderStacks();
         });
     });
@@ -269,8 +337,9 @@ function renderCards() {
         return;
     }
 
+    var visible = filtered.slice(0, peptidesVisibleCount);
     var html = "";
-    filtered.forEach(function(p) {
+    visible.forEach(function(p) {
         var initials = p.name.substring(0, 2).toUpperCase();
         var statusClass = p.status === "approved" ? "" : (p.status === "trial" ? "trial" : "research");
         html += '<div class="card" onclick="openModal(\'' + p.id + '\')">';
@@ -297,7 +366,21 @@ function renderCards() {
         html += '</div>';
     });
 
+    if (filtered.length > peptidesVisibleCount) {
+        var remaining = filtered.length - peptidesVisibleCount;
+        html += '<div class="load-more-container">';
+        html += '  <button class="load-more-btn" id="loadMorePeptides" onclick="loadMorePeptides()">';
+        html += '    Carregar mais (' + remaining + ' restantes)';
+        html += '  </button>';
+        html += '</div>';
+    }
+
     cardsContainer.innerHTML = html;
+}
+
+function loadMorePeptides() {
+    peptidesVisibleCount += peptidesPageSize;
+    renderCards();
 }
 
 // Filter stacks
@@ -339,8 +422,9 @@ function renderStacks() {
         return;
     }
 
+    var visible = filtered.slice(0, stacksVisibleCount);
     var html = "";
-    filtered.forEach(function(s) {
+    visible.forEach(function(s) {
         html += '<div class="stack-card" onclick="openStackModal(\'' + s.id + '\')">';
         html += '  <div class="stack-card-header ' + s.goal + '">';
         html += '    <div class="stack-card-name">' + s.name + '</div>';
@@ -361,7 +445,21 @@ function renderStacks() {
         html += '</div>';
     });
 
+    if (filtered.length > stacksVisibleCount) {
+        var remaining = filtered.length - stacksVisibleCount;
+        html += '<div class="load-more-container">';
+        html += '  <button class="load-more-btn" id="loadMoreStacks" onclick="loadMoreStacks()">';
+        html += '    Carregar mais (' + remaining + ' restantes)';
+        html += '  </button>';
+        html += '</div>';
+    }
+
     stacksGrid.innerHTML = html;
+}
+
+function loadMoreStacks() {
+    stacksVisibleCount += stacksPageSize;
+    renderStacks();
 }
 
 // Open peptide from stack (with back navigation)
@@ -570,8 +668,16 @@ function openStackModal(id) {
 
 // Close modal
 function closeModal() {
-    modalOverlay.classList.remove("active");
-    document.body.style.overflow = "";
+    var modal = document.querySelector('.modal');
+    if (modal) {
+        modal.classList.add('modal-exit');
+    }
+    modalOverlay.style.opacity = '0';
+    setTimeout(function() {
+        modalOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+        if (modal) modal.classList.remove('modal-exit');
+    }, 250);
     // SEO: restore original title and URL
     document.title = 'Guia Completo de Pept\u00eddeos - Refer\u00eancia Cient\u00edfica sobre Pept\u00eddeos Terap\u00eauticos';
     history.replaceState(null, '', window.location.pathname);
