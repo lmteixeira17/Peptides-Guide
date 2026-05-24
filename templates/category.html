@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %}{% load compress %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -34,7 +34,9 @@
     <meta name="twitter:image" content="{{ site_og_image_url }}">
 
     <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    {% endcompress %}
 
     {% include "_ga4.html" %}
 

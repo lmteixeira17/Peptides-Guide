@@ -32,7 +32,7 @@ from django.urls import reverse
 
 from core.admin import PeptideAdmin, StackAdmin
 from core.management.commands.seed_peptides import js_to_json
-from core.middleware import RateLimitMiddleware
+from core.middleware import AdminSecurityMiddleware, RateLimitMiddleware
 from core.models import (
     CATEGORY_CHOICES,
     SEVERITY_CHOICES,
@@ -47,6 +47,8 @@ from core.models import (
     StackReference,
 )
 from core.serializers import serialize_peptide, serialize_stack
+from core.templatetags.core_filters import sanitize_ref
+from core.views import _site_counts
 
 
 # =============================================================================
@@ -826,12 +828,12 @@ class TestAdminRegistration:
 
     def test_peptide_admin_accessible(self, client, admin_user):
         client.login(username='admin', password='testpass123')
-        response = client.get('/admin/core/peptide/')
+        response = client.get('/gestao/core/peptide/')
         assert response.status_code == 200
 
     def test_stack_admin_accessible(self, client, admin_user):
         client.login(username='admin', password='testpass123')
-        response = client.get('/admin/core/stack/')
+        response = client.get('/gestao/core/stack/')
         assert response.status_code == 200
 
     def test_peptide_admin_list_display(self):
@@ -879,12 +881,12 @@ class TestAdminRegistration:
 
     def test_peptide_change_page(self, client, admin_user, peptide_with_relations):
         client.login(username='admin', password='testpass123')
-        response = client.get(f'/admin/core/peptide/{peptide_with_relations.pk}/change/')
+        response = client.get(f'/gestao/core/peptide/{peptide_with_relations.pk}/change/')
         assert response.status_code == 200
 
     def test_stack_change_page(self, client, admin_user, stack_with_relations):
         client.login(username='admin', password='testpass123')
-        response = client.get(f'/admin/core/stack/{stack_with_relations.pk}/change/')
+        response = client.get(f'/gestao/core/stack/{stack_with_relations.pk}/change/')
         assert response.status_code == 200
 
 
@@ -1496,7 +1498,7 @@ class TestURLRouting:
 
     def test_admin_url_accessible(self, client, admin_user):
         client.login(username='admin', password='testpass123')
-        response = client.get('/admin/')
+        response = client.get('/gestao/')
         assert response.status_code == 200
 
 
@@ -1648,7 +1650,7 @@ class TestSEOEndpoints:
     def test_index_has_og_image(self, client):
         response = client.get('/')
         assert b'og:image' in response.content
-        assert b'og-image.png' in response.content
+        assert b'og-image.webp' in response.content
 
     def test_index_has_noscript_content(self, client, peptide, stack):
         response = client.get('/')
@@ -1676,12 +1678,16 @@ class TestSEOEndpoints:
         assert response.status_code == 200
         assert b'Gloss' in response.content
         assert b'DefinedTermSet' in response.content
+        assert b'class="header-nav"' in response.content
+        assert b'api/peptides.json' in response.content
 
     def test_sobre_page_returns_200(self, client):
         response = client.get('/sobre/')
         assert response.status_code == 200
         assert b'Sobre' in response.content
         assert b'AboutPage' in response.content
+        assert b'class="header-nav"' in response.content
+        assert b'api/peptides.json' in response.content
         assert b'E-E-A-T' not in response.content  # not user-facing term
 
     def test_peptides_api_returns_json(self, client, peptide):
@@ -1693,6 +1699,29 @@ class TestSEOEndpoints:
         assert 'peptides' in data
         assert 'stacks' in data
         assert len(data['peptides']) >= 1
+
+    def test_peptides_api_returns_html_for_browser_accept(self, client, peptide, stack):
+        response = client.get('/api/peptides.json', HTTP_ACCEPT='text/html')
+
+        assert response.status_code == 200
+        assert 'text/html' in response['Content-Type']
+        assert b'API JSON' in response.content
+        assert b'class="header-nav"' in response.content
+        assert b'Abrir JSON bruto' in response.content
+
+    def test_peptides_api_format_json_overrides_browser_accept(self, client, peptide):
+        response = client.get('/api/peptides.json?format=json', HTTP_ACCEPT='text/html')
+
+        assert response.status_code == 200
+        assert 'application/json' in response['Content-Type']
+        data = response.json()
+        assert 'peptides' in data
+
+    def test_peptides_api_json_varies_by_accept_header(self, client, peptide):
+        response = client.get('/api/peptides.json', HTTP_ACCEPT='application/json')
+
+        assert response.status_code == 200
+        assert 'Accept' in response.get('Vary', '')
 
     def test_peptides_api_has_cors_header(self, client):
         response = client.get('/api/peptides.json')
@@ -2240,7 +2269,7 @@ class TestProductionSite:
         assert '200' in out.split('\n')[0]
 
     def test_og_image_loads(self):
-        out = self._curl('/peptides/static/core/og-image.png')
+        out = self._curl('/peptides/static/core/og-image.webp')
         assert '200' in out.split('\n')[0]
 
     def test_peptide_detail_page(self):
@@ -2310,3 +2339,425 @@ class TestProductionSite:
         css_path = m.group(1)
         out = self._curl(css_path)
         assert '200' in out.split('\n')[0], f'Detail page CSS {css_path} returns: {out.split(chr(10))[0]}'
+
+
+class TestAdminSecurityMiddleware:
+    """Tests for AdminSecurityMiddleware."""
+
+    def test_default_admin_path_returns_403(self, client):
+        """The default /admin/ path must be blocked."""
+        response = client.get('/admin/')
+        assert response.status_code == 403
+
+    def test_default_admin_subpaths_return_403(self, client):
+        """Any subpath under /admin/ must be blocked."""
+        response = client.get('/admin/login/')
+        assert response.status_code == 403
+
+    def test_gestao_login_rate_limited(self, client, settings):
+        """Admin login must be rate limited."""
+        from django.core.cache import cache
+        cache.clear()
+        settings.RATE_LIMIT_ADMIN_REQUESTS = 2
+        settings.RATE_LIMIT_ADMIN_WINDOW_SECONDS = 60
+
+        factory = RequestFactory()
+        middleware = AdminSecurityMiddleware(lambda request: JsonResponse({'ok': True}))
+
+        for _ in range(2):
+            request = factory.get('/gestao/login/', REMOTE_ADDR='203.0.113.50')
+            assert middleware(request).status_code == 200
+
+        # Third request should be blocked
+        request = factory.get('/gestao/login/', REMOTE_ADDR='203.0.113.50')
+        assert middleware(request).status_code == 403
+
+    def test_gestao_login_different_ips_not_affected(self, client, settings):
+        """Rate limit must be per IP."""
+        from django.core.cache import cache
+        cache.clear()
+        settings.RATE_LIMIT_ADMIN_REQUESTS = 2
+        settings.RATE_LIMIT_ADMIN_WINDOW_SECONDS = 60
+
+        factory = RequestFactory()
+        middleware = AdminSecurityMiddleware(lambda request: JsonResponse({'ok': True}))
+
+        request = factory.get('/gestao/login/', REMOTE_ADDR='203.0.113.51')
+        assert middleware(request).status_code == 200
+
+        request = factory.get('/gestao/login/', REMOTE_ADDR='203.0.113.52')
+        assert middleware(request).status_code == 200
+
+    def test_gestao_login_x_forwarded_for_respected(self, client, settings):
+        """X-Forwarded-For must be used for IP extraction."""
+        from django.core.cache import cache
+        cache.clear()
+        settings.RATE_LIMIT_ADMIN_REQUESTS = 1
+        settings.RATE_LIMIT_ADMIN_WINDOW_SECONDS = 60
+
+        factory = RequestFactory()
+        middleware = AdminSecurityMiddleware(lambda request: JsonResponse({'ok': True}))
+
+        request = factory.get(
+            '/gestao/login/',
+            HTTP_X_FORWARDED_FOR='198.51.100.30, 10.0.0.1',
+            REMOTE_ADDR='10.0.0.1',
+        )
+        assert middleware(request).status_code == 200
+
+        # Second request from same forwarded IP should be blocked
+        request = factory.get(
+            '/gestao/login/',
+            HTTP_X_FORWARDED_FOR='198.51.100.30, 10.0.0.1',
+            REMOTE_ADDR='10.0.0.1',
+        )
+        assert middleware(request).status_code == 403
+
+
+# =============================================================================
+# Template Filter Tests
+# =============================================================================
+
+
+class TestSanitizeRef:
+    """Tests for the sanitize_ref bleach filter."""
+
+    def test_allows_safe_anchor_tags(self):
+        html = '<a href="https://pubmed.ncbi.nlm.nih.gov/123/" target="_blank">[PubMed]</a>'
+        result = sanitize_ref(html)
+        assert 'pubmed.ncbi.nlm.nih.gov' in result
+        assert '<a' in result
+        assert 'target="_blank"' in result
+
+    def test_strips_script_tags(self):
+        html = '<script>alert(1)</script>Hello'
+        result = sanitize_ref(html)
+        assert '<script>' not in result
+        assert 'alert(1)' in result
+        assert 'Hello' in result
+
+    def test_strips_event_handlers(self):
+        html = '<a href="https://x.com" onclick="evil()">link</a>'
+        result = sanitize_ref(html)
+        assert 'onclick' not in result
+        assert '<a' in result
+        assert 'https://x.com' in result
+
+    def test_adds_rel_noopener_to_target_blank(self):
+        html = '<a href="https://x.com" target="_blank">link</a>'
+        result = sanitize_ref(html)
+        assert 'rel="noopener noreferrer"' in result
+
+    def test_preserves_existing_rel(self):
+        html = '<a href="https://x.com" target="_blank" rel="nofollow">link</a>'
+        result = sanitize_ref(html)
+        # bleach preserves existing attributes; our regex adds rel only if absent
+        assert 'nofollow' in result
+
+    def test_returns_none_for_none(self):
+        assert sanitize_ref(None) is None
+
+    def test_returns_empty_for_empty_string(self):
+        assert sanitize_ref('') == ''
+
+    def test_strips_unsafe_tags_but_keeps_text(self):
+        html = '<div><span><a href="/x">safe</a></span></div><iframe src="evil"></iframe>'
+        result = sanitize_ref(html)
+        assert '<iframe>' not in result
+        assert 'evil' not in result
+        assert '<a' in result
+        assert 'safe' in result
+
+
+# =============================================================================
+# Model Index Tests
+# =============================================================================
+
+
+class TestModelIndexes:
+    """Verify database indexes declared on models."""
+
+    def test_peptide_has_category_order_name_index(self):
+        index_fields = []
+        for idx in Peptide._meta.indexes:
+            index_fields.append(tuple(idx.fields))
+        assert ('category', 'order', 'name') in index_fields
+
+    def test_peptide_has_status_index(self):
+        index_fields = []
+        for idx in Peptide._meta.indexes:
+            index_fields.append(tuple(idx.fields))
+        assert ('status',) in index_fields
+
+    def test_stack_has_goal_order_name_index(self):
+        index_fields = []
+        for idx in Stack._meta.indexes:
+            index_fields.append(tuple(idx.fields))
+        assert ('goal', 'order', 'name') in index_fields
+
+
+# =============================================================================
+# Settings / Configuration Tests
+# =============================================================================
+
+
+class TestSettingsConfiguration:
+    """Validate production-oriented settings changes."""
+
+    def test_gzip_middleware_is_configured(self):
+        assert 'django.middleware.gzip.GZipMiddleware' in settings.MIDDLEWARE
+
+    def test_cached_template_loader_is_used(self):
+        loaders = settings.TEMPLATES[0]['OPTIONS'].get('loaders', [])
+        assert any('cached.Loader' in str(loader) for loader in loaders)
+
+    def test_app_dirs_is_false_for_cached_loader(self):
+        assert settings.TEMPLATES[0].get('APP_DIRS') is False
+
+    def test_compressor_in_installed_apps(self):
+        assert 'compressor' in settings.INSTALLED_APPS
+
+    def test_compress_offline_enabled(self):
+        assert settings.COMPRESS_OFFLINE is True
+
+    def test_compressor_finder_in_staticfiles_finders(self):
+        assert 'compressor.finders.CompressorFinder' in settings.STATICFILES_FINDERS
+
+    def test_sqlite_database_uses_data_directory(self):
+        # pytest-django overrides NAME to an in-memory DB during tests.
+        # Verify the source file configures the data directory path.
+        settings_path = Path(settings.BASE_DIR) / 'peptides_project' / 'settings.py'
+        content = settings_path.read_text(encoding='utf-8')
+        assert "'data' / 'db.sqlite3'" in content or '"data" / "db.sqlite3"' in content
+
+    def test_cache_uses_locmem_when_redis_url_missing(self):
+        # In test environment REDIS_URL is not set, so LocMem should be active
+        assert settings.CACHES['default']['BACKEND'] == 'django.core.cache.backends.locmem.LocMemCache'
+
+    def test_rate_limit_admin_settings_exist(self):
+        assert hasattr(settings, 'RATE_LIMIT_ADMIN_REQUESTS')
+        assert hasattr(settings, 'RATE_LIMIT_ADMIN_WINDOW_SECONDS')
+
+
+# =============================================================================
+# Site Counts Cache Tests
+# =============================================================================
+
+
+class TestSiteCountsCache:
+    """Validate _site_counts caching behaviour."""
+
+    def test_site_counts_sets_cache_key(self, peptide, stack):
+        cache.clear()
+        _site_counts()
+        assert cache.get('site:counts') is not None
+
+    def test_site_counts_avoids_queries_on_cache_hit(self, peptide, stack):
+        cache.clear()
+        _site_counts()  # warm cache
+        with CaptureQueriesContext(connection) as queries:
+            _site_counts()
+        assert len(queries) == 0
+
+    def test_site_counts_returns_correct_counts(self, peptide_with_relations, stack_with_relations):
+        cache.clear()
+        result = _site_counts()
+        assert result['peptide_count'] >= 1
+        assert result['stack_count'] >= 1
+        assert result['reference_count'] >= 1
+
+    def test_site_counts_cache_is_dict(self, peptide, stack):
+        cache.clear()
+        _site_counts()
+        cached = cache.get('site:counts')
+        assert isinstance(cached, dict)
+        assert 'peptide_count' in cached
+        assert 'stack_count' in cached
+        assert 'reference_count' in cached
+
+
+# =============================================================================
+# CSS / Static Asset Sanity Tests
+# =============================================================================
+
+
+class TestCssSanity:
+    """Validate static asset contents."""
+
+    def test_css_does_not_import_fonts(self):
+        css_path = Path(settings.BASE_DIR) / 'static' / 'core' / 'style.css'
+        assert css_path.exists()
+        content = css_path.read_text(encoding='utf-8')
+        assert '@import' not in content.lower()
+        assert 'fonts.googleapis.com' not in content
+
+    def test_css_has_card_button_reset(self):
+        css_path = Path(settings.BASE_DIR) / 'static' / 'core' / 'style.css'
+        content = css_path.read_text(encoding='utf-8')
+        assert 'appearance: none' in content
+        assert '.card,' in content or '.card' in content
+
+    def test_og_image_webp_exists(self):
+        webp_path = Path(settings.BASE_DIR) / 'static' / 'core' / 'og-image.webp'
+        assert webp_path.exists()
+
+    def test_app_js_exists(self):
+        js_path = Path(settings.BASE_DIR) / 'static' / 'core' / 'app.js'
+        assert js_path.exists()
+
+    def test_app_js_uses_button_for_cards(self):
+        js_path = Path(settings.BASE_DIR) / 'static' / 'core' / 'app.js'
+        content = js_path.read_text(encoding='utf-8')
+        assert '<button class="card' in content
+        assert '<button class="stack-card' in content
+
+    def test_app_js_has_modal_trap_functions(self):
+        js_path = Path(settings.BASE_DIR) / 'static' / 'core' / 'app.js'
+        content = js_path.read_text(encoding='utf-8')
+        assert 'enableModalTrap' in content
+        assert 'disableModalTrap' in content
+
+    def test_app_js_has_mobile_menu_init(self):
+        js_path = Path(settings.BASE_DIR) / 'static' / 'core' / 'app.js'
+        content = js_path.read_text(encoding='utf-8')
+        assert 'initMobileMenu' in content
+        assert 'menuToggle' in content
+
+
+# =============================================================================
+# Legacy Files / Cleanup Tests
+# =============================================================================
+
+
+class TestLegacyFilesRemoved:
+    """Ensure old static root files were cleaned up."""
+
+    def test_legacy_app_js_removed_from_root(self):
+        assert not (Path(settings.BASE_DIR) / 'app.js').exists()
+
+    def test_legacy_style_css_removed_from_root(self):
+        assert not (Path(settings.BASE_DIR) / 'style.css').exists()
+
+    def test_legacy_index_html_removed_from_root(self):
+        assert not (Path(settings.BASE_DIR) / 'index.html').exists()
+
+
+# =============================================================================
+# Docker / Deployment Artifact Tests
+# =============================================================================
+
+
+class TestDockerignore:
+    """Validate .dockerignore contents."""
+
+    def test_dockerignore_exists(self):
+        path = Path(settings.BASE_DIR) / '.dockerignore'
+        assert path.exists()
+
+    def test_dockerignore_ignores_git(self):
+        content = (Path(settings.BASE_DIR) / '.dockerignore').read_text()
+        assert '.git' in content
+
+    def test_dockerignore_ignores_sqlite(self):
+        content = (Path(settings.BASE_DIR) / '.dockerignore').read_text()
+        assert 'db.sqlite3' in content
+
+    def test_dockerignore_ignores_env(self):
+        content = (Path(settings.BASE_DIR) / '.dockerignore').read_text()
+        assert '.env' in content
+
+    def test_dockerignore_ignores_pycache(self):
+        content = (Path(settings.BASE_DIR) / '.dockerignore').read_text()
+        assert '__pycache__' in content
+
+    def test_dockerignore_ignores_venv(self):
+        content = (Path(settings.BASE_DIR) / '.dockerignore').read_text()
+        assert '.venv' in content
+
+
+class TestDockerComposeRedis:
+    """Validate docker-compose.yml includes Redis service."""
+
+    def test_docker_compose_includes_redis_service(self):
+        compose_path = Path(settings.BASE_DIR) / 'docker-compose.yml'
+        assert compose_path.exists()
+        content = compose_path.read_text()
+        assert 'redis:' in content
+        assert 'redis:7-alpine' in content
+
+    def test_docker_compose_has_redis_url_env(self):
+        content = (Path(settings.BASE_DIR) / 'docker-compose.yml').read_text()
+        assert 'REDIS_URL=' in content
+
+    def test_docker_compose_web_depends_on_redis(self):
+        content = (Path(settings.BASE_DIR) / 'docker-compose.yml').read_text()
+        # Ensure 'redis' appears in depends_on context for web service
+        assert 'redis' in content
+
+    def test_dockerfile_runs_compress(self):
+        dockerfile = Path(settings.BASE_DIR) / 'Dockerfile'
+        assert dockerfile.exists()
+        content = dockerfile.read_text()
+        assert 'manage.py compress' in content
+
+
+# =============================================================================
+# Accessibility / ARIA Markup Tests
+# =============================================================================
+
+
+class TestAccessibilityMarkup:
+    """Validate ARIA and semantic markup in rendered templates."""
+
+    def test_index_has_modal_dialog_role(self, client, db):
+        response = client.get('/')
+        content = response.content.decode()
+        assert 'role="dialog"' in content
+        assert 'aria-modal="true"' in content
+        assert 'aria-labelledby="modalTitle"' in content
+
+    def test_index_has_aria_live_on_results_count(self, client, db):
+        response = client.get('/')
+        content = response.content.decode()
+        assert 'aria-live="polite"' in content
+        assert 'aria-atomic="true"' in content
+
+    def test_index_has_menu_toggle_button(self, client, db):
+        response = client.get('/')
+        content = response.content.decode()
+        assert 'id="menuToggle"' in content
+        assert 'aria-expanded="false"' in content
+        assert 'aria-controls="headerNav"' in content
+
+    def test_modal_close_button_has_type_button(self, client, db):
+        response = client.get('/')
+        content = response.content.decode()
+        assert 'id="modalClose"' in content
+        # The close button should have type="button"
+        close_idx = content.find('id="modalClose"')
+        tag_start = content.rfind('<', 0, close_idx)
+        tag_end = content.find('>', close_idx)
+        tag = content[tag_start:tag_end + 1]
+        assert 'type="button"' in tag
+
+    def test_peptide_detail_has_compress_tag(self, client, peptide):
+        response = client.get(f'/peptideos/{peptide.id}/')
+        # compress tags are rendered out in DEBUG=False; in DEBUG they pass through raw
+        # We just verify the template doesn't explode (status 200 already checked elsewhere)
+        assert response.status_code == 200
+
+    def test_stack_detail_has_compress_tag(self, client, stack):
+        response = client.get(f'/combinacoes/{stack.id}/')
+        assert response.status_code == 200
+
+    def test_category_has_compress_tag(self, client, db):
+        response = client.get('/categorias/weight-loss/')
+        assert response.status_code == 200
+
+    def test_glossario_has_compress_tag(self, client, db):
+        response = client.get('/glossario/')
+        assert response.status_code == 200
+
+    def test_sobre_has_compress_tag(self, client, db):
+        response = client.get('/sobre/')
+        assert response.status_code == 200

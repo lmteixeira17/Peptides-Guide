@@ -3,11 +3,13 @@ from datetime import timedelta
 from functools import wraps
 
 from django.conf import settings
+from django.core.cache import cache
 from django.db import connection
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
 from django.utils import timezone
 from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_headers
 
 from .models import Peptide, PeptideReference, Stack, StackReference
 from .serializers import serialize_peptide, serialize_stack
@@ -47,12 +49,23 @@ def _site_url(path='/'):
 
 
 def _site_counts(peptide_count=None, stack_count=None):
-    """Return current site-wide object counts for dynamic copy/SEO."""
-    return {
+    """Return current site-wide object counts for dynamic copy/SEO.
+
+    Results are cached for 5 minutes to avoid repeated COUNT(*) queries
+    on high-traffic pages (health checks, llms.txt, etc.).
+    """
+    cache_key = 'site:counts'
+    cached = cache.get(cache_key)
+    if cached is not None:
+        return cached
+
+    result = {
         'peptide_count': peptide_count if peptide_count is not None else Peptide.objects.count(),
         'stack_count': stack_count if stack_count is not None else Stack.objects.count(),
         'reference_count': PeptideReference.objects.count() + StackReference.objects.count(),
     }
+    cache.set(cache_key, result, timeout=300)
+    return result
 
 
 @production_cache_page(300)
@@ -101,6 +114,7 @@ def health_view(request):
         return JsonResponse(payload, status=503)
 
     try:
+        cache.delete('site:counts')
         counts = _site_counts()
     except Exception as exc:
         payload['status'] = 'error'
@@ -251,8 +265,25 @@ def sobre_view(request):
 
 
 @production_cache_page(3600)
+@vary_on_headers('Accept')
 def peptides_api(request):
     """Public JSON API endpoint for AI/LLM consumption."""
+    accept_header = request.headers.get('Accept', '')
+    wants_browser_page = (
+        request.GET.get('format') != 'json'
+        and 'text/html' in accept_header
+        and 'application/json' not in accept_header
+    )
+
+    if wants_browser_page:
+        context = _site_counts()
+        context.update({
+            'api_json_url': _site_url('/api/peptides.json?format=json'),
+            'api_endpoint_url': _site_url('/api/peptides.json'),
+            'api_source_url': _site_url('/'),
+        })
+        return render(request, 'api.html', context)
+
     peptides = Peptide.objects.prefetch_related(
         'benefits', 'side_effects', 'dosages', 'references'
     ).order_by('order', 'name')
@@ -282,7 +313,7 @@ def robots_txt(request):
         '',
         'User-agent: *',
         'Allow: /',
-        'Disallow: /admin/',
+        'Disallow: /gestao/',
         'Disallow: /health/',
         '',
         '# AI Crawlers - explicitly allowed for accurate information dissemination',

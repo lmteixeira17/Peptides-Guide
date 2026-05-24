@@ -45,6 +45,8 @@ var peptideFiltersBar = document.getElementById("peptideFiltersBar");
 var modalOverlay = document.getElementById("modalOverlay");
 var modalContent = document.getElementById("modalContent");
 var modalClose = document.getElementById("modalClose");
+var modalLastFocused = null;
+var modalTrapHandler = null;
 var filterButtons = document.querySelectorAll(".filters-scroll .filter-chip");
 var sectionButtons = document.querySelectorAll(".section-tab");
 var stackFilterButtons = document.querySelectorAll("#stacksFilters .filter-chip");
@@ -211,8 +213,30 @@ function loadData() {
 }
 
 // Initialize
+function initMobileMenu() {
+    var menuToggle = document.getElementById('menuToggle');
+    var headerNav = document.getElementById('headerNav');
+    if (!menuToggle || !headerNav) return;
+
+    menuToggle.addEventListener('click', function() {
+        var isOpen = headerNav.classList.toggle('is-open');
+        menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        menuToggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    });
+
+    // Close menu when a link is clicked
+    headerNav.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            headerNav.classList.remove('is-open');
+            menuToggle.setAttribute('aria-expanded', 'false');
+            menuToggle.setAttribute('aria-label', 'Abrir menu');
+        });
+    });
+}
+
 function init() {
     initTheme();
+    initMobileMenu();
     bindEvents();
     renderCurrentSection();
     window.addEventListener('scroll', onScroll);
@@ -348,7 +372,7 @@ function renderCards() {
     visible.forEach(function(p) {
         var initials = p.name.substring(0, 2).toUpperCase();
         var statusClass = p.status === "approved" ? "" : (p.status === "trial" ? "trial" : "research");
-        html += '<div class="card ' + p.category + '" onclick="openModal(\'' + p.id + '\')">';
+        html += '<button class="card ' + p.category + '" type="button" onclick="openModal(\'' + p.id + '\')">';
         html += '  <div class="card-header">';
         html += '    <div class="card-icon ' + p.category + '">' + initials + '</div>';
         html += '    <div class="card-title-group">';
@@ -369,7 +393,7 @@ function renderCards() {
         html += '    <span>Ver detalhes completos</span>';
         html += '    <span>&rarr;</span>';
         html += '  </div>';
-        html += '</div>';
+        html += '</button>';
     });
 
     if (filtered.length > peptidesVisibleCount) {
@@ -434,7 +458,7 @@ function renderStacks() {
     var visible = filtered.slice(0, stacksVisibleCount);
     var html = "";
     visible.forEach(function(s) {
-        html += '<div class="stack-card ' + s.goal + '" onclick="openStackModal(\'' + s.id + '\')">';
+        html += '<button class="stack-card ' + s.goal + '" type="button" onclick="openStackModal(\'' + s.id + '\')">';
         html += '  <div class="stack-card-header ' + s.goal + '">';
         html += '    <div class="stack-card-name">' + s.name + '</div>';
         html += '    <div class="stack-card-level">' + s.goalLabel + ' \u2022 N\u00edvel: ' + s.level + '</div>';
@@ -451,7 +475,7 @@ function renderStacks() {
         html += '    <span>Ver protocolo completo</span>';
         html += '    <span>&rarr;</span>';
         html += '  </div>';
-        html += '</div>';
+        html += '</button>';
     });
 
     if (filtered.length > stacksVisibleCount) {
@@ -495,7 +519,7 @@ function openModal(id) {
     }
 
     html += '<div class="modal-header">';
-    html += '  <div class="modal-title">' + p.name + '</div>';
+    html += '  <div class="modal-title" id="modalTitle">' + p.name + '</div>';
     if (p.aka) {
         html += '  <div class="modal-aka">Tamb\u00e9m conhecido como: ' + p.aka + '</div>';
     }
@@ -580,6 +604,10 @@ function openModal(id) {
     modalOverlay.style.opacity = '';
     modalOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
+    modalLastFocused = document.activeElement;
+    enableModalTrap();
+    // Move focus to the close button for screen readers
+    if (modalClose) modalClose.focus();
     // SEO: update title and URL hash
     document.title = p.name + ' - Guia de Pept\u00eddeos';
     history.replaceState(null, '', '#' + id);
@@ -598,7 +626,7 @@ function openStackModal(id) {
 
     var html = '';
     html += '<div class="modal-header">';
-    html += '  <div class="modal-title">' + s.name + '</div>';
+    html += '  <div class="modal-title" id="modalTitle">' + s.name + '</div>';
     html += '  <div class="modal-tags" style="margin-top:0.8rem">';
     html += '    <span class="tag tag-category">' + s.goalLabel + '</span>';
     html += '    <span class="tag" style="background:#f3e8ff;color:#7c3aed">N\u00edvel: ' + s.level + '</span>';
@@ -672,9 +700,44 @@ function openStackModal(id) {
     modalOverlay.style.opacity = '';
     modalOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
+    modalLastFocused = document.activeElement;
+    enableModalTrap();
+    if (modalClose) modalClose.focus();
     // SEO: update title and URL hash
     document.title = s.name + ' - Guia de Pept\u00eddeos';
     history.replaceState(null, '', '#stack-' + id);
+}
+
+function enableModalTrap() {
+    if (modalTrapHandler) return;
+    modalTrapHandler = function(e) {
+        if (e.key !== 'Tab') return;
+        var focusable = modalOverlay.querySelectorAll(
+            'a[href], button, textarea, input[type="text"], input[type="radio"], input[type="checkbox"], select'
+        );
+        if (focusable.length === 0) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey) {
+            if (document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            }
+        } else {
+            if (document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
+            }
+        }
+    };
+    modalOverlay.addEventListener('keydown', modalTrapHandler);
+}
+
+function disableModalTrap() {
+    if (modalTrapHandler) {
+        modalOverlay.removeEventListener('keydown', modalTrapHandler);
+        modalTrapHandler = null;
+    }
 }
 
 // Close modal
@@ -690,6 +753,11 @@ function closeModal() {
         document.body.style.overflow = "";
         if (modal) modal.classList.remove('modal-exit');
     }, 250);
+    disableModalTrap();
+    if (modalLastFocused) {
+        modalLastFocused.focus();
+        modalLastFocused = null;
+    }
     // SEO: restore original title and URL
     document.title = 'Guia Completo de Pept\u00eddeos - Refer\u00eancia Cient\u00edfica sobre Pept\u00eddeos Terap\u00eauticos';
     history.replaceState(null, '', window.location.pathname);

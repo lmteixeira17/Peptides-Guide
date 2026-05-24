@@ -46,6 +46,10 @@ class Peptide(models.Model):
         verbose_name = 'Peptídeo'
         verbose_name_plural = 'Peptídeos'
         ordering = ['order', 'name']
+        indexes = [
+            models.Index(fields=['category', 'order', 'name']),
+            models.Index(fields=['status']),
+        ]
 
     def __str__(self):
         return self.name
@@ -128,6 +132,9 @@ class Stack(models.Model):
         verbose_name = 'Combinação'
         verbose_name_plural = 'Combinações'
         ordering = ['order', 'name']
+        indexes = [
+            models.Index(fields=['goal', 'order', 'name']),
+        ]
 
     def __str__(self):
         return self.name

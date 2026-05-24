@@ -1,0 +1,165 @@
+{% load static %}{% load compress %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <script>
+    (function() {
+        var saved = localStorage.getItem('peptides-theme');
+        var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved || (prefersDark ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+    })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API JSON - Guia de Peptídeos</title>
+    <meta name="description" content="API JSON pública do Guia de Peptídeos com {{ peptide_count }} peptídeos, {{ stack_count }} combinações e {{ reference_count }} referências.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="API JSON - Guia de Peptídeos">
+    <meta property="og:description" content="Dados estruturados públicos sobre peptídeos terapêuticos, combinações e referências científicas.">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:site_name" content="Guia de Peptídeos">
+    <meta property="og:image" content="{{ site_og_image_url }}">
+    <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
+    {% compress css %}
+    <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    {% endcompress %}
+    {% include "_ga4.html" %}
+</head>
+<body>
+    <div class="scroll-progress" id="scrollProgress"></div>
+    <header class="header" id="mainHeader">
+        <div class="header-inner">
+            <a href="{{ site_path_prefix }}/" class="header-brand">
+                <h1>Guia de Peptídeos</h1>
+                <span>v2</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="headerNav" aria-label="Abrir menu">
+                <span aria-hidden="true">&#x2630;</span>
+            </button>
+            <nav class="header-nav" id="headerNav">
+                <a href="{{ site_path_prefix }}/sobre/">Sobre</a>
+                <a href="{{ site_path_prefix }}/glossario/">Glossário</a>
+                <a href="{{ site_path_prefix }}/api/peptides.json">API</a>
+                <button class="theme-toggle" id="themeToggle" type="button" title="Alternar tema">
+                    <span id="themeIcon">&#x1F319;</span>
+                    <span id="themeLabel">Escuro</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <nav aria-label="breadcrumb" class="breadcrumb">
+        <a href="{{ site_path_prefix }}/">Início</a> &rsaquo; <span>API JSON</span>
+    </nav>
+
+    <main class="detail-page">
+        <article>
+            <header class="detail-header">
+                <h1 class="detail-title">API JSON</h1>
+                <p class="detail-aka">Dados estruturados para integrações, IA e pesquisa</p>
+            </header>
+
+            <section>
+                <h2>Endpoint</h2>
+                <p>A API pública retorna o catálogo completo em JSON quando solicitada por ferramentas, scripts ou chamadas com <code>Accept: application/json</code>.</p>
+                <div class="detail-meta">
+                    <div><strong>{{ peptide_count }} peptídeos</strong> individuais</div>
+                    <div><strong>{{ stack_count }} combinações</strong> recomendadas</div>
+                    <div><strong>{{ reference_count }} referências</strong> científicas</div>
+                </div>
+                <p><a class="api-action" href="{{ api_json_url }}">Abrir JSON bruto</a></p>
+            </section>
+
+            <section>
+                <h2>Uso rápido</h2>
+                <pre><code>fetch("{{ api_endpoint_url }}", {
+  headers: { "Accept": "application/json" }
+}).then(response =&gt; response.json())</code></pre>
+            </section>
+
+            <section>
+                <h2>Estrutura</h2>
+                <ul class="detail-list">
+                    <li><strong>version:</strong> versão do formato de dados.</li>
+                    <li><strong>source:</strong> URL canônica do guia.</li>
+                    <li><strong>peptides:</strong> lista de peptídeos com categoria, status, mecanismo, benefícios, efeitos, dosagens e referências.</li>
+                    <li><strong>stacks:</strong> combinações com objetivo, nível, duração, aplicação, sinergia, peptídeos e referências.</li>
+                </ul>
+            </section>
+
+            <section class="warning-box">
+                <strong>Uso educacional:</strong> os dados são uma referência científica informativa e não substituem avaliação médica profissional.
+            </section>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <nav class="footer-nav" aria-label="Navegação do rodapé">
+            <a href="{{ site_path_prefix }}/">Início</a>
+            <a href="{{ site_path_prefix }}/sobre/">Sobre</a>
+            <a href="{{ site_path_prefix }}/glossario/">Glossário</a>
+            <a href="{{ site_path_prefix }}/sitemap.xml">Sitemap</a>
+        </nav>
+        <p>Guia de Peptídeos &copy; 2026 - Conteúdo baseado em literatura científica publicada</p>
+    </footer>
+
+    <script>
+    (function() {
+        var themeToggle = document.getElementById('themeToggle');
+        var themeIcon = document.getElementById('themeIcon');
+        var themeLabel = document.getElementById('themeLabel');
+        var menuToggle = document.getElementById('menuToggle');
+        var headerNav = document.getElementById('headerNav');
+        var mainHeader = document.getElementById('mainHeader');
+        var scrollProgress = document.getElementById('scrollProgress');
+
+        function updateThemeUI(theme) {
+            if (theme === 'dark') {
+                themeIcon.innerHTML = '\u2600';
+                themeLabel.textContent = 'Claro';
+            } else {
+                themeIcon.innerHTML = '\uD83C\uDF19';
+                themeLabel.textContent = 'Escuro';
+            }
+        }
+
+        updateThemeUI(document.documentElement.getAttribute('data-theme') || 'light');
+
+        if (themeToggle) {
+            themeToggle.addEventListener('click', function() {
+                var current = document.documentElement.getAttribute('data-theme') || 'light';
+                var next = current === 'dark' ? 'light' : 'dark';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('peptides-theme', next);
+                updateThemeUI(next);
+            });
+        }
+
+        if (menuToggle && headerNav) {
+            menuToggle.addEventListener('click', function() {
+                var isOpen = headerNav.classList.toggle('is-open');
+                menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+        }
+
+        function onScroll() {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if (scrollProgress) {
+                scrollProgress.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+            }
+            if (mainHeader) {
+                if (scrollTop > 60) mainHeader.classList.add('scrolled');
+                else mainHeader.classList.remove('scrolled');
+            }
+        }
+
+        window.addEventListener('scroll', onScroll);
+        onScroll();
+    })();
+    </script>
+</body>
+</html>

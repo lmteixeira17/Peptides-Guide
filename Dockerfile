@@ -26,6 +26,10 @@ COPY . .
 RUN SECRET_KEY='build-only-dummy-key-not-used-in-production' \
     DEBUG=True \
     python manage.py collectstatic --noinput
+RUN SECRET_KEY='build-only-dummy-key-not-used-in-production' \
+    DEBUG=True \
+    COMPRESS_ENABLED=True \
+    python manage.py compress
 
 # -----------------------------------------------------------------------------
 # Stage 2: Runtime

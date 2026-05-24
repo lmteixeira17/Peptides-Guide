@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %}{% load compress %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -34,7 +34,9 @@
     <meta name="twitter:image" content="{{ site_og_image_url }}">
 
     <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    {% endcompress %}
 
     {% include "_ga4.html" %}
 
@@ -63,13 +65,23 @@
 <body>
     <div class="scroll-progress" id="scrollProgress"></div>
     <header class="header" id="mainHeader">
-        <button class="theme-toggle" id="themeToggle" type="button" title="Alternar tema">
-            <span id="themeIcon">&#x1F319;</span>
-            <span id="themeLabel">Escuro</span>
-        </button>
-        <div class="header-content">
-            <h1><a href="{{ site_path_prefix }}/" style="color:inherit;text-decoration:none">Guia Completo de Peptídeos</a></h1>
-            <p class="subtitle">Glossário de termos técnicos em peptidoterapia</p>
+        <div class="header-inner">
+            <a href="{{ site_path_prefix }}/" class="header-brand">
+                <h1>Guia de Peptídeos</h1>
+                <span>v2</span>
+            </a>
+            <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="headerNav" aria-label="Abrir menu">
+                <span aria-hidden="true">&#x2630;</span>
+            </button>
+            <nav class="header-nav" id="headerNav">
+                <a href="{{ site_path_prefix }}/sobre/">Sobre</a>
+                <a href="{{ site_path_prefix }}/glossario/">Gloss&aacute;rio</a>
+                <a href="{{ site_path_prefix }}/api/peptides.json">API</a>
+                <button class="theme-toggle" id="themeToggle" type="button" title="Alternar tema">
+                    <span id="themeIcon">&#x1F319;</span>
+                    <span id="themeLabel">Escuro</span>
+                </button>
+            </nav>
         </div>
     </header>
 
@@ -210,7 +222,12 @@
     </main>
 
     <footer class="footer">
-        <p><a href="{{ site_path_prefix }}/">&larr; Voltar ao Guia Completo</a></p>
+        <nav class="footer-nav" aria-label="Navegação do rodapé">
+            <a href="{{ site_path_prefix }}/">Início</a>
+            <a href="{{ site_path_prefix }}/sobre/">Sobre</a>
+            <a href="{{ site_path_prefix }}/api/peptides.json">API JSON</a>
+            <a href="{{ site_path_prefix }}/sitemap.xml">Sitemap</a>
+        </nav>
         <p>Guia de Peptídeos &copy; 2026</p>
     </footer>
     <script>
@@ -218,6 +235,8 @@
         var themeToggle = document.getElementById('themeToggle');
         var themeIcon = document.getElementById('themeIcon');
         var themeLabel = document.getElementById('themeLabel');
+        var menuToggle = document.getElementById('menuToggle');
+        var headerNav = document.getElementById('headerNav');
         var mainHeader = document.getElementById('mainHeader');
         var scrollProgress = document.getElementById('scrollProgress');
 
@@ -241,6 +260,13 @@
                 document.documentElement.setAttribute('data-theme', next);
                 localStorage.setItem('peptides-theme', next);
                 updateThemeUI(next);
+            });
+        }
+
+        if (menuToggle && headerNav) {
+            menuToggle.addEventListener('click', function() {
+                var isOpen = headerNav.classList.toggle('is-open');
+                menuToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
             });
         }
 

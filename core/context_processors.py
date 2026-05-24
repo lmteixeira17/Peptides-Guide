@@ -17,5 +17,5 @@ def analytics(request):
         'site_path_prefix': site_prefix,
         'site_url_prefix': site_url_prefix,
         'site_home_url': f'{site_url_prefix}/',
-        'site_og_image_url': f'{site_url_prefix}/static/core/og-image.png',
+        'site_og_image_url': f'{site_url_prefix}/static/core/og-image.webp',
     }

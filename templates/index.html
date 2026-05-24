@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %}{% load core_filters %}{% load compress %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -41,7 +41,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    {% endcompress %}
     <link rel="preload" href="{% static 'core/app.js' %}" as="script">
 
     {% if ga4_id %}
@@ -230,7 +232,10 @@
                 <h1>Guia de Pept&iacute;deos</h1>
                 <span>v2</span>
             </a>
-            <nav class="header-nav">
+            <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="headerNav" aria-label="Abrir menu">
+                <span aria-hidden="true">&#x2630;</span>
+            </button>
+            <nav class="header-nav" id="headerNav">
                 <a href="{{ site_path_prefix }}/sobre/">Sobre</a>
                 <a href="{{ site_path_prefix }}/glossario/">Gloss&aacute;rio</a>
                 <a href="{{ site_path_prefix }}/api/peptides.json">API</a>
@@ -315,7 +320,7 @@
             <button class="filter-chip" data-category="body-comp">Composi&ccedil;&atilde;o Corporal</button>
             <button class="filter-chip" data-category="other">Outros</button>
         </div>
-        <div class="results-count">
+        <div class="results-count" aria-live="polite" aria-atomic="true">
             <span id="countDisplay">0</span> resultados
         </div>
     </div>
@@ -343,7 +348,7 @@
             <button class="filter-chip" data-goal="sleep">Sono</button>
             <button class="filter-chip" data-goal="hormonal">Hormonal</button>
         </div>
-        <div class="results-count stack-results-count">
+        <div class="results-count stack-results-count" aria-live="polite" aria-atomic="true">
             <span id="stackCountDisplay">0</span> combina&ccedil;&otilde;es
         </div>
         <div class="stacks-grid" id="stacksGrid">
@@ -374,9 +379,9 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
         <div class="modal" id="modal">
-            <button class="modal-close" id="modalClose">&times;</button>
+            <button class="modal-close" id="modalClose" type="button" aria-label="Fechar">&times;</button>
             <div class="modal-content" id="modalContent">
                 <!-- Modal content rendered by JS -->
             </div>
@@ -450,7 +455,7 @@
             <h4>Efeitos Colaterais</h4>
             <ul>{% for se in p.side_effects.all %}<li>{{ se.name }} ({{ se.get_severity_display }})</li>{% endfor %}</ul>
             <h4>Refer&ecirc;ncias</h4>
-            <ul>{% for r in p.references.all %}<li>{{ r.text|safe }}</li>{% endfor %}</ul>
+            <ul>{% for r in p.references.all %}<li>{{ r.text|sanitize_ref }}</li>{% endfor %}</ul>
         </article>
         {% endfor %}
         <h2>Combina&ccedil;&otilde;es Recomendadas</h2>
@@ -462,7 +467,7 @@
             <p><strong>Sinergia:</strong> {{ s.synergy }}</p>
             <p><strong>Dura&ccedil;&atilde;o:</strong> {{ s.duration }}</p>
             <h4>Refer&ecirc;ncias</h4>
-            <ul>{% for r in s.references.all %}<li>{{ r.text|safe }}</li>{% endfor %}</ul>
+            <ul>{% for r in s.references.all %}<li>{{ r.text|sanitize_ref }}</li>{% endfor %}</ul>
         </article>
         {% endfor %}
     </div>
@@ -491,6 +496,8 @@
       "https://mlt.com.br/peptides/api/peptides.json"
     ];
     </script>
+    {% compress js %}
     <script src="{% static 'core/app.js' %}"></script>
+    {% endcompress %}
 </body>
 </html>

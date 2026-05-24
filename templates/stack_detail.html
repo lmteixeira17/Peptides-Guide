@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %}{% load core_filters %}{% load compress %}
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -37,7 +37,9 @@
     <meta name="twitter:image" content="{{ site_og_image_url }}">
 
     <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
+    {% endcompress %}
 
     {% include "_ga4.html" %}
 
@@ -146,7 +148,7 @@
             <section>
                 <h2>Referências Científicas</h2>
                 <ol class="references-list">
-                    {% for r in stack.references.all %}<li>{{ r.text|safe }}</li>{% endfor %}
+                    {% for r in stack.references.all %}<li>{{ r.text|sanitize_ref }}</li>{% endfor %}
                 </ol>
             </section>
 

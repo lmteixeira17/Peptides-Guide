@@ -206,3 +206,99 @@ def test_theme_toggle_switches_and_header_is_readable(page: Page, live_server):
     page.locator("#themeToggle").click()
     final_theme = page.evaluate("document.documentElement.getAttribute('data-theme')")
     assert final_theme == theme, "Theme should toggle back"
+
+
+def test_peptide_cards_are_semantic_buttons(page: Page, live_server):
+    """Cards must be <button> elements for keyboard accessibility."""
+    open_home(page, live_server)
+    first_card = page.locator("#cardsContainer .card").first
+    expect(first_card).to_have_js_property("tagName", "BUTTON")
+    expect(first_card).to_have_attribute("type", "button")
+
+
+def test_stack_cards_are_semantic_buttons(page: Page, live_server):
+    """Stack cards must also be <button> elements."""
+    open_home(page, live_server)
+    page.locator('[data-section="stacks"]').click()
+    expect(page.locator(".stack-card").first).to_be_visible()
+    first_stack = page.locator("#stacksGrid .stack-card").first
+    expect(first_stack).to_have_js_property("tagName", "BUTTON")
+    expect(first_stack).to_have_attribute("type", "button")
+
+
+def test_mobile_menu_toggle(page: Page, live_server):
+    """Hamburger menu opens/closes the nav and updates ARIA attributes."""
+    page.set_viewport_size({"width": 390, "height": 844})
+    open_home(page, live_server)
+
+    menu_toggle = page.locator("#menuToggle")
+    # Wait for the nav element to exist in the DOM
+    page.wait_for_selector("#headerNav", state="attached")
+    header_nav = page.locator("#headerNav")
+
+    # Menu toggle is visible in mobile
+    expect(menu_toggle).to_be_visible()
+    # Nav is hidden by default in mobile (CSS display:none)
+    expect(header_nav).to_be_hidden()
+
+    # Click to open
+    menu_toggle.click()
+    # After click, nav should become visible
+    expect(header_nav).to_be_visible()
+    expect(menu_toggle).to_have_attribute("aria-expanded", "true")
+
+    # Click menu toggle again to close
+    menu_toggle.click()
+    expect(header_nav).to_be_hidden()
+    expect(menu_toggle).to_have_attribute("aria-expanded", "false")
+
+
+def test_modal_has_dialog_role_and_aria_attributes(page: Page, live_server):
+    """Modal overlay must have proper ARIA attributes for screen readers."""
+    open_home(page, live_server)
+    page.locator(".card").first.click()
+
+    modal = page.locator("#modalOverlay")
+    expect(modal).to_have_attribute("role", "dialog")
+    expect(modal).to_have_attribute("aria-modal", "true")
+    expect(modal).to_have_attribute("aria-labelledby", "modalTitle")
+
+    # Modal title element must exist
+    expect(page.locator("#modalTitle")).to_be_visible()
+
+
+def test_modal_traps_focus(page: Page, live_server):
+    """Tabbing inside the modal should cycle focus between first and last elements."""
+    open_home(page, live_server)
+    page.locator(".card").first.click()
+
+    # Focus should start on the close button (first focusable element)
+    active = page.evaluate("() => document.activeElement.id")
+    assert active == "modalClose", f"Expected focus on modalClose, got {active}"
+
+    # Tab to the last focusable element (could be a link inside modal content)
+    # We simulate enough Tab presses to reach the end and verify wrap-around
+    # by checking that Shift+Tab from first element goes to last.
+    # Simpler test: press Tab many times and ensure focus never leaves modal.
+    for _ in range(20):
+        page.keyboard.press("Tab")
+        active = page.evaluate("() => document.activeElement.id")
+        # Focus must stay inside the modal overlay (either an element inside it,
+        # or the modal itself which has tabindex=-1)
+        is_inside = page.evaluate(
+            f"() => document.getElementById('modalOverlay').contains(document.getElementById('{active}'))"
+        ) if active else False
+        if not is_inside and active != "modalOverlay":
+            # Some active elements may not have an id; check via contains
+            is_inside = page.evaluate(
+                "() => document.getElementById('modalOverlay').contains(document.activeElement)"
+            )
+        assert is_inside, f"Focus escaped modal to element: {active}"
+
+
+def test_search_results_announced_to_screen_readers(page: Page, live_server):
+    """The results counter must have aria-live for screen reader announcements."""
+    open_home(page, live_server)
+    results_counter = page.locator(".results-count").first
+    expect(results_counter).to_have_attribute("aria-live", "polite")
+    expect(results_counter).to_have_attribute("aria-atomic", "true")

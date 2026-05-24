@@ -42,15 +42,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'compressor',
     'core',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'django.middleware.gzip.GZipMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'core.middleware.RateLimitMiddleware',
+    'core.middleware.AdminSecurityMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -63,8 +66,14 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates'],
-        'APP_DIRS': True,
+        'APP_DIRS': False,
         'OPTIONS': {
+            'loaders': [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ]),
+            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
@@ -101,7 +110,7 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': BASE_DIR / 'data' / 'db.sqlite3',
         }
     }
 
@@ -139,22 +148,49 @@ STORAGES = {
 WHITENOISE_AUTOREFRESH = DEBUG or _running_tests
 WHITENOISE_USE_FINDERS = DEBUG or _running_tests
 
+# django-compressor
+COMPRESS_ENABLED = not DEBUG
+COMPRESS_OFFLINE = True
+COMPRESS_FILTERS = {
+    'css': [
+        'compressor.filters.css_default.CssAbsoluteFilter',
+        'compressor.filters.cssmin.rCSSMinFilter',
+    ],
+    'js': [
+        'compressor.filters.jsmin.rJSMinFilter',
+    ],
+}
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder',
+]
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Lightweight in-process cache for static-like public pages/API responses.
-# Production runs Gunicorn with a small worker count, so LocMem keeps common
-# catalogue pages fast without adding Redis or another infrastructure service.
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-        'LOCATION': 'peptides-guide-cache',
+_redis_url = os.environ.get('REDIS_URL', '')
+if _redis_url:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+            'LOCATION': _redis_url,
+        }
     }
-}
+else:
+    # Fallback: in-process cache for local dev / tests.
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'peptides-guide-cache',
+        }
+    }
 
 RATE_LIMIT_API_REQUESTS = int(
     os.environ.get('RATE_LIMIT_API_REQUESTS', '1000' if _running_tests else '60')
 )
 RATE_LIMIT_API_WINDOW_SECONDS = int(os.environ.get('RATE_LIMIT_API_WINDOW_SECONDS', '60'))
+RATE_LIMIT_ADMIN_REQUESTS = int(os.environ.get('RATE_LIMIT_ADMIN_REQUESTS', '5'))
+RATE_LIMIT_ADMIN_WINDOW_SECONDS = int(os.environ.get('RATE_LIMIT_ADMIN_WINDOW_SECONDS', '300'))
 
 # Cookies — unique names to avoid conflicts with other Django apps on the same domain
 SESSION_COOKIE_NAME = 'peptides_sessionid'
