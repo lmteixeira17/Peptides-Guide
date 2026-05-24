@@ -637,6 +637,13 @@ class TestSerializeStack:
 # =============================================================================
 
 
+def header_nav_html(response):
+    content = response.content.decode()
+    start = content.index('<nav class="header-nav" id="headerNav">')
+    end = content.index('</nav>', start)
+    return content[start:end]
+
+
 @pytest.mark.django_db
 class TestIndexView:
     """Tests for the index_view."""
@@ -660,6 +667,14 @@ class TestIndexView:
         assert bootstrap_pos != -1
         assert app_script_pos != -1
         assert bootstrap_pos < app_script_pos
+
+    def test_header_nav_does_not_show_api_link(self, client, db):
+        response = client.get('/')
+        nav = header_nav_html(response)
+
+        assert 'Sobre' in nav
+        assert 'Gloss' in nav
+        assert 'api/peptides.json' not in nav
 
     def test_noscript_contains_seeded_peptide_ids(self, client, peptide_with_relations, second_peptide):
         response = client.get('/')
@@ -1680,6 +1695,7 @@ class TestSEOEndpoints:
         assert b'DefinedTermSet' in response.content
         assert b'class="header-nav"' in response.content
         assert b'api/peptides.json' in response.content
+        assert 'api/peptides.json' not in header_nav_html(response)
 
     def test_sobre_page_returns_200(self, client):
         response = client.get('/sobre/')
@@ -1688,6 +1704,7 @@ class TestSEOEndpoints:
         assert b'AboutPage' in response.content
         assert b'class="header-nav"' in response.content
         assert b'api/peptides.json' in response.content
+        assert 'api/peptides.json' not in header_nav_html(response)
         assert b'E-E-A-T' not in response.content  # not user-facing term
 
     def test_peptides_api_returns_json(self, client, peptide):
@@ -1708,6 +1725,7 @@ class TestSEOEndpoints:
         assert b'API JSON' in response.content
         assert b'class="header-nav"' in response.content
         assert b'Abrir JSON bruto' in response.content
+        assert 'api/peptides.json' not in header_nav_html(response)
         assert response['Cache-Control'] == 'no-cache'
 
     def test_peptides_api_format_json_overrides_browser_accept(self, client, peptide):

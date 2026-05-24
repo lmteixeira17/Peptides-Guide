@@ -193,7 +193,7 @@ RATE_LIMIT_ADMIN_REQUESTS = int(os.environ.get('RATE_LIMIT_ADMIN_REQUESTS', '5')
 RATE_LIMIT_ADMIN_WINDOW_SECONDS = int(os.environ.get('RATE_LIMIT_ADMIN_WINDOW_SECONDS', '300'))
 CACHE_MIDDLEWARE_KEY_PREFIX = os.environ.get(
     'CACHE_MIDDLEWARE_KEY_PREFIX',
-    'peptides-v4-content-layout',
+    'peptides-v5-menu-no-api',
 )
 
 # Cookies — unique names to avoid conflicts with other Django apps on the same domain
