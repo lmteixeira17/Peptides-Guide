@@ -24,10 +24,12 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY . .
 
 RUN SECRET_KEY='build-only-dummy-key-not-used-in-production' \
-    DEBUG=True \
+    DEBUG=False \
+    FORCE_SCRIPT_NAME=/peptides \
     python manage.py collectstatic --noinput
 RUN SECRET_KEY='build-only-dummy-key-not-used-in-production' \
-    DEBUG=True \
+    DEBUG=False \
+    FORCE_SCRIPT_NAME=/peptides \
     COMPRESS_ENABLED=True \
     python manage.py compress --force
 

@@ -2700,6 +2700,13 @@ class TestDockerComposeRedis:
         content = dockerfile.read_text()
         assert 'manage.py compress' in content
 
+    def test_dockerfile_runs_compress_like_production(self):
+        dockerfile = Path(settings.BASE_DIR) / 'Dockerfile'
+        content = dockerfile.read_text()
+        assert 'DEBUG=False' in content
+        assert 'FORCE_SCRIPT_NAME=/peptides' in content
+        assert 'manage.py compress --force' in content
+
 
 # =============================================================================
 # Accessibility / ARIA Markup Tests
