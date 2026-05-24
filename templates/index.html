@@ -277,20 +277,30 @@
             <span class="search-icon">&#x1F50D;</span>
             <input type="text" id="searchInput" placeholder="Buscar pept&iacute;deo, stack ou categoria..." autocomplete="off">
         </div>
-        <div class="section-tabs">
-            <button class="section-tab active" data-section="peptides">
-                <span class="tab-icon">&#x1F9EA;</span>
-                Pept&iacute;deos
+        <div class="section-tabs" role="group" aria-label="Tipo de conte&uacute;do">
+            <button class="section-tab active" type="button" data-section="peptides" aria-pressed="true">
+                <span class="tab-main">
+                    <span class="tab-icon">&#x1F9EA;</span>
+                    <span class="tab-title">Pept&iacute;deos</span>
+                    <span class="tab-count">{{ peptide_count }}</span>
+                </span>
+                <span class="tab-description">Mol&eacute;culas individuais</span>
+                <span class="tab-state">Selecionado</span>
             </button>
-            <button class="section-tab" data-section="stacks">
-                <span class="tab-icon">&#x1F9F5;</span>
-                Combina&ccedil;&otilde;es
+            <button class="section-tab" type="button" data-section="stacks" aria-pressed="false">
+                <span class="tab-main">
+                    <span class="tab-icon">&#x1F9F5;</span>
+                    <span class="tab-title">Combina&ccedil;&otilde;es</span>
+                    <span class="tab-count">{{ stack_count }}</span>
+                </span>
+                <span class="tab-description">Protocolos combinados</span>
+                <span class="tab-state">Selecionado</span>
             </button>
         </div>
     </div>
 
     <!-- Filters -->
-    <div class="filters-bar">
+    <div class="filters-bar" id="peptideFiltersBar">
         <div class="filters-scroll" id="filtersScroll">
             <button class="filter-chip active" data-category="all">Todos</button>
             <button class="filter-chip" data-category="weight-loss">Perda de Peso</button>
@@ -332,6 +342,9 @@
             <button class="filter-chip" data-goal="body-comp">Composi&ccedil;&atilde;o Corporal</button>
             <button class="filter-chip" data-goal="sleep">Sono</button>
             <button class="filter-chip" data-goal="hormonal">Hormonal</button>
+        </div>
+        <div class="results-count stack-results-count">
+            <span id="stackCountDisplay">0</span> combina&ccedil;&otilde;es
         </div>
         <div class="stacks-grid" id="stacksGrid">
           <div class="loading-state">

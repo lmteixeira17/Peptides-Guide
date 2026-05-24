@@ -79,6 +79,9 @@ def test_stacks_search_and_new_stack_modal(page: Page, live_server):
     page.locator('[data-section="stacks"]').click()
     expect(page.locator("#stacksContainer")).to_be_visible()
     expect(page.locator(".stack-card").first).to_be_visible()
+    expect(page.locator("#peptideFiltersBar")).to_be_hidden()
+    expect(page.locator("#stackCountDisplay")).to_have_text("44")
+    expect(page.locator('[data-section="stacks"]')).to_have_attribute("aria-pressed", "true")
 
     page.locator("#searchInput").fill("MASH")
     expect(page.locator(".stack-card-name").filter(has_text="MASH/NASH - Eixo FGF21")).to_be_visible()

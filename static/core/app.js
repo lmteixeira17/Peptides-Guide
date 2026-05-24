@@ -40,6 +40,8 @@ var stacksContainer = document.getElementById("stacksContainer");
 var stacksGrid = document.getElementById("stacksGrid");
 var searchInput = document.getElementById("searchInput");
 var countDisplay = document.getElementById("countDisplay");
+var stackCountDisplay = document.getElementById("stackCountDisplay");
+var peptideFiltersBar = document.getElementById("peptideFiltersBar");
 var modalOverlay = document.getElementById("modalOverlay");
 var modalContent = document.getElementById("modalContent");
 var modalClose = document.getElementById("modalClose");
@@ -250,8 +252,12 @@ function bindEvents() {
 
     sectionButtons.forEach(function(btn) {
         btn.addEventListener("click", function() {
-            sectionButtons.forEach(function(b) { b.classList.remove("active"); });
+            sectionButtons.forEach(function(b) {
+                b.classList.remove("active");
+                b.setAttribute("aria-pressed", "false");
+            });
             btn.classList.add("active");
+            btn.setAttribute("aria-pressed", "true");
             currentSection = btn.getAttribute("data-section");
             toggleSection();
         });
@@ -280,11 +286,13 @@ function bindEvents() {
 function toggleSection() {
     if (currentSection === "peptides") {
         cardsContainer.style.display = "";
+        peptideFiltersBar.style.display = "";
         stacksContainer.style.display = "none";
         searchInput.placeholder = "Buscar pept\u00eddeo por nome...";
         renderCurrentSection();
     } else {
         cardsContainer.style.display = "none";
+        peptideFiltersBar.style.display = "none";
         stacksContainer.style.display = "";
         searchInput.placeholder = "Buscar combina\u00e7\u00e3o ou pept\u00eddeo do stack...";
         renderCurrentSection();
@@ -395,6 +403,7 @@ function getFilteredStacks() {
 // Render stack cards
 function renderStacks() {
     if (dataLoadFailed) {
+        stackCountDisplay.textContent = "0";
         stacksGrid.innerHTML = buildStateMessage(
             "N\u00e3o foi poss\u00edvel carregar as combina\u00e7\u00f5es.",
             "Atualize a p\u00e1gina para tentar novamente.",
@@ -404,6 +413,7 @@ function renderStacks() {
     }
 
     if (!dataLoaded) {
+        stackCountDisplay.textContent = "...";
         stacksGrid.innerHTML = buildStateMessage(
             "Carregando combina\u00e7\u00f5es...",
             "Preparando os protocolos recomendados.",
@@ -413,6 +423,7 @@ function renderStacks() {
     }
 
     var filtered = getFilteredStacks();
+    stackCountDisplay.textContent = filtered.length;
 
     if (filtered.length === 0) {
         stacksGrid.innerHTML = '<div class="no-results"><h3>Nenhuma combina\u00e7\u00e3o encontrada</h3><p>Tente outro filtro.</p></div>';
