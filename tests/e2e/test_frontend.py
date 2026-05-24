@@ -110,3 +110,35 @@ def test_detail_pages_render_and_mobile_home_is_usable(page: Page, live_server):
     expect(page.locator("#searchInput")).to_be_visible()
     page.locator("#searchInput").fill("teduglutide")
     expect(page.locator("#countDisplay")).to_have_text("1")
+
+
+def test_theme_toggle_switches_and_header_is_readable(page: Page, live_server):
+    page.goto(live_server.url + "/")
+    expect(page.locator(".card").first).to_be_visible()
+
+    # Default theme should be dark (light text on dark bg)
+    theme = page.evaluate("document.documentElement.getAttribute('data-theme')")
+    assert theme in ("dark", "light"), "data-theme should be set"
+
+    # Click theme toggle
+    page.locator("#themeToggle").click()
+    new_theme = page.evaluate("document.documentElement.getAttribute('data-theme')")
+    assert new_theme != theme, "Theme should switch after click"
+
+    # Verify header text is readable in both themes
+    # Get computed color of header brand text and header background
+    header_bg = page.evaluate(
+        "window.getComputedStyle(document.querySelector('.header')).backgroundColor"
+    )
+    header_text_color = page.evaluate(
+        "window.getComputedStyle(document.querySelector('.header-brand h1')).color"
+    )
+
+    # Colors must be defined (not empty/transparent for text)
+    assert header_text_color and header_text_color != "rgba(0, 0, 0, 0)", "Header text color must be defined"
+    assert header_bg and header_bg != "rgba(0, 0, 0, 0)", "Header background must be defined"
+
+    # Toggle back
+    page.locator("#themeToggle").click()
+    final_theme = page.evaluate("document.documentElement.getAttribute('data-theme')")
+    assert final_theme == theme, "Theme should toggle back"

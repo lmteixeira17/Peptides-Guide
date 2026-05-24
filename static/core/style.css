@@ -16,6 +16,7 @@
     --surface: #1a1a1a;
     --surface-hover: #222222;
     --elevated: #242424;
+    --header-bg: rgba(15,15,15,0.85);
     --border: rgba(255,255,255,0.08);
     --border-strong: rgba(255,255,255,0.12);
 
@@ -49,6 +50,7 @@
     --surface: #ffffff;
     --surface-hover: #f0f0f0;
     --elevated: #ffffff;
+    --header-bg: rgba(255,255,255,0.85);
     --border: rgba(0,0,0,0.08);
     --border-strong: rgba(0,0,0,0.12);
     --text: #1a1a1a;
@@ -94,7 +96,7 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(15,15,15,0.85);
+    background: var(--header-bg);
     backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
     padding: 0 1.5rem;
