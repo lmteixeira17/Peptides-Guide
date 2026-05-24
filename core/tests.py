@@ -12,19 +12,27 @@ Covers:
 
 import json
 import os
+import subprocess
 import tempfile
 from pathlib import Path
+from unittest.mock import patch
 
 import pytest
+from django.conf import settings
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import User
+from django.core.cache import cache
+from django.core.management import call_command
+from django.core.management.base import CommandError
 from django.db import connection
-from django.test import Client, override_settings
+from django.http import JsonResponse
+from django.test import Client, RequestFactory, override_settings
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 
 from core.admin import PeptideAdmin, StackAdmin
 from core.management.commands.seed_peptides import js_to_json
+from core.middleware import RateLimitMiddleware
 from core.models import (
     CATEGORY_CHOICES,
     SEVERITY_CHOICES,
@@ -1180,6 +1188,120 @@ class TestSeedCommand:
 
 
 # =============================================================================
+# Backup Command Tests
+# =============================================================================
+
+class TestBackupDbCommand:
+    """Tests for database backup safety paths."""
+
+    def _database_settings(self, engine, name, **overrides):
+        config = {
+            'ENGINE': engine,
+            'NAME': str(name),
+        }
+        config.update(overrides)
+        return {'default': config}
+
+    def _call_backup(self, database_settings, output_dir):
+        with patch.object(settings, 'DATABASES', database_settings):
+            call_command('backup_db', output=str(output_dir), verbosity=0)
+
+    def test_sqlite_backup_copies_database_file(self, tmp_path):
+        source_db = tmp_path / 'source.sqlite3'
+        source_db.write_text('sqlite-content', encoding='utf-8')
+        output_dir = tmp_path / 'backups'
+
+        self._call_backup(
+            self._database_settings(
+                'django.db.backends.sqlite3',
+                source_db,
+            ),
+            output_dir,
+        )
+
+        backups = list(output_dir.glob('peptides_backup_*.sqlite3'))
+        assert len(backups) == 1
+        assert backups[0].read_text(encoding='utf-8') == 'sqlite-content'
+
+    def test_sqlite_backup_fails_when_database_is_missing(self, tmp_path):
+        database_settings = self._database_settings(
+            'django.db.backends.sqlite3',
+            tmp_path / 'missing.sqlite3',
+        )
+
+        with pytest.raises(CommandError, match='SQLite database not found'):
+            self._call_backup(database_settings, tmp_path)
+
+    def test_unsupported_database_engine_fails_clearly(self, tmp_path):
+        database_settings = self._database_settings(
+            'django.db.backends.mysql',
+            'peptides',
+        )
+
+        with pytest.raises(CommandError, match='Unsupported database engine'):
+            self._call_backup(database_settings, tmp_path)
+
+    def test_postgresql_backup_invokes_pg_dump_with_configured_credentials(
+        self,
+        tmp_path,
+    ):
+        database_settings = self._database_settings(
+            'django.db.backends.postgresql',
+            'peptides',
+            USER='peptides_user',
+            PASSWORD='secret',
+            HOST='db.example.test',
+            PORT='5433',
+        )
+
+        with patch('core.management.commands.backup_db.subprocess.run') as run:
+            self._call_backup(database_settings, tmp_path)
+
+        cmd = run.call_args.args[0]
+        env = run.call_args.kwargs['env']
+        assert '--host' in cmd
+        assert 'db.example.test' in cmd
+        assert '--port' in cmd
+        assert '5433' in cmd
+        assert '--username' in cmd
+        assert 'peptides_user' in cmd
+        assert '--dbname' in cmd
+        assert 'peptides' in cmd
+        assert env['PGPASSWORD'] == 'secret'
+
+    def test_postgresql_backup_reports_missing_pg_dump(self, tmp_path):
+        database_settings = self._database_settings(
+            'django.db.backends.postgresql',
+            'peptides',
+        )
+
+        with patch(
+            'core.management.commands.backup_db.subprocess.run',
+            side_effect=FileNotFoundError,
+        ):
+            with pytest.raises(CommandError, match='pg_dump not found'):
+                self._call_backup(database_settings, tmp_path)
+
+    def test_postgresql_backup_reports_pg_dump_error(self, tmp_path):
+        database_settings = self._database_settings(
+            'django.db.backends.postgresql',
+            'peptides',
+        )
+        error = subprocess.CalledProcessError(
+            returncode=1,
+            cmd='pg_dump',
+            stderr='permission denied',
+        )
+
+        with patch(
+            'core.management.commands.backup_db.subprocess.run',
+            side_effect=error,
+        ):
+            with pytest.raises(CommandError, match='permission denied'):
+                self._call_backup(database_settings, tmp_path)
+
+
+# =============================================================================
 # Integration Tests
 # =============================================================================
 
@@ -1481,6 +1603,117 @@ class TestSEOEndpoints:
     def test_peptides_api_has_cache_header(self, client):
         response = client.get('/api/peptides.json')
         assert response['Cache-Control'] == 'public, max-age=3600'
+
+    @override_settings(RATE_LIMIT_API_REQUESTS=2, RATE_LIMIT_API_WINDOW_SECONDS=60)
+    def test_peptides_api_rate_limits_by_ip(self, client, peptide):
+        cache.clear()
+        assert client.get('/api/peptides.json', REMOTE_ADDR='203.0.113.10').status_code == 200
+        assert client.get('/api/peptides.json', REMOTE_ADDR='203.0.113.10').status_code == 200
+
+        response = client.get('/api/peptides.json', REMOTE_ADDR='203.0.113.10')
+
+        assert response.status_code == 429
+        assert response.json()['error'] == 'Rate limit exceeded.'
+        cache.clear()
+
+    @override_settings(RATE_LIMIT_API_REQUESTS=2, RATE_LIMIT_API_WINDOW_SECONDS=60)
+    def test_peptides_api_rate_limit_keeps_ips_separate(self, client, peptide):
+        cache.clear()
+        client.get('/api/peptides.json', REMOTE_ADDR='203.0.113.11')
+        client.get('/api/peptides.json', REMOTE_ADDR='203.0.113.11')
+
+        response = client.get('/api/peptides.json', REMOTE_ADDR='203.0.113.12')
+
+        assert response.status_code == 200
+        cache.clear()
+
+    @override_settings(RATE_LIMIT_API_REQUESTS=1, RATE_LIMIT_API_WINDOW_SECONDS=60)
+    def test_rate_limit_uses_path_info_for_prefixed_deployments(self):
+        cache.clear()
+        factory = RequestFactory()
+        middleware = RateLimitMiddleware(lambda request: JsonResponse({'ok': True}))
+
+        request = factory.get('/peptides/api/peptides.json')
+        request.path = '/peptides/api/peptides.json'
+        request.path_info = '/api/peptides.json'
+        request.META['REMOTE_ADDR'] = '203.0.113.13'
+        assert middleware(request).status_code == 200
+
+        request = factory.get('/peptides/api/peptides.json')
+        request.path = '/peptides/api/peptides.json'
+        request.path_info = '/api/peptides.json'
+        request.META['REMOTE_ADDR'] = '203.0.113.13'
+        assert middleware(request).status_code == 429
+        cache.clear()
+
+    @override_settings(RATE_LIMIT_API_REQUESTS=1, RATE_LIMIT_API_WINDOW_SECONDS=60)
+    def test_rate_limit_does_not_apply_to_other_paths(self):
+        cache.clear()
+        factory = RequestFactory()
+        middleware = RateLimitMiddleware(lambda request: JsonResponse({'ok': True}))
+
+        request = factory.get('/health/')
+        request.path = '/health/'
+        request.path_info = '/health/'
+        request.META['REMOTE_ADDR'] = '203.0.113.14'
+        assert middleware(request).status_code == 200
+
+        request = factory.get('/health/')
+        request.path = '/health/'
+        request.path_info = '/health/'
+        request.META['REMOTE_ADDR'] = '203.0.113.14'
+        assert middleware(request).status_code == 200
+        cache.clear()
+
+    @override_settings(RATE_LIMIT_API_REQUESTS=0, RATE_LIMIT_API_WINDOW_SECONDS=60)
+    def test_rate_limit_can_be_disabled(self):
+        cache.clear()
+        factory = RequestFactory()
+        middleware = RateLimitMiddleware(lambda request: JsonResponse({'ok': True}))
+
+        for _ in range(3):
+            request = factory.get('/api/peptides.json', REMOTE_ADDR='203.0.113.15')
+            assert middleware(request).status_code == 200
+
+        cache.clear()
+
+    @override_settings(RATE_LIMIT_API_REQUESTS=1, RATE_LIMIT_API_WINDOW_SECONDS=60)
+    def test_rate_limit_resets_after_window_expires(self):
+        cache.clear()
+        factory = RequestFactory()
+        middleware = RateLimitMiddleware(lambda request: JsonResponse({'ok': True}))
+        cache.set(
+            'ratelimit:api:peptides:203.0.113.16',
+            {'count': 1, 'window_start': 100.0},
+            timeout=60,
+        )
+
+        with patch('core.middleware.time.time', return_value=161.0):
+            request = factory.get('/api/peptides.json', REMOTE_ADDR='203.0.113.16')
+            assert middleware(request).status_code == 200
+
+        cache.clear()
+
+    @override_settings(RATE_LIMIT_API_REQUESTS=1, RATE_LIMIT_API_WINDOW_SECONDS=60)
+    def test_rate_limit_uses_x_forwarded_for_client_ip(self):
+        cache.clear()
+        factory = RequestFactory()
+        middleware = RateLimitMiddleware(lambda request: JsonResponse({'ok': True}))
+
+        request = factory.get(
+            '/api/peptides.json',
+            HTTP_X_FORWARDED_FOR='198.51.100.20, 10.0.0.1',
+            REMOTE_ADDR='10.0.0.1',
+        )
+        assert middleware(request).status_code == 200
+
+        request = factory.get(
+            '/api/peptides.json',
+            HTTP_X_FORWARDED_FOR='198.51.100.20, 10.0.0.2',
+            REMOTE_ADDR='10.0.0.2',
+        )
+        assert middleware(request).status_code == 429
+        cache.clear()
 
     def test_sitemap_includes_category_urls(self, client, peptide):
         response = client.get('/sitemap.xml')

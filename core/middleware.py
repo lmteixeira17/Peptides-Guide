@@ -5,6 +5,7 @@ No external dependencies required.
 
 import time
 
+from django.conf import settings
 from django.core.cache import cache
 from django.http import JsonResponse
 
@@ -16,22 +17,23 @@ class RateLimitMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        # Only rate limit API endpoints
-        if request.path == '/api/peptides.json':
+        # path_info excludes FORCE_SCRIPT_NAME, so /peptides/api/... is covered.
+        if request.path_info == '/api/peptides.json':
             client_ip = self._get_client_ip(request)
-            cache_key = f'ratelimit:{client_ip}'
+            cache_key = f'ratelimit:api:peptides:{client_ip}'
 
-            # Get current request count and timestamp
             data = cache.get(cache_key)
             now = time.time()
-            window = 60  # 1 minute window
-            limit = 60   # 60 requests per minute
+            window = max(1, int(getattr(settings, 'RATE_LIMIT_API_WINDOW_SECONDS', 60)))
+            limit = int(getattr(settings, 'RATE_LIMIT_API_REQUESTS', 60))
+
+            if limit <= 0:
+                return self.get_response(request)
 
             if data is None:
                 data = {'count': 1, 'window_start': now}
                 cache.set(cache_key, data, timeout=window)
             else:
-                # Check if window has expired
                 if now - data['window_start'] > window:
                     data = {'count': 1, 'window_start': now}
                     cache.set(cache_key, data, timeout=window)
@@ -43,7 +45,9 @@ class RateLimitMiddleware:
                         return JsonResponse(
                             {
                                 'error': 'Rate limit exceeded.',
-                                'retry_after': int(window - (now - data['window_start'])),
+                                'retry_after': int(
+                                    window - (now - data['window_start'])
+                                ),
                             },
                             status=429,
                         )

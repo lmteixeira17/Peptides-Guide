@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'core.middleware.RateLimitMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -123,9 +124,17 @@ STATIC_URL = f'{FORCE_SCRIPT_NAME}/static/' if FORCE_SCRIPT_NAME else '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 if _running_tests:
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+    staticfiles_storage = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 else:
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    staticfiles_storage = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STORAGES = {
+    'default': {
+        'BACKEND': 'django.core.files.storage.FileSystemStorage',
+    },
+    'staticfiles': {
+        'BACKEND': staticfiles_storage,
+    },
+}
 WHITENOISE_AUTOREFRESH = DEBUG or _running_tests
 WHITENOISE_USE_FINDERS = DEBUG or _running_tests
 
@@ -141,6 +150,11 @@ CACHES = {
     }
 }
 
+RATE_LIMIT_API_REQUESTS = int(
+    os.environ.get('RATE_LIMIT_API_REQUESTS', '1000' if _running_tests else '60')
+)
+RATE_LIMIT_API_WINDOW_SECONDS = int(os.environ.get('RATE_LIMIT_API_WINDOW_SECONDS', '60'))
+
 # Cookies — unique names to avoid conflicts with other Django apps on the same domain
 SESSION_COOKIE_NAME = 'peptides_sessionid'
 CSRF_COOKIE_NAME = 'peptides_csrftoken'
@@ -152,6 +166,9 @@ X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
+# HSTS subdomains/preload stay opt-in because this app can run under shared
+# apex/path domains where forcing every subdomain to HTTPS may affect other apps.
+SILENCED_SYSTEM_CHECKS = ['security.W005', 'security.W021']
 
 if not DEBUG:
     SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True').lower() in ('true', '1', 'yes')
