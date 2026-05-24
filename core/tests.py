@@ -1708,6 +1708,7 @@ class TestSEOEndpoints:
         assert b'API JSON' in response.content
         assert b'class="header-nav"' in response.content
         assert b'Abrir JSON bruto' in response.content
+        assert response['Cache-Control'] == 'no-cache'
 
     def test_peptides_api_format_json_overrides_browser_accept(self, client, peptide):
         response = client.get('/api/peptides.json?format=json', HTTP_ACCEPT='text/html')

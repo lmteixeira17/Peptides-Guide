@@ -264,7 +264,6 @@ def sobre_view(request):
     return render(request, 'sobre.html', _site_counts())
 
 
-@production_cache_page(3600)
 @vary_on_headers('Accept')
 def peptides_api(request):
     """Public JSON API endpoint for AI/LLM consumption."""
@@ -282,7 +281,9 @@ def peptides_api(request):
             'api_endpoint_url': _site_url('/api/peptides.json'),
             'api_source_url': _site_url('/'),
         })
-        return render(request, 'api.html', context)
+        response = render(request, 'api.html', context)
+        response['Cache-Control'] = 'no-cache'
+        return response
 
     peptides = Peptide.objects.prefetch_related(
         'benefits', 'side_effects', 'dosages', 'references'
