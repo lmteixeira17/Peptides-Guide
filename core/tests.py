@@ -2538,6 +2538,9 @@ class TestSettingsConfiguration:
         assert hasattr(settings, 'RATE_LIMIT_ADMIN_REQUESTS')
         assert hasattr(settings, 'RATE_LIMIT_ADMIN_WINDOW_SECONDS')
 
+    def test_cache_middleware_key_prefix_is_versioned(self):
+        assert settings.CACHE_MIDDLEWARE_KEY_PREFIX.startswith('peptides-v')
+
 
 # =============================================================================
 # Site Counts Cache Tests
