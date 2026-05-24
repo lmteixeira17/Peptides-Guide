@@ -29,7 +29,7 @@ RUN SECRET_KEY='build-only-dummy-key-not-used-in-production' \
 RUN SECRET_KEY='build-only-dummy-key-not-used-in-production' \
     DEBUG=True \
     COMPRESS_ENABLED=True \
-    python manage.py compress
+    python manage.py compress --force
 
 # -----------------------------------------------------------------------------
 # Stage 2: Runtime
