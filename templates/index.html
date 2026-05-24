@@ -17,16 +17,16 @@
     <meta name="keywords" content="pept&iacute;deos, peptides, semaglutida, tirzepatida, BPC-157, TB-500, GHK-Cu, ipamorelin, CJC-1295, tesamorelin, AOD-9604, epithalon, MOTS-c, pept&iacute;deos terap&ecirc;uticos, dosagem pept&iacute;deos, efeitos colaterais pept&iacute;deos, guia pept&iacute;deos, refer&ecirc;ncia cient&iacute;fica">
     <meta name="author" content="Guia de Pept&iacute;deos">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://guiadepeptideos.com.br/">
+    <link rel="canonical" href="{{ site_home_url }}">
 
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Guia Completo de Pept&iacute;deos - Refer&ecirc;ncia Cient&iacute;fica">
     <meta property="og:description" content="{{ peptide_count }} pept&iacute;deos terap&ecirc;uticos com dosagens, efeitos colaterais e {{ reference_count }} refer&ecirc;ncias PubMed. Semaglutida, BPC-157, TB-500, GHK-Cu e {{ stack_count }} combina&ccedil;&otilde;es recomendadas.">
-    <meta property="og:url" content="https://guiadepeptideos.com.br/">
+    <meta property="og:url" content="{{ site_home_url }}">
     <meta property="og:site_name" content="Guia de Pept&iacute;deos">
     <meta property="og:locale" content="pt_BR">
-    <meta property="og:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+    <meta property="og:image" content="{{ site_og_image_url }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Guia Completo de Pept&iacute;deos - {{ peptide_count }} pept&iacute;deos, {{ stack_count }} stacks, {{ reference_count }} refer&ecirc;ncias">
@@ -35,7 +35,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Guia Completo de Pept&iacute;deos - Refer&ecirc;ncia Cient&iacute;fica">
     <meta name="twitter:description" content="{{ peptide_count }} pept&iacute;deos terap&ecirc;uticos com dosagens, efeitos colaterais e {{ reference_count }} refer&ecirc;ncias PubMed.">
-    <meta name="twitter:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+    <meta name="twitter:image" content="{{ site_og_image_url }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -61,19 +61,19 @@
         {
           "@type": "WebSite",
           "name": "Guia Completo de Pept\u00eddeos",
-          "url": "https://guiadepeptideos.com.br/",
+          "url": "{{ site_home_url }}",
           "description": "Refer\u00eancia cient\u00edfica sobre pept\u00eddeos terap\u00eauticos com dosagens, efeitos colaterais e refer\u00eancias PubMed",
           "inLanguage": "pt-BR",
           "potentialAction": {
             "@type": "SearchAction",
-            "target": "https://guiadepeptideos.com.br/?q={search_term_string}",
+            "target": "{{ site_home_url }}?q={search_term_string}",
             "query-input": "required name=search_term_string"
           }
         },
         {
           "@type": "MedicalWebPage",
           "name": "Guia Completo de Pept\u00eddeos Terap\u00eauticos",
-          "url": "https://guiadepeptideos.com.br/",
+          "url": "{{ site_home_url }}",
           "description": "Guia cient\u00edfico com {{ peptide_count }} pept\u00eddeos terap\u00eauticos e {{ stack_count }} combina\u00e7\u00f5es recomendadas. Dosagens baseadas em estudos cl\u00ednicos, efeitos colaterais classificados por frequ\u00eancia e {{ reference_count }} refer\u00eancias PubMed verificadas.",
           "inLanguage": "pt-BR",
           "about": {
@@ -96,16 +96,16 @@
           "description": "Lista de {{ peptide_count }} pept\u00eddeos com informa\u00e7\u00f5es cient\u00edficas",
           "numberOfItems": {{ peptide_count }},
           "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Semaglutida (Ozempic, Wegovy)", "url": "https://guiadepeptideos.com.br/#semaglutide"},
-            {"@type": "ListItem", "position": 2, "name": "Tirzepatida (Mounjaro)", "url": "https://guiadepeptideos.com.br/#tirzepatide"},
-            {"@type": "ListItem", "position": 3, "name": "BPC-157", "url": "https://guiadepeptideos.com.br/#bpc-157"},
-            {"@type": "ListItem", "position": 4, "name": "TB-500 (Timosina Beta 4)", "url": "https://guiadepeptideos.com.br/#tb-500"},
-            {"@type": "ListItem", "position": 5, "name": "GHK-Cu", "url": "https://guiadepeptideos.com.br/#ghk-cu"},
-            {"@type": "ListItem", "position": 6, "name": "Ipamorelin", "url": "https://guiadepeptideos.com.br/#ipamorelin"},
-            {"@type": "ListItem", "position": 7, "name": "CJC-1295", "url": "https://guiadepeptideos.com.br/#cjc-1295"},
-            {"@type": "ListItem", "position": 8, "name": "Tesamorelin (Egrifta)", "url": "https://guiadepeptideos.com.br/#tesamorelin"},
-            {"@type": "ListItem", "position": 9, "name": "Epithalon", "url": "https://guiadepeptideos.com.br/#epithalon"},
-            {"@type": "ListItem", "position": 10, "name": "MOTS-c", "url": "https://guiadepeptideos.com.br/#mots-c"}
+            {"@type": "ListItem", "position": 1, "name": "Semaglutida (Ozempic, Wegovy)", "url": "{{ site_home_url }}#semaglutide"},
+            {"@type": "ListItem", "position": 2, "name": "Tirzepatida (Mounjaro)", "url": "{{ site_home_url }}#tirzepatide"},
+            {"@type": "ListItem", "position": 3, "name": "BPC-157", "url": "{{ site_home_url }}#bpc-157"},
+            {"@type": "ListItem", "position": 4, "name": "TB-500 (Timosina Beta 4)", "url": "{{ site_home_url }}#tb-500"},
+            {"@type": "ListItem", "position": 5, "name": "GHK-Cu", "url": "{{ site_home_url }}#ghk-cu"},
+            {"@type": "ListItem", "position": 6, "name": "Ipamorelin", "url": "{{ site_home_url }}#ipamorelin"},
+            {"@type": "ListItem", "position": 7, "name": "CJC-1295", "url": "{{ site_home_url }}#cjc-1295"},
+            {"@type": "ListItem", "position": 8, "name": "Tesamorelin (Egrifta)", "url": "{{ site_home_url }}#tesamorelin"},
+            {"@type": "ListItem", "position": 9, "name": "Epithalon", "url": "{{ site_home_url }}#epithalon"},
+            {"@type": "ListItem", "position": 10, "name": "MOTS-c", "url": "{{ site_home_url }}#mots-c"}
           ]
         },
         {
@@ -226,14 +226,14 @@
     <!-- Header -->
     <header class="header" id="mainHeader">
         <div class="header-inner">
-            <a href="/" class="header-brand">
+            <a href="{{ site_path_prefix }}/" class="header-brand">
                 <h1>Guia de Pept&iacute;deos</h1>
                 <span>v2</span>
             </a>
             <nav class="header-nav">
-                <a href="/sobre/">Sobre</a>
-                <a href="/glossario/">Gloss&aacute;rio</a>
-                <a href="/api/peptides.json">API</a>
+                <a href="{{ site_path_prefix }}/sobre/">Sobre</a>
+                <a href="{{ site_path_prefix }}/glossario/">Gloss&aacute;rio</a>
+                <a href="{{ site_path_prefix }}/api/peptides.json">API</a>
                 <button class="theme-toggle" id="themeToggle" type="button" title="Alternar tema">
                     <span id="themeIcon">&#x1F319;</span>
                     <span id="themeLabel">Escuro</span>
@@ -471,10 +471,10 @@
     <!-- Footer -->
     <footer class="footer">
         <nav class="footer-nav" aria-label="Navegação do rodapé">
-            <a href="/sobre/">Sobre</a>
-            <a href="/glossario/">Gloss&aacute;rio</a>
-            <a href="/sitemap.xml">Sitemap</a>
-            <a href="/api/peptides.json">API JSON</a>
+            <a href="{{ site_path_prefix }}/sobre/">Sobre</a>
+            <a href="{{ site_path_prefix }}/glossario/">Gloss&aacute;rio</a>
+            <a href="{{ site_path_prefix }}/sitemap.xml">Sitemap</a>
+            <a href="{{ site_path_prefix }}/api/peptides.json">API JSON</a>
         </nav>
         <p>Guia de Pept&iacute;deos &copy; 2026 - Conte&uacute;do baseado em literatura cient&iacute;fica publicada</p>
         <p class="footer-disclaimer">Este material &eacute; para fins educacionais. N&atilde;o substitui orienta&ccedil;&atilde;o m&eacute;dica profissional.</p>
@@ -486,6 +486,7 @@
       "{% url 'peptides_api' %}",
       "/api/peptides.json",
       "/peptides/api/peptides.json",
+      "{{ site_url_prefix }}/api/peptides.json",
       "https://guiadepeptideos.com.br/api/peptides.json",
       "https://mlt.com.br/peptides/api/peptides.json"
     ];

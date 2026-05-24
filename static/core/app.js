@@ -152,6 +152,7 @@ function buildApiCandidates() {
         addApiCandidate(candidates, origin + "/api/peptides.json");
     }
 
+    addApiCandidate(candidates, "https://guiadepeptideos.com.br/peptides/api/peptides.json");
     addApiCandidate(candidates, "https://guiadepeptideos.com.br/api/peptides.json");
     addApiCandidate(candidates, "https://mlt.com.br/peptides/api/peptides.json");
 

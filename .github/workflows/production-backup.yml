@@ -1,0 +1,42 @@
+name: Production Backup
+
+on:
+  schedule:
+    - cron: '25 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Validate Backup Secrets
+        run: |
+          test -n "${{ secrets.SERVER_IP }}" || (echo "SERVER_IP secret is missing" && exit 1)
+          test -n "${{ secrets.SSH_PRIVATE_KEY }}" || (echo "SSH_PRIVATE_KEY secret is missing" && exit 1)
+
+      - name: Backup PostgreSQL via app command
+        uses: appleboy/ssh-action@0ff4204d59e8e51228ff73bce53f80d53301dee2
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            set -e
+            backup_dir="/var/backups/peptides"
+            mkdir -p "$backup_dir"
+            docker exec peptides-web mkdir -p /tmp/peptides-backups
+            docker exec peptides-web python manage.py backup_db --output /tmp/peptides-backups
+            latest_backup="$(docker exec peptides-web sh -c 'ls -t /tmp/peptides-backups/peptides_backup_* 2>/dev/null | head -1')"
+            test -n "$latest_backup" || (echo "No backup file generated" && exit 1)
+            docker cp "peptides-web:$latest_backup" "$backup_dir/"
+            docker exec peptides-web rm -f "$latest_backup"
+            find "$backup_dir" -type f -name 'peptides_backup_*' -mtime +14 -delete
+            ls -lh "$backup_dir" | tail -20

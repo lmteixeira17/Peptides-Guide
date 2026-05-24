@@ -16,22 +16,22 @@
     <meta name="description" content="Glossário completo de termos técnicos em peptidoterapia: GLP-1, GHRH, GHRP, receptores, mecanismos de ação, vias de administração, meia-vida farmacocinética e mais.">
     <meta name="keywords" content="glossário peptídeos, GLP-1, GHRH, GHRP, receptor, agonista, peptídeo definição, termos farmacologia">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://guiadepeptideos.com.br/glossario/">
+    <link rel="canonical" href="{{ canonical_url }}">
 
     <meta property="og:type" content="article">
     <meta property="og:title" content="Glossário de Peptídeos - Termos Técnicos e Definições">
     <meta property="og:description" content="Glossário completo de termos técnicos em peptidoterapia com definições claras e exemplos.">
-    <meta property="og:url" content="https://guiadepeptideos.com.br/glossario/">
+    <meta property="og:url" content="{{ canonical_url }}">
     <meta property="og:site_name" content="Guia de Peptídeos">
     <meta property="og:locale" content="pt_BR">
-    <meta property="og:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+    <meta property="og:image" content="{{ site_og_image_url }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Glossário de Peptídeos">
     <meta name="twitter:description" content="Termos técnicos em peptidoterapia com definições claras.">
-    <meta name="twitter:image" content="https://guiadepeptideos.com.br/static/core/og-image.png">
+    <meta name="twitter:image" content="{{ site_og_image_url }}">
 
     <link rel="icon" href="{% static 'core/favicon.svg' %}" type="image/svg+xml">
     <link rel="stylesheet" href="{% static 'core/style.css' %}">
@@ -45,15 +45,15 @@
         {
           "@type": "DefinedTermSet",
           "name": "Glossário de Peptídeos",
-          "url": "https://guiadepeptideos.com.br/glossario/",
+          "url": "{{ canonical_url }}",
           "description": "Glossário completo de termos técnicos em peptidoterapia",
           "inLanguage": "pt-BR"
         },
         {
           "@type": "BreadcrumbList",
           "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Guia de Peptídeos", "item": "https://guiadepeptideos.com.br/"},
-            {"@type": "ListItem", "position": 2, "name": "Glossário", "item": "https://guiadepeptideos.com.br/glossario/"}
+            {"@type": "ListItem", "position": 1, "name": "Guia de Peptídeos", "item": "{{ site_home_url }}"},
+            {"@type": "ListItem", "position": 2, "name": "Glossário", "item": "{{ canonical_url }}"}
           ]
         }
       ]
@@ -68,13 +68,13 @@
             <span id="themeLabel">Escuro</span>
         </button>
         <div class="header-content">
-            <h1><a href="/" style="color:inherit;text-decoration:none">Guia Completo de Peptídeos</a></h1>
+            <h1><a href="{{ site_path_prefix }}/" style="color:inherit;text-decoration:none">Guia Completo de Peptídeos</a></h1>
             <p class="subtitle">Glossário de termos técnicos em peptidoterapia</p>
         </div>
     </header>
 
     <nav aria-label="breadcrumb" class="breadcrumb">
-        <a href="/">Início</a> &rsaquo; <span>Glossário</span>
+        <a href="{{ site_path_prefix }}/">Início</a> &rsaquo; <span>Glossário</span>
     </nav>
 
     <main class="detail-page">
@@ -210,7 +210,7 @@
     </main>
 
     <footer class="footer">
-        <p><a href="/">&larr; Voltar ao Guia Completo</a></p>
+        <p><a href="{{ site_path_prefix }}/">&larr; Voltar ao Guia Completo</a></p>
         <p>Guia de Peptídeos &copy; 2026</p>
     </footer>
     <script>

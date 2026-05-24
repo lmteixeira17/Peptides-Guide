@@ -49,7 +49,12 @@ jobs:
         run: python manage.py check
 
       - name: Run test suite
-        run: pytest core/tests.py -q
+        run: |
+          if [ "${{ matrix.python-version }}" = "3.11" ]; then
+            pytest core/tests.py --cov=core --cov=peptides_project --cov-report=term-missing --cov-fail-under=90 -q
+          else
+            pytest core/tests.py -q
+          fi
 
       - name: Install Playwright browser
         if: matrix.python-version == '3.11'

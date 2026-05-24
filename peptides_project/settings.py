@@ -33,6 +33,7 @@ if not SECRET_KEY:
         )
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,45.63.90.69,mlt.com.br,guiadepeptideos.com.br,www.guiadepeptideos.com.br').split(',')
+SITE_BASE_URL = os.environ.get('SITE_BASE_URL', 'https://guiadepeptideos.com.br').rstrip('/')
 
 INSTALLED_APPS = [
     'django.contrib.admin',

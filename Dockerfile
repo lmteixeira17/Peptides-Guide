@@ -37,6 +37,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     libpq5 \
+    postgresql-client \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
@@ -62,6 +63,6 @@ USER appuser
 EXPOSE 8000
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \
-    CMD curl -f http://localhost:8000/health/ || exit 1
+    CMD curl -f "http://localhost:8000/health/?deep=1" || exit 1
 
 CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "2", "--timeout", "120", "--max-requests", "1000", "--max-requests-jitter", "50", "peptides_project.wsgi:application"]

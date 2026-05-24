@@ -73,6 +73,22 @@ def test_category_filter_limits_peptide_cards(page: Page, live_server):
     expect(page.locator(".card-title").filter(has_text="Setmelanotide")).to_have_count(0)
 
 
+def test_load_more_and_empty_search_state_are_stable(page: Page, live_server):
+    open_home(page, live_server)
+
+    expect(page.locator(".card")).to_have_count(12)
+    page.locator("#loadMorePeptides").click()
+    expect(page.locator(".card")).to_have_count(24)
+
+    page.locator("#searchInput").fill("resultado impossivel de existir")
+    expect(page.locator("#countDisplay")).to_have_text("0")
+    expect(page.locator(".no-results")).to_contain_text("Nenhum peptídeo encontrado")
+
+    page.locator("#searchInput").clear()
+    expect(page.locator("#countDisplay")).to_have_text("113")
+    expect(page.locator(".card")).to_have_count(12)
+
+
 def test_stacks_search_and_new_stack_modal(page: Page, live_server):
     open_home(page, live_server)
 

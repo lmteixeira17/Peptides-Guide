@@ -1,10 +1,12 @@
-import os
 import sys
+from datetime import timedelta
 from functools import wraps
 
 from django.conf import settings
+from django.db import connection
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, render
+from django.utils import timezone
 from django.views.decorators.cache import cache_page
 
 from .models import Peptide, PeptideReference, Stack, StackReference
@@ -33,11 +35,15 @@ def production_cache_page(timeout):
     return decorator
 
 
-def _base_context():
-    """Common context available to all pages (GA4, etc)."""
-    return {
-        'ga4_id': os.environ.get('GA4_MEASUREMENT_ID', ''),
-    }
+def _site_prefix():
+    return (getattr(settings, 'FORCE_SCRIPT_NAME', '') or '').rstrip('/')
+
+
+def _site_url(path='/'):
+    """Return an absolute production URL honoring FORCE_SCRIPT_NAME."""
+    if not path.startswith('/'):
+        path = f'/{path}'
+    return f'{settings.SITE_BASE_URL}{_site_prefix()}{path}'
 
 
 def _site_counts(peptide_count=None, stack_count=None):
@@ -69,8 +75,47 @@ def index_view(request):
 
 
 def health_view(request):
-    """Health check endpoint for Docker."""
-    return JsonResponse({'status': 'ok'})
+    """Health check endpoint for Docker and uptime checks.
+
+    /health/ stays lightweight. /health/?deep=1 also checks DB connectivity
+    and whether the public catalog has been seeded.
+    """
+    if request.GET.get('deep') not in ('1', 'true', 'yes'):
+        return JsonResponse({'status': 'ok'})
+
+    payload = {
+        'status': 'ok',
+        'checks': {},
+        'counts': {},
+    }
+    status_code = 200
+
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT 1')
+            cursor.fetchone()
+        payload['checks']['database'] = 'ok'
+    except Exception as exc:
+        payload['status'] = 'error'
+        payload['checks']['database'] = exc.__class__.__name__
+        return JsonResponse(payload, status=503)
+
+    try:
+        counts = _site_counts()
+    except Exception as exc:
+        payload['status'] = 'error'
+        payload['checks']['catalog'] = exc.__class__.__name__
+        return JsonResponse(payload, status=503)
+
+    payload['counts'] = counts
+    if counts['peptide_count'] > 0 and counts['stack_count'] > 0:
+        payload['checks']['catalog'] = 'ok'
+    else:
+        payload['status'] = 'error'
+        payload['checks']['catalog'] = 'empty'
+        status_code = 503
+
+    return JsonResponse(payload, status=status_code)
 
 
 @production_cache_page(300)
@@ -216,7 +261,7 @@ def peptides_api(request):
     ).order_by('order', 'name')
     data = {
         'version': '1.0',
-        'source': 'https://guiadepeptideos.com.br/',
+        'source': _site_url('/'),
         'license': 'Educational use only - consult references for primary sources',
         'last_updated': '2026-04-04',
         'peptides': [serialize_peptide(p) for p in peptides],
@@ -265,9 +310,24 @@ def robots_txt(request):
         'User-agent: CCBot',
         'Allow: /',
         '',
-        'Sitemap: https://guiadepeptideos.com.br/sitemap.xml',
+        'Sitemap: ' + _site_url('/sitemap.xml'),
     ]
     return HttpResponse('\n'.join(lines), content_type='text/plain')
+
+
+@production_cache_page(3600)
+def security_txt(request):
+    """Expose security contact metadata for responsible disclosure."""
+    expires = (timezone.now() + timedelta(days=180)).date().isoformat()
+    lines = [
+        'Contact: ' + _site_url('/sobre/'),
+        'Expires: ' + expires + 'T23:59:59Z',
+        'Preferred-Languages: pt-BR, en',
+        'Canonical: ' + _site_url('/.well-known/security.txt'),
+        'Policy: ' + _site_url('/sobre/'),
+        '',
+    ]
+    return HttpResponse('\n'.join(lines), content_type='text/plain; charset=utf-8')
 
 
 @production_cache_page(3600)
@@ -280,26 +340,26 @@ def sitemap_xml(request):
 
     urls = []
     # Main page
-    urls.append({'loc': 'https://guiadepeptideos.com.br/', 'lastmod': today, 'changefreq': 'weekly', 'priority': '1.0'})
+    urls.append({'loc': _site_url('/'), 'lastmod': today, 'changefreq': 'weekly', 'priority': '1.0'})
     # Static pages
-    urls.append({'loc': 'https://guiadepeptideos.com.br/sobre/', 'lastmod': today, 'changefreq': 'monthly', 'priority': '0.7'})
-    urls.append({'loc': 'https://guiadepeptideos.com.br/glossario/', 'lastmod': today, 'changefreq': 'monthly', 'priority': '0.8'})
+    urls.append({'loc': _site_url('/sobre/'), 'lastmod': today, 'changefreq': 'monthly', 'priority': '0.7'})
+    urls.append({'loc': _site_url('/glossario/'), 'lastmod': today, 'changefreq': 'monthly', 'priority': '0.8'})
     # Category landing pages
     for cat_slug in CATEGORY_META.keys():
         urls.append({
-            'loc': 'https://guiadepeptideos.com.br/categorias/' + cat_slug + '/',
+            'loc': _site_url('/categorias/' + cat_slug + '/'),
             'lastmod': today, 'changefreq': 'weekly', 'priority': '0.85',
         })
     # Individual peptide detail pages
     for p in peptides:
         urls.append({
-            'loc': 'https://guiadepeptideos.com.br/peptideos/' + p.id + '/',
+            'loc': _site_url('/peptideos/' + p.id + '/'),
             'lastmod': today, 'changefreq': 'monthly', 'priority': '0.9',
         })
     # Individual stack detail pages
     for s in stacks:
         urls.append({
-            'loc': 'https://guiadepeptideos.com.br/combinacoes/' + s.id + '/',
+            'loc': _site_url('/combinacoes/' + s.id + '/'),
             'lastmod': today, 'changefreq': 'monthly', 'priority': '0.8',
         })
 
@@ -329,32 +389,32 @@ def llms_txt(request):
         '',
         '> Referencia cientifica independente sobre peptideos terapeuticos em portugues brasileiro, com ' + str(counts['peptide_count']) + ' peptideos individuais, ' + str(counts['stack_count']) + ' combinacoes (stacks) recomendadas e ' + str(counts['reference_count']) + ' referencias PubMed verificaveis. Conteudo educacional para profissionais de saude e pesquisadores.',
         '',
-        '**Dominio:** https://guiadepeptideos.com.br/',
+        '**Dominio:** ' + _site_url('/'),
         '**Idioma:** Portugues (pt-BR)',
         '**Licenca:** Conteudo educacional gratuito, sem fins lucrativos',
-        '**API JSON:** https://guiadepeptideos.com.br/api/peptides.json',
+        '**API JSON:** ' + _site_url('/api/peptides.json'),
         '',
         '## Paginas Principais',
         '',
-        '- [Pagina inicial](https://guiadepeptideos.com.br/): Lista completa de peptideos e stacks',
-        '- [Sobre e Metodologia](https://guiadepeptideos.com.br/sobre/): Criterios editoriais, fontes, principios',
-        '- [Glossario](https://guiadepeptideos.com.br/glossario/): Termos tecnicos e definicoes',
-        '- [API JSON](https://guiadepeptideos.com.br/api/peptides.json): Dados estruturados completos',
-        '- [Sitemap](https://guiadepeptideos.com.br/sitemap.xml): Todas as paginas indexaveis',
+        '- [Pagina inicial](' + _site_url('/') + '): Lista completa de peptideos e stacks',
+        '- [Sobre e Metodologia](' + _site_url('/sobre/') + '): Criterios editoriais, fontes, principios',
+        '- [Glossario](' + _site_url('/glossario/') + '): Termos tecnicos e definicoes',
+        '- [API JSON](' + _site_url('/api/peptides.json') + '): Dados estruturados completos',
+        '- [Sitemap](' + _site_url('/sitemap.xml') + '): Todas as paginas indexaveis',
         '',
         '## Categorias de Peptideos',
         '',
-        '- [Perda de Peso](https://guiadepeptideos.com.br/categorias/weight-loss/) - Semaglutida, Tirzepatida, Retatrutide, Orforglipron, Liraglutida',
-        '- [Hormonio do Crescimento](https://guiadepeptideos.com.br/categorias/growth-hormone/) - Ipamorelin, CJC-1295, Tesamorelin, MK-677, Sermorelin',
-        '- [Cura e Recuperacao](https://guiadepeptideos.com.br/categorias/healing/) - BPC-157, TB-500, Pentadecarginia',
-        '- [Anti-Envelhecimento](https://guiadepeptideos.com.br/categorias/anti-aging/) - Epithalon, NAD+, SS-31, Humanin',
-        '- [Pele e Estetica](https://guiadepeptideos.com.br/categorias/skin/) - GHK-Cu, Melanotan II, PT-141, AHK-Cu',
-        '- [Cognitivo](https://guiadepeptideos.com.br/categorias/cognitive/) - Semax, Selank, Dihexa, Cerebrolysin, Noopept',
-        '- [Sistema Imunologico](https://guiadepeptideos.com.br/categorias/immune/) - Thymosin Alpha 1, LL-37, Thymulin',
-        '- [Hormonal](https://guiadepeptideos.com.br/categorias/hormonal/) - Kisspeptin, Gonadorelin, HCG, Oxitocina',
-        '- [Sono](https://guiadepeptideos.com.br/categorias/sleep/) - DSIP, Epitalon',
-        '- [Composicao Corporal](https://guiadepeptideos.com.br/categorias/body-comp/) - AOD-9604, MOTS-c, CBL-514, 5-Amino-1MQ, Bimagrumab',
-        '- [Outros](https://guiadepeptideos.com.br/categorias/other/) - Peptideos e compostos diversos',
+        '- [Perda de Peso](' + _site_url('/categorias/weight-loss/') + ') - Semaglutida, Tirzepatida, Retatrutide, Orforglipron, Liraglutida',
+        '- [Hormonio do Crescimento](' + _site_url('/categorias/growth-hormone/') + ') - Ipamorelin, CJC-1295, Tesamorelin, MK-677, Sermorelin',
+        '- [Cura e Recuperacao](' + _site_url('/categorias/healing/') + ') - BPC-157, TB-500, Pentadecarginia',
+        '- [Anti-Envelhecimento](' + _site_url('/categorias/anti-aging/') + ') - Epithalon, NAD+, SS-31, Humanin',
+        '- [Pele e Estetica](' + _site_url('/categorias/skin/') + ') - GHK-Cu, Melanotan II, PT-141, AHK-Cu',
+        '- [Cognitivo](' + _site_url('/categorias/cognitive/') + ') - Semax, Selank, Dihexa, Cerebrolysin, Noopept',
+        '- [Sistema Imunologico](' + _site_url('/categorias/immune/') + ') - Thymosin Alpha 1, LL-37, Thymulin',
+        '- [Hormonal](' + _site_url('/categorias/hormonal/') + ') - Kisspeptin, Gonadorelin, HCG, Oxitocina',
+        '- [Sono](' + _site_url('/categorias/sleep/') + ') - DSIP, Epitalon',
+        '- [Composicao Corporal](' + _site_url('/categorias/body-comp/') + ') - AOD-9604, MOTS-c, CBL-514, 5-Amino-1MQ, Bimagrumab',
+        '- [Outros](' + _site_url('/categorias/other/') + ') - Peptideos e compostos diversos',
         '',
         '## Estrutura dos Dados',
         '',
@@ -385,7 +445,7 @@ def llms_txt(request):
             lines.append('### ' + p.category_label)
             lines.append('')
         aka = ' (' + p.aka + ')' if p.aka else ''
-        lines.append('- [' + p.name + aka + '](https://guiadepeptideos.com.br/peptideos/' + p.id + '/): ' + p.description[:150].replace('\n', ' ') + '...')
+        lines.append('- [' + p.name + aka + '](' + _site_url('/peptideos/' + p.id + '/') + '): ' + p.description[:150].replace('\n', ' ') + '...')
 
     lines.append('')
     lines.append('## Combinacoes Recomendadas (' + str(stacks.count()) + ' total)')
@@ -397,13 +457,13 @@ def llms_txt(request):
             lines.append('')
             lines.append('### ' + s.goal_label)
             lines.append('')
-        lines.append('- [' + s.name + '](https://guiadepeptideos.com.br/combinacoes/' + s.id + '/) - ' + s.level + ': ' + s.description[:150].replace('\n', ' ') + '...')
+        lines.append('- [' + s.name + '](' + _site_url('/combinacoes/' + s.id + '/') + ') - ' + s.level + ': ' + s.description[:150].replace('\n', ' ') + '...')
 
     lines.append('')
     lines.append('## Como Citar')
     lines.append('')
     lines.append('Ao usar informacoes deste guia, cite como:')
-    lines.append('"Guia de Peptideos. Disponivel em: https://guiadepeptideos.com.br/. Acesso em: [data]"')
+    lines.append('"Guia de Peptideos. Disponivel em: ' + _site_url('/') + '. Acesso em: [data]"')
     lines.append('')
     lines.append('Para decisoes clinicas, sempre consulte as fontes primarias (PubMed) linkadas em cada peptideo.')
     lines.append('')

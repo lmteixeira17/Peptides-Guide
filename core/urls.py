@@ -11,6 +11,8 @@ urlpatterns = [
     path('api/peptides.json', views.peptides_api, name='peptides_api'),
     path('health/', views.health_view, name='health'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
+    path('.well-known/security.txt', views.security_txt, name='security_txt'),
+    path('security.txt', views.security_txt, name='security_txt_legacy'),
     path('sitemap.xml', views.sitemap_xml, name='sitemap_xml'),
     path('llms.txt', views.llms_txt, name='llms_txt'),
 ]

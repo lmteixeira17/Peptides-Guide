@@ -712,6 +712,7 @@ class TestIndexView:
         assert 'function buildApiCandidates()' in app_js
         assert 'function loadDataFromCandidates(candidates, index)' in app_js
         assert 'window.peptidesApiUrl' not in app_js
+        assert 'https://guiadepeptideos.com.br/peptides/api/peptides.json' in app_js
         assert 'https://guiadepeptideos.com.br/api/peptides.json' in app_js
         assert 'https://mlt.com.br/peptides/api/peptides.json' in app_js
 
@@ -773,6 +774,45 @@ class TestHealthView:
         response = client.get('/health/')
         data = json.loads(response.content)
         assert data == {'status': 'ok'}
+
+    def test_deep_health_returns_counts_when_catalog_is_ready(self, client, peptide, stack):
+        response = client.get('/health/?deep=1')
+        data = response.json()
+
+        assert response.status_code == 200
+        assert data['status'] == 'ok'
+        assert data['checks']['database'] == 'ok'
+        assert data['checks']['catalog'] == 'ok'
+        assert data['counts']['peptide_count'] >= 1
+        assert data['counts']['stack_count'] >= 1
+
+    def test_deep_health_fails_when_catalog_is_empty(self, client, db):
+        response = client.get('/health/?deep=1')
+        data = response.json()
+
+        assert response.status_code == 503
+        assert data['status'] == 'error'
+        assert data['checks']['database'] == 'ok'
+        assert data['checks']['catalog'] == 'empty'
+
+    def test_deep_health_reports_database_errors(self, client):
+        with patch('core.views.connection.cursor', side_effect=RuntimeError('db down')):
+            response = client.get('/health/?deep=1')
+
+        data = response.json()
+        assert response.status_code == 503
+        assert data['status'] == 'error'
+        assert data['checks']['database'] == 'RuntimeError'
+
+    def test_deep_health_reports_catalog_query_errors(self, client):
+        with patch('core.views._site_counts', side_effect=RuntimeError('no tables')):
+            response = client.get('/health/?deep=1')
+
+        data = response.json()
+        assert response.status_code == 503
+        assert data['status'] == 'error'
+        assert data['checks']['database'] == 'ok'
+        assert data['checks']['catalog'] == 'RuntimeError'
 
 
 # =============================================================================
@@ -1434,6 +1474,10 @@ class TestURLRouting:
         url = reverse('llms_txt')
         assert url == '/llms.txt'
 
+    def test_security_txt_url_resolves(self):
+        url = reverse('security_txt')
+        assert url == '/.well-known/security.txt'
+
     def test_category_url_resolves(self):
         url = reverse('category', kwargs={'slug': 'weight-loss'})
         assert url == '/categorias/weight-loss/'
@@ -1491,6 +1535,14 @@ class TestSEOEndpoints:
         assert b'Sitemap:' in response.content
         assert b'guiadepeptideos.com.br' in response.content
 
+    def test_security_txt_returns_200(self, client):
+        response = client.get('/.well-known/security.txt')
+        assert response.status_code == 200
+        assert 'text/plain' in response['Content-Type']
+        assert b'Contact:' in response.content
+        assert b'Expires:' in response.content
+        assert b'Canonical:' in response.content
+
     def test_sitemap_xml_returns_200(self, client):
         response = client.get('/sitemap.xml')
         assert response.status_code == 200
@@ -1506,6 +1558,52 @@ class TestSEOEndpoints:
     def test_sitemap_includes_stack_urls(self, client, stack):
         response = client.get('/sitemap.xml')
         assert b'/combinacoes/test-stack/' in response.content
+
+    @override_settings(FORCE_SCRIPT_NAME='/peptides')
+    def test_sitemap_honors_force_script_name(self, client, peptide, stack):
+        response = client.get('/sitemap.xml')
+        content = response.content.decode()
+
+        assert 'https://guiadepeptideos.com.br/peptides/' in content
+        assert (
+            'https://guiadepeptideos.com.br/peptides/peptideos/test-peptide/'
+            in content
+        )
+        assert (
+            'https://guiadepeptideos.com.br/peptides/combinacoes/test-stack/'
+            in content
+        )
+
+    @override_settings(FORCE_SCRIPT_NAME='/peptides')
+    def test_ai_discovery_endpoints_honor_force_script_name(self, client, peptide):
+        robots = client.get('/robots.txt').content.decode()
+        llms = client.get('/llms.txt').content.decode()
+        security = client.get('/.well-known/security.txt').content.decode()
+
+        assert (
+            'Sitemap: https://guiadepeptideos.com.br/peptides/sitemap.xml'
+            in robots
+        )
+        assert 'https://guiadepeptideos.com.br/peptides/api/peptides.json' in llms
+        assert (
+            'Canonical: https://guiadepeptideos.com.br/peptides/.well-known/security.txt'
+            in security
+        )
+
+    @override_settings(FORCE_SCRIPT_NAME='/peptides')
+    def test_rendered_pages_honor_force_script_name_in_canonical_links(
+        self,
+        client,
+        peptide,
+    ):
+        response = client.get('/peptideos/test-peptide/')
+        content = response.content.decode()
+
+        assert (
+            '<link rel="canonical" href="https://guiadepeptideos.com.br/'
+            'peptides/peptideos/test-peptide/">'
+        ) in content
+        assert 'href="/peptides/"' in content
 
     def test_llms_txt_returns_200(self, client):
         response = client.get('/llms.txt')
@@ -2002,6 +2100,62 @@ class TestDeploymentConfig:
             content = f.read()
         assert 'FORCE_SCRIPT_NAME=/peptides' in content
 
+    def test_docker_healthcheck_uses_deep_health(self):
+        """Docker health checks must include DB/catalog readiness."""
+        compose_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            'docker-compose.yml',
+        )
+        dockerfile_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            'Dockerfile',
+        )
+        with open(compose_path, 'r') as f:
+            compose_content = f.read()
+        with open(dockerfile_path, 'r') as f:
+            dockerfile_content = f.read()
+
+        assert '/health/?deep=1' in compose_content
+        assert '/health/?deep=1' in dockerfile_content
+
+    def test_runtime_image_includes_postgresql_client_for_backups(self):
+        """backup_db requires pg_dump when production uses PostgreSQL."""
+        dockerfile_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            'Dockerfile',
+        )
+        with open(dockerfile_path, 'r') as f:
+            content = f.read()
+
+        assert 'postgresql-client' in content
+
+    def test_ci_has_coverage_gate(self):
+        """CI should fail when backend test coverage drops below the floor."""
+        workflow_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            '.github', 'workflows', 'ci.yml',
+        )
+        with open(workflow_path, 'r') as f:
+            content = f.read()
+
+        assert '--cov=core' in content
+        assert '--cov=peptides_project' in content
+        assert '--cov-fail-under=90' in content
+
+    def test_production_backup_workflow_exists(self):
+        """Production backups must be scheduled and retained on the server."""
+        workflow_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            '.github', 'workflows', 'production-backup.yml',
+        )
+        with open(workflow_path, 'r') as f:
+            content = f.read()
+
+        assert 'cron:' in content
+        assert 'backup_db' in content
+        assert '/var/backups/peptides' in content
+        assert '-mtime +14' in content
+
     def test_nginx_guiadepeptideos_handles_static_rewrite(self):
         """nginx config for guiadepeptideos.com.br must rewrite /peptides/static/ to /static/."""
         import subprocess
@@ -2036,7 +2190,10 @@ class TestProductionSite:
         import subprocess
         try:
             result = subprocess.run(
-                ['curl', '-sI', '--connect-timeout', '3', 'https://guiadepeptideos.com.br/health/'],
+                [
+                    'curl', '-sI', '--connect-timeout', '3',
+                    'https://guiadepeptideos.com.br/peptides/health/',
+                ],
                 capture_output=True, text=True, timeout=8,
             )
         except (OSError, subprocess.TimeoutExpired):
@@ -2116,6 +2273,10 @@ class TestProductionSite:
 
     def test_llms_txt(self):
         out = self._curl('/peptides/llms.txt')
+        assert '200' in out.split('\n')[0]
+
+    def test_security_txt(self):
+        out = self._curl('/peptides/.well-known/security.txt')
         assert '200' in out.split('\n')[0]
 
     def test_api_json(self):
