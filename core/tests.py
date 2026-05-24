@@ -1798,6 +1798,8 @@ class TestProductionSite:
 
     @pytest.fixture(autouse=True)
     def check_reachable(self):
+        if os.environ.get('RUN_PRODUCTION_TESTS', '').lower() not in ('true', '1', 'yes'):
+            pytest.skip('Production integration tests require RUN_PRODUCTION_TESTS=1')
         import subprocess
         try:
             result = subprocess.run(
