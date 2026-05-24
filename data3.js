@@ -223,10 +223,205 @@ var peptidesPart3 = [
       "Rebolledo-Bustillo M et al., 2023. 'Structural Basis of the Binding Mode of the Antineoplastic Compound Motixafortide (BL-8040) in the CXCR4 Chemokine Receptor.' Int J Mol Sci, 24(5), 4393. <a href='https://pubmed.ncbi.nlm.nih.gov/36901829/' target='_blank'>[PubMed]</a>"
     ]
   },
+  {
+    id: "pegcetacoplan",
+    name: "Pegcetacoplan",
+    aka: "Empaveli, Syfovre, APL-2",
+    category: "immune",
+    categoryLabel: "Sistema Imunológico",
+    description: "Pegcetacoplan é um inibidor peguilado do complemento C3/C3b composto por dois peptídeos cíclicos ligados a PEG. É aprovado para hemoglobinúria paroxística noturna e, por via intravítrea, para atrofia geográfica secundária à degeneração macular relacionada à idade. Representa uma classe moderna de peptídeos terapêuticos que modulam diretamente o sistema complemento.",
+    mechanism: "Liga-se a C3 e C3b, bloqueando a amplificação da cascata do complemento em nível central. Isso reduz opsonização, inflamação mediada por complemento e formação de complexos downstream. Na PNH, reduz hemólise intra e extravascular; na atrofia geográfica, reduz progressão de lesão retinal mediada por complemento.",
+    benefits: [
+      "Inibição central de C3/C3b",
+      "Aprovado para PNH e atrofia geográfica",
+      "Redução de hemólise em pacientes com PNH",
+      "Redução da progressão de atrofia geográfica em estudos OAKS/DERBY",
+      "Exemplo de peptídeo cíclico peguilado aprovado"
+    ],
+    sideEffects: [
+      { name: "Risco aumentado de infecções por bactérias encapsuladas", severity: "rare" },
+      { name: "Reações no local da injeção", severity: "common" },
+      { name: "Inflamação intraocular (uso intravítreo)", severity: "occasional" },
+      { name: "Neovascularização exsudativa (uso ocular)", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "PNH", dose: "1080mg SC 2x/semana", notes: "Regime aprovado para PNH; requer vacinação e manejo de risco infeccioso conforme bula." },
+      { protocol: "Atrofia geográfica", dose: "15mg intravítreo mensal ou a cada 2 meses", notes: "Uso ocular por especialista em retina, com monitoramento para inflamação e neovascularização." }
+    ],
+    administration: "Subcutânea (SC) / Intravítrea",
+    halfLife: "~8 dias (SC; variável por formulação)",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Hillmen P et al., 2021. 'Pegcetacoplan versus Eculizumab in Paroxysmal Nocturnal Hemoglobinuria.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/33730455/' target='_blank'>[PubMed]</a>",
+      "Heier JS et al., 2023. 'Pegcetacoplan for the treatment of geographic atrophy secondary to age-related macular degeneration (OAKS and DERBY).' Lancet. <a href='https://pubmed.ncbi.nlm.nih.gov/37865470/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "icatibant",
+    name: "Icatibant",
+    aka: "Firazyr, HOE-140",
+    category: "immune",
+    categoryLabel: "Sistema Imunológico",
+    description: "Icatibant é um decapeptídeo sintético antagonista seletivo do receptor de bradicinina B2, aprovado para tratamento de crises agudas de angioedema hereditário. É um peptídeo terapêutico de resgate, administrado por via subcutânea, com evidência robusta nos estudos FAST.",
+    mechanism: "Bloqueia competitivamente o receptor B2 de bradicinina, impedindo vasodilatação, aumento de permeabilidade vascular e edema induzidos pelo excesso de bradicinina em angioedema hereditário por deficiência/disfunção de C1-inibidor.",
+    benefits: [
+      "Tratamento de resgate para crises agudas de angioedema hereditário",
+      "Administração subcutânea",
+      "Alívio mais rápido de sintomas em estudos controlados",
+      "Mecanismo direto sobre via da bradicinina",
+      "Pode ser autoadministrado por pacientes treinados"
+    ],
+    sideEffects: [
+      { name: "Reação no local da injeção", severity: "common" },
+      { name: "Eritema local", severity: "common" },
+      { name: "Dor/queimação local", severity: "common" },
+      { name: "Tontura", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Crise HAE", dose: "30mg SC por crise", notes: "Dose aprovada para adultos; pode repetir conforme bula se sintomas persistirem/recorrerem, respeitando limites máximos diários." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~1.4 horas",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Cicardi M et al., 2010. 'Icatibant, a new bradykinin-receptor antagonist, in hereditary angioedema.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/20818888/' target='_blank'>[PubMed]</a>",
+      "Lumry WR et al., 2015. 'Icatibant for Multiple Hereditary Angioedema Attacks across the Controlled and Open-Label Extension Phases of FAST-3.' Int Arch Allergy Immunol. <a href='https://pubmed.ncbi.nlm.nih.gov/26556097/' target='_blank'>[PubMed]</a>"
+    ]
+  },
 
   // ============================================================
   // HORMONAL E REPRODUTIVO
   // ============================================================
+  {
+    id: "teriparatide",
+    name: "Teriparatide",
+    aka: "Forteo, PTH 1-34",
+    category: "hormonal",
+    categoryLabel: "Hormonal e Reprodutivo",
+    description: "Teriparatide é o fragmento ativo 1-34 do hormônio paratireoideo humano, aprovado para tratamento de osteoporose em pacientes com alto risco de fratura. Ao contrário de anti-reabsortivos, atua como terapia anabólica óssea quando administrado de forma intermitente, estimulando formação de osso novo.",
+    mechanism: "Ativa o receptor PTH1R em osteoblastos e células estromais. A exposição intermitente favorece formação óssea, aumento de atividade osteoblástica e melhora de microarquitetura; exposição contínua ao PTH teria efeito catabólico, por isso o regime diário intermitente é central para o benefício.",
+    benefits: [
+      "Redução de fraturas vertebrais e não vertebrais",
+      "Aumento de densidade mineral óssea",
+      "Terapia anabólica para osteoporose severa",
+      "Útil em alto risco de fratura",
+      "Evidência clínica clássica em ensaio NEJM"
+    ],
+    sideEffects: [
+      { name: "Náusea", severity: "occasional" },
+      { name: "Cefaleia", severity: "occasional" },
+      { name: "Hipercalcemia", severity: "occasional" },
+      { name: "Tontura/hipotensão ortostática inicial", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Osteoporose", dose: "20mcg/dia SC", notes: "Dose aprovada diária por período limitado conforme bula e avaliação médica. Geralmente seguida por anti-reabsortivo para consolidar ganho ósseo." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~1 hora",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Neer RM et al., 2001. 'Effect of Parathyroid Hormone (1-34) on Fractures and Bone Mineral Density in Postmenopausal Women with Osteoporosis.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/11346808/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "abaloparatide",
+    name: "Abaloparatide",
+    aka: "Tymlos, análogo PTHrP 1-34",
+    category: "hormonal",
+    categoryLabel: "Hormonal e Reprodutivo",
+    description: "Abaloparatide é um análogo sintético do peptídeo relacionado ao hormônio paratireoideo (PTHrP 1-34), aprovado para osteoporose em pacientes com alto risco de fratura. Assim como teriparatide, é uma terapia anabólica óssea, mas com perfil de ativação do receptor PTH1R desenhado para estimular formação óssea rápida.",
+    mechanism: "Liga-se ao receptor PTH1R favorecendo sinalização transitória de cAMP e atividade osteoblástica. O resultado é aumento de formação óssea e densidade mineral, com redução de risco de novas fraturas vertebrais no estudo ACTIVE.",
+    benefits: [
+      "Redução de novas fraturas vertebrais",
+      "Aumento rápido de densidade mineral óssea",
+      "Alternativa anabólica ao teriparatide",
+      "Dose diária subcutânea",
+      "Evidência fase 3 em mulheres pós-menopausa com osteoporose"
+    ],
+    sideEffects: [
+      { name: "Hipercalciúria", severity: "common" },
+      { name: "Tontura", severity: "common" },
+      { name: "Náusea", severity: "occasional" },
+      { name: "Palpitações", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Osteoporose", dose: "80mcg/dia SC", notes: "Dose aprovada diária por tempo limitado conforme bula. Deve ser seguido por terapia anti-reabsortiva quando apropriado." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~1 hora",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Miller PD et al., 2016. 'Effect of Abaloparatide vs Placebo on New Vertebral Fractures in Postmenopausal Women With Osteoporosis.' JAMA. <a href='https://pubmed.ncbi.nlm.nih.gov/27533157/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "dasiglucagon",
+    name: "Dasiglucagon",
+    aka: "Zegalogue",
+    category: "hormonal",
+    categoryLabel: "Hormonal e Reprodutivo",
+    description: "Dasiglucagon é um análogo estável do glucagon, pronto para uso, aprovado para tratamento de hipoglicemia severa em pacientes com diabetes. Diferente do glucagon tradicional liofilizado, não exige reconstituição, permitindo uso rápido por autoinjetor ou seringa preenchida em situações de emergência.",
+    mechanism: "Ativa receptores hepáticos de glucagon, estimulando glicogenólise e gliconeogênese para elevar rapidamente a glicose plasmática. A engenharia molecular aumenta estabilidade aquosa, possibilitando formulação pronta para uso.",
+    benefits: [
+      "Resgate rápido de hipoglicemia severa",
+      "Formulação pronta para uso",
+      "Tempo mediano de recuperação glicêmica em torno de 10 minutos em fase 3",
+      "Uso por cuidador com autoinjetor",
+      "Estável em solução aquosa"
+    ],
+    sideEffects: [
+      { name: "Náusea", severity: "common" },
+      { name: "Vômito", severity: "common" },
+      { name: "Cefaleia", severity: "occasional" },
+      { name: "Reação no local da injeção", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Hipoglicemia severa", dose: "0.6mg SC dose única", notes: "Dose aprovada em autoinjetor/seringa preenchida. Após resposta, administrar carboidrato oral quando possível e buscar atendimento conforme gravidade." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~30 minutos",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Pieber TR et al., 2021. 'Dasiglucagon-A Next-Generation Glucagon Analog for Rapid and Effective Treatment of Severe Hypoglycemia: Results of Phase 3 Trial.' Diabetes Care. <a href='https://pubmed.ncbi.nlm.nih.gov/35239971/' target='_blank'>[PubMed]</a>",
+      "Bailey NC et al., 2022. 'A Comparative Study of Dasiglucagon Ready-to-Use Autoinjector and Glucagon Emergency Kit During Rescue from Simulated Severe Hypoglycemia.' Diabetes Technol Ther. <a href='https://pubmed.ncbi.nlm.nih.gov/34809479/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "avexitide",
+    name: "Avexitide",
+    aka: "Exendin (9-39), GLP-1 receptor antagonist",
+    category: "hormonal",
+    categoryLabel: "Hormonal e Reprodutivo",
+    description: "Avexitide é um antagonista peptídico do receptor GLP-1 derivado de exendin(9-39), em desenvolvimento para hipoglicemia hiperinsulinêmica pós-bariátrica e hiperinsulinismo congênito. É relevante por inverter a lógica dos agonistas de GLP-1: em vez de estimular incretina, bloqueia excesso de sinalização GLP-1 quando esta contribui para hipoglicemia pós-prandial.",
+    mechanism: "Antagoniza o receptor GLP-1, reduzindo secreção excessiva de insulina dependente de GLP-1 após refeições em pacientes com hipoglicemia pós-bariátrica. Com menor pico de insulina, aumenta o nadir glicêmico e reduz eventos hipoglicêmicos sem induzir hiperglicemia clinicamente relevante nos estudos iniciais.",
+    benefits: [
+      "Abordagem direcionada para hipoglicemia pós-bariátrica",
+      "Redução de eventos hipoglicêmicos em fase 2",
+      "Mecanismo complementar ao manejo nutricional",
+      "Potencial em hiperinsulinismo congênito",
+      "Exemplo de antagonista peptídico de GLP-1"
+    ],
+    sideEffects: [
+      { name: "Reações no local da injeção", severity: "occasional" },
+      { name: "Dados de longo prazo limitados", severity: "occasional" },
+      { name: "Uso ainda investigacional", severity: "common" }
+    ],
+    dosage: [
+      { protocol: "PREVENT fase 2", dose: "30mg 2x/dia ou 60mg 1x/dia SC", notes: "Regimes estudados por 28 dias em hipoglicemia pós-bariátrica. Ainda não aprovado; dose pode mudar em estudos confirmatórios." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "Em investigação",
+    status: "trial",
+    statusLabel: "Fase 2/3",
+    references: [
+      "Craig CM et al., 2021. 'PREVENT: A Randomized, Placebo-controlled Crossover Trial of Avexitide for Treatment of Postbariatric Hypoglycemia.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/33616643/' target='_blank'>[PubMed]</a>"
+    ]
+  },
   {
     id: "hcg",
     name: "HCG",

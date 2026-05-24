@@ -22,7 +22,7 @@ def seeded_catalog():
 def open_home(page: Page, live_server):
     page.goto(live_server.url + "/")
     expect(page.locator(".card").first).to_be_visible()
-    expect(page.locator("#countDisplay")).to_have_text("113")
+    expect(page.locator("#countDisplay")).to_have_text("129")
 
 
 def test_home_search_filters_and_opens_new_peptide_modal(page: Page, live_server):
@@ -68,7 +68,7 @@ def test_category_filter_limits_peptide_cards(page: Page, live_server):
     open_home(page, live_server)
 
     page.locator('[data-category="healing"]').click()
-    expect(page.locator("#countDisplay")).to_have_text("10")
+    expect(page.locator("#countDisplay")).to_have_text("13")
     expect(page.locator(".card-title").filter(has_text="Teduglutide")).to_be_visible()
     expect(page.locator(".card-title").filter(has_text="Setmelanotide")).to_have_count(0)
 
@@ -85,7 +85,7 @@ def test_load_more_and_empty_search_state_are_stable(page: Page, live_server):
     expect(page.locator(".no-results")).to_contain_text("Nenhum peptídeo encontrado")
 
     page.locator("#searchInput").clear()
-    expect(page.locator("#countDisplay")).to_have_text("113")
+    expect(page.locator("#countDisplay")).to_have_text("129")
     expect(page.locator(".card")).to_have_count(12)
 
 
@@ -96,7 +96,7 @@ def test_stacks_search_and_new_stack_modal(page: Page, live_server):
     expect(page.locator("#stacksContainer")).to_be_visible()
     expect(page.locator(".stack-card").first).to_be_visible()
     expect(page.locator("#peptideFiltersBar")).to_be_hidden()
-    expect(page.locator("#stackCountDisplay")).to_have_text("44")
+    expect(page.locator("#stackCountDisplay")).to_have_text("46")
     expect(page.locator('[data-section="stacks"]')).to_have_attribute("aria-pressed", "true")
 
     page.locator("#searchInput").fill("MASH")
@@ -172,7 +172,7 @@ def test_detail_pages_render_and_mobile_home_is_usable(page: Page, live_server):
     page.set_viewport_size({"width": 390, "height": 844})
     page.goto(live_server.url + "/")
     expect(page.locator("#searchInput")).to_be_visible()
-    page.locator("#searchInput").fill("teduglutide")
+    page.locator("#searchInput").fill("Gattex")
     expect(page.locator("#countDisplay")).to_have_text("1")
 
 

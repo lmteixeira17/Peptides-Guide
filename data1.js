@@ -332,6 +332,104 @@ var peptidesPart1 = [
     ]
   },
   {
+    id: "pramlintide",
+    name: "Pramlintide",
+    aka: "Symlin, análogo de amilina",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Pramlintide é um análogo sintético da amilina humana, aprovado como terapia adjuvante em diabetes tratado com insulina. Embora não seja aprovado especificamente para obesidade, é clinicamente relevante para o eixo de saciedade por amilina: reduz ingestão alimentar, retarda o esvaziamento gástrico, suprime glucagon pós-prandial e demonstrou perda de peso em estudos de obesidade, inclusive em combinação investigacional com metreleptina.",
+    mechanism: "Ativa receptores de amilina no sistema nervoso central, especialmente na área postrema, aumentando saciedade e reduzindo tamanho das refeições. Também retarda o esvaziamento gástrico e reduz secreção pós-prandial de glucagon, suavizando picos glicêmicos. O mecanismo é complementar ao GLP-1 e serve como base translacional para análogos modernos como cagrilintide, eloralintide e petrelintide.",
+    benefits: [
+      "Único análogo de amilina aprovado pela FDA",
+      "Redução de apetite e ingestão calórica",
+      "Perda de peso modesta documentada em estudos clínicos",
+      "Melhora de glicemia pós-prandial em usuários de insulina",
+      "Base clínica para terapias modernas do eixo amilina"
+    ],
+    sideEffects: [
+      { name: "Náusea", severity: "common" },
+      { name: "Hipoglicemia quando combinado com insulina", severity: "common" },
+      { name: "Vômito", severity: "occasional" },
+      { name: "Perda de apetite", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Diabetes tipo 1", dose: "15-60mcg antes das refeições", notes: "Dose aprovada como adjuvante à insulina prandial; exige redução inicial da dose de insulina e monitoramento glicêmico rigoroso." },
+      { protocol: "Diabetes tipo 2", dose: "60-120mcg antes das refeições", notes: "Dose aprovada em usuários de insulina no diabetes tipo 2. Para obesidade isolada, o uso permanece fora da indicação aprovada." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~48 minutos",
+    status: "approved",
+    statusLabel: "Aprovado FDA (diabetes)",
+    references: [
+      "Aronne L et al., 2007. 'Progressive reduction in body weight after treatment with the amylin analog pramlintide in obese subjects.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/17504894/' target='_blank'>[PubMed]</a>",
+      "Ravussin E et al., 2009. 'Enhanced weight loss with pramlintide/metreleptin: an integrated neurohormonal approach to obesity pharmacotherapy.' Obesity. <a href='https://pubmed.ncbi.nlm.nih.gov/19521351/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "eloralintide",
+    name: "Eloralintide",
+    aka: "LY3841136",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Eloralintide é um agonista seletivo e de longa duração do receptor de amilina em desenvolvimento pela Eli Lilly para controle de peso. Em estudo de Fase 2 publicado no Lancet em 2025, produziu perda de peso dose-dependente de aproximadamente 9% a 20% em 48 semanas em adultos com obesidade ou sobrepeso, com náusea e fadiga como eventos adversos principais.",
+    mechanism: "Atua preferencialmente no eixo de amilina, modulando saciedade central e tamanho das refeições sem depender do receptor GLP-1. A molécula foi desenhada para meia-vida semanal e seletividade pelo receptor de amilina, buscando preservar potência anorexígena com melhor tolerabilidade gastrointestinal que agonistas menos seletivos.",
+    benefits: [
+      "Perda de peso dose-dependente de até cerca de 20% em Fase 2",
+      "Mecanismo complementar ao GLP-1/GIP",
+      "Administração semanal subcutânea",
+      "Potencial para preservar massa magra por reduzir ingestão com via distinta",
+      "Programa de desenvolvimento avançando para estudos confirmatórios"
+    ],
+    sideEffects: [
+      { name: "Náusea", severity: "common" },
+      { name: "Fadiga", severity: "common" },
+      { name: "Vômito", severity: "occasional" },
+      { name: "Diminuição do apetite", severity: "common" }
+    ],
+    dosage: [
+      { protocol: "Fase 2", dose: "1-9mg/semana", notes: "Doses semanais subcutâneas de 1, 3, 6 e 9mg, com braços de escalonamento até 9mg, foram avaliadas por 48 semanas. Ainda não há dose aprovada." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "Longa ação semanal (em investigação)",
+    status: "trial",
+    statusLabel: "Fase 2/3",
+    references: [
+      "Billings LK et al., 2025. 'Eloralintide, a selective amylin receptor agonist for the treatment of obesity: a 48-week phase 2 trial.' Lancet. <a href='https://pubmed.ncbi.nlm.nih.gov/41207310/' target='_blank'>[PubMed]</a>",
+      "Briere DA et al., 2025. 'Eloralintide (LY3841136), a novel amylin receptor agonist for the treatment of obesity: From discovery to clinical proof of concept.' Mol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/41109426/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "petrelintide",
+    name: "Petrelintide",
+    aka: "ZP8396",
+    category: "weight-loss",
+    categoryLabel: "Perda de Peso",
+    description: "Petrelintide é um análogo humano de amilina de longa duração desenvolvido para tratamento de obesidade e controle de peso. Foi otimizado para alta estabilidade química, potência prolongada e formulação próxima ao pH neutro, característica importante para potencial coformulação futura com peptídeos metabólicos já aprovados ou em desenvolvimento.",
+    mechanism: "Mimetiza a amilina humana, ativando vias centrais de saciedade e redução de ingestão alimentar. A engenharia molecular busca reduzir instabilidade/deamidação e manter atividade prolongada, permitindo administração subcutânea semanal. Seu interesse estratégico está no eixo amilina como via complementar ao GLP-1, GIP e glucagon.",
+    benefits: [
+      "Agonismo de amilina com longa duração",
+      "Potencial para perda de peso por via complementar aos incretínicos",
+      "Desenvolvido para formulação estável próxima ao pH neutro",
+      "Candidato a uso futuro em combinações metabólicas",
+      "Base pré-clínica e translacional publicada"
+    ],
+    sideEffects: [
+      { name: "Náusea esperada por classe", severity: "common" },
+      { name: "Diminuição do apetite", severity: "common" },
+      { name: "Dados humanos ainda limitados", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Em desenvolvimento", dose: "Dose humana ainda em investigação", notes: "Candidato em desenvolvimento clínico. Não há regime aprovado; protocolos dependem dos estudos em andamento." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "Longa ação semanal (em investigação)",
+    status: "trial",
+    statusLabel: "Ensaio Clínico",
+    references: [
+      "Munch HF et al., 2025. 'Development of Petrelintide: a Potent, Stable, Long-Acting Human Amylin Analogue.' J Med Chem. <a href='https://pubmed.ncbi.nlm.nih.gov/41217931/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
     id: "aod-9604",
     name: "AOD-9604",
     aka: "Advanced Obesity Drug, versão modificada do HGH Frag 176-191",
@@ -676,6 +774,106 @@ var peptidesPart1 = [
     references: [
       "Rudman D et al., 1990. 'Effects of human growth hormone in men over 60 years old.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/2355952/' target='_blank'>[PubMed]</a>",
       "Liu H et al., 2007. 'Systematic review: the safety and efficacy of growth hormone in the healthy elderly.' Ann Intern Med. <a href='https://pubmed.ncbi.nlm.nih.gov/17227934/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "lonapegsomatropin",
+    name: "Lonapegsomatropin",
+    aka: "Skytrofa, TransCon hGH",
+    category: "growth-hormone",
+    categoryLabel: "Hormônio do Crescimento",
+    description: "Lonapegsomatropin é um pró-fármaco de somatropina de ação semanal aprovado para deficiência de hormônio do crescimento pediátrica. Usa a tecnologia TransCon para liberar somatropina não modificada de forma sustentada, reduzindo a carga de injeções diárias mantendo exposição semanal adequada de GH e IGF-1.",
+    mechanism: "Após administração subcutânea, o pró-fármaco libera gradualmente somatropina ativa. A somatropina se liga ao receptor de GH, aumenta IGF-1 e promove crescimento linear, síntese proteica, lipólise e efeitos metabólicos do eixo GH/IGF-1. A liberação prolongada permite dosagem semanal em vez de diária.",
+    benefits: [
+      "Alternativa semanal à somatropina diária",
+      "Aprovado para deficiência de GH pediátrica",
+      "Eficácia sustentada em velocidade de crescimento",
+      "Menor carga de aplicação e potencial melhora de adesão",
+      "Libera somatropina não modificada"
+    ],
+    sideEffects: [
+      { name: "Reações no local da injeção", severity: "common" },
+      { name: "Dor de cabeça", severity: "occasional" },
+      { name: "Artralgia", severity: "occasional" },
+      { name: "Elevação de IGF-1", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Semanal pediátrico", dose: "0.24mg hGH/kg/semana", notes: "Dose semanal utilizada em deficiência de GH pediátrica. Requer titulação e monitoramento de crescimento, IGF-1, glicemia, tireoide e eventos adversos." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "Liberação prolongada semanal",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Thornton PS et al., 2021. 'Weekly Lonapegsomatropin in Treatment-Naïve Children With Growth Hormone Deficiency: The Phase 3 heiGHt Trial.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/34272849/' target='_blank'>[PubMed]</a>",
+      "Maniatis AK et al., 2022. 'Switching to Weekly Lonapegsomatropin from Daily Somatropin in Children with Growth Hormone Deficiency: The fliGHt Trial.' Horm Res Paediatr. <a href='https://pubmed.ncbi.nlm.nih.gov/35263755/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "somapacitan",
+    name: "Somapacitan",
+    aka: "Sogroya",
+    category: "growth-hormone",
+    categoryLabel: "Hormônio do Crescimento",
+    description: "Somapacitan é um derivado de hormônio do crescimento humano de ação semanal, ligado reversivelmente à albumina, aprovado para deficiência de GH em adultos e crianças. Foi desenvolvido para reduzir o número de aplicações mantendo eficácia comparável ao GH diário em estudos pediátricos e adultos.",
+    mechanism: "A ligação reversível à albumina prolonga a circulação sistêmica do hormônio do crescimento, permitindo ativação sustentada do receptor de GH e estímulo de IGF-1 com administração semanal. O efeito final replica a reposição de GH: crescimento linear em crianças, melhora de composição corporal e normalização do eixo GH/IGF-1 em adultos deficientes.",
+    benefits: [
+      "Dosagem semanal com caneta própria",
+      "Aprovado para deficiência de GH em adultos e pediatria",
+      "Não inferior ao GH diário no estudo pediátrico REAL4",
+      "Melhora comodidade e adesão potencial",
+      "Monitoramento por IGF-1 bem estabelecido"
+    ],
+    sideEffects: [
+      { name: "Cefaleia", severity: "common" },
+      { name: "Nasofaringite", severity: "common" },
+      { name: "Dor no local da injeção", severity: "occasional" },
+      { name: "Edema/artralgia", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Pediátrico GHD", dose: "0.16mg/kg/semana", notes: "Dose semanal estudada no REAL4 para deficiência de GH pediátrica. Ajustes devem seguir idade, peso, IGF-1 e resposta de crescimento." },
+      { protocol: "Adulto GHD", dose: "Dose inicial individualizada semanal", notes: "Em adultos, titulação por idade, sexo, uso de estrogênio e IGF-1. Necessita acompanhamento endocrinológico." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~2-3 dias",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Miller BS et al., 2022. 'Weekly Somapacitan is Effective and Well Tolerated in Children With GH Deficiency: The Randomized Phase 3 REAL4 Trial.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/36062966/' target='_blank'>[PubMed]</a>",
+      "Johannsson G et al., 2020. 'Once-weekly Somapacitan is Effective and Well Tolerated in Adults with GH Deficiency: A Randomized Phase 3 Trial.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/32022863/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "somatrogon",
+    name: "Somatrogon",
+    aka: "Ngenla, MOD-4023",
+    category: "growth-hormone",
+    categoryLabel: "Hormônio do Crescimento",
+    description: "Somatrogon é um hormônio do crescimento humano recombinante de ação longa aprovado para deficiência de GH pediátrica. Sua estrutura incorpora cópias do peptídeo C-terminal da gonadotrofina coriônica humana, prolongando a meia-vida e permitindo aplicação subcutânea semanal.",
+    mechanism: "Ativa o receptor de GH como a somatropina, estimulando produção de IGF-1 e crescimento linear. A fusão com sequências CTP reduz depuração renal e aumenta tempo de circulação, permitindo exposição semanal. O objetivo é manter eficácia semelhante à somatropina diária com menor frequência de injeções.",
+    benefits: [
+      "Terapia semanal para deficiência de GH pediátrica",
+      "Eficácia comparável à somatropina diária em estudo fase 3",
+      "Menor carga de injeções ao longo do tratamento",
+      "Aprovado em múltiplas regiões para GHD pediátrica",
+      "Opção adicional entre GHs de longa ação"
+    ],
+    sideEffects: [
+      { name: "Reações no local da injeção", severity: "common" },
+      { name: "Cefaleia", severity: "occasional" },
+      { name: "Artralgia", severity: "occasional" },
+      { name: "Elevação de IGF-1", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Pediátrico GHD", dose: "0.66mg/kg/semana", notes: "Dose semanal usada nos estudos pediátricos. Monitorar velocidade de crescimento, IGF-1, glicemia, tireoide e eventos adversos." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "~25-37 horas",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Deal CL et al., 2022. 'Efficacy and Safety of Weekly Somatrogon vs Daily Somatropin in Children With Growth Hormone Deficiency: A Phase 3 Study.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/35405011/' target='_blank'>[PubMed]</a>",
+      "Fleseriu M et al., 2026. 'Efficacy and safety of once-weekly somatrogon in adults with growth hormone deficiency: a randomized phase 3 study.' Pituitary. <a href='https://pubmed.ncbi.nlm.nih.gov/41879875/' target='_blank'>[PubMed]</a>"
     ]
   },
   {

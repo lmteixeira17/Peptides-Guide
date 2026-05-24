@@ -556,6 +556,48 @@ var peptideStacks = [
     ]
   },
 
+  {
+    id: "gh-long-acting-options",
+    name: "Deficiência de GH - Opções Semanais de Longa Ação",
+    goal: "growth-hormone",
+    goalLabel: "Hormônio do Crescimento",
+    level: "Especializado",
+    description: "Protocolo comparativo para reposição de GH em pacientes com deficiência confirmada, reunindo as terapias semanais aprovadas como alternativas à somatropina diária. Não é um stack de coadministração: a aplicação clínica é escolher uma opção semanal, individualizar dose e monitorar IGF-1 e crescimento/composição corporal conforme o perfil do paciente.",
+    peptides: [
+      {
+        id: "lonapegsomatropin",
+        name: "Lonapegsomatropin",
+        role: "Pró-fármaco semanal de somatropina - opção pediátrica com liberação sustentada de hGH não modificado",
+        dose: "0.24mg hGH/kg/semana",
+        timing: "1x por semana, mesmo dia"
+      },
+      {
+        id: "somapacitan",
+        name: "Somapacitan",
+        role: "GH semanal com ligação reversível à albumina - opção aprovada para adultos e crianças com GHD",
+        dose: "0.16mg/kg/semana em pediatria; adulto individualizado",
+        timing: "1x por semana, mesmo dia"
+      },
+      {
+        id: "somatrogon",
+        name: "Somatrogon",
+        role: "GH semanal com extensão CTP - opção pediátrica de longa ação",
+        dose: "0.66mg/kg/semana",
+        timing: "1x por semana, mesmo dia"
+      }
+    ],
+    synergy: "Não há sinergia por combinação; há benefício de escolha terapêutica. As três moléculas convergem no receptor de GH e no eixo IGF-1, mas diferem em tecnologia de meia-vida, idade/indicação aprovada, dose e perfil prático. A utilidade do protocolo é comparar alternativas semanais para reduzir carga de injeções e melhorar adesão.",
+    application: "Escolher apenas uma das opções semanais. Nunca combinar lonapegsomatropin, somapacitan, somatrogon e somatropina diária simultaneamente. Aplicar com dispositivo/formulação própria, ajustar por endocrinologista e monitorar IGF-1, glicemia, tireoide, velocidade de crescimento e sinais de excesso de GH.",
+    duration: "Terapia crônica enquanto houver indicação de reposição, com reavaliação periódica de resposta e segurança",
+    warnings: "Uso exclusivo para deficiência de GH ou indicações aprovadas/avaliadas por endocrinologista. Risco de excesso de IGF-1, edema, artralgia, hipertensão intracraniana, alteração glicêmica e progressão de escoliose em pediatria. Evitar em neoplasia ativa ou contraindicações da classe.",
+    evidenceLevel: "Alto para cada agente em GHD nas indicações aprovadas / Não aplicável como combinação, pois são alternativas",
+    references: [
+      "Thornton PS et al., 2021. 'Weekly Lonapegsomatropin in Treatment-Naïve Children With Growth Hormone Deficiency: The Phase 3 heiGHt Trial.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/34272849/' target='_blank'>[PubMed]</a>",
+      "Miller BS et al., 2022. 'Weekly Somapacitan is Effective and Well Tolerated in Children With GH Deficiency: The Randomized Phase 3 REAL4 Trial.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/36062966/' target='_blank'>[PubMed]</a>",
+      "Deal CL et al., 2022. 'Efficacy and Safety of Weekly Somatrogon vs Daily Somatropin in Children With Growth Hormone Deficiency: A Phase 3 Study.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/35405011/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
   // =============================================
   // COGNITIVO
   // =============================================
@@ -937,6 +979,40 @@ var peptideStacks = [
     references: [
       "Coviello AD et al., 2008. 'Low-dose human chorionic gonadotropin maintains intratesticular testosterone in normal men with testosterone-induced gonadotropin suppression.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/15713727/' target='_blank'>[PubMed]</a>",
       "Dhillo WS et al., 2005. 'Kisspeptin-54 stimulates the hypothalamic-pituitary gonadal axis in human males.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/39834030/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+
+  {
+    id: "post-bariatric-hypoglycemia",
+    name: "Hipoglicemia Pós-Bariátrica - Antagonismo GLP-1 + Resgate",
+    goal: "hormonal",
+    goalLabel: "Hormonal e Reprodutivo",
+    level: "Especializado",
+    description: "Protocolo especializado para hipoglicemia hiperinsulinêmica pós-bariátrica, centrado no Avexitide como antagonista peptídico de GLP-1 em investigação e Dasiglucagon como resgate aprovado para hipoglicemia severa. Não é protocolo de emagrecimento; é manejo metabólico de uma complicação pós-prandial complexa.",
+    peptides: [
+      {
+        id: "avexitide",
+        name: "Avexitide",
+        role: "Agente investigacional principal — antagonista de GLP-1R que reduz hiperinsulinemia pós-prandial dependente de incretina",
+        dose: "30mg 2x/dia ou 60mg 1x/dia SC em fase 2",
+        timing: "Conforme protocolo clínico; antes de períodos de risco pós-prandial"
+      },
+      {
+        id: "dasiglucagon",
+        name: "Dasiglucagon",
+        role: "Resgate de emergência — análogo de glucagon pronto para uso em hipoglicemia severa",
+        dose: "0.6mg SC dose única",
+        timing: "Somente em episódio severo conforme plano médico"
+      }
+    ],
+    synergy: "Avexitide atua preventivamente bloqueando excesso de sinalização GLP-1 que dirige hiperinsulinemia pós-refeição. Dasiglucagon atua como resgate downstream, elevando glicose hepática quando há hipoglicemia severa. São funções complementares por cenário clínico, não substâncias para aplicação conjunta rotineira.",
+    application: "Avexitide ainda é investigacional e deve ficar restrito a ensaios/uso regulado. Dasiglucagon deve permanecer como medicamento de resgate em dispositivo próprio; não misturar com Avexitide. Base obrigatória: plano nutricional pós-bariátrico, monitorização glicêmica e acompanhamento endocrinológico.",
+    duration: "Avexitide em estudos de 28 dias ou conforme protocolo; Dasiglucagon sob demanda para emergência",
+    warnings: "Condição de alto risco. Hipoglicemia pós-bariátrica exige diagnóstico diferencial, ajuste alimentar e avaliação especializada. Não usar agonistas GLP-1/amilina para emagrecimento nesses pacientes sem avaliação cuidadosa. Dasiglucagon pode causar náusea e vômito; após recuperação, repor carboidrato e buscar atendimento se necessário.",
+    evidenceLevel: "Moderado para Avexitide em fase 2 / Alto para Dasiglucagon como resgate de hipoglicemia severa / Baixo-moderado para o protocolo combinado como estratégia clínica",
+    references: [
+      "Craig CM et al., 2021. 'PREVENT: A Randomized, Placebo-controlled Crossover Trial of Avexitide for Treatment of Postbariatric Hypoglycemia.' J Clin Endocrinol Metab. <a href='https://pubmed.ncbi.nlm.nih.gov/33616643/' target='_blank'>[PubMed]</a>",
+      "Pieber TR et al., 2021. 'Dasiglucagon-A Next-Generation Glucagon Analog for Rapid and Effective Treatment of Severe Hypoglycemia: Results of Phase 3 Trial.' Diabetes Care. <a href='https://pubmed.ncbi.nlm.nih.gov/35239971/' target='_blank'>[PubMed]</a>"
     ]
   },
 
@@ -1454,14 +1530,21 @@ var peptideStacks = [
     goal: "healing",
     goalLabel: "Cura e Recupera\u00e7\u00e3o",
     level: "Especializado",
-    description: "Protocolo especializado para s\u00edndrome do intestino curto com insufici\u00eancia intestinal, centrado no Teduglutide, an\u00e1logo de GLP-2 aprovado para reduzir depend\u00eancia de suporte parenteral. BPC-157 e Glutationa entram como suporte te\u00f3rico de mucosa/estresse oxidativo, n\u00e3o como substitutos da terapia nutricional e gastroenterol\u00f3gica formal.",
+    description: "Protocolo especializado para s\u00edndrome do intestino curto com insufici\u00eancia intestinal, centrado em an\u00e1logos de GLP-2. Teduglutide \u00e9 a op\u00e7\u00e3o aprovada e di\u00e1ria; Glepaglutide entra como alternativa de longa a\u00e7\u00e3o em fase 3, com evid\u00eancia publicada de redu\u00e7\u00e3o do suporte parenteral. BPC-157 e Glutationa entram apenas como suporte te\u00f3rico de mucosa/estresse oxidativo, n\u00e3o como substitutos da terapia nutricional e gastroenterol\u00f3gica formal.",
     peptides: [
       {
         id: "teduglutide",
         name: "Teduglutide",
-        role: "Agente principal — an\u00e1logo GLP-2 que promove adapta\u00e7\u00e3o intestinal e reduz necessidade de nutri\u00e7\u00e3o parenteral",
+        role: "Agente principal aprovado — an\u00e1logo GLP-2 que promove adapta\u00e7\u00e3o intestinal e reduz necessidade de nutri\u00e7\u00e3o parenteral",
         dose: "0.05mg/kg/dia SC",
         timing: "Di\u00e1rio, mesmo hor\u00e1rio, com monitoramento de hidrata\u00e7\u00e3o e eletr\u00f3litos"
+      },
+      {
+        id: "glepaglutide",
+        name: "Glepaglutide",
+        role: "Alternativa GLP-2 de longa a\u00e7\u00e3o em fase 3 — considerar apenas como op\u00e7\u00e3o substitutiva ao Teduglutide, n\u00e3o combinada",
+        dose: "Regime semanal/2x semanal em investiga\u00e7\u00e3o",
+        timing: "Conforme protocolo cl\u00ednico/ensaio, separado de qualquer GLP-2 di\u00e1rio"
       },
       {
         id: "bpc-157",
@@ -1478,14 +1561,15 @@ var peptideStacks = [
         timing: "IV semanal, separado dos pept\u00eddeos SC"
       }
     ],
-    synergy: "Teduglutide \u00e9 o componente com evid\u00eancia humana forte: ativa GLP-2R, aumenta superf\u00edcie absortiva e favorece adapta\u00e7\u00e3o intestinal. BPC-157 pode complementar, de forma experimental, com sinaliza\u00e7\u00e3o de reparo e prote\u00e7\u00e3o mucosa. Glutationa oferece suporte antioxidante em pacientes com inflama\u00e7\u00e3o, nutri\u00e7\u00e3o parenteral e maior carga metab\u00f3lica. A sinergia cl\u00ednica formal do trio ainda n\u00e3o foi testada.",
-    application: "Teduglutide: SC di\u00e1rio, seringa/caneta pr\u00f3pria. BPC-157: oral ou SC separado, nunca misturar com Teduglutide. Glutationa: IV em sess\u00e3o separada com profissional. Manter suporte nutricional, hidrata\u00e7\u00e3o, eletr\u00f3litos e acompanhamento gastroenterol\u00f3gico como base obrigat\u00f3ria.",
+    synergy: "Teduglutide e Glepaglutide compartilham a mesma via GLP-2R e devem ser entendidos como alternativas, n\u00e3o como sinergia combinada. O benef\u00edcio comprovado vem da ativa\u00e7\u00e3o GLP-2R, que aumenta superf\u00edcie absortiva e favorece adapta\u00e7\u00e3o intestinal. BPC-157 pode complementar, de forma experimental, com sinaliza\u00e7\u00e3o de reparo e prote\u00e7\u00e3o mucosa. Glutationa oferece suporte antioxidante em pacientes com inflama\u00e7\u00e3o, nutri\u00e7\u00e3o parenteral e maior carga metab\u00f3lica. A sinergia cl\u00ednica formal com suportes adicionais ainda n\u00e3o foi testada.",
+    application: "Escolher um an\u00e1logo de GLP-2: Teduglutide aprovado di\u00e1rio ou Glepaglutide apenas em contexto de estudo/disponibilidade regulat\u00f3ria. N\u00e3o combinar Teduglutide e Glepaglutide. BPC-157: oral ou SC separado, nunca misturar com GLP-2. Glutationa: IV em sess\u00e3o separada com profissional. Manter suporte nutricional, hidrata\u00e7\u00e3o, eletr\u00f3litos e acompanhamento gastroenterol\u00f3gico como base obrigat\u00f3ria.",
     duration: "24 semanas para avalia\u00e7\u00e3o inicial de resposta, podendo ser terapia cr\u00f4nica quando indicada; suporte BPC/Glutationa por 8-12 semanas conforme objetivo",
-    warnings: "Uso altamente especializado. Teduglutide pode causar dor abdominal, distens\u00e3o, reten\u00e7\u00e3o de fluidos, obstru\u00e7\u00e3o intestinal e crescimento de p\u00f3lipos; colonoscopia e rastreio conforme protocolo s\u00e3o importantes. Ajustes do suporte parenteral devem ser feitos por equipe especializada para evitar hiper-hidrata\u00e7\u00e3o, desidrata\u00e7\u00e3o ou dist\u00farbios eletrol\u00edticos.",
-    evidenceLevel: "Alto para Teduglutide em s\u00edndrome do intestino curto / Moderado-Baixo para BPC-157 / Moderado para Glutationa / Baixo para o protocolo combinado completo",
+    warnings: "Uso altamente especializado. An\u00e1logos GLP-2 podem causar dor abdominal, distens\u00e3o, reten\u00e7\u00e3o de fluidos, obstru\u00e7\u00e3o intestinal e crescimento de p\u00f3lipos; colonoscopia e rastreio conforme protocolo s\u00e3o importantes. Ajustes do suporte parenteral devem ser feitos por equipe especializada para evitar hiper-hidrata\u00e7\u00e3o, desidrata\u00e7\u00e3o ou dist\u00farbios eletrol\u00edticos.",
+    evidenceLevel: "Alto para Teduglutide aprovado / Alto-moderado para Glepaglutide fase 3 / Moderado-Baixo para BPC-157 / Moderado para Glutationa / Baixo para o protocolo combinado completo",
     references: [
       "Jeppesen PB et al., 2012. 'Teduglutide reduces need for parenteral support among patients with short bowel syndrome with intestinal failure.' Gastroenterology. <a href='https://pubmed.ncbi.nlm.nih.gov/22982184/' target='_blank'>[PubMed]</a>",
       "Kocoshis SA et al., 2020. 'Safety and Efficacy of Teduglutide in Pediatric Patients With Intestinal Failure due to Short Bowel Syndrome: A 24-Week, Phase III Study.' JPEN J Parenter Enteral Nutr. <a href='https://pubmed.ncbi.nlm.nih.gov/31495952/' target='_blank'>[PubMed]</a>",
+      "Jeppesen PB et al., 2025. 'Glepaglutide, a Long-Acting Glucagon-like Peptide-2 Analogue, Reduces Parenteral Support in Patients With Short Bowel Syndrome: A Phase 3 Randomized Controlled Trial.' Gastroenterology. <a href='https://pubmed.ncbi.nlm.nih.gov/39708985/' target='_blank'>[PubMed]</a>",
       "Sikiric P et al., 2022. 'Stable gastric pentadecapeptide BPC 157-therapy and the nervous system.' Curr Pharm Des. <a href='https://pubmed.ncbi.nlm.nih.gov/37242459/' target='_blank'>[PubMed]</a>"
     ]
   },

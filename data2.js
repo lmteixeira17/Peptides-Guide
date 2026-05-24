@@ -72,6 +72,105 @@ var peptidesPart2 = [
     ]
   },
   {
+    id: "glepaglutide",
+    name: "Glepaglutide",
+    aka: "ZP1848",
+    category: "healing",
+    categoryLabel: "Cura e Recuperação",
+    description: "Glepaglutide é um análogo de GLP-2 de longa ação desenvolvido para síndrome do intestino curto com insuficiência intestinal. Diferente do teduglutide diário, foi desenhado para aplicação menos frequente. Em estudo fase 3 publicado em 2025, reduziu necessidade de suporte parenteral em pacientes com síndrome do intestino curto.",
+    mechanism: "Ativa o receptor de GLP-2 no intestino, estimulando adaptação mucosa, aumento da superfície absortiva, melhora do fluxo sanguíneo intestinal e redução de secreções/perdas. A longa ação permite manutenção do estímulo trófico intestinal com regime de dose semanal ou duas vezes por semana conforme estudo.",
+    benefits: [
+      "Redução de suporte parenteral em síndrome do intestino curto",
+      "Mecanismo GLP-2 validado para adaptação intestinal",
+      "Potencial conveniência maior que teduglutide diário",
+      "Evidência fase 3 publicada",
+      "Opção emergente para insuficiência intestinal crônica"
+    ],
+    sideEffects: [
+      { name: "Dor abdominal", severity: "common" },
+      { name: "Distensão abdominal", severity: "common" },
+      { name: "Reações no local da injeção", severity: "occasional" },
+      { name: "Retenção de fluidos", severity: "occasional" }
+    ],
+    dosage: [
+      { protocol: "Fase 3 SBS-IF", dose: "Dose semanal/2x semanal em investigação", notes: "Ensaios clínicos avaliaram regimes de longa ação para reduzir suporte parenteral. Ainda não há posologia universal aprovada em todos os mercados." }
+    ],
+    administration: "Subcutânea (SC)",
+    halfLife: "Longa ação",
+    status: "trial",
+    statusLabel: "Fase 3",
+    references: [
+      "Jeppesen PB et al., 2025. 'Glepaglutide, a Long-Acting Glucagon-like Peptide-2 Analogue, Reduces Parenteral Support in Patients With Short Bowel Syndrome: A Phase 3 Randomized Controlled Trial.' Gastroenterology. <a href='https://pubmed.ncbi.nlm.nih.gov/39708985/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "linaclotide",
+    name: "Linaclotide",
+    aka: "Linzess, Constella",
+    category: "healing",
+    categoryLabel: "Cura e Recuperação",
+    description: "Linaclotide é um peptídeo oral minimamente absorvido, agonista da guanilato ciclase-C (GC-C), aprovado para síndrome do intestino irritável com constipação e constipação idiopática crônica. É relevante para o guia por ser um peptídeo terapêutico oral com ação local intestinal e evidência clínica robusta.",
+    mechanism: "Liga-se ao receptor GC-C na superfície luminal do epitélio intestinal, aumentando cGMP intracelular e secreção de cloreto/bicarbonato via CFTR. Isso aumenta fluido intestinal, acelera trânsito e pode reduzir sinalização de dor visceral por cGMP extracelular.",
+    benefits: [
+      "Melhora frequência evacuatória em CIC e IBS-C",
+      "Redução de dor abdominal em IBS-C",
+      "Ação local intestinal com absorção sistêmica mínima",
+      "Administração oral diária",
+      "Evidência de fase 3 e aprovação regulatória"
+    ],
+    sideEffects: [
+      { name: "Diarreia", severity: "common" },
+      { name: "Dor abdominal", severity: "occasional" },
+      { name: "Distensão", severity: "occasional" },
+      { name: "Desidratação se diarreia intensa", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "IBS-C", dose: "290mcg/dia oral", notes: "Dose aprovada para síndrome do intestino irritável com constipação em adultos. Tomar conforme bula, geralmente antes da primeira refeição." },
+      { protocol: "CIC", dose: "72-145mcg/dia oral", notes: "Doses usadas para constipação idiopática crônica conforme resposta e tolerabilidade." }
+    ],
+    administration: "Oral (VO)",
+    halfLife: "Ação local; absorção mínima",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Chey WD et al., 2012. 'Linaclotide for irritable bowel syndrome with constipation: a 26-week, randomized, double-blind trial.' Am J Gastroenterol. <a href='https://pubmed.ncbi.nlm.nih.gov/22986437/' target='_blank'>[PubMed]</a>",
+      "Lembo AJ et al., 2011. 'Two randomized trials of linaclotide for chronic constipation.' N Engl J Med. <a href='https://pubmed.ncbi.nlm.nih.gov/21830967/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
+    id: "plecanatide",
+    name: "Plecanatide",
+    aka: "Trulance",
+    category: "healing",
+    categoryLabel: "Cura e Recuperação",
+    description: "Plecanatide é um análogo oral da uroguanilina, agonista de GC-C aprovado para constipação idiopática crônica e síndrome do intestino irritável com constipação. Atua localmente no lúmen intestinal, com absorção sistêmica mínima, sendo uma alternativa peptídica ao linaclotide.",
+    mechanism: "Mimetiza a uroguanilina endógena e ativa a guanilato ciclase-C no epitélio intestinal de forma pH-dependente. O aumento de cGMP estimula secreção de cloreto e bicarbonato via CFTR, aumenta hidratação luminal e facilita trânsito intestinal.",
+    benefits: [
+      "Aprovado para CIC e IBS-C",
+      "Peptídeo oral com ação local intestinal",
+      "Melhora evacuações completas espontâneas",
+      "Baixa exposição sistêmica",
+      "Perfil de segurança dominado por eventos gastrointestinais"
+    ],
+    sideEffects: [
+      { name: "Diarreia", severity: "common" },
+      { name: "Distensão abdominal", severity: "occasional" },
+      { name: "Náusea", severity: "occasional" },
+      { name: "Desidratação se diarreia intensa", severity: "rare" }
+    ],
+    dosage: [
+      { protocol: "Adultos", dose: "3mg/dia oral", notes: "Dose aprovada uma vez ao dia para CIC e IBS-C. Não indicado para crianças pequenas devido a risco de desidratação grave por classe." }
+    ],
+    administration: "Oral (VO)",
+    halfLife: "Ação local; absorção mínima",
+    status: "approved",
+    statusLabel: "Aprovado FDA",
+    references: [
+      "Miner PB Jr et al., 2017. 'A Randomized Phase III Clinical Trial of Plecanatide, a Uroguanylin Analog, in Patients With Chronic Idiopathic Constipation.' Am J Gastroenterol. <a href='https://pubmed.ncbi.nlm.nih.gov/28169285/' target='_blank'>[PubMed]</a>",
+      "Barish CF et al., 2019. 'Long-term treatment with plecanatide was safe and tolerable in patients with irritable bowel syndrome with constipation.' Curr Med Res Opin. <a href='https://pubmed.ncbi.nlm.nih.gov/30277094/' target='_blank'>[PubMed]</a>"
+    ]
+  },
+  {
     id: "tb-500",
     name: "TB-500",
     aka: "Thymosin Beta 4 Acetate",
@@ -410,7 +509,7 @@ var peptidesPart2 = [
     aka: "Elamipretide / Bendavia / MTP-131",
     category: "anti-aging",
     categoryLabel: "Anti-Envelhecimento",
-    description: "Tetrapeptídeo aromático-catiônico (D-Arg-Dmt-Lys-Phe-NH2) especificamente direcionado à membrana interna mitocondrial. Desenvolvido pelo Dr. Hazel Szeto, o SS-31 concentra-se nas mitocôndrias em níveis até 5000 vezes superiores à sua concentração extracelular. Está em fase 3 de ensaios clínicos para diversas condições relacionadas à disfunção mitocondrial.",
+    description: "Tetrapeptídeo aromático-catiônico (D-Arg-Dmt-Lys-Phe-NH2) especificamente direcionado à membrana interna mitocondrial. Desenvolvido pelo Dr. Hazel Szeto, o SS-31 concentra-se nas mitocôndrias em níveis até 5000 vezes superiores à sua concentração extracelular. Em 19/09/2025, o elamipretide recebeu aprovação acelerada da FDA como Forzinity para melhorar força muscular em adultos e pacientes pediátricos com síndrome de Barth pesando pelo menos 30kg. Para outras indicações mitocondriais, permanece investigacional.",
     mechanism: "O SS-31 penetra na membrana interna mitocondrial e interage seletivamente com a cardiolipina, um fosfolipídeo exclusivo da mitocôndria essencial para a função da cadeia de transporte de elétrons. Ao estabilizar a cardiolipina, otimiza o fluxo de elétrons nos complexos respiratórios, reduz a geração de espécies reativas de oxigênio (EROs), previne a abertura do poro de transição de permeabilidade mitocondrial e melhora a eficiência da produção de ATP.",
     benefits: [
       "Melhora da função mitocondrial e produção de ATP",
@@ -418,7 +517,7 @@ var peptidesPart2 = [
       "Melhora da função muscular esquelética",
       "Redução do estresse oxidativo mitocondrial",
       "Neuroproteção contra dano isquêmico",
-      "Potencial no tratamento de miopatias mitocondriais",
+      "Tratamento aprovado para síndrome de Barth (Forzinity)",
       "Proteção renal contra lesão isquêmica"
     ],
     sideEffects: [
@@ -427,13 +526,14 @@ var peptidesPart2 = [
       { name: "Fadiga", severity: "occasional" }
     ],
     dosage: [
-      { protocol: "Subcutâneo", dose: "4mg por dia via subcutânea", notes: "Dose utilizada em ensaios clínicos para miopatia mitocondrial e outras indicações." },
+      { protocol: "Forzinity (síndrome de Barth)", dose: "40mg/dia SC", notes: "Dose aprovada pela FDA para pacientes com síndrome de Barth pesando pelo menos 30kg. Uso restrito à indicação aprovada e acompanhamento especializado." },
+      { protocol: "Subcutâneo investigacional", dose: "4mg por dia via subcutânea", notes: "Dose utilizada em ensaios clínicos para miopatia mitocondrial e outras indicações não aprovadas." },
       { protocol: "Intravenoso", dose: "40mg via IV em estudos clínicos", notes: "Infusão intravenosa utilizada em protocolos de pesquisa para condições agudas como lesão de reperfusão." }
     ],
     administration: "Subcutânea (SC) / Intravenosa (IV)",
     halfLife: "~4 horas",
-    status: "trial",
-    statusLabel: "Fase Clínica",
+    status: "approved",
+    statusLabel: "Aprovado FDA (Barth)",
     references: [
       "Szeto HH, 2014. 'First-in-class cardiolipin-protective compound as a therapeutic agent to restore mitochondrial bioenergetics.' Br J Pharmacol. <a href='https://pubmed.ncbi.nlm.nih.gov/24117165/' target='_blank'>[PubMed]</a>",
       "Reid Thompson W et al., 2021. 'A phase 2/3 randomized clinical trial followed by an open-label extension to evaluate the effectiveness of elamipretide in Barth syndrome.' Genet Med. <a href='https://pubmed.ncbi.nlm.nih.gov/33077895/' target='_blank'>[PubMed]</a>"
@@ -1126,6 +1226,37 @@ var peptidesPart2 = [
   // ========================================
   // PELE E ESTETICA
   // ========================================
+  {
+    id: "sovateltide",
+    name: "Sovateltide",
+    aka: "IRL-1620, PMZ-1620, Tycamzzi",
+    category: "cognitive",
+    categoryLabel: "Cognitivo",
+    description: "Sovateltide é um agonista seletivo do receptor de endotelina B (ETB) estudado como neuroreparador em AVC isquêmico agudo. Foi aprovado na Índia para AVC isquêmico agudo e possui estudos fase 2 e fase 3 publicados mostrando melhora de desfechos neurológicos quando administrado como adjuvante ao padrão de cuidado dentro de janela aguda.",
+    mechanism: "Ativa receptores ETB em células neurais e vasculares, aumentando fluxo sanguíneo cerebral, reduzindo apoptose, estimulando neurogênese/angiogênese e promovendo remodelamento neurovascular. O racional é neurorestauração pós-isquêmica, não trombólise; portanto atua de forma complementar ao tratamento padrão do AVC.",
+    benefits: [
+      "Candidato first-in-class para neuroreparo pós-AVC",
+      "Melhora de escalas funcionais em estudos clínicos na Índia",
+      "Ativação de vias de neurogênese e angiogênese",
+      "Administração IV em regime curto no período agudo",
+      "Aprovado na Índia para AVC isquêmico agudo"
+    ],
+    sideEffects: [
+      { name: "Dados de segurança ainda limitados fora dos ensaios", severity: "occasional" },
+      { name: "Monitoramento hemodinâmico necessário", severity: "occasional" },
+      { name: "Uso restrito a ambiente hospitalar", severity: "common" }
+    ],
+    dosage: [
+      { protocol: "AVC agudo (estudos)", dose: "0.3mcg/kg IV por dose", notes: "Nos estudos, administrado em três doses com intervalo de 3 +/- 1 horas nos dias 1, 3 e 6, como adjuvante ao padrão de cuidado. Uso hospitalar especializado." }
+    ],
+    administration: "Intravenosa (IV)",
+    halfLife: "Curta; regime intermitente em estudos",
+    status: "approved",
+    statusLabel: "Aprovado na Índia",
+    references: [
+      "Gulati A et al., 2021. 'Safety and Efficacy of Sovateltide (IRL-1620) in a Multicenter Randomized Controlled Clinical Trial in Patients with Acute Cerebral Ischemic Stroke.' CNS Drugs. <a href='https://pubmed.ncbi.nlm.nih.gov/33428177/' target='_blank'>[PubMed]</a>"
+    ]
+  },
   {
     id: "ahk-cu",
     name: "AHK-Cu",
