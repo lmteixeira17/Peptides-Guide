@@ -19,7 +19,7 @@ import pytest
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import User
 from django.db import connection
-from django.test import Client, TestCase, override_settings
+from django.test import Client, override_settings
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
 
@@ -196,13 +196,13 @@ class TestPeptideModel:
         assert str(peptide) == 'Test Peptide'
 
     def test_ordering(self, db):
-        p2 = Peptide.objects.create(
+        Peptide.objects.create(
             id='z-peptide', name='Z Peptide', category='other',
             category_label='Outros', description='', mechanism='',
             administration='', half_life='', status='research',
             status_label='', order=2,
         )
-        p1 = Peptide.objects.create(
+        Peptide.objects.create(
             id='a-peptide', name='A Peptide', category='other',
             category_label='Outros', description='', mechanism='',
             administration='', half_life='', status='research',
@@ -1772,12 +1772,15 @@ class TestDeploymentConfig:
     def test_nginx_guiadepeptideos_handles_static_rewrite(self):
         """nginx config for guiadepeptideos.com.br must rewrite /peptides/static/ to /static/."""
         import subprocess
-        result = subprocess.run(
-            ['ssh', '-i', r'C:\Users\lm\.ssh\id_rsa', '-o', 'BatchMode=yes',
-             '-o', 'ConnectTimeout=3', 'root@45.63.90.69',
-             'cat /var/www/docker-infra/nginx/conf.d/guiadepeptideos.conf 2>/dev/null'],
-            capture_output=True, text=True, timeout=10,
-        )
+        try:
+            result = subprocess.run(
+                ['ssh', '-i', r'C:\Users\lm\.ssh\id_rsa', '-o', 'BatchMode=yes',
+                 '-o', 'ConnectTimeout=3', 'root@45.63.90.69',
+                 'cat /var/www/docker-infra/nginx/conf.d/guiadepeptideos.conf 2>/dev/null'],
+                capture_output=True, text=True, timeout=10,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            pytest.skip('Cannot access server via SSH')
         if result.returncode != 0:
             pytest.skip('Cannot access server via SSH')
         content = result.stdout
@@ -1796,10 +1799,13 @@ class TestProductionSite:
     @pytest.fixture(autouse=True)
     def check_reachable(self):
         import subprocess
-        result = subprocess.run(
-            ['curl', '-sI', '--connect-timeout', '3', 'https://guiadepeptideos.com.br/health/'],
-            capture_output=True, text=True, timeout=8,
-        )
+        try:
+            result = subprocess.run(
+                ['curl', '-sI', '--connect-timeout', '3', 'https://guiadepeptideos.com.br/health/'],
+                capture_output=True, text=True, timeout=8,
+            )
+        except (OSError, subprocess.TimeoutExpired):
+            pytest.skip('guiadepeptideos.com.br is not reachable')
         if result.returncode != 0 or '200' not in result.stdout:
             pytest.skip('guiadepeptideos.com.br is not reachable')
 

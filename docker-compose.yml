@@ -21,7 +21,7 @@ services:
     ports:
       - "3007:8000"
     environment:
-      - DEBUG=${DEBUG:-False}
+      - DEBUG=${PEPTIDES_DEBUG:-False}
       - SECRET_KEY=${SECRET_KEY:?SECRET_KEY is required}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1,45.63.90.69,mlt.com.br,guiadepeptideos.com.br,www.guiadepeptideos.com.br}
       - GA4_MEASUREMENT_ID=${GA4_MEASUREMENT_ID:-}

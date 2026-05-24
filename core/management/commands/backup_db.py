@@ -72,7 +72,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.NOTICE(f'Creating PostgreSQL backup: {filepath}'))
 
         try:
-            result = subprocess.run(
+            subprocess.run(
                 cmd,
                 env=env,
                 capture_output=True,

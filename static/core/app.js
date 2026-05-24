@@ -565,6 +565,7 @@ function openModal(id) {
     html += '</div>';
 
     modalContent.innerHTML = html;
+    modalOverlay.style.opacity = '';
     modalOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
     // SEO: update title and URL hash
@@ -656,6 +657,7 @@ function openStackModal(id) {
     html += '</div>';
 
     modalContent.innerHTML = html;
+    modalOverlay.style.opacity = '';
     modalOverlay.classList.add("active");
     document.body.style.overflow = "hidden";
     // SEO: update title and URL hash
@@ -672,6 +674,7 @@ function closeModal() {
     modalOverlay.style.opacity = '0';
     setTimeout(function() {
         modalOverlay.classList.remove("active");
+        modalOverlay.style.opacity = '';
         document.body.style.overflow = "";
         if (modal) modal.classList.remove('modal-exit');
     }, 250);

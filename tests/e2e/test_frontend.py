@@ -42,6 +42,28 @@ def test_home_search_filters_and_opens_new_peptide_modal(page: Page, live_server
     expect(page.locator("#modalOverlay")).not_to_have_class(re.compile(r".*active.*"))
 
 
+def test_peptide_modal_can_reopen_after_close(page: Page, live_server):
+    open_home(page, live_server)
+
+    page.locator(".card").nth(0).click()
+    expect(page.locator(".modal-title")).to_have_text("Semaglutide")
+    expect(page.locator("#modalOverlay")).to_have_css("opacity", "1")
+
+    page.keyboard.press("Escape")
+    expect(page.locator("#modalOverlay")).not_to_have_class(re.compile(r".*active.*"))
+
+    page.locator(".card").nth(1).click()
+    expect(page.locator(".modal-title")).to_have_text("Tirzepatide")
+    expect(page.locator("#modalOverlay")).to_have_css("opacity", "1")
+
+    page.locator("#modalClose").click()
+    expect(page.locator("#modalOverlay")).not_to_have_class(re.compile(r".*active.*"))
+
+    page.locator(".card").nth(2).click()
+    expect(page.locator(".modal-title")).to_have_text("Retatrutide")
+    expect(page.locator("#modalOverlay")).to_have_css("opacity", "1")
+
+
 def test_category_filter_limits_peptide_cards(page: Page, live_server):
     open_home(page, live_server)
 

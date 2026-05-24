@@ -8,8 +8,19 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-_running_tests = 'pytest' in sys.modules or ('py.test' in sys.argv[0] if sys.argv else False)
-DEBUG = os.environ.get('DEBUG', 'True' if _running_tests else 'False').lower() in ('true', '1', 'yes')
+_running_tests = (
+    any(
+        module_name == 'pytest'
+        or module_name.startswith('_pytest')
+        or module_name.startswith('pytest_')
+        for module_name in sys.modules
+    )
+    or any('pytest' in arg.lower() or 'py.test' in arg.lower() for arg in sys.argv)
+)
+DEBUG = (
+    True if _running_tests
+    else os.environ.get('DEBUG', 'False').lower() in ('true', '1', 'yes')
+)
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 if not SECRET_KEY:
@@ -143,9 +154,16 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 
 if not DEBUG:
-    SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'False').lower() in ('true', '1', 'yes')
-    SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'False').lower() in ('true', '1', 'yes')
-    CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'False').lower() in ('true', '1', 'yes')
+    SECURE_SSL_REDIRECT = os.environ.get('SECURE_SSL_REDIRECT', 'True').lower() in ('true', '1', 'yes')
+    SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'True').lower() in ('true', '1', 'yes')
+    CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'True').lower() in ('true', '1', 'yes')
+    SECURE_HSTS_SECONDS = int(os.environ.get('SECURE_HSTS_SECONDS', '31536000'))
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = os.environ.get(
+        'SECURE_HSTS_INCLUDE_SUBDOMAINS', 'False'
+    ).lower() in ('true', '1', 'yes')
+    SECURE_HSTS_PRELOAD = os.environ.get('SECURE_HSTS_PRELOAD', 'False').lower() in (
+        'true', '1', 'yes'
+    )
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Logging
