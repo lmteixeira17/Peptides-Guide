@@ -15,7 +15,13 @@ from .models import Peptide, PeptideReference, Stack, StackReference
 from .serializers import serialize_peptide, serialize_stack
 
 
-def production_cache_page(timeout):
+def _running_under_tests():
+    return 'pytest' in sys.modules or any(
+        'pytest' in arg or 'py.test' in arg for arg in sys.argv
+    )
+
+
+def production_cache_page(timeout, *, cache_html=False):
     """Cache public, static-like views only in production.
 
     Tests and local development keep uncached responses so fixture-specific
@@ -26,10 +32,9 @@ def production_cache_page(timeout):
 
         @wraps(view_func)
         def wrapped(request, *args, **kwargs):
-            running_tests = 'pytest' in sys.modules or any(
-                'pytest' in arg or 'py.test' in arg for arg in sys.argv
-            )
-            if settings.DEBUG or running_tests:
+            if settings.DEBUG or _running_under_tests():
+                return view_func(request, *args, **kwargs)
+            if not cache_html:
                 return view_func(request, *args, **kwargs)
             return cached_view(request, *args, **kwargs)
 
@@ -305,7 +310,7 @@ def peptides_api(request):
     return response
 
 
-@production_cache_page(3600)
+@production_cache_page(3600, cache_html=True)
 def robots_txt(request):
     """Serve robots.txt for search engine crawlers and AI bots."""
     lines = [
@@ -347,7 +352,7 @@ def robots_txt(request):
     return HttpResponse('\n'.join(lines), content_type='text/plain')
 
 
-@production_cache_page(3600)
+@production_cache_page(3600, cache_html=True)
 def security_txt(request):
     """Expose security contact metadata for responsible disclosure."""
     expires = (timezone.now() + timedelta(days=180)).date().isoformat()
@@ -362,7 +367,7 @@ def security_txt(request):
     return HttpResponse('\n'.join(lines), content_type='text/plain; charset=utf-8')
 
 
-@production_cache_page(3600)
+@production_cache_page(3600, cache_html=True)
 def sitemap_xml(request):
     """Generate sitemap.xml with all peptide, stack, category, and static URLs."""
     from datetime import date
@@ -409,7 +414,7 @@ def sitemap_xml(request):
     return HttpResponse(xml, content_type='application/xml')
 
 
-@production_cache_page(3600)
+@production_cache_page(3600, cache_html=True)
 def llms_txt(request):
     """Serve llms.txt for AI/LLM discoverability (https://llmstxt.org spec)."""
     peptides = Peptide.objects.order_by('category', 'order', 'name')

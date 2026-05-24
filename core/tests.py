@@ -26,7 +26,7 @@ from django.core.cache import cache
 from django.core.management import call_command
 from django.core.management.base import CommandError
 from django.db import connection
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.test import Client, RequestFactory, override_settings
 from django.test.utils import CaptureQueriesContext
 from django.urls import reverse
@@ -53,7 +53,7 @@ from core.models import (
 )
 from core.serializers import serialize_peptide, serialize_stack
 from core.templatetags.core_filters import sanitize_ref
-from core.views import _site_counts
+from core.views import _site_counts, production_cache_page
 
 
 # =============================================================================
@@ -2683,6 +2683,44 @@ class TestContentSecurityPolicy:
         response = ContentSecurityPolicyMiddleware(get_response)(request)
 
         assert response['Content-Security-Policy'] == "default-src 'none'"
+
+    @override_settings(DEBUG=False)
+    def test_html_views_bypass_page_cache_to_keep_nonce_fresh(self, rf, monkeypatch):
+        import core.views as views
+
+        cache.clear()
+        monkeypatch.setattr(views, '_running_under_tests', lambda: False)
+        calls = {'count': 0}
+
+        @production_cache_page(60)
+        def uncached_html_view(request):
+            calls['count'] += 1
+            return HttpResponse('<html></html>', content_type='text/html')
+
+        request = rf.get('/')
+        uncached_html_view(request)
+        uncached_html_view(request)
+
+        assert calls['count'] == 2
+
+    @override_settings(DEBUG=False)
+    def test_explicit_non_html_cache_still_works(self, rf, monkeypatch):
+        import core.views as views
+
+        cache.clear()
+        monkeypatch.setattr(views, '_running_under_tests', lambda: False)
+        calls = {'count': 0}
+
+        @production_cache_page(60, cache_html=True)
+        def cached_text_view(request):
+            calls['count'] += 1
+            return HttpResponse('robots', content_type='text/plain')
+
+        request = rf.get('/robots.txt')
+        cached_text_view(request)
+        cached_text_view(request)
+
+        assert calls['count'] == 1
 
 
 # =============================================================================
