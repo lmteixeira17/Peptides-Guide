@@ -20,7 +20,7 @@ Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoe
 - **Static files:** WhiteNoise
 - **Cache:** LocMemCache em producao para API/operacionais estaticos; HTML publico nao usa page cache para manter nonce CSP consistente
 - **Deploy:** Docker (multi-stage build)
-- **Testes:** pytest + pytest-django + pytest-playwright (288 testes automatizados + 19 skips esperados)
+- **Testes:** pytest + pytest-django + pytest-playwright (292 testes automatizados + 19 skips esperados)
 
 ### Frontend (JavaScript puro)
 - **Stack:** HTML5 + CSS3 + JavaScript puro (ES5)
@@ -255,7 +255,7 @@ nginx-proxy (nginx:alpine) → porta 80/443
 - **Cache server-side:** API, robots, sitemap e llms.txt usam cache em producao; HTML publico nao usa page cache porque cada resposta precisa de nonce CSP novo.
 - **Cache Cloudflare:** Cache Rules na zona `guiadepeptideos.com.br` podem armazenar assets estaticos e endpoints operacionais. Nao cachear HTML publico com CSP nonce, `/admin/` ou `/health/`.
 - **Consultas:** Homepage pre-carrega relacoes usadas no `<noscript>` e evita `count()` duplicado, mantendo consulta local limitada a ate 8 queries.
-- **Payload principal:** A homepage preserva conteudo SEO completo em `<noscript>`; por isso e a maior pagina. O frontend carrega o catalogo estruturado via `/api/peptides.json` para manter o HTML inicial menor do que dados JS inline completos.
+- **Payload principal:** A homepage preserva conteudo SEO completo em `<noscript>`; por isso e a maior pagina. O frontend carrega o catalogo estruturado via `/api/v1/peptides.json` para manter o HTML inicial menor do que dados JS inline completos.
 - **Baseline crawler (2026-05-25):** 189 URLs do sitemap de producao retornaram 200, com 0 falhas.
 
 ---
@@ -278,7 +278,8 @@ nginx-proxy (nginx:alpine) → porta 80/443
 - `/categorias/<slug>/` - Paginas de categoria (11 categorias com intro, peptideos e stacks)
 - `/glossario/` - Glossario com 30+ termos tecnicos em 4 secoes
 - `/sobre/` - Pagina sobre/E-E-A-T (metodologia, fontes, criterios editoriais)
-- `/api/peptides.json` - API publica JSON com CORS headers
+- `/api/v1/peptides.json` - API publica JSON versionada com CORS headers
+- `/api/peptides.json` - alias legado mantido por compatibilidade
 
 ### Paginas Individuais por Peptideo/Stack
 Cada peptideo e stack tem uma URL propria com SEO otimizado:
@@ -390,7 +391,7 @@ python -m pytest core/tests.py::TestRealDataFiles -v
 python -m pytest core/tests.py --cov=core -v
 ```
 
-### Categorias de Testes (288 testes + 19 skips esperados)
+### Categorias de Testes (292 testes + 19 skips esperados)
 
 | Categoria | Classe de Teste | Qtd | O que testa |
 |-----------|----------------|-----|-------------|

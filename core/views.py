@@ -282,8 +282,9 @@ def peptides_api(request):
     if wants_browser_page:
         context = _site_counts()
         context.update({
-            'api_json_url': _site_url('/api/peptides.json?format=json'),
-            'api_endpoint_url': _site_url('/api/peptides.json'),
+            'api_json_url': _site_url('/api/v1/peptides.json?format=json'),
+            'api_endpoint_url': _site_url('/api/v1/peptides.json'),
+            'api_legacy_url': _site_url('/api/peptides.json'),
             'api_source_url': _site_url('/'),
         })
         response = render(request, 'api.html', context)
@@ -305,6 +306,7 @@ def peptides_api(request):
         'stacks': [serialize_stack(s) for s in stacks],
     }
     response = JsonResponse(data)
+    response['X-API-Version'] = '1.0'
     response['Access-Control-Allow-Origin'] = '*'
     response['Cache-Control'] = 'public, max-age=3600'
     return response
@@ -429,14 +431,14 @@ def llms_txt(request):
         '**Dominio:** ' + _site_url('/'),
         '**Idioma:** Portugues (pt-BR)',
         '**Licenca:** Conteudo educacional gratuito, sem fins lucrativos',
-        '**API JSON:** ' + _site_url('/api/peptides.json'),
+        '**API JSON:** ' + _site_url('/api/v1/peptides.json'),
         '',
         '## Paginas Principais',
         '',
         '- [Pagina inicial](' + _site_url('/') + '): Lista completa de peptideos e stacks',
         '- [Sobre e Metodologia](' + _site_url('/sobre/') + '): Criterios editoriais, fontes, principios',
         '- [Glossario](' + _site_url('/glossario/') + '): Termos tecnicos e definicoes',
-        '- [API JSON](' + _site_url('/api/peptides.json') + '): Dados estruturados completos',
+        '- [API JSON](' + _site_url('/api/v1/peptides.json') + '): Dados estruturados completos',
         '- [Sitemap](' + _site_url('/sitemap.xml') + '): Todas as paginas indexaveis',
         '',
         '## Categorias de Peptideos',

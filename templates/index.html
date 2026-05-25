@@ -478,7 +478,7 @@
             <a href="{{ site_path_prefix }}/sobre/">Sobre</a>
             <a href="{{ site_path_prefix }}/glossario/">Gloss&aacute;rio</a>
             <a href="{{ site_path_prefix }}/sitemap.xml">Sitemap</a>
-            <a href="{{ site_path_prefix }}/api/peptides.json">API JSON</a>
+            <a href="{{ site_path_prefix }}/api/v1/peptides.json">API JSON</a>
         </nav>
         <p>Guia de Pept&iacute;deos &copy; 2026 - Conte&uacute;do baseado em literatura cient&iacute;fica publicada</p>
         <p class="footer-disclaimer">Este material &eacute; para fins educacionais. N&atilde;o substitui orienta&ccedil;&atilde;o m&eacute;dica profissional.</p>
@@ -488,11 +488,18 @@
     window.defaultMetaDescription = "Guia cient\u00edfico com {{ peptide_count }} pept\u00eddeos terap\u00eauticos e {{ stack_count }} combina\u00e7\u00f5es recomendadas. Dosagens, efeitos colaterais, mecanismos de a\u00e7\u00e3o e {{ reference_count }} refer\u00eancias PubMed.";
     window.sitePathPrefix = "{{ site_path_prefix|escapejs }}";
     window.peptidesApiCandidates = [
+      "{% url 'peptides_api_v1' %}",
       "{% url 'peptides_api' %}",
+      "/api/v1/peptides.json",
       "/api/peptides.json",
+      "/peptides/api/v1/peptides.json",
       "/peptides/api/peptides.json",
+      "{{ site_url_prefix }}/api/v1/peptides.json",
       "{{ site_url_prefix }}/api/peptides.json",
+      "https://guiadepeptideos.com.br/peptides/api/v1/peptides.json",
+      "https://guiadepeptideos.com.br/api/v1/peptides.json",
       "https://guiadepeptideos.com.br/api/peptides.json",
+      "https://mlt.com.br/peptides/api/v1/peptides.json",
       "https://mlt.com.br/peptides/api/peptides.json"
     ];
     </script>

@@ -42,7 +42,7 @@ Organizar as correcoes estruturais do projeto antes de ampliar funcionalidades, 
 ## Fase 5 - Melhorias de produto
 
 - [ ] Centralizar os metadados de categoria para reduzir duplicacao entre modelos, views e frontend
-- [ ] Revisar a estrategia de API publica e versionamento do endpoint JSON
+- [x] Revisar a estrategia de API publica e versionamento do endpoint JSON
 - [ ] Melhorar observabilidade basica de deploy, seed e falhas de importacao
 - [ ] Priorizar backlog funcional apos estabilizacao da base tecnica
 

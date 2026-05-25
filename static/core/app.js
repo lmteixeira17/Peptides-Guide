@@ -244,19 +244,26 @@ function buildApiCandidates() {
     });
 
     if (pathname === "/peptides" || pathname.indexOf("/peptides/") === 0) {
+        addApiCandidate(candidates, "/peptides/api/v1/peptides.json");
         addApiCandidate(candidates, "/peptides/api/peptides.json");
         if (origin) {
+            addApiCandidate(candidates, origin + "/peptides/api/v1/peptides.json");
             addApiCandidate(candidates, origin + "/peptides/api/peptides.json");
         }
     }
 
+    addApiCandidate(candidates, "/api/v1/peptides.json");
     addApiCandidate(candidates, "/api/peptides.json");
     if (origin) {
+        addApiCandidate(candidates, origin + "/api/v1/peptides.json");
         addApiCandidate(candidates, origin + "/api/peptides.json");
     }
 
+    addApiCandidate(candidates, "https://guiadepeptideos.com.br/peptides/api/v1/peptides.json");
     addApiCandidate(candidates, "https://guiadepeptideos.com.br/peptides/api/peptides.json");
+    addApiCandidate(candidates, "https://guiadepeptideos.com.br/api/v1/peptides.json");
     addApiCandidate(candidates, "https://guiadepeptideos.com.br/api/peptides.json");
+    addApiCandidate(candidates, "https://mlt.com.br/peptides/api/v1/peptides.json");
     addApiCandidate(candidates, "https://mlt.com.br/peptides/api/peptides.json");
 
     return candidates;

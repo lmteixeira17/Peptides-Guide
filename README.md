@@ -3,7 +3,8 @@
 Aplicacao Django do Guia de Peptideos, publicada em:
 
 - Producao: `https://guiadepeptideos.com.br/peptides/`
-- API JSON: `https://guiadepeptideos.com.br/peptides/api/peptides.json`
+- API JSON v1: `https://guiadepeptideos.com.br/peptides/api/v1/peptides.json`
+- API JSON legado: `https://guiadepeptideos.com.br/peptides/api/peptides.json`
 
 ## Setup Local
 
@@ -49,7 +50,7 @@ A suite cobre:
 - regressao visual desktop/mobile com screenshots.
 - CSP nonce-based e ausencia de handlers inline no frontend dinamico.
 
-Estado validado em 2026-05-25: `pytest -q` com 288 testes passando e 19 skips esperados; CI tambem roda E2E Playwright e publica o artefato `visual-regression-screenshots`.
+Estado validado em 2026-05-25: `pytest -q` com 292 testes passando e 19 skips esperados; CI tambem roda E2E Playwright e publica o artefato `visual-regression-screenshots`.
 
 Para gerar screenshots visuais localmente:
 
@@ -77,7 +78,7 @@ Depois do deploy:
 ```bash
 curl -sI https://guiadepeptideos.com.br/peptides/
 curl -s https://guiadepeptideos.com.br/peptides/health/
-curl -s https://guiadepeptideos.com.br/peptides/api/peptides.json
+curl -s https://guiadepeptideos.com.br/peptides/api/v1/peptides.json
 ```
 
 Para uma varredura rapida das URLs publicadas, use o sitemap de producao e confirme que todas retornam `200`.
@@ -96,5 +97,5 @@ Para uma varredura rapida das URLs publicadas, use o sitemap de producao e confi
 ## Pendencias Conhecidas
 
 - Definir oficialmente se a fonte de verdade sera JS, admin Django ou um fluxo editorial hibrido.
-- Versionar formalmente a API publica (`/api/v1/...`) antes de integracoes externas dependerem dela.
+- Publicar contrato/changelog da API antes de integracoes externas criticas dependerem dela.
 - Melhorar observabilidade de seed, deploy e falhas de importacao.

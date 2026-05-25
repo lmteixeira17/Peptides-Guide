@@ -1707,6 +1707,19 @@ body {
     color: var(--text);
 }
 
+.detail-note {
+    margin-top: 0.85rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
+
+.detail-note code {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
 /* ============================================
    SEO
    ============================================ */

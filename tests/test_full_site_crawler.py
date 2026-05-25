@@ -104,6 +104,8 @@ def _operational_page_specs():
         ),
         PageSpec("api-json", "/api/peptides.json", "application/json", headers={"HTTP_ACCEPT": "application/json"}),
         PageSpec("api-json-format", "/api/peptides.json?format=json", "application/json"),
+        PageSpec("api-v1-json", "/api/v1/peptides.json", "application/json", headers={"HTTP_ACCEPT": "application/json"}),
+        PageSpec("api-v1-json-format", "/api/v1/peptides.json?format=json", "application/json"),
         PageSpec("health", "/health/", "application/json", ('"status": "ok"',)),
         PageSpec("robots", "/robots.txt", "text/plain", ("Sitemap:",)),
         PageSpec("security", "/.well-known/security.txt", "text/plain", ("Contact:", "Expires:")),
@@ -225,10 +227,14 @@ def test_sitemap_matches_all_indexable_catalog_pages(seeded_real_catalog):
 
 def test_full_site_api_inventory_matches_seeded_catalog(seeded_real_catalog):
     crawler = Client(raise_request_exception=False)
-    response = crawler.get("/api/peptides.json", HTTP_ACCEPT="application/json")
-    assert response.status_code == 200
+    legacy_response = crawler.get("/api/peptides.json", HTTP_ACCEPT="application/json")
+    v1_response = crawler.get("/api/v1/peptides.json", HTTP_ACCEPT="application/json")
+    assert legacy_response.status_code == 200
+    assert v1_response.status_code == 200
+    assert legacy_response["X-API-Version"] == "1.0"
+    assert v1_response["X-API-Version"] == "1.0"
 
-    payload = json.loads(response.content)
+    payload = json.loads(v1_response.content)
     assert payload["last_updated"] == "2026-05-24"
     assert {item["id"] for item in payload["peptides"]} == {
         peptide.id for peptide in seeded_real_catalog["peptides"]

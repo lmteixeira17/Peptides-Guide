@@ -85,7 +85,7 @@ class RateLimitMiddleware:
 
     def __call__(self, request):
         # path_info excludes FORCE_SCRIPT_NAME, so /peptides/api/... is covered.
-        if request.path_info == '/api/peptides.json':
+        if request.path_info in {'/api/peptides.json', '/api/v1/peptides.json'}:
             client_ip = get_client_ip(request)
             cache_key = f'ratelimit:api:peptides:{client_ip}'
 

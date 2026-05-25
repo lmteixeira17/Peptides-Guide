@@ -63,7 +63,7 @@
 
             <section>
                 <h2>Endpoint</h2>
-                <p>A API pública retorna o catálogo completo em JSON quando solicitada por ferramentas, scripts ou chamadas com <code>Accept: application/json</code>.</p>
+                <p>A API pública v1 retorna o catálogo completo em JSON quando solicitada por ferramentas, scripts ou chamadas com <code>Accept: application/json</code>.</p>
                 <div class="detail-meta">
                     <div><strong>{{ peptide_count }} peptídeos</strong> individuais</div>
                     <div><strong>{{ stack_count }} combinações</strong> recomendadas</div>
@@ -77,6 +77,7 @@
                 <pre><code>fetch("{{ api_endpoint_url }}", {
   headers: { "Accept": "application/json" }
 }).then(response =&gt; response.json())</code></pre>
+                <p class="detail-note">O endpoint legado <code>{{ api_legacy_url }}</code> continua ativo por compatibilidade.</p>
             </section>
 
             <section>

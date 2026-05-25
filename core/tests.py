@@ -665,8 +665,11 @@ class TestIndexView:
         assert 'window.sitePathPrefix' in content
         assert content.count('window.peptidesApiCandidates') == 1
         assert 'window.peptidesApiUrl =' not in content
+        assert '/api/v1/peptides.json' in content
         assert '/api/peptides.json' in content
+        assert '/peptides/api/v1/peptides.json' in content
         assert '/peptides/api/peptides.json' in content
+        assert 'https://guiadepeptideos.com.br/peptides/api/v1/peptides.json' in content
         assert 'https://guiadepeptideos.com.br/api/peptides.json' in content
         bootstrap_pos = content.find('window.peptidesApiCandidates')
         app_script_match = re.search(r'<script\b[^>]*\bsrc="[^"]*core/app\.js"', content[bootstrap_pos:])
@@ -717,7 +720,9 @@ class TestIndexView:
 
         assert 'window.peptidesApiCandidates' in content
         assert 'window.peptidesApiUrl =' not in content
+        assert '/api/v1/peptides.json' in content
         assert '/api/peptides.json' in content
+        assert '/peptides/api/v1/peptides.json' in content
         assert '/peptides/api/peptides.json' in content
 
     def test_empty_database(self, client, db):
@@ -739,8 +744,11 @@ class TestIndexView:
         assert "withSitePath('/peptideos/'" in app_js
         assert "withSitePath('/combinacoes/'" in app_js
         assert 'window.peptidesApiUrl' not in app_js
+        assert 'https://guiadepeptideos.com.br/peptides/api/v1/peptides.json' in app_js
         assert 'https://guiadepeptideos.com.br/peptides/api/peptides.json' in app_js
+        assert 'https://guiadepeptideos.com.br/api/v1/peptides.json' in app_js
         assert 'https://guiadepeptideos.com.br/api/peptides.json' in app_js
+        assert 'https://mlt.com.br/peptides/api/v1/peptides.json' in app_js
         assert 'https://mlt.com.br/peptides/api/peptides.json' in app_js
         assert 'onclick=' not in app_js
         assert 'javascript:void' not in app_js
@@ -1532,6 +1540,10 @@ class TestURLRouting:
         url = reverse('peptides_api')
         assert url == '/api/peptides.json'
 
+    def test_peptides_api_v1_url_resolves(self):
+        url = reverse('peptides_api_v1')
+        assert url == '/api/v1/peptides.json'
+
     def test_admin_url_accessible(self, client, admin_user):
         client.login(username='admin', password='testpass123')
         response = client.get('/gestao/')
@@ -1622,7 +1634,7 @@ class TestSEOEndpoints:
             'Sitemap: https://guiadepeptideos.com.br/peptides/sitemap.xml'
             in robots
         )
-        assert 'https://guiadepeptideos.com.br/peptides/api/peptides.json' in llms
+        assert 'https://guiadepeptideos.com.br/peptides/api/v1/peptides.json' in llms
         assert (
             'Canonical: https://guiadepeptideos.com.br/peptides/.well-known/security.txt'
             in security
@@ -1715,7 +1727,7 @@ class TestSEOEndpoints:
         assert b'Gloss' in response.content
         assert b'DefinedTermSet' in response.content
         assert b'class="header-nav"' in response.content
-        assert b'api/peptides.json' in response.content
+        assert b'api/v1/peptides.json' in response.content
         assert 'api/peptides.json' not in header_nav_html(response)
 
     def test_sobre_page_returns_200(self, client):
@@ -1724,7 +1736,7 @@ class TestSEOEndpoints:
         assert b'Sobre' in response.content
         assert b'AboutPage' in response.content
         assert b'class="header-nav"' in response.content
-        assert b'api/peptides.json' in response.content
+        assert b'api/v1/peptides.json' in response.content
         assert 'api/peptides.json' not in header_nav_html(response)
         assert b'E-E-A-T' not in response.content  # not user-facing term
 
@@ -1732,11 +1744,23 @@ class TestSEOEndpoints:
         response = client.get('/api/peptides.json')
         assert response.status_code == 200
         assert 'application/json' in response['Content-Type']
+        assert response['X-API-Version'] == '1.0'
         data = json.loads(response.content)
         assert 'version' in data
+        assert data['version'] == '1.0'
         assert 'peptides' in data
         assert 'stacks' in data
         assert len(data['peptides']) >= 1
+
+    def test_peptides_api_v1_returns_json(self, client, peptide):
+        response = client.get('/api/v1/peptides.json')
+
+        assert response.status_code == 200
+        assert 'application/json' in response['Content-Type']
+        assert response['X-API-Version'] == '1.0'
+        data = response.json()
+        assert data['version'] == '1.0'
+        assert 'peptides' in data
 
     def test_peptides_api_returns_html_for_browser_accept(self, client, peptide, stack):
         response = client.get('/api/peptides.json', HTTP_ACCEPT='text/html')
@@ -1746,6 +1770,8 @@ class TestSEOEndpoints:
         assert b'API JSON' in response.content
         assert b'class="header-nav"' in response.content
         assert b'Abrir JSON bruto' in response.content
+        assert b'/api/v1/peptides.json' in response.content
+        assert b'endpoint legado' in response.content
         assert 'api/peptides.json' not in header_nav_html(response)
         assert response['Cache-Control'] == 'no-cache'
 
@@ -1770,6 +1796,18 @@ class TestSEOEndpoints:
     def test_peptides_api_has_cache_header(self, client):
         response = client.get('/api/peptides.json')
         assert response['Cache-Control'] == 'public, max-age=3600'
+
+    @override_settings(RATE_LIMIT_API_REQUESTS=2, RATE_LIMIT_API_WINDOW_SECONDS=60)
+    def test_peptides_api_v1_rate_limits_by_ip(self, client, peptide):
+        cache.clear()
+        assert client.get('/api/v1/peptides.json', REMOTE_ADDR='203.0.113.20').status_code == 200
+        assert client.get('/api/v1/peptides.json', REMOTE_ADDR='203.0.113.20').status_code == 200
+
+        response = client.get('/api/v1/peptides.json', REMOTE_ADDR='203.0.113.20')
+
+        assert response.status_code == 429
+        assert response.json()['error'] == 'Rate limit exceeded.'
+        cache.clear()
 
     @override_settings(RATE_LIMIT_API_REQUESTS=2, RATE_LIMIT_API_WINDOW_SECONDS=60)
     def test_peptides_api_rate_limits_by_ip(self, client, peptide):
@@ -1810,6 +1848,25 @@ class TestSEOEndpoints:
         request.path = '/peptides/api/peptides.json'
         request.path_info = '/api/peptides.json'
         request.META['REMOTE_ADDR'] = '203.0.113.13'
+        assert middleware(request).status_code == 429
+        cache.clear()
+
+    @override_settings(RATE_LIMIT_API_REQUESTS=1, RATE_LIMIT_API_WINDOW_SECONDS=60)
+    def test_rate_limit_covers_v1_api_path(self):
+        cache.clear()
+        factory = RequestFactory()
+        middleware = RateLimitMiddleware(lambda request: JsonResponse({'ok': True}))
+
+        request = factory.get('/api/v1/peptides.json')
+        request.path = '/api/v1/peptides.json'
+        request.path_info = '/api/v1/peptides.json'
+        request.META['REMOTE_ADDR'] = '203.0.113.21'
+        assert middleware(request).status_code == 200
+
+        request = factory.get('/api/v1/peptides.json')
+        request.path = '/api/v1/peptides.json'
+        request.path_info = '/api/v1/peptides.json'
+        request.META['REMOTE_ADDR'] = '203.0.113.21'
         assert middleware(request).status_code == 429
         cache.clear()
 
@@ -1900,7 +1957,7 @@ class TestSEOEndpoints:
 
     def test_llms_txt_has_api_link(self, client):
         response = client.get('/llms.txt')
-        assert b'/api/peptides.json' in response.content
+        assert b'/api/v1/peptides.json' in response.content
         assert b'guiadepeptideos.com.br/sobre/' in response.content
 
     def test_llms_txt_groups_peptides_by_category(self, client, peptide, second_peptide):
@@ -1947,7 +2004,7 @@ class TestSEOEndpoints:
         response = client.get('/')
         assert b'/sobre/' in response.content
         assert b'/glossario/' in response.content
-        assert b'/api/peptides.json' in response.content
+        assert b'/api/v1/peptides.json' in response.content
 
     def test_index_css_is_referenced(self, client):
         """CSS file must be referenced in the HTML head."""
