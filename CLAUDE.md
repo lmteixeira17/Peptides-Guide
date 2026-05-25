@@ -2,12 +2,12 @@
 
 ## Visao Geral do Projeto
 
-Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoes detalhadas sobre 113 peptideos individuais e 44 combinacoes (stacks) recomendadas, com dados baseados em estudos cientificos publicados.
+Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoes detalhadas sobre 129 peptideos individuais e 46 combinacoes (stacks) recomendadas, com dados baseados em estudos cientificos publicados.
 
 **Idioma do conteudo:** Portugues (pt-BR)
 **Publico-alvo:** Profissionais de saude e pesquisadores
 **Repositorio:** https://github.com/lmteixeira17/Peptides-Guide
-**Dominio de producao:** https://guiadepeptideos.com.br/ (Cloudflare SSL Flexible)
+**Dominio de producao:** https://guiadepeptideos.com.br/peptides/ (Cloudflare SSL Flexible)
 **Dominio legado:** https://mlt.com.br/peptides/ (ainda funciona)
 
 ---
@@ -18,18 +18,18 @@ Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoe
 - **Framework:** Django 4.2+ com Gunicorn (2 workers)
 - **Banco de dados:** PostgreSQL 16-alpine (SQLite em dev/testes)
 - **Static files:** WhiteNoise
-- **Cache:** LocMemCache em producao para paginas publicas/API estaticas por 5-60 min
+- **Cache:** LocMemCache em producao para API/operacionais estaticos; HTML publico nao usa page cache para manter nonce CSP consistente
 - **Deploy:** Docker (multi-stage build)
-- **Testes:** pytest + pytest-django + pytest-playwright (181 backend/SEO + 6 E2E browser)
+- **Testes:** pytest + pytest-django + pytest-playwright (288 testes automatizados + 19 skips esperados)
 
 ### Frontend (JavaScript puro)
-- **Stack:** HTML5 + CSS3 + JavaScript puro (ES5) — zero mudancas no frontend
+- **Stack:** HTML5 + CSS3 + JavaScript puro (ES5)
 - **Sem frameworks:** Nao usa React, Vue, Angular ou qualquer biblioteca JS
 - **Sem build tools:** Nao usa bundlers, transpilers ou package managers
 - **Renderizacao:** Client-side com innerHTML (suporta tags HTML embutidas nos dados)
 
 ### Estrategia de Integracao
-O Django serve os dados do PostgreSQL como JSON injetado no template via `<script>` tags, mantendo as mesmas variaveis globais (`peptidesPart1`, `peptidesPart2`, `peptidesPart3`, `peptideStacks`) que o app.js espera. O frontend funciona **sem nenhuma alteracao**.
+O Django serve os dados do PostgreSQL como JSON consumido pelo frontend e mantem compatibilidade com o app.js legado. Scripts de template usam nonce de CSP; handlers inline e `javascript:` foram removidos do frontend dinamico.
 
 ```
 Browser → nginx-proxy → peptides-web (Django/Gunicorn:8000) → peptides-db (PostgreSQL:5432)
@@ -75,10 +75,10 @@ _Peptides/
 │       ├── app.js                 # Logica da aplicacao (modal, busca, deep links)
 │       ├── og-image.png           # Open Graph image (1200x630)
 │       └── favicon.svg            # Favicon SVG com emoji DNA
-├── data1.js                       # 40 peptideos (backup/fonte para seed)
-├── data2.js                       # 37 peptideos (backup/fonte para seed)
-├── data3.js                       # 36 peptideos (backup/fonte para seed)
-├── stacks.js                      # 44 combinacoes (backup/fonte para seed)
+├── data1.js                       # 46 peptideos (backup/fonte para seed)
+├── data2.js                       # 41 peptideos (backup/fonte para seed)
+├── data3.js                       # 42 peptideos (backup/fonte para seed)
+├── stacks.js                      # 46 combinacoes (backup/fonte para seed)
 ├── manage.py                      # Django CLI
 ├── requirements.txt               # Django, gunicorn, whitenoise, psycopg2-binary
 ├── pytest.ini                     # Configuracao pytest
@@ -252,11 +252,11 @@ nginx-proxy (nginx:alpine) → porta 80/443
 
 - **Assets estaticos:** WhiteNoise gera arquivos com hash e `Cache-Control: public, max-age=315360000, immutable` para CSS/JS/favicon em producao.
 - **Compressao:** Cloudflare/WhiteNoise entregam Brotli/Gzip para HTML, JSON, CSS e JS quando o cliente envia `Accept-Encoding`.
-- **Cache server-side:** Views publicas quase estaticas usam cache apenas em producao (`DEBUG=False`): homepage/detalhes/categorias/sobre/glossario por 5 min; API, robots, sitemap e llms.txt por 60 min.
-- **Cache Cloudflare:** Cache Rules na zona `guiadepeptideos.com.br` armazenam na borda: `/api/peptides.json`, `/sitemap.xml`, `/robots.txt`, `/llms.txt` por 1h; HTML publico (`/`, `/sobre/`, `/glossario/`, `/peptideos/*`, `/combinacoes/*`, `/categorias/*`) por 5 min. Nao cachear `/admin/` ou `/health/`.
+- **Cache server-side:** API, robots, sitemap e llms.txt usam cache em producao; HTML publico nao usa page cache porque cada resposta precisa de nonce CSP novo.
+- **Cache Cloudflare:** Cache Rules na zona `guiadepeptideos.com.br` podem armazenar assets estaticos e endpoints operacionais. Nao cachear HTML publico com CSP nonce, `/admin/` ou `/health/`.
 - **Consultas:** Homepage pre-carrega relacoes usadas no `<noscript>` e evita `count()` duplicado, mantendo consulta local limitada a ate 8 queries.
 - **Payload principal:** A homepage preserva conteudo SEO completo em `<noscript>`; por isso e a maior pagina. O frontend carrega o catalogo estruturado via `/api/peptides.json` para manter o HTML inicial menor do que dados JS inline completos.
-- **Baseline pos-cache (2026-04-24):** 171 URLs do sitemap retornaram 200; apos aquecer a borda, `cf-cache-status=HIT` em 171/171, media ~0,120s, p50 ~0,099s, p95 ~0,226s.
+- **Baseline crawler (2026-05-25):** 189 URLs do sitemap de producao retornaram 200, com 0 falhas.
 
 ---
 
@@ -270,7 +270,7 @@ nginx-proxy (nginx:alpine) → porta 80/443
 
 ### Endpoints SEO
 - `/robots.txt` - Allow todos exceto /admin/ e /health/, permite AI bots (GPTBot, ClaudeBot, PerplexityBot)
-- `/sitemap.xml` - 171 URLs com lastmod (main + sobre + glossario + 11 categorias + 113 peptideos + 44 stacks)
+- `/sitemap.xml` - 189 URLs com lastmod (catalogo, paginas institucionais, categorias, 129 peptideos e 46 stacks)
 - `/llms.txt` - Inventario completo para IAs (ChatGPT, Claude, Perplexity)
 - `/favicon.svg` - Favicon SVG com emoji DNA
 - `/peptideos/<slug>/` - Pagina individual por peptideo (SEO-friendly)
@@ -292,29 +292,29 @@ Cada peptideo e stack tem uma URL propria com SEO otimizado:
 ### Meta Tags e Structured Data
 Em `templates/index.html`:
 - Meta description, keywords, author, robots
-- Canonical URL → `https://guiadepeptideos.com.br/`
+- Canonical URL → `https://guiadepeptideos.com.br/peptides/`
 - Open Graph (og:title, og:description, og:url, og:locale, og:site_name, og:image 1200x630)
 - Twitter Cards (summary_large_image com og-image.png)
 - JSON-LD: `WebSite` (com SearchAction), `MedicalWebPage`, `ItemList`, `FAQPage` com 13 perguntas frequentes
 - OG Image: `static/core/og-image.png` (1200x630 PNG gerada via PIL, gradient azul/roxo)
 
 ### SEO para Crawlers (sem JavaScript)
-Bloco `<noscript>` em `templates/index.html` com **149 articles** contendo:
-- Todos os 113 peptideos com descricao, mecanismo, beneficios, efeitos colaterais, referencias
-- Todos os 41 stacks com descricao, sinergia, duracao, referencias
+Bloco `<noscript>` em `templates/index.html` com o catalogo indexavel contendo:
+- Todos os 129 peptideos com descricao, mecanismo, beneficios, efeitos colaterais, referencias
+- Todos os 46 stacks com descricao, sinergia, duracao, referencias
 - Googlebot e outros crawlers indexam esse conteudo completo
 
 ### SEO Dinamico (JavaScript)
 Em `static/core/app.js`:
 - `document.title` atualiza ao abrir modal (ex: "Semaglutida - Guia de Peptideos")
 - URL hash atualiza via `history.replaceState` (ex: `#semaglutide`, `#stack-weight-loss-beginner`)
-- Deep links funcionam: `guiadepeptideos.com.br/#bpc-157` abre modal direto
+- Deep links funcionam: `guiadepeptideos.com.br/peptides/#bpc-157` abre modal direto
 - Meta description atualiza dinamicamente com info do peptideo
 
 ### Google Search Console
 - **Propriedade:** `sc-domain:guiadepeptideos.com.br`
 - **Verificacao:** automatica via Cloudflare
-- **Sitemap:** `https://guiadepeptideos.com.br/sitemap.xml` (submetido)
+- **Sitemap:** `https://guiadepeptideos.com.br/peptides/sitemap.xml` (submetido)
 - **API OAuth:** configurado com refresh token permanente (readonly + indexing scopes)
 - **Indexing API:** 50 URLs submetidas via urlNotifications:publish (2026-04-07)
 
@@ -344,12 +344,12 @@ Body: {"startDate":"YYYY-MM-DD","endDate":"YYYY-MM-DD","dimensions":["query"],"r
 # 4. Inspecionar status de indexacao de uma URL
 POST https://searchconsole.googleapis.com/v1/urlInspection/index:inspect
 Authorization: Bearer <ACCESS_TOKEN>
-Body: {"inspectionUrl":"https://guiadepeptideos.com.br/","siteUrl":"sc-domain:guiadepeptideos.com.br"}
+Body: {"inspectionUrl":"https://guiadepeptideos.com.br/peptides/","siteUrl":"sc-domain:guiadepeptideos.com.br"}
 
 # 5. Submeter URL para indexacao (requer refresh token com scope indexing)
 POST https://indexing.googleapis.com/v3/urlNotifications:publish
 Authorization: Bearer <ACCESS_TOKEN>
-Body: {"url":"https://guiadepeptideos.com.br/peptideos/semaglutide/","type":"URL_UPDATED"}
+Body: {"url":"https://guiadepeptideos.com.br/peptides/peptideos/semaglutide/","type":"URL_UPDATED"}
 ```
 
 **Dimensoes disponiveis no searchAnalytics:** `query`, `page`, `country`, `device`, `searchAppearance`, `date`
@@ -390,7 +390,7 @@ python -m pytest core/tests.py::TestRealDataFiles -v
 python -m pytest core/tests.py --cov=core -v
 ```
 
-### Categorias de Testes (187 total: 181 backend/SEO + 6 E2E browser)
+### Categorias de Testes (288 testes + 19 skips esperados)
 
 | Categoria | Classe de Teste | Qtd | O que testa |
 |-----------|----------------|-----|-------------|
@@ -412,10 +412,10 @@ python -m pytest core/tests.py --cov=core -v
 | **Integracao** | TestEndToEndFlow | 2 | Seed→render, logica de particao (11 categorias) |
 | **URLs** | TestURLRouting | 3 | Resolve index, health, admin |
 | **SEO** | TestSEOEndpoints | 32 | robots.txt, sitemap.xml, llms.txt, detail pages, 404s, schemas, og:image, noscript, categorias, glossario, sobre, API JSON, CORS, footer nav, CSS/JS refs |
-| **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 113 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 306 refs, seed completo |
+| **Dados Reais** | TestRealDataFiles | 14 | Parse data1/2/3/stacks, 129 peptideos, campos obrigatorios, IDs unicos, categorias/status/severity validos, PubMed links, 338 refs, seed completo |
 | **Deploy Config** | TestDeploymentConfig | 4 | ALLOWED_HOSTS (ambos dominios), FORCE_SCRIPT_NAME, docker-compose.yml, nginx static rewrite (SSH) |
 | **Producao** | TestProductionSite | 17 | Homepage, CSS/JS loads, favicon, og-image, todas as paginas, HTTPS redirect, www redirect, detail page CSS |
-| **Browser E2E** | tests/e2e/test_frontend.py | 6 | Busca e filtros reais, modais, stacks novos, deep links, navegacao stack→peptideo, paginas detalhe e viewport mobile |
+| **Browser E2E** | tests/e2e/test_frontend.py + test_visual_regression.py | 20 | Busca e filtros reais, modais, stacks, deep links, navegacao stack→peptideo, paginas detalhe, viewport mobile e screenshots visuais |
 
 ### Dados Reais vs Dados de Teste
 - **Fixtures (pytest):** criam objetos minimos para testes isolados
@@ -482,7 +482,7 @@ Todas as referencias devem incluir um link PubMed clicavel:
 - `target='_blank'` e obrigatorio em todos os links
 - PMID deve ser um numero valido do PubMed
 - Toda referencia DEVE ter um link PubMed verificavel
-- Total atual: 306 referencias com links PubMed (69 em data1 + 55 em data2 + 50 em data3 + 132 em stacks)
+- Total atual: 338 referencias com links PubMed (80 em data1 + 61 em data2 + 59 em data3 + 138 em stacks)
 
 ---
 
@@ -865,9 +865,9 @@ A IA pode marcar biomarcadores como alerta mesmo quando estao dentro da faixa de
 2. **Commit + Push:** Enviar para `origin/master`
 3. **Aguardar CI/CD:** Verificar que GitHub Actions `Deploy to Production` ficou `completed` + `success`
 4. **Validar producao:**
-   - `curl -s https://guiadepeptideos.com.br/health/`
-   - `curl -s https://guiadepeptideos.com.br/ | grep` (verificar elementos novos)
-   - Se mudanca visual: confirmar que apareceu no site (considerar cache do browser/Cloudflare)
+   - `curl -s https://guiadepeptideos.com.br/peptides/health/`
+   - `curl -s https://guiadepeptideos.com.br/peptides/ | grep` (verificar elementos novos)
+   - Se mudanca visual: confirmar screenshots do artefato `visual-regression-screenshots` e validar no site
 5. **Só entao dizer que esta pronto**
 
 ### Checklist Rápido (copiar e colar)
@@ -883,7 +883,7 @@ A IA pode marcar biomarcadores como alerta mesmo quando estao dentro da faixa de
 ### Cache — Problema Comum
 O usuario pode ver o site "antigo" mesmo depois do deploy. Razoes:
 - **Browser cache:** Resolver com `Ctrl+F5`
-- **Cloudflare cache:** Pode demorar alguns minutos
+- **Cloudflare cache:** Pode demorar alguns minutos para assets estaticos; HTML publico nao deve ser cacheado com CSP nonce
 - **WhiteNoise cache:** Arquivos com hash novo, mas o HTML pode referenciar o antigo
 
 **Sempre avisar o usuario sobre a possibilidade de cache e como fazer hard refresh.**

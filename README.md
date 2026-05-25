@@ -29,6 +29,8 @@ A fonte atual do catalogo sao os arquivos:
 
 O comando `python manage.py seed_peptides` limpa as tabelas do catalogo e recria tudo a partir desses arquivos. Edicoes feitas apenas no admin Django podem ser perdidas no proximo seed.
 
+Catalogo atual em producao: 129 peptideos, 46 combinacoes e 338 referencias.
+
 ## Testes
 
 ```bash
@@ -46,6 +48,8 @@ A suite cobre:
 - E2E Playwright para busca, filtros, modais, mobile e acessibilidade;
 - regressao visual desktop/mobile com screenshots.
 - CSP nonce-based e ausencia de handlers inline no frontend dinamico.
+
+Estado validado em 2026-05-25: `pytest -q` com 288 testes passando e 19 skips esperados; CI tambem roda E2E Playwright e publica o artefato `visual-regression-screenshots`.
 
 Para gerar screenshots visuais localmente:
 

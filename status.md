@@ -85,6 +85,11 @@ pytest tests/e2e/test_visual_regression.py -q
 | 2026-05-24 | 2c52372 | Expansao cientifica do catalogo para 129 peptideos e 46 stacks | SIM |
 | 2026-05-24 | 5ea569b | Hardening de frontend, rotas, rate limit e menu sem API | SIM |
 | 2026-05-24 | 0a09358 | Crawler de cobertura total do site | SIM |
+| 2026-05-24 | eb49f24 | Regressao visual Playwright e screenshots no CI | SIM |
+| 2026-05-24 | e79219f | CSP com nonce e remocao de handlers inline | SIM |
+| 2026-05-24 | b94a2ae | Fix do compressor offline com script nonceado | SIM |
+| 2026-05-24 | 08a43f2 | Nonce CSP consistente em HTML sem page cache | SIM |
+| 2026-05-24 | f88b673 | Artifact CI atualizado para Node 24 nativo | SIM |
 
 ---
 
@@ -94,5 +99,6 @@ pytest tests/e2e/test_visual_regression.py -q
 - O CI roda testes unitarios/integracao, crawler de cobertura total e E2E Playwright
 - Screenshots visuais ficam no artefato `visual-regression-screenshots`
 - O app usa Content-Security-Policy com nonce para scripts e bloqueio de handlers inline
+- HTML publico nao usa page cache server-side para evitar mismatch entre nonce do header CSP e nonce dos scripts
 - Static files usam WhiteNoise com hash, mas o browser pode cachear — sempre pedir hard refresh
 - Cloudflare pode cachear static files — em caso de duvida, verificar via `curl` com cache-bypass
