@@ -92,7 +92,7 @@ pytest tests/e2e/test_visual_regression.py -q
 | 2026-05-24 | 08a43f2 | Nonce CSP consistente em HTML sem page cache | SIM |
 | 2026-05-24 | f88b673 | Artifact CI atualizado para Node 24 nativo | SIM |
 | 2026-05-24 | 8906912 | Documentacao operacional atualizada | SIM |
-| 2026-05-25 | pendente | API publica versionada em `/api/v1/peptides.json` | A PUBLICAR |
+| 2026-05-25 | 25781b4 | API publica versionada em `/api/v1/peptides.json` | SIM |
 
 ---
 
