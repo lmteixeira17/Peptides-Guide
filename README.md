@@ -6,6 +6,8 @@ Aplicacao Django do Guia de Peptideos, publicada em:
 - API JSON v1: `https://guiadepeptideos.com.br/peptides/api/v1/peptides.json`
 - API JSON legado: `https://guiadepeptideos.com.br/peptides/api/peptides.json`
 
+Contrato publico da API: [`API.md`](API.md).
+
 ## Setup Local
 
 ```powershell
@@ -112,4 +114,3 @@ Para uma varredura rapida das URLs publicadas, use o sitemap de producao e confi
 
 - Rotacionar o PAT usado pelo `GH_TOKEN` e revisar seus escopos na conta GitHub.
 - Limpar o PDF comercial de commits antigos com `git filter-repo`, se houver janela aprovada para force-push e realinhamento de clones.
-- Publicar contrato/changelog da API antes de integracoes externas criticas dependerem dela.
