@@ -1,19 +1,7 @@
 from django.db import models
 
+from .categories import CATEGORY_CHOICES
 
-CATEGORY_CHOICES = [
-    ('weight-loss', 'Perda de Peso'),
-    ('growth-hormone', 'Hormônio do Crescimento'),
-    ('healing', 'Cura e Recuperação'),
-    ('anti-aging', 'Anti-Envelhecimento'),
-    ('skin', 'Pele e Estética'),
-    ('cognitive', 'Cognitivo'),
-    ('immune', 'Sistema Imunológico'),
-    ('hormonal', 'Hormonal'),
-    ('sleep', 'Sono'),
-    ('body-comp', 'Composição Corporal'),
-    ('other', 'Outros'),
-]
 
 STATUS_CHOICES = [
     ('approved', 'Aprovado'),

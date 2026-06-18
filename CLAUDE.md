@@ -15,12 +15,12 @@ Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoe
 ## Arquitetura
 
 ### Backend (Django + PostgreSQL)
-- **Framework:** Django 4.2+ com Gunicorn (2 workers)
+- **Framework:** Django 5.2 LTS com Gunicorn (2 workers)
 - **Banco de dados:** PostgreSQL 16-alpine (SQLite em dev/testes)
 - **Static files:** WhiteNoise
 - **Cache:** LocMemCache em producao para API/operacionais estaticos; HTML publico nao usa page cache para manter nonce CSP consistente
 - **Deploy:** Docker (multi-stage build)
-- **Testes:** pytest + pytest-django + pytest-playwright (292 testes automatizados + 19 skips esperados)
+- **Testes:** pytest + pytest-django + pytest-playwright (296 testes automatizados + 18 skips esperados)
 
 ### Frontend (JavaScript puro)
 - **Stack:** HTML5 + CSS3 + JavaScript puro (ES5)
@@ -29,7 +29,7 @@ Site de referencia cientifica sobre peptideos terapeuticos. Apresenta informacoe
 - **Renderizacao:** Client-side com innerHTML (suporta tags HTML embutidas nos dados)
 
 ### Estrategia de Integracao
-O Django serve os dados do PostgreSQL como JSON consumido pelo frontend e mantem compatibilidade com o app.js legado. Scripts de template usam nonce de CSP; handlers inline e `javascript:` foram removidos do frontend dinamico.
+O Django serve os dados do PostgreSQL em um bootstrap JSON nonceado na homepage e pela API publica versionada como fallback/consumo externo. Scripts de template usam nonce de CSP; handlers inline e `javascript:` foram removidos do frontend dinamico.
 
 ```
 Browser → nginx-proxy → peptides-web (Django/Gunicorn:8000) → peptides-db (PostgreSQL:5432)
@@ -52,6 +52,7 @@ _Peptides/
 │   ├── views.py                   # index_view (dados JSON) + health_view
 │   ├── urls.py                    # / e /health/
 │   ├── admin.py                   # Admin com TabularInlines para CRUD
+│   ├── categories.py              # Metadados centrais de categorias
 │   ├── serializers.py             # Converte modelos → JSON (camelCase, formato JS)
 │   ├── tests.py                   # Suite backend/SEO/dados (181 testes)
 │   ├── context_processors.py      # analytics() - GA4 measurement ID
@@ -170,7 +171,11 @@ Importa dados dos arquivos JS (data1.js, data2.js, data3.js, stacks.js) para o P
 ```bash
 python manage.py seed_peptides                    # usa diretorio raiz do projeto
 python manage.py seed_peptides --data-dir /caminho # diretorio customizado
+python manage.py seed_peptides --dry-run          # valida arquivos sem alterar o banco
+python manage.py seed_peptides --backup-json backup.json
 ```
+
+O comando valida todos os arquivos obrigatorios antes de apagar dados. No deploy, o workflow gera `pg_dump` pre-deploy e backup JSON pre-seed em `/var/www/peptides-backups/`.
 
 ### Parser js_to_json
 Converte notacao JS para JSON valido usando processamento boundary-aware:
@@ -255,7 +260,7 @@ nginx-proxy (nginx:alpine) → porta 80/443
 - **Cache server-side:** API, robots, sitemap e llms.txt usam cache em producao; HTML publico nao usa page cache porque cada resposta precisa de nonce CSP novo.
 - **Cache Cloudflare:** Cache Rules na zona `guiadepeptideos.com.br` podem armazenar assets estaticos e endpoints operacionais. Nao cachear HTML publico com CSP nonce, `/admin/` ou `/health/`.
 - **Consultas:** Homepage pre-carrega relacoes usadas no `<noscript>` e evita `count()` duplicado, mantendo consulta local limitada a ate 8 queries.
-- **Payload principal:** A homepage preserva conteudo SEO completo em `<noscript>`; por isso e a maior pagina. O frontend carrega o catalogo estruturado via `/api/v1/peptides.json` para manter o HTML inicial menor do que dados JS inline completos.
+- **Payload principal:** A homepage preserva conteudo SEO completo em `<noscript>` e inclui um bootstrap JSON nonceado para render inicial sem fetch duplicado. A API `/api/v1/peptides.json` permanece como fallback do frontend e contrato publico.
 - **Baseline crawler (2026-05-25):** 189 URLs do sitemap de producao retornaram 200, com 0 falhas.
 
 ---
@@ -391,7 +396,7 @@ python -m pytest core/tests.py::TestRealDataFiles -v
 python -m pytest core/tests.py --cov=core -v
 ```
 
-### Categorias de Testes (292 testes + 19 skips esperados)
+### Categorias de Testes (296 testes + 18 skips esperados)
 
 | Categoria | Classe de Teste | Qtd | O que testa |
 |-----------|----------------|-----|-------------|
@@ -516,14 +521,15 @@ var sourceStackId = null;         // Stack de origem (para navegacao de volta)
 
 ## Como Adicionar/Editar Dados
 
-### Via Django Admin (recomendado)
+### Via Django Admin (consulta/emergencia)
 1. Acessar http://45.63.90.69/peptides/admin/
-2. Peptideos e stacks podem ser criados/editados diretamente com inlines para beneficios, efeitos colaterais, dosagens, referencias
+2. Peptideos e stacks podem ser criados/editados temporariamente, mas toda alteracao editorial permanente deve voltar para os arquivos JS versionados.
 
-### Via Arquivos JS (seed)
+### Via Arquivos JS (fonte de verdade)
 1. Editar o arquivo JS correspondente (data1.js, data2.js, data3.js, stacks.js)
-2. Executar o seed: `python manage.py seed_peptides`
-   - **ATENCAO:** o seed limpa TODOS os dados antes de reimportar
+2. Validar com `python manage.py seed_peptides --dry-run`
+3. Executar o seed: `python manage.py seed_peptides --backup-json backup.json`
+   - **ATENCAO:** o seed limpa TODOS os dados antes de reimportar, mas valida os arquivos antes do delete e pode salvar backup JSON pre-substituicao.
 
 ### Checklist para Novos Peptideos
 - `id` unico em kebab-case

@@ -664,6 +664,7 @@ class TestIndexView:
         content = response.content.decode()
 
         assert 'window.peptidesApiCandidates' in content
+        assert 'id="peptidesBootstrapData"' in content
         assert 'window.sitePathPrefix' in content
         assert content.count('window.peptidesApiCandidates') == 1
         assert 'window.peptidesApiUrl =' not in content
@@ -693,12 +694,15 @@ class TestIndexView:
         assert 'test-peptide' in content
         assert 'second-peptide' in content
 
-    def test_index_does_not_inline_full_dataset(self, client, peptide_with_relations):
+    def test_index_uses_json_bootstrap_without_legacy_globals(self, client, peptide_with_relations):
         response = client.get('/')
         content = response.content.decode()
 
         assert 'var peptidesPart1' not in content
         assert 'var peptideStacks' not in content
+        assert 'id="peptidesBootstrapData"' in content
+        assert '"peptides"' in content
+        assert '"stacks"' in content
         assert 'window.peptidesApiCandidates' in content
         assert 'window.peptidesApiUrl =' not in content
 
@@ -739,6 +743,7 @@ class TestIndexView:
         app_js = (Path(__file__).resolve().parent.parent / 'static' / 'core' / 'app.js').read_text(encoding='utf-8')
 
         assert 'function buildApiCandidates()' in app_js
+        assert 'function getBootstrappedData()' in app_js
         assert 'function loadDataFromCandidates(candidates, index)' in app_js
         assert 'function escapeHtml(value)' in app_js
         assert 'function sanitizeReferenceHtml(value)' in app_js
@@ -1153,6 +1158,22 @@ class TestSeedCommand:
             with open(os.path.join(tmpdir, name), 'w', encoding='utf-8') as f:
                 f.write(content)
 
+    def _create_existing_peptide(self):
+        return Peptide.objects.create(
+            id='existing-peptide',
+            name='Existing Peptide',
+            aka='',
+            category='other',
+            category_label='Outros',
+            description='Existing description',
+            mechanism='Existing mechanism',
+            administration='SC',
+            half_life='1h',
+            status='research',
+            status_label='Pesquisa',
+            order=1,
+        )
+
     def test_seed_creates_peptides(self):
         from django.core.management import call_command
 
@@ -1271,6 +1292,57 @@ class TestSeedCommand:
 
         # Should have 2 peptides (from data1 + data2, data3 is empty)
         assert Peptide.objects.count() == 2
+
+    def test_seed_dry_run_does_not_modify_database(self):
+        """Dry-run validates files and leaves the current catalog unchanged."""
+        from django.core.management import call_command
+
+        self._create_existing_peptide()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            self._create_js_files(tmpdir)
+            call_command('seed_peptides', data_dir=tmpdir, dry_run=True, verbosity=0)
+
+        assert Peptide.objects.count() == 1
+        assert Peptide.objects.filter(id='existing-peptide').exists()
+        assert not Peptide.objects.filter(id='test-pep-1').exists()
+
+    def test_seed_missing_file_does_not_clear_existing_data(self):
+        """Missing required source files fail before any destructive delete."""
+        from django.core.management import call_command
+
+        self._create_existing_peptide()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            self._create_js_files(tmpdir)
+            os.remove(os.path.join(tmpdir, 'stacks.js'))
+
+            with pytest.raises(CommandError):
+                call_command('seed_peptides', data_dir=tmpdir, verbosity=0)
+
+        assert Peptide.objects.count() == 1
+        assert Peptide.objects.filter(id='existing-peptide').exists()
+
+    def test_seed_writes_backup_json_before_replace(self):
+        """Backup JSON captures the current catalog before replacement."""
+        from django.core.management import call_command
+
+        self._create_existing_peptide()
+        with tempfile.TemporaryDirectory() as tmpdir:
+            self._create_js_files(tmpdir)
+            backup_path = os.path.join(tmpdir, 'catalog-backup.json')
+
+            call_command(
+                'seed_peptides',
+                data_dir=tmpdir,
+                backup_json=backup_path,
+                verbosity=0,
+            )
+
+            with open(backup_path, encoding='utf-8') as f:
+                backup = json.load(f)
+
+        assert backup['counts']['peptides'] == 1
+        assert backup['peptides'][0]['id'] == 'existing-peptide'
+        assert Peptide.objects.filter(id='test-pep-1').exists()
 
 
 # =============================================================================

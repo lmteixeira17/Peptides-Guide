@@ -9,7 +9,7 @@
 ### 1. Pre-Commit (Local)
 
 - [ ] `ruff check .` passa
-- [ ] `pytest -q` passa 100% (atual: 273 testes, 18 skips esperados)
+- [ ] `pytest -q` passa 100% (atual: 296 testes, 18 skips esperados)
 - [ ] Nao ha conflitos de merge pendentes (`git status` limpo)
 - [ ] Arquivos novos estao adicionados (`git add`)
 - [ ] Commit message descritiva em portugues ou ingles
@@ -103,7 +103,21 @@ pytest tests/e2e/test_visual_regression.py -q
 | 2026-05-24 | f88b673 | Artifact CI atualizado para Node 24 nativo | SIM |
 | 2026-05-24 | 8906912 | Documentacao operacional atualizada | SIM |
 | 2026-05-25 | 25781b4 | API publica versionada em `/api/v1/peptides.json` | SIM |
-| 2026-06-18 | pendente | Hardening geral (Django 5.2 LTS, serialize_stack, trusted proxies, cache bleach, etc) | pendente |
+| 2026-06-18 | b2416a8 | Hardening geral (Django 5.2 LTS, serialize_stack, trusted proxies, cache bleach, etc) | SIM |
+| 2026-06-18 | atual | Fechamento de pendencias tecnicas (seed seguro, categorias centralizadas, bootstrap JSON, CI dry-run) | SIM |
+
+## Ultima Validacao Local
+
+Executado em 2026-06-18 no ambiente Windows temporario `peptides-win-venv`:
+
+- `ruff check .` — OK
+- `python manage.py check` — OK
+- `python manage.py makemigrations --check --dry-run` — OK, sem mudancas
+- `python manage.py seed_peptides --dry-run` — OK, 129 peptideos e 46 stacks parseados
+- `python manage.py migrate --noinput` — OK, sem migracoes pendentes
+- `python manage.py showmigrations core` — `0001_initial` e `0002_peptide_core_peptid_categor_af0a9a_idx_and_more` aplicadas
+- `pytest -q` — 296 passed, 18 skipped
+- `pytest tests/e2e -q` — 20 passed
 
 ---
 

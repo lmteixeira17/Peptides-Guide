@@ -503,6 +503,7 @@
       "https://mlt.com.br/peptides/api/peptides.json"
     ];
     </script>
+    <script nonce="{{ csp_nonce }}" id="peptidesBootstrapData" type="application/json">{{ bootstrap_payload_json|safe }}</script>
     <script nonce="{{ csp_nonce }}" src="{% static 'core/app.js' %}"></script>
 </body>
 </html>

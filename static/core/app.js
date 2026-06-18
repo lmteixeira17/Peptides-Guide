@@ -282,8 +282,30 @@ function loadDataFromCandidates(candidates, index) {
     });
 }
 
+function getBootstrappedData() {
+    var bootstrapElement = document.getElementById("peptidesBootstrapData");
+    if (!bootstrapElement) {
+        return null;
+    }
+    try {
+        var data = JSON.parse(bootstrapElement.textContent || "{}");
+        return isValidApiPayload(data) ? data : null;
+    } catch (e) {
+        return null;
+    }
+}
+
 function loadData() {
     if (dataLoaded) {
+        return Promise.resolve();
+    }
+
+    var bootstrappedData = getBootstrappedData();
+    if (bootstrappedData) {
+        peptides = bootstrappedData.peptides || [];
+        stacks = bootstrappedData.stacks || [];
+        dataLoaded = true;
+        dataLoadFailed = false;
         return Promise.resolve();
     }
 

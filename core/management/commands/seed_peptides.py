@@ -13,16 +13,24 @@ This command:
 """
 
 import json
-import os
+import logging
 import re
+from pathlib import Path
 
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
+from django.utils import timezone
 
 from core.models import (
     Peptide, PeptideBenefit, PeptideSideEffect, PeptideDosage, PeptideReference,
     Stack, StackPeptide, StackReference,
 )
+from core.serializers import serialize_peptide, serialize_stack
+
+
+logger = logging.getLogger(__name__)
+PEPTIDE_DATA_FILES = ('data1.js', 'data2.js', 'data3.js')
+STACK_DATA_FILE = 'stacks.js'
 
 
 def js_to_json(js_text):
@@ -110,15 +118,124 @@ class Command(BaseCommand):
             default=None,
             help='Directory containing the JS data files (default: project root)',
         )
+        parser.add_argument(
+            '--dry-run',
+            action='store_true',
+            help='Parse all data files and report counts without changing the database',
+        )
+        parser.add_argument(
+            '--backup-json',
+            type=str,
+            default=None,
+            help='Write a JSON snapshot of the current catalog before replacing it',
+        )
+
+    def _parse_data_file(self, filepath):
+        with open(filepath, 'r', encoding='utf-8') as f:
+            js_text = f.read()
+
+        json_text = js_to_json(js_text)
+        try:
+            return json.loads(json_text)
+        except json.JSONDecodeError as e:
+            line_num = json_text[:e.pos].count('\n') + 1
+            start = max(0, e.pos - 100)
+            end = min(len(json_text), e.pos + 100)
+            self.stderr.write(f'Error parsing {Path(filepath).name}: {e}')
+            self.stderr.write(f'Error near line {line_num}, position {e.pos}')
+            self.stderr.write(f'Context: ...{json_text[start:end]}...')
+            raise
+
+    def _load_seed_data(self, data_dir):
+        required_files = [*PEPTIDE_DATA_FILES, STACK_DATA_FILE]
+        missing = [
+            str(Path(data_dir) / filename)
+            for filename in required_files
+            if not (Path(data_dir) / filename).exists()
+        ]
+        if missing:
+            raise CommandError(
+                'Missing required seed data file(s): ' + ', '.join(missing)
+            )
+
+        all_peptides = []
+        for filename in PEPTIDE_DATA_FILES:
+            filepath = Path(data_dir) / filename
+            self.stdout.write(f'Reading {filename}...')
+            peptides_data = self._parse_data_file(filepath)
+            all_peptides.extend(peptides_data)
+            self.stdout.write(f'  Found {len(peptides_data)} peptides in {filename}')
+
+        self.stdout.write(f'Reading {STACK_DATA_FILE}...')
+        stacks_data = self._parse_data_file(Path(data_dir) / STACK_DATA_FILE)
+        self.stdout.write(f'  Found {len(stacks_data)} stacks')
+
+        return all_peptides, stacks_data
+
+    def _catalog_counts(self):
+        return {
+            'peptides': Peptide.objects.count(),
+            'benefits': PeptideBenefit.objects.count(),
+            'side_effects': PeptideSideEffect.objects.count(),
+            'dosages': PeptideDosage.objects.count(),
+            'peptide_references': PeptideReference.objects.count(),
+            'stacks': Stack.objects.count(),
+            'stack_peptides': StackPeptide.objects.count(),
+            'stack_references': StackReference.objects.count(),
+        }
+
+    def _write_catalog_backup(self, backup_path):
+        path = Path(backup_path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        peptides = Peptide.objects.prefetch_related(
+            'benefits', 'side_effects', 'dosages', 'references'
+        ).order_by('order', 'name')
+        stacks = Stack.objects.prefetch_related(
+            'stack_peptides', 'references'
+        ).order_by('order', 'name')
+        payload = {
+            'generated_at': timezone.now().isoformat(),
+            'counts': self._catalog_counts(),
+            'peptides': [serialize_peptide(p) for p in peptides],
+            'stacks': [serialize_stack(s) for s in stacks],
+        }
+        path.write_text(
+            json.dumps(payload, ensure_ascii=False, indent=2),
+            encoding='utf-8',
+        )
+        return path
 
     def handle(self, *args, **options):
         from django.conf import settings
-        data_dir = options['data_dir'] or str(settings.BASE_DIR)
+        data_dir = Path(options['data_dir'] or str(settings.BASE_DIR))
 
         self.stdout.write('Importing peptide and stack data from JS files...')
         self.stdout.write(f'Data directory: {data_dir}')
 
+        all_peptides, stacks_data = self._load_seed_data(data_dir)
+        logger.info(
+            'seed_peptides parsed source files',
+            extra={
+                'peptide_count': len(all_peptides),
+                'stack_count': len(stacks_data),
+                'data_dir': str(data_dir),
+                'dry_run': options['dry_run'],
+            },
+        )
+
+        if options['dry_run']:
+            self.stdout.write(self.style.SUCCESS(
+                'Dry run OK: parsed '
+                f'{len(all_peptides)} peptides and {len(stacks_data)} stacks; '
+                'database unchanged.'
+            ))
+            return
+
         with transaction.atomic():
+            if options['backup_json']:
+                backup_path = self._write_catalog_backup(options['backup_json'])
+                self.stdout.write(f'Catalog backup written: {backup_path}')
+
             # Clear existing data
             self.stdout.write('Clearing existing data...')
             StackReference.objects.all().delete()
@@ -129,35 +246,6 @@ class Command(BaseCommand):
             PeptideSideEffect.objects.all().delete()
             PeptideBenefit.objects.all().delete()
             Peptide.objects.all().delete()
-
-            # Import peptides from data1.js, data2.js, data3.js
-            all_peptides = []
-            for filename in ['data1.js', 'data2.js', 'data3.js']:
-                filepath = os.path.join(data_dir, filename)
-                if not os.path.exists(filepath):
-                    self.stderr.write(f'File not found: {filepath}')
-                    continue
-
-                self.stdout.write(f'Reading {filename}...')
-                with open(filepath, 'r', encoding='utf-8') as f:
-                    js_text = f.read()
-
-                json_text = js_to_json(js_text)
-                try:
-                    peptides_data = json.loads(json_text)
-                except json.JSONDecodeError as e:
-                    self.stderr.write(f'Error parsing {filename}: {e}')
-                    # Try to find the problematic area
-                    line_num = json_text[:e.pos].count('\n') + 1
-                    self.stderr.write(f'Error near line {line_num}, position {e.pos}')
-                    # Show context around error
-                    start = max(0, e.pos - 100)
-                    end = min(len(json_text), e.pos + 100)
-                    self.stderr.write(f'Context: ...{json_text[start:end]}...')
-                    raise
-
-                all_peptides.extend(peptides_data)
-                self.stdout.write(f'  Found {len(peptides_data)} peptides in {filename}')
 
             # Create peptide records
             order = 0
@@ -225,32 +313,8 @@ class Command(BaseCommand):
                 f'Created {len(all_peptides)} peptides with all related data'
             ))
 
-            # Import stacks from stacks.js
-            stacks_filepath = os.path.join(data_dir, 'stacks.js')
-            if not os.path.exists(stacks_filepath):
-                self.stderr.write(f'File not found: {stacks_filepath}')
-                return
-
-            self.stdout.write('Reading stacks.js...')
-            with open(stacks_filepath, 'r', encoding='utf-8') as f:
-                js_text = f.read()
-
-            json_text = js_to_json(js_text)
-            try:
-                stacks_data = json.loads(json_text)
-            except json.JSONDecodeError as e:
-                self.stderr.write(f'Error parsing stacks.js: {e}')
-                line_num = json_text[:e.pos].count('\n') + 1
-                self.stderr.write(f'Error near line {line_num}, position {e.pos}')
-                start = max(0, e.pos - 100)
-                end = min(len(json_text), e.pos + 100)
-                self.stderr.write(f'Context: ...{json_text[start:end]}...')
-                raise
-
-            self.stdout.write(f'  Found {len(stacks_data)} stacks')
-
             # Create stack records
-            peptide_ids = set(Peptide.objects.values_list('id', flat=True))
+            peptides_by_id = Peptide.objects.in_bulk()
 
             order = 0
             for sdata in stacks_data:
@@ -273,9 +337,7 @@ class Command(BaseCommand):
                 # Stack peptides
                 for i, sp in enumerate(sdata.get('peptides', [])):
                     sp_id = sp.get('id', '')
-                    linked_peptide = None
-                    if sp_id in peptide_ids:
-                        linked_peptide = Peptide.objects.get(id=sp_id)
+                    linked_peptide = peptides_by_id.get(sp_id)
 
                     StackPeptide.objects.create(
                         stack=stack,
@@ -310,3 +372,7 @@ class Command(BaseCommand):
             self.stdout.write(f'Stacks: {Stack.objects.count()}')
             self.stdout.write(f'Stack Peptides: {StackPeptide.objects.count()}')
             self.stdout.write(f'Stack References: {StackReference.objects.count()}')
+            logger.info(
+                'seed_peptides replaced catalog',
+                extra=self._catalog_counts(),
+            )

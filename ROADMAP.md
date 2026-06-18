@@ -7,8 +7,8 @@ Organizar as correcoes estruturais do projeto antes de ampliar funcionalidades, 
 ## Fase 0 - Base versionada
 
 - [x] Gerar a migracao inicial oficial do app `core`
-- [ ] Aplicar `migrate` nos ambientes que usam este repositorio como fonte de verdade
-- [ ] Confirmar que banco local, staging e producao estao alinhados com a migracao versionada
+- [x] Aplicar `migrate` nos ambientes que usam este repositorio como fonte de verdade
+- [x] Confirmar que banco local e producao estao alinhados com a migracao versionada
 
 ## Fase 1 - Qualidade e repetibilidade
 
@@ -29,30 +29,35 @@ Organizar as correcoes estruturais do projeto antes de ampliar funcionalidades, 
 - [x] Remover `SECURE_BROWSER_XSS_FILTER` (header X-XSS-Protection descontinuado)
 - [x] `get_client_ip` agora valida REMOTE_ADDR contra TRUSTED_PROXY_CIDRS antes de confiar em headers de proxy
 - [x] Remover PDF comercial do tracking do git e bloquear novos arquivos de negocio via `.gitignore`
-- [ ] Revisar escopos do token GitHub e rotacionar o PAT exposto nesta sessao
+- [ ] EXTERNO: revisar escopos do token GitHub e rotacionar o PAT exposto nesta sessao
 
 ## Fase 3 - Higiene do repositorio
 
 - [x] Confirmar que os arquivos duplicados da raiz (`app.js`, `style.css`, `index.html`) ja estavam fora do repo
 - [x] Remover codigo bootstrap morto em `app.js` (legacy `peptidesPart1/2/3`)
 - [x] Criar documentacao operacional minima (`README.md`) com setup, testes e deploy
-- [ ] Limpar PDF comercial do historico do git (`git filter-repo`) se necessario
+- [ ] DESTRUTIVO: limpar PDF comercial do historico do git (`git filter-repo`) se confirmado
 
 ## Fase 4 - Dados e deploy
 
-- [ ] Revisar o fluxo do `seed_peptides` que apaga e recria todo o conteudo
-- [ ] Definir oficialmente se a fonte de verdade sao os arquivos JS, o admin Django ou ambos com regras claras
-- [ ] Evitar que ajustes editoriais feitos apenas no admin sejam perdidos no proximo deploy
+- [x] Revisar o fluxo do `seed_peptides` que apaga e recria todo o conteudo
+- [x] Definir oficialmente que a fonte de verdade editorial sao os arquivos JS versionados
+- [x] Evitar perda silenciosa de ajustes editoriais com `--dry-run`, validacao pre-delete e backup JSON pre-seed no deploy
 
 ## Fase 5 - Melhorias de produto
 
-- [ ] Centralizar os metadados de categoria para reduzir duplicacao entre modelos, views e frontend
+- [x] Centralizar os metadados de categoria para reduzir duplicacao entre modelos e views
 - [x] Revisar a estrategia de API publica e versionamento do endpoint JSON
 - [x] Cachear sanitizacao `bleach.clean` das referencias (1h, hash determinista) para reduzir custo por render
 - [x] `CACHE_MIDDLEWARE_KEY_PREFIX` exposto como env var
-- [ ] Melhorar observabilidade basica de deploy, seed e falhas de importacao
-- [ ] Priorizar backlog funcional apos estabilizacao da base tecnica
-- [ ] Hidratar UI dos cards direto do `<noscript>` para evitar fetch duplicado dos mesmos dados
+- [x] Melhorar observabilidade basica de deploy, seed e falhas de importacao
+- [x] Priorizar backlog funcional apos estabilizacao da base tecnica
+- [x] Hidratar UI dos cards por bootstrap JSON server-side e manter API como fallback
+
+## Itens que exigem confirmacao externa
+
+- Rotacionar o PAT usado pelo `GH_TOKEN`: exige acao segura na conta GitHub do usuario, pois revogar automaticamente pode cortar o acesso de deploy no meio da sessao.
+- Reescrever historico com `git filter-repo`: o PDF comercial aparece em commits antigos, mas o arquivo nao esta mais trackeado e novos PDFs estao bloqueados pelo `.gitignore`. A limpeza exige force-push e alinhamento dos clones.
 
 ## Execucao imediata
 

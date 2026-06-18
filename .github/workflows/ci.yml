@@ -50,6 +50,12 @@ jobs:
       - name: Run Django system checks
         run: python manage.py check
 
+      - name: Check model migrations are committed
+        run: python manage.py makemigrations --check --dry-run
+
+      - name: Validate seed data files
+        run: python manage.py seed_peptides --dry-run
+
       - name: Run test suite
         run: |
           if [ "${{ matrix.python-version }}" = "3.11" ]; then
