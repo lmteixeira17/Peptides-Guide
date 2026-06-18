@@ -119,6 +119,10 @@ def health_view(request):
         return JsonResponse(payload, status=503)
 
     try:
+        # Deep check intentionally refreshes the cached counts so the
+        # catalog status reflects the current DB state. The cost is a
+        # handful of COUNT(*) on small tables (~microseconds), well below
+        # the 30s Docker poll cadence.
         cache.delete('site:counts')
         counts = _site_counts()
     except Exception as exc:

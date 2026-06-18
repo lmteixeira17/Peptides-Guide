@@ -50,7 +50,7 @@ A suite cobre:
 - regressao visual desktop/mobile com screenshots.
 - CSP nonce-based e ausencia de handlers inline no frontend dinamico.
 
-Estado validado em 2026-05-25: `pytest -q` com 292 testes passando e 19 skips esperados; CI tambem roda E2E Playwright e publica o artefato `visual-regression-screenshots`.
+Estado validado em 2026-06-18: `pytest -q` com 273 testes passando e 18 skips esperados; CI tambem roda E2E Playwright e publica o artefato `visual-regression-screenshots`. Django 5.2 LTS em Python 3.11/3.12/3.13 (3.14 experimental).
 
 Para gerar screenshots visuais localmente:
 
@@ -92,6 +92,8 @@ Para uma varredura rapida das URLs publicadas, use o sitemap de producao e confi
 - `FORCE_SCRIPT_NAME`: prefixo de publicacao, hoje `/peptides` em producao.
 - `DB_ENGINE`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, `DB_HOST`, `DB_PORT`: banco em producao.
 - `REDIS_URL`: cache/rate limit em producao.
+- `TRUSTED_PROXIES`: lista de CIDRs (separados por virgula) autorizados a definir headers de IP do cliente. Vazio = padrao seguro (loopback + RFC1918 + link-local).
+- `CACHE_MIDDLEWARE_KEY_PREFIX`: chave de cache versionada, usada para invalidar cache de paginas. Padrao `peptides-v6`.
 - `GA4_MEASUREMENT_ID`: analytics, opcional.
 
 ## Pendencias Conhecidas
@@ -99,3 +101,4 @@ Para uma varredura rapida das URLs publicadas, use o sitemap de producao e confi
 - Definir oficialmente se a fonte de verdade sera JS, admin Django ou um fluxo editorial hibrido.
 - Publicar contrato/changelog da API antes de integracoes externas criticas dependerem dela.
 - Melhorar observabilidade de seed, deploy e falhas de importacao.
+- Remover PDF comercial do historico do git com `git filter-repo` se necessario (foi tirado do tracking mas ainda consta em commits antigos).

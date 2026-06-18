@@ -43,7 +43,11 @@ def serialize_stack(stack):
         'description': stack.description,
         'peptides': [
             {
-                'id': sp.peptide_id or sp.name.lower().replace(' ', '-'),
+                # When the stack peptide is not linked to a Peptide record
+                # (FK is SET_NULL), return None instead of fabricating a slug
+                # derived from the name. A fabricated id would never match a
+                # real peptide and would produce broken links / duplicates.
+                'id': sp.peptide_id,
                 'name': sp.name,
                 'role': sp.role,
                 'dose': sp.dose,

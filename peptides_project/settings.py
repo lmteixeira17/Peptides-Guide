@@ -2,6 +2,7 @@
 Django settings for peptides_project.
 """
 
+import ipaddress
 import os
 import sys
 from pathlib import Path
@@ -192,9 +193,19 @@ RATE_LIMIT_API_REQUESTS = int(
 RATE_LIMIT_API_WINDOW_SECONDS = int(os.environ.get('RATE_LIMIT_API_WINDOW_SECONDS', '60'))
 RATE_LIMIT_ADMIN_REQUESTS = int(os.environ.get('RATE_LIMIT_ADMIN_REQUESTS', '5'))
 RATE_LIMIT_ADMIN_WINDOW_SECONDS = int(os.environ.get('RATE_LIMIT_ADMIN_WINDOW_SECONDS', '300'))
+
+# Trusted reverse-proxy CIDRs that are allowed to set client-IP forwarding
+# headers (X-Forwarded-For, CF-Connecting-IP, X-Real-IP). Empty/unset means
+# "use the safe default" (loopback + RFC1918 + link-local). Set to a
+# comma-separated list of CIDRs to lock it down, e.g. "173.245.48.0/20".
+TRUSTED_PROXY_CIDRS = None
+_env_trusted_proxies = os.environ.get('TRUSTED_PROXIES', '').strip()
+if _env_trusted_proxies:
+    TRUSTED_PROXY_CIDRS = [ipaddress.ip_network(c.strip()) for c in _env_trusted_proxies.split(',') if c.strip()]
+
 CACHE_MIDDLEWARE_KEY_PREFIX = os.environ.get(
     'CACHE_MIDDLEWARE_KEY_PREFIX',
-    'peptides-v5-menu-no-api',
+    'peptides-v6',
 )
 
 # Cookies — unique names to avoid conflicts with other Django apps on the same domain
@@ -206,10 +217,12 @@ CSRF_COOKIE_PATH = f'{FORCE_SCRIPT_NAME}/' if FORCE_SCRIPT_NAME else '/'
 # Security
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_BROWSER_XSS_FILTER = True
 SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 # HSTS subdomains/preload stay opt-in because this app can run under shared
 # apex/path domains where forcing every subdomain to HTTPS may affect other apps.
+# Note: SECURE_BROWSER_XSS_FILTER intentionally omitted — the X-XSS-Protection
+# header is deprecated, unsupported by modern browsers, and can introduce
+# vulnerabilities. CSP (see core.middleware) is the modern mitigation.
 SILENCED_SYSTEM_CHECKS = ['security.W005', 'security.W021']
 
 if not DEBUG:

@@ -600,8 +600,10 @@ class TestSerializeStack:
         ).get(pk='test-stack')
         data = serialize_stack(s)
 
-        # When no linked peptide, should generate id from name
-        assert data['peptides'][0]['id'] == 'orphan-peptide'
+        # When no linked peptide, the id must be null so the frontend can
+        # gracefully hide the "view details" link instead of pointing to a
+        # fabricated URL that would 404.
+        assert data['peptides'][0]['id'] is None
         assert data['peptides'][0]['name'] == 'Orphan Peptide'
 
     def test_references_serialization(self, stack_with_relations):

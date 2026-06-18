@@ -1,20 +1,7 @@
-import sys
+"""Project-level pytest fixtures and configuration.
 
-from django.template.context import BaseContext
-
-
-def _patch_django_context_copy_for_python_314():
-    if sys.version_info < (3, 14):
-        return
-
-    # Django 4.2 is not fully compatible with Python 3.14's copy(super()) behavior.
-    def _compat_copy(self):
-        duplicate = self.__class__.__new__(self.__class__)
-        duplicate.__dict__ = self.__dict__.copy()
-        duplicate.dicts = self.dicts[:]
-        return duplicate
-
-    BaseContext.__copy__ = _compat_copy
-
-
-_patch_django_context_copy_for_python_314()
+Note: The previous Python 3.14 compatibility monkey-patch for
+`BaseContext.__copy__` (needed by Django 4.2) has been removed after the
+upgrade to Django 5.2 LTS, which officially supports Python 3.10-3.13
+and works correctly on 3.14 without patches.
+"""

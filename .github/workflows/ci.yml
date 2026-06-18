@@ -23,7 +23,9 @@ jobs:
       matrix:
         python-version:
           - '3.11'
-          - '3.14'
+          - '3.12'
+          - '3.13'
+          - '3.14'  # experimental: Django 5.2 not yet officially certified for 3.14
     env:
       DEBUG: 'True'
       SECRET_KEY: ci-secret-key

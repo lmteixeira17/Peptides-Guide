@@ -33,3 +33,10 @@ test-results/
 .DS_Store
 Thumbs.db
 nul
+
+# Business / commercial documents (keep out of source control)
+*.pdf
+wholesale*
+*.xlsx
+*.xlsb
+*.csv

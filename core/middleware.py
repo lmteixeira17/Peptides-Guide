@@ -1,5 +1,5 @@
 """
-Simple rate limiting middleware using Django cache.
+Simple rate limiting and security middleware using Django cache.
 No external dependencies required.
 """
 
@@ -10,6 +10,20 @@ import time
 from django.conf import settings
 from django.core.cache import cache
 from django.http import HttpResponseForbidden, HttpResponseNotFound, JsonResponse
+
+
+# Module-level constant to avoid rebuilding ip_network objects on every request
+# when TRUSTED_PROXY_CIDRS is not explicitly set (the common case).
+_DEFAULT_TRUSTED_NETWORKS = (
+    ipaddress.ip_network('127.0.0.0/8'),
+    ipaddress.ip_network('10.0.0.0/8'),
+    ipaddress.ip_network('172.16.0.0/12'),
+    ipaddress.ip_network('192.168.0.0/16'),
+    ipaddress.ip_network('169.254.0.0/16'),
+    ipaddress.ip_network('::1/128'),
+    ipaddress.ip_network('fc00::/7'),
+    ipaddress.ip_network('fe80::/10'),
+)
 
 
 def _valid_ip(value):
@@ -23,21 +37,41 @@ def _valid_ip(value):
         return None
 
 
-def get_client_ip(request):
-    """Extract a usable client IP from common proxy headers."""
-    for header in ('HTTP_CF_CONNECTING_IP', 'HTTP_X_REAL_IP'):
-        ip = _valid_ip(request.META.get(header))
-        if ip:
-            return ip
+def _is_trusted_proxy(addr):
+    """Return True if `addr` is in TRUSTED_PROXY_CIDRS (default: loopback + RFC1918)."""
+    if not addr:
+        return False
+    try:
+        ip = ipaddress.ip_address(addr)
+    except ValueError:
+        return False
+    trusted = getattr(settings, 'TRUSTED_PROXY_CIDRS', None) or _DEFAULT_TRUSTED_NETWORKS
+    return any(ip in net for net in trusted)
 
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        for part in x_forwarded_for.split(','):
-            ip = _valid_ip(part)
+
+def get_client_ip(request):
+    """Extract a usable client IP from common proxy headers.
+
+    Only honors forwarding headers when REMOTE_ADDR is a trusted proxy
+    (configurable via settings.TRUSTED_PROXY_CIDRS). This prevents clients on
+    untrusted networks from spoofing X-Forwarded-For to bypass rate limits.
+    """
+    remote = _valid_ip(request.META.get('REMOTE_ADDR'))
+
+    if remote is None or _is_trusted_proxy(remote):
+        for header in ('HTTP_CF_CONNECTING_IP', 'HTTP_X_REAL_IP'):
+            ip = _valid_ip(request.META.get(header))
             if ip:
                 return ip
 
-    return _valid_ip(request.META.get('REMOTE_ADDR')) or 'unknown'
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            for part in x_forwarded_for.split(','):
+                ip = _valid_ip(part)
+                if ip:
+                    return ip
+
+    return remote or 'unknown'
 
 
 class ContentSecurityPolicyMiddleware:

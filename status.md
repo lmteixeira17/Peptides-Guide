@@ -9,7 +9,7 @@
 ### 1. Pre-Commit (Local)
 
 - [ ] `ruff check .` passa
-- [ ] `pytest -q` passa 100% (atual: 292 testes, 19 skips esperados)
+- [ ] `pytest -q` passa 100% (atual: 273 testes, 18 skips esperados)
 - [ ] Nao ha conflitos de merge pendentes (`git status` limpo)
 - [ ] Arquivos novos estao adicionados (`git add`)
 - [ ] Commit message descritiva em portugues ou ingles
@@ -40,6 +40,16 @@ Se o deploy quebrar algo:
 ```bash
 git revert HEAD
 git push origin master
+```
+
+Para restaurar o banco a partir do snapshot pre-deploy gerado automaticamente:
+```bash
+# Listar snapshots disponiveis
+ls -1t /var/www/peptides-backups/peptides_pre_deploy_*.sql
+
+# Restaurar (substitua TIMESTAMP pelo arquivo desejado)
+docker exec -i peptides-db psql -U peptides -d peptides \
+  < /var/www/peptides-backups/peptides_pre_deploy_TIMESTAMP.sql
 ```
 
 ---
@@ -93,6 +103,7 @@ pytest tests/e2e/test_visual_regression.py -q
 | 2026-05-24 | f88b673 | Artifact CI atualizado para Node 24 nativo | SIM |
 | 2026-05-24 | 8906912 | Documentacao operacional atualizada | SIM |
 | 2026-05-25 | 25781b4 | API publica versionada em `/api/v1/peptides.json` | SIM |
+| 2026-06-18 | pendente | Hardening geral (Django 5.2 LTS, serialize_stack, trusted proxies, cache bleach, etc) | pendente |
 
 ---
 

@@ -1,28 +1,10 @@
-function getBootstrappedPeptides() {
-    var bootstrapped = [];
-    if (typeof peptidesPart1 !== "undefined") {
-        bootstrapped = bootstrapped.concat(peptidesPart1);
-    }
-    if (typeof peptidesPart2 !== "undefined") {
-        bootstrapped = bootstrapped.concat(peptidesPart2);
-    }
-    if (typeof peptidesPart3 !== "undefined") {
-        bootstrapped = bootstrapped.concat(peptidesPart3);
-    }
-    return bootstrapped;
-}
-
-function getBootstrappedStacks() {
-    return (typeof peptideStacks !== "undefined") ? peptideStacks : [];
-}
-
-var peptides = getBootstrappedPeptides();
-var stacks = getBootstrappedStacks();
-var bootstrapDataPresent =
-    typeof peptidesPart1 !== "undefined" ||
-    typeof peptidesPart2 !== "undefined" ||
-    typeof peptidesPart3 !== "undefined" ||
-    typeof peptideStacks !== "undefined";
+// Data is always loaded via the public JSON API; the legacy bootstrap
+// mechanism (peptidesPart1/2/3, peptideStacks) was removed when the catalog
+// moved to PostgreSQL-backed server rendering.
+var peptides = [];
+var stacks = [];
+var dataLoaded = false;
+var dataLoadFailed = false;
 
 // State
 var currentCategory = "all";
@@ -31,8 +13,6 @@ var currentSection = "peptides";
 var currentStackGoal = "all";
 var sourceStackId = null;
 var searchDebounceTimer = null;
-var dataLoaded = bootstrapDataPresent;
-var dataLoadFailed = false;
 
 // DOM elements
 var cardsContainer = document.getElementById("cardsContainer");
