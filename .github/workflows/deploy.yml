@@ -56,12 +56,15 @@ jobs:
             docker compose down
             docker compose build --no-cache
             docker compose up -d
-            docker exec peptides-web python manage.py migrate
-            docker exec peptides-web python manage.py seed_peptides \
-              --backup-json "$BACKUP_DIR/peptides_pre_seed_${BACKUP_TS}.json"
-            ls -1t "$BACKUP_DIR"/peptides_pre_seed_*.json | tail -n +11 | xargs -r rm -f
             docker network connect docker-infra_app-network peptides-web || true
             docker network connect docker-infra_app-network peptides-db || true
+            docker exec peptides-web python manage.py migrate
+            SEED_BACKUP_FILE="peptides_pre_seed_${BACKUP_TS}.json"
+            docker exec peptides-web python manage.py seed_peptides \
+              --backup-json "/tmp/${SEED_BACKUP_FILE}"
+            docker cp "peptides-web:/tmp/${SEED_BACKUP_FILE}" "$BACKUP_DIR/${SEED_BACKUP_FILE}"
+            docker exec peptides-web rm -f "/tmp/${SEED_BACKUP_FILE}"
+            ls -1t "$BACKUP_DIR"/peptides_pre_seed_*.json | tail -n +11 | xargs -r rm -f
             curl -fsS "http://localhost:3007/health/?deep=1" >/dev/null
             curl -fsS http://localhost/peptides/ >/dev/null
             curl -fsS http://localhost/peptides/peptideos/semaglutide/ >/dev/null
